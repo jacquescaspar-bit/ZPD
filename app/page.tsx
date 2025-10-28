@@ -1,103 +1,242 @@
-import Image from "next/image";
+"use client";
 
-const Home = () => (
-  <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-    <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-      <Image
-        priority
-        alt="Next.js logo"
-        className="dark:invert"
-        height={38}
-        src="/next.svg"
-        width={180}
-      />
-      <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-        <li className="mb-2 tracking-[-.01em]">
-          Get started by editing{" "}
-          <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-            app/page.tsx
-          </code>
-          .
-        </li>
-        <li className="tracking-[-.01em]">
-          Save and see your changes instantly.
-        </li>
-      </ol>
+import { useState, useEffect } from "react";
+import Hero from "@/Hero";
+import About from "@/About";
+import Parents from "@/Parents";
+import Tutors from "@/Tutors";
+import Contact from "@/Contact";
 
-      <div className="flex gap-4 items-center flex-col sm:flex-row">
-        <a
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          rel="noopener noreferrer"
-          target="_blank"
+const Home = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(0);
+  const [navOpacity, setNavOpacity] = useState(0);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setIsOpen(false);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDark(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const setVh = () => {
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight * 0.01}px`,
+      );
+    };
+    setVh();
+    window.addEventListener("resize", setVh);
+    window.addEventListener("orientationchange", setVh);
+    return () => {
+      window.removeEventListener("resize", setVh);
+      window.removeEventListener("orientationchange", setVh);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollY } = window;
+      const vh = window.innerHeight;
+      const threshold = vh / 2;
+      if (scrollY > threshold) {
+        const progress = Math.min((scrollY - threshold) / (vh / 2), 1);
+        setShowBackToTop(progress);
+      } else {
+        setShowBackToTop(0);
+      }
+      const maxScroll = Number(vh); // 100% vh for more gradual transition
+      const opacity = Math.min((scrollY / maxScroll) * 0.3, 0.3);
+      setNavOpacity(opacity);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menuOpacity = 0.3;
+
+  return (
+    <div className="min-h-screen flex flex-col relative">
+      {/* Full-screen background behind navigation */}
+      <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
+
+      {/* Sticky Navigation */}
+      <nav
+        className="sticky top-0 z-20 backdrop-blur-md px-6 py-4 min-h-16 relative transition-all duration-500"
+        style={{
+          backgroundColor: `rgba(${isDark ? "0, 0, 0" : "255, 255, 255"}, ${navOpacity})`,
+        }}
+      >
+        <div className="flex items-end justify-between w-full">
+          <a
+            className={`text-4xl whitespace-nowrap ${isMobile ? "absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" : "-mt-3"}`}
+            href="#"
+            style={{ letterSpacing: "0.07em" }}
+          >
+            <span className="font-normal" style={{ fontFamily: "antipasto" }}>
+              ZPD
+            </span>
+            <span
+              className="font-light"
+              style={{ fontFamily: "antipasto", letterSpacing: "0.056em" }}
+            >
+              {" "}
+              learning
+            </span>
+          </a>
+          <div
+            className={`absolute right-6 bottom-4 flex flex-row items-baseline space-x-6 transition-opacity duration-500 ${isMobile ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+          >
+            <a
+              className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 text-center"
+              href="#contact"
+              style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            >
+              Contact
+            </a>
+            <a
+              className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 text-center"
+              href="#tutors"
+              style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            >
+              Tutors
+            </a>
+            <a
+              className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 text-center"
+              href="#parents"
+              style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            >
+              Parents
+            </a>
+            <a
+              className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 text-center"
+              href="#about"
+              style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            >
+              About
+            </a>
+            <a
+              className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 text-center"
+              href="#contact"
+              style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            >
+              Book
+            </a>
+          </div>
+        </div>
+        <button
+          className={`absolute left-6 top-1/2 -translate-y-1/2 transition-opacity duration-500 ${isMobile ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          onClick={() => setIsOpen(!isOpen)}
         >
-          <Image
-            alt="Vercel logomark"
-            className="dark:invert"
-            height={20}
-            src="/vercel.svg"
-            width={20}
-          />
-          Deploy now
+          <div className="w-6 h-6 relative">
+            <span
+              className={`absolute top-1.5 left-0 w-6 h-px bg-gray-900 dark:bg-white transition-all duration-300 ${isOpen ? "rotate-45 top-1/2 -translate-y-1/2" : ""}`}
+            />
+            <span
+              className={`absolute bottom-1.5 left-0 w-6 h-px bg-gray-900 dark:bg-white transition-all duration-300 ${isOpen ? "-rotate-45 top-1/2 -translate-y-1/2" : ""}`}
+            />
+          </div>
+        </button>
+      </nav>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed top-16 left-0 w-full backdrop-blur-md shadow-lg z-30 flex flex-col justify-start items-start space-y-4 py-4 pl-6 pr-6 transition-opacity duration-300 md:opacity-0 md:pointer-events-none ${isMobile && isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        style={{
+          backgroundColor: `rgba(${isDark ? "0, 0, 0" : "255, 255, 255"}, ${menuOpacity})`,
+        }}
+      >
+        <a
+          className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+          href="#contact"
+          style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+          onClick={() => setIsOpen(false)}
+        >
+          Book
         </a>
         <a
-          className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          rel="noopener noreferrer"
-          target="_blank"
+          className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+          href="#about"
+          style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+          onClick={() => setIsOpen(false)}
         >
-          Read our docs
+          About
+        </a>
+        <a
+          className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+          href="#parents"
+          style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+          onClick={() => setIsOpen(false)}
+        >
+          Parents
+        </a>
+        <a
+          className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+          href="#tutors"
+          style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+          onClick={() => setIsOpen(false)}
+        >
+          Tutors
+        </a>
+        <a
+          className="text-2xl font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+          href="#contact"
+          style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+          onClick={() => setIsOpen(false)}
+        >
+          Contact
         </a>
       </div>
-    </main>
-    <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-      <a
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-        href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-        rel="noopener noreferrer"
-        target="_blank"
+
+      {/* Hero Section */}
+      <Hero />
+
+      {/* Sections */}
+      <About />
+      <Parents />
+      <Tutors />
+      <Contact />
+
+      {/* Back to Top Button */}
+      <button
+        aria-label="Back to top"
+        className="fixed bottom-8 right-8 w-14 h-14 bg-white/10 dark:bg-black/20 backdrop-blur-md hover:bg-white/20 dark:hover:bg-black/30 border border-white/20 text-gray-900 dark:text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 z-50"
+        style={{
+          opacity: showBackToTop,
+          pointerEvents: showBackToTop > 0 ? "auto" : "none",
+        }}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        <Image
-          aria-hidden
-          alt="File icon"
-          height={16}
-          src="/file.svg"
-          width={16}
-        />
-        Learn
-      </a>
-      <a
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-        href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <Image
-          aria-hidden
-          alt="Window icon"
-          height={16}
-          src="/window.svg"
-          width={16}
-        />
-        Examples
-      </a>
-      <a
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-        href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <Image
-          aria-hidden
-          alt="Globe icon"
-          height={16}
-          src="/globe.svg"
-          width={16}
-        />
-        Go to nextjs.org →
-      </a>
-    </footer>
-  </div>
-);
+        <svg
+          fill="none"
+          height="20"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width="20"
+        >
+          <polyline points="18,15 12,9 6,15" />
+        </svg>
+      </button>
+    </div>
+  );
+};
 
 export default Home;
