@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import localFont from "next/font/local";
 
 const antipasto = localFont({
@@ -20,93 +20,36 @@ const antipasto = localFont({
   ],
 });
 
-interface Synapse {
-  x: number;
-  y: number;
-  size: number;
-  connections: number[];
-}
-
 const Hero = () => {
-  const [synapses, setSynapses] = useState<Synapse[]>([]);
+  const [hideCta, setHideCta] = useState(false);
+  const [ctaThreshold, setCtaThreshold] = useState(0);
+  const ctaRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const generateSynapses = () => {
-      const numSynapses = Math.floor(Math.random() * 4) + 5; // 5-8 synapses
-      const newSynapses: Synapse[] = [];
-
-      for (let i = 0; i < numSynapses; i++) {
-        newSynapses.push({
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          size: Math.random() * 20 + 10, // 10-30px
-          connections: [],
-        });
+    if (typeof window === "undefined") return;
+    // Calculate CTA threshold on mount
+    const calculateThreshold = () => {
+      if (ctaRef.current) {
+        const rect = ctaRef.current.getBoundingClientRect();
+        setCtaThreshold(rect.top + window.scrollY);
       }
-
-      // Create connections
-      newSynapses.forEach((synapse, index) => {
-        const numConnections = Math.floor(Math.random() * 3) + 1; // 1-3 connections
-        const possibleConnections = newSynapses
-          .map((_, i) => i)
-          .filter((i) => i !== index);
-        for (
-          let j = 0;
-          j < numConnections && possibleConnections.length > 0;
-          j++
-        ) {
-          const randomIndex = Math.floor(
-            Math.random() * possibleConnections.length,
-          );
-          const [connectionIndex] = possibleConnections.splice(randomIndex, 1);
-          synapse.connections.push(connectionIndex);
-        }
-      });
-
-      setSynapses(newSynapses);
     };
-
-    generateSynapses();
+    // Delay to ensure layout is ready
+    setTimeout(calculateThreshold, 100);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleScroll = () => {
+      const { scrollY } = window;
+      setHideCta(scrollY > ctaThreshold - 64);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [ctaThreshold]);
 
   return (
     <main className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center items-center px-6 relative overflow-hidden">
-      {/* Synapse background */}
-      <svg
-        className="absolute inset-0 w-full h-full opacity-30"
-        preserveAspectRatio="none"
-        viewBox="0 0 100 100"
-      >
-        {synapses.map((synapse, index) => (
-          <g key={index}>
-            {/* Connections */}
-            {synapse.connections.map((connIndex) => {
-              const connected = synapses[connIndex];
-              return (
-                <line
-                  key={`${index}-${connIndex}`}
-                  className="text-blue-300 dark:text-blue-700"
-                  stroke="currentColor"
-                  strokeWidth="0.2"
-                  x1={synapse.x}
-                  x2={connected.x}
-                  y1={synapse.y}
-                  y2={connected.y}
-                />
-              );
-            })}
-            {/* Synapse circle */}
-            <circle
-              className="text-blue-200 dark:text-blue-800"
-              cx={synapse.x}
-              cy={synapse.y}
-              fill="currentColor"
-              r={synapse.size / 2}
-            />
-          </g>
-        ))}
-      </svg>
-
       <div className="text-center flex flex-col items-center justify-center relative z-10 animate-fade-in-up">
         {/* ZPD */}
         <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -127,8 +70,14 @@ const Hero = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="mt-8">
-          <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg tracking-wide">
+        <div
+          className={`mt-8 transition-opacity duration-500 ${hideCta ? "opacity-0" : "opacity-100"}`}
+        >
+          <button
+            ref={ctaRef}
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg tracking-wide"
+            id="cta-button"
+          >
             Book Now
           </button>
         </div>

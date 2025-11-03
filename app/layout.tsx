@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/globals.css";
+import Nav from "@/Nav";
 
 export const metadata: Metadata = {
   title: "Where Learning Happens",
@@ -18,7 +19,10 @@ const RootLayout = ({
         rel="stylesheet"
       />
     </head>
-    <body className="antialiased">{children}</body>
+    <body className="antialiased">
+      <Nav />
+      {children}
+    </body>
   </html>
 );
 
