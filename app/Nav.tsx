@@ -141,6 +141,13 @@ const Nav = () => {
                 About
               </a>
               <a
+                className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
+                href="/blog"
+                style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+              >
+                Blog
+              </a>
+              <a
                 className={`text-2xl ${pathname === "/contact" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
                 href="/contact"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
@@ -233,6 +240,14 @@ const Nav = () => {
             onClick={() => setIsOpen(false)}
           >
             About
+          </a>
+          <a
+            className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}
+            href="/blog"
+            style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            onClick={() => setIsOpen(false)}
+          >
+            Blog
           </a>
           <a
             className={`text-2xl ${pathname === "/contact" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}

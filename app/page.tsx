@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Hero from "@/Hero";
+import Infographic from "@/Infographic";
 import About from "@/About";
 import Parents from "@/Parents";
 import Tutors from "@/Tutors";
@@ -49,6 +50,9 @@ const Home = () => {
 
       {/* Hero Section */}
       <Hero />
+
+      {/* Infographic Section */}
+      <Infographic />
 
       {/* Sections */}
       <About />
