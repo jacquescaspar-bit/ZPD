@@ -4,6 +4,7 @@ import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+// import nextConfig from 'eslint-config-next/flat';
 import noZustandPropDrilling from './eslint-rules/no-zustand-prop-drilling.js';
 import noRelativeImports from './eslint-rules/no-relative-imports.js';
 // import tailwindPlugin from 'eslint-plugin-tailwindcss'; // Temporarily disabled - not compatible with Tailwind v4 yet
@@ -15,6 +16,7 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
+//   nextConfig,
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
@@ -172,6 +174,14 @@ export default tseslint.config(
     files: ['**/*.js', '**/*.jsx'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+  {
+    files: ['app/blog/**/*.tsx'],
+    rules: {
+      'react/no-unescaped-entities': 'off',
+      'max-lines-per-function': 'off',
+      'max-lines': 'off',
     },
   },
   {

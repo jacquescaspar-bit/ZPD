@@ -1,114 +1,95 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Baby, GraduationCap, Users } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Infographic = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  const rotation = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const innerScale = useTransform(scrollYProgress, [0.5, 1], [1, 1.5]);
-  const innerOpacity = useTransform(scrollYProgress, [0.5, 1], [1, 0]);
-  const iconOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
-
-  const [textKey, setTextKey] = useState("known");
+  const [circleOpacity, setCircleOpacity] = useState(0);
+  const [showGrown, setShowGrown] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (progress) => {
-      if (progress > 0.8) {
-        setTextKey("grown");
-      } else {
-        setTextKey("known");
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const progress = Math.max(
+          0,
+          Math.min(
+            1,
+            (window.innerHeight / 2 - rect.top) / (window.innerHeight / 2),
+          ),
+        );
+        const opacity = progress * 0.2;
+        setCircleOpacity(opacity);
+        setShowGrown(progress > 0.8);
       }
-    });
-    return unsubscribe;
-  }, [scrollYProgress]);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section ref={ref} className="w-full h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-      <div className="w-full max-w-7xl px-4">
-        <div className="flex items-center justify-center">
-          <svg width="400" height="400" viewBox="-200 -200 400 400" className="w-full max-w-md h-auto">
-            {/* Outer stroke circle */}
-            <circle cx="0" cy="0" r="150" fill="none" stroke="#3b82f6" strokeWidth="2" />
-
-            {/* Inner filled circle */}
-            <motion.circle
-              cx="0"
-              cy="0"
-              r="100"
-              fill="#ffffff"
-              style={{ scale: innerScale, opacity: innerOpacity }}
+    <section
+      ref={sectionRef}
+      className="w-full h-[100vh] relative bg-white dark:bg-gray-900 z-0 flex justify-center items-center"
+    >
+      <div
+        className="absolute w-[309px] h-[309px] border border-current bg-current rounded-full transition-opacity duration-1000"
+        style={{ opacity: circleOpacity }}
+      />
+      <div
+        className="absolute w-[309px] h-[309px] border border-current rounded-full"
+        style={{ opacity: 0.2 }}
+      />
+      {showGrown && (
+        <>
+          {[0, 0.3, 0.6].map((delay, i) => (
+            <motion.div
+              key={i}
+              animate={{ scale: 1.58, opacity: 0 }}
+              className="absolute border border-current rounded-full"
+              initial={{ scale: 1, opacity: 0.6 }}
+              style={{ width: "12.25rem", height: "12.25rem" }}
+              transition={{ duration: 4, ease: "easeOut", delay }}
             />
-
-            {/* Center content */}
-            <g>
-              <text
-                x="0"
-                y="0"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                className="text-2xl font-light text-white"
-                style={{ fontFamily: 'Antipasto', fontWeight: 200 }}
-              >
-                <AnimatePresence mode="wait">
-                  {textKey === "known" ? (
-                    <motion.tspan
-                      key="known"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      known
-                    </motion.tspan>
-                  ) : (
-                    <motion.tspan
-                      key="grown"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      grown
-                    </motion.tspan>
-                  )}
-                </AnimatePresence>
-              </text>
-            </g>
-
-            {/* Rotating icons in gap */}
-            <motion.g style={{ rotate: rotation }}>
-              <motion.g
-                style={{ opacity: iconOpacity }}
-                transform="translate(0, -125)"
-              >
-                <foreignObject x="-15" y="-15" width="30" height="30">
-                  <Baby className="w-8 h-8 text-white" />
-                </foreignObject>
-              </motion.g>
-              <motion.g
-                style={{ opacity: iconOpacity }}
-                transform="translate(-62.5, 108.253)"
-              >
-                <foreignObject x="-15" y="-15" width="30" height="30">
-                  <GraduationCap className="w-8 h-8 text-white" />
-                </foreignObject>
-              </motion.g>
-              <motion.g
-                style={{ opacity: iconOpacity }}
-                transform="translate(-62.5, -108.253)"
-              >
-                <foreignObject x="-15" y="-15" width="30" height="30">
-                  <Users className="w-8 h-8 text-white" />
-                </foreignObject>
-              </motion.g>
-            </motion.g>
-          </svg>
-        </div>
+          ))}
+          <motion.div
+            animate={{ opacity: 0.2 }}
+            className="absolute border border-current rounded-full"
+            initial={{ opacity: 0 }}
+            style={{ width: "30.562rem", height: "30.562rem" }}
+            transition={{ duration: 3, delay: 5 }}
+          />
+        </>
+      )}
+      <motion.div
+        animate={showGrown ? { scale: 1.58 } : { scale: 1 }}
+        className="border border-current rounded-full flex justify-center items-center p-8 relative z-10 bg-white dark:bg-gray-900"
+        style={{ width: "12.25rem", height: "12.25rem" }}
+        transition={{ duration: 4, ease: "easeOut" }}
+      />
+      <div className="absolute inset-0 flex justify-center items-center z-20">
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={showGrown ? "grown" : "known"}
+            animate={
+              showGrown
+                ? { opacity: 1, scale: 1.05, letterSpacing: "0.05em" }
+                : { opacity: 1, scale: 1, letterSpacing: 0 }
+            }
+            className="text-5xl font-extralight"
+            exit={{ opacity: 0, scale: 1, letterSpacing: 0 }}
+            initial={{ opacity: 0, scale: 1, letterSpacing: 0 }}
+            transition={
+              showGrown ? { duration: 1.5, delay: 0.5 } : { duration: 1 }
+            }
+          >
+            {showGrown ? "grown" : "known"}
+          </motion.span>
+        </AnimatePresence>
       </div>
     </section>
   );

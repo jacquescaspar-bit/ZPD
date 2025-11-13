@@ -1,6 +1,6 @@
 const Tutors = () => (
   <section
-    className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center bg-gray-50 dark:bg-gray-900 px-6"
+    className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center bg-gray-50 dark:bg-gray-800 px-6 z-10"
     id="tutors"
   >
     <div className="max-w-6xl text-center mx-auto py-8">

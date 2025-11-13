@@ -1,6 +1,6 @@
 const Contact = () => (
   <section
-    className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center bg-white dark:bg-gray-800 px-6"
+    className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center bg-white dark:bg-gray-900 px-6 z-10"
     id="contact"
   >
     <div className="max-w-4xl w-full mx-auto py-8">
