@@ -1,11 +1,14 @@
 const ProgressTrackingPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="progress-tracking-helps-learning"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         Why Tracking Progress Actually Helps Kids Learn Better
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-08-05">5 August 2025</time>
+        <time dateTime="2025-06-10">10 June 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -19,8 +22,8 @@ const ProgressTrackingPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         I used to hate progress reports. You know, those meetings where teachers
         tell you how you're doing, and it's all about grades and test scores.
-        But somewhere along the way, I realized that tracking progress isn't
-        about judgment – it's about growth. It's about knowing where you are so
+        But somewhere along the way, I realised that tracking progress isn't
+        about judgement – it's about growth. It's about knowing where you are so
         you can figure out how to get where you want to go.
       </p>
 
@@ -28,7 +31,7 @@ const ProgressTrackingPost = () => (
         At ZPD Learning, we take{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/progress-tracking-education"
+          href="https://grokipedia.com/page/Progress_Tracking_Education"
         >
           progress tracking
         </a>{" "}
@@ -51,7 +54,7 @@ const ProgressTrackingPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         We do things differently. We track progress in real-time, celebrating
         small wins and catching problems before they become big ones. It's not
-        about judgment – it's about support.
+        about judgement – it's about support.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -140,7 +143,7 @@ const ProgressTrackingPost = () => (
         Research shows that regular{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/formative-assessment"
+          href="https://grokipedia.com/page/Formative_Assessment"
         >
           formative assessment
         </a>{" "}
@@ -148,7 +151,7 @@ const ProgressTrackingPost = () => (
         – it has to be specific, timely, and focused on{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/growth-mindset"
+          href="https://grokipedia.com/page/Growth_Mindset"
         >
           growth
         </a>{" "}

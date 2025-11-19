@@ -1,6 +1,6 @@
 const About = () => (
   <section
-    className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center bg-gray-50 dark:bg-gray-800 px-6 z-10"
+    className="min-h-screen flex flex-col justify-center bg-gray-50 dark:bg-gray-800 px-6 z-10"
     id="about"
   >
     <div className="max-w-4xl text-center mx-auto py-16">
@@ -24,7 +24,7 @@ const About = () => (
       </p>
       <a
         className="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
-        href="/about"
+        href="/blog"
       >
         Learn More
       </a>

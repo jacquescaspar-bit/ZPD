@@ -1,11 +1,14 @@
 const ScienceBehindZPDPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="science-behind-zpd"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         The Science Behind ZPD: Why This Learning Theory Actually Works
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-08-19">19 August 2025</time>
+        <time dateTime="2025-08-12">12 August 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -17,8 +20,8 @@ const ScienceBehindZPDPost = () => (
 
     <div className="prose prose-lg dark:prose-invert max-w-none">
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        When I first learned about the Zone of Proximal Development, I thought
-        it sounded too good to be true. Give kids challenges that are just hard
+        When I first learnt about the Zone of Proximal Development, I thought it
+        sounded too good to be true. Give kids challenges that are just hard
         enough, and they learn better? It seemed almost magical. But then I dug
         into the research, and wow – the science really backs this up. ZPD isn't
         just some educational fad. It's a principle that's been tested, refined,
@@ -36,9 +39,9 @@ const ScienceBehindZPDPost = () => (
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Lev Vygotsky wasn't just theorizing in the 1920s and 30s. He was
-        observing real children, watching how they learned with and without
-        help. His key insight? Kids can do more with guidance than they can
-        alone. But not just any guidance – the right kind, at the right time.
+        observing real children, watching how they learnt with and without help.
+        His key insight? Kids can do more with guidance than they can alone. But
+        not just any guidance – the right kind, at the right time.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
@@ -62,7 +65,7 @@ const ScienceBehindZPDPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Studies from Cambridge and Harvard show similar results. Kids taught in
         their ZPD master skills faster, remember more, and can apply what
-        they've learned to new situations. It's not just about getting better
+        they've learnt to new situations. It's not just about getting better
         grades – it's about becoming genuinely capable.
       </p>
 
@@ -201,7 +204,7 @@ const ScienceBehindZPDPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/zone-of-proximal-development-research"
+              href="https://grokipedia.com/page/Zone_of_Proximal_Development_Research"
             >
               The evidence base for ZPD
             </a>
@@ -209,7 +212,7 @@ const ScienceBehindZPDPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/cognitive-load-theory"
+              href="https://grokipedia.com/page/Cognitive_Load_Theory"
             >
               How our brains process information
             </a>
@@ -217,7 +220,7 @@ const ScienceBehindZPDPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/dynamic-assessment"
+              href="https://grokipedia.com/page/Dynamic_Assessment"
             >
               Testing that shows potential
             </a>

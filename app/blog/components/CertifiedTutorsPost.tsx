@@ -1,11 +1,14 @@
 const CertifiedTutorsPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="certified-tutors-matter"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         Why Certified Tutors Actually Matter (And Why You Should Care)
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-07-29">29 July 2025</time>
+        <time dateTime="2025-05-15">15 May 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -27,11 +30,11 @@ const CertifiedTutorsPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         At ZPD Learning, we believe that teaching kids is just as important as
         any other skilled profession. That's why we only work with certified
-        tutors – people who've not just learned their subject, but learned how
-        to teach it effectively. Our tutors hold proper{" "}
+        tutors – people who've not just learnt their subject, but learnt how to
+        teach it effectively. Our tutors hold proper{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/teacher-certification"
+          href="https://grokipedia.com/page/Teacher_Certification"
         >
           teacher certifications
         </a>{" "}
@@ -116,7 +119,7 @@ const CertifiedTutorsPost = () => (
         changed lives. The key is having the right{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/tutor-qualifications"
+          href="https://grokipedia.com/page/Tutor_Qualifications"
         >
           tutor qualifications
         </a>{" "}
@@ -139,7 +142,7 @@ const CertifiedTutorsPost = () => (
         provide ongoing{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/professional-development-education"
+          href="https://grokipedia.com/page/Professional_Development_Education"
         >
           professional development
         </a>

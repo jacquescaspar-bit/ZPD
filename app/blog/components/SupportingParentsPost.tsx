@@ -1,11 +1,14 @@
 const SupportingParentsPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="supporting-parents"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         Supporting Parents: You're Not Alone in This Learning Journey
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-09-02">2 September 2025</time>
+        <time dateTime="2025-10-15">15 October 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -130,7 +133,7 @@ const SupportingParentsPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Some families face particularly challenging circumstances – learning
         disabilities, giftedness, trauma, or cultural barriers. We provide
-        specialized guidance for these situations, connecting families with
+        specialised guidance for these situations, connecting families with
         additional resources and expert advice when needed.
       </p>
 
@@ -197,7 +200,7 @@ const SupportingParentsPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/parental-involvement-education"
+              href="https://grokipedia.com/page/Parental_Involvement_Education"
             >
               Why parent involvement matters
             </a>
@@ -205,7 +208,7 @@ const SupportingParentsPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/family-engagement"
+              href="https://grokipedia.com/page/Family_Engagement"
             >
               Building strong family partnerships
             </a>
@@ -213,7 +216,7 @@ const SupportingParentsPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/home-learning-support"
+              href="https://grokipedia.com/page/Home_Learning_Support"
             >
               Supporting learning at home
             </a>

@@ -1,12 +1,15 @@
 const ZPDPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="zpd-zone-of-proximal-development"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         The Zone of Proximal Development: That Sweet Spot Where Learning
         Actually Happens
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-07-15">15 July 2025</time>
+        <time dateTime="2025-03-12">12 March 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -40,7 +43,7 @@ const ZPDPost = () => (
         This idea comes from{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/lev-vygotsky"
+          href="https://grokipedia.com/page/Lev_Vygotsky"
         >
           Lev Vygotsky
         </a>
@@ -55,7 +58,7 @@ const ZPDPost = () => (
         Vygotsky called this the "
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/zone-of-proximal-development"
+          href="https://grokipedia.com/page/Zone_of_Proximal_Development"
         >
           Zone of Proximal Development
         </a>
@@ -112,7 +115,7 @@ const ZPDPost = () => (
         The key to making ZPD work is something called "
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/scaffolding-theory"
+          href="https://grokipedia.com/page/Scaffolding_Theory"
         >
           scaffolding
         </a>

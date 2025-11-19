@@ -1,11 +1,14 @@
 const EducationalPhilosophyPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="educational-philosophy"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         Our Educational Philosophy: Why We Do What We Do
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-08-12">12 August 2025</time>
+        <time dateTime="2025-07-08">8 July 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -208,7 +211,7 @@ const EducationalPhilosophyPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/educational-philosophy"
+              href="https://grokipedia.com/page/Educational_Philosophy"
             >
               The foundations of our approach
             </a>
@@ -216,7 +219,7 @@ const EducationalPhilosophyPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/growth-mindset"
+              href="https://grokipedia.com/page/Growth_Mindset"
             >
               Why effort beats "smart"
             </a>
@@ -224,7 +227,7 @@ const EducationalPhilosophyPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/holistic-education"
+              href="https://grokipedia.com/page/Holistic_Education"
             >
               Education for the whole child
             </a>

@@ -23,7 +23,7 @@ const antipasto = localFont({
 const Hero = () => {
   const [hideCta, setHideCta] = useState(false);
   const [ctaThreshold, setCtaThreshold] = useState(0);
-  const ctaRef = useRef<HTMLButtonElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -73,13 +73,14 @@ const Hero = () => {
         <div
           className={`mt-8 transition-opacity duration-500 ${hideCta ? "opacity-0" : "opacity-100"}`}
         >
-          <button
+          <a
             ref={ctaRef}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg tracking-wide"
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg tracking-wide inline-block"
+            href="#contact"
             id="cta-button"
           >
             Book Now
-          </button>
+          </a>
         </div>
       </div>
     </main>

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 const Nav = () => {
   const pathname = usePathname();
+  const prevPathnameRef = useRef("/");
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [navOpacity, setNavOpacity] = useState(0);
@@ -62,17 +63,41 @@ const Nav = () => {
       const maxScroll = Number(vh); // 100% vh for more gradual transition
       const opacity = Math.min((scrollY / maxScroll) * 0.3, 0.3);
       setNavOpacity(opacity);
-      if (ctaThreshold > 0) {
-        setShowCtaInNav(scrollY > ctaThreshold - 64); // 64px = 4rem nav height
+      if (pathname === "/") {
+        if (ctaThreshold > 0) {
+          setShowCtaInNav(scrollY > ctaThreshold - 64); // 64px = 4rem nav height
+        }
+      } else {
+        setShowCtaInNav(true);
       }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [ctaThreshold]);
+  }, [ctaThreshold, pathname]);
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname]);
+    const prevPathname = prevPathnameRef.current;
+    prevPathnameRef.current = pathname;
+    // Set CTA visibility on navigation with fade-in
+    if (pathname !== "/") {
+      if (prevPathname === "/") {
+        // Fade in only when navigating from homepage
+        setShowCtaInNav(false); // Ensure hidden initially
+        setTimeout(() => setShowCtaInNav(true), 100); // Fade in after short delay
+      } else {
+        setShowCtaInNav(true); // Keep visible when navigating between non-homepage pages
+      }
+    } else {
+      // For homepage, check current scroll position
+      const { scrollY } = window;
+      if (ctaThreshold > 0) {
+        setShowCtaInNav(scrollY > ctaThreshold - 64);
+      } else {
+        setShowCtaInNav(false);
+      }
+    }
+  }, [pathname, ctaThreshold]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !isMobile) return;
@@ -113,46 +138,25 @@ const Nav = () => {
               </span>
             </a>
             <div className="flex flex-row items-center space-x-6">
-              <button
-                className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-500 text-sm tracking-wide ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
-                type="button"
+              <a
+                className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-500" : ""} text-sm tracking-wide inline-block ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
+                href="#contact"
               >
                 Book Now
-              </button>
-              <a
-                className={`text-2xl ${pathname === "/parents" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
-                href="/parents"
-                style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
-              >
-                Parents
               </a>
               <a
-                className={`text-2xl ${pathname === "/tutors" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
-                href="/tutors"
+                className={`text-2xl ${pathname === "/services" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"} text-center`}
+                href="/services"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
               >
-                Tutors
+                Services
               </a>
               <a
-                className={`text-2xl ${pathname === "/about" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
-                href="/about"
-                style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
-              >
-                About
-              </a>
-              <a
-                className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
+                className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"} text-center`}
                 href="/blog"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
               >
                 Blog
-              </a>
-              <a
-                className={`text-2xl ${pathname === "/contact" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300 text-center`}
-                href="/contact"
-                style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
-              >
-                Contact
               </a>
             </div>
           </div>
@@ -178,11 +182,12 @@ const Nav = () => {
 
       {/* Mobile CTA */}
       {isMobile && (
-        <button
-          className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-24 h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm tracking-wide whitespace-nowrap flex items-center justify-center ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
+        <a
+          className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-24 h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-300" : ""} text-sm tracking-wide whitespace-nowrap flex items-center justify-center ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
+          href="#contact"
         >
           Book Now
-        </button>
+        </a>
       )}
 
       {/* Mobile Logo */}
@@ -218,44 +223,20 @@ const Nav = () => {
           }}
         >
           <a
-            className={`text-2xl ${pathname === "/parents" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}
-            href="/parents"
+            className={`text-2xl ${pathname === "/services" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"}`}
+            href="/services"
             style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
             onClick={() => setIsOpen(false)}
           >
-            Parents
+            Services
           </a>
           <a
-            className={`text-2xl ${pathname === "/tutors" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}
-            href="/tutors"
-            style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
-            onClick={() => setIsOpen(false)}
-          >
-            Tutors
-          </a>
-          <a
-            className={`text-2xl ${pathname === "/about" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}
-            href="/about"
-            style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </a>
-          <a
-            className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}
+            className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"}`}
             href="/blog"
             style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
             onClick={() => setIsOpen(false)}
           >
             Blog
-          </a>
-          <a
-            className={`text-2xl ${pathname === "/contact" ? "font-normal text-blue-600 dark:text-blue-400" : "font-light text-gray-900 dark:text-white"} hover:text-gray-700 dark:hover:text-gray-300`}
-            href="/contact"
-            style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
           </a>
         </div>
       )}

@@ -1,11 +1,14 @@
 const TutorMatchingPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="perfect-tutor-match"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         Finding the Perfect Tutor Match: It's More Than Just Subject Knowledge
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-08-26">26 August 2025</time>
+        <time dateTime="2025-09-10">10 September 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -20,7 +23,7 @@ const TutorMatchingPost = () => (
         I remember my first tutoring experience as a kid. My tutor was a math
         whiz, but we just didn't click. He knew his stuff, but I felt lost and
         frustrated. It wasn't until I worked with someone who understood how I
-        thought that math finally made sense. That's when I realized: Tutor
+        thought that math finally made sense. That's when I realised: Tutor
         matching isn't just about expertise. It's about connection.
       </p>
 
@@ -101,7 +104,7 @@ const TutorMatchingPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Gifted students need tutors who can provide intellectual stimulation and
         advanced challenges. Students with learning differences benefit from
-        tutors experienced in specialized strategies. Some kids need patient,
+        tutors experienced in specialised strategies. Some kids need patient,
         nurturing guidance, while others thrive with energetic, challenging
         interactions.
       </p>
@@ -161,9 +164,9 @@ const TutorMatchingPost = () => (
         The Future of Matching
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Technology is enhancing our matching capabilities. AI can analyze
+        Technology is enhancing our matching capabilities. AI can analyse
         patterns from successful partnerships to improve recommendations.
-        Sentiment analysis can gauge relationship quality. But human judgment
+        Sentiment analysis can gauge relationship quality. But human judgement
         remains essential – the nuanced understanding that comes from
         experience.
       </p>
@@ -200,7 +203,7 @@ const TutorMatchingPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/tutor-student-matching"
+              href="https://grokipedia.com/page/Tutor_Student_Matching"
             >
               The science of compatibility
             </a>
@@ -208,7 +211,7 @@ const TutorMatchingPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/learning-styles"
+              href="https://grokipedia.com/page/Learning_Styles"
             >
               How different students learn
             </a>
@@ -216,7 +219,7 @@ const TutorMatchingPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/educational-relationships"
+              href="https://grokipedia.com/page/Educational_Relationships"
             >
               Building trust in learning
             </a>

@@ -8,6 +8,7 @@ import ScienceBehindZPDPost from "@/blog/components/ScienceBehindZPDPost";
 import TutorMatchingPost from "@/blog/components/TutorMatchingPost";
 import SupportingParentsPost from "@/blog/components/SupportingParentsPost";
 import AboutZPDPost from "@/blog/components/AboutZPDPost";
+import BlogNavigation from "@/blog/components/BlogNavigation";
 
 export const metadata: Metadata = {
   title: "ZPD Learning Blog | Educational Insights & Tutoring Tips",
@@ -27,7 +28,7 @@ const BlogPage = () => (
   <div className="relative">
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-6 py-20">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <h1
           className="text-5xl font-light mb-12 text-gray-900 dark:text-white text-center"
           style={{ letterSpacing: "0.1em" }}
@@ -39,23 +40,33 @@ const BlogPage = () => (
           Exploring the fascinating world of how kids actually learn best.
         </p>
 
-        <ZPDPost />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <aside className="lg:col-span-1">
+            <div className="sticky top-24">
+              <BlogNavigation />
+            </div>
+          </aside>
 
-        <PersonalisedLearningPost />
+          <main className="lg:col-span-3">
+            <AboutZPDPost />
 
-        <CertifiedTutorsPost />
+            <SupportingParentsPost />
 
-        <ProgressTrackingPost />
+            <TutorMatchingPost />
 
-        <EducationalPhilosophyPost />
+            <ScienceBehindZPDPost />
 
-        <ScienceBehindZPDPost />
+            <EducationalPhilosophyPost />
 
-        <TutorMatchingPost />
+            <ProgressTrackingPost />
 
-        <SupportingParentsPost />
+            <CertifiedTutorsPost />
 
-        <AboutZPDPost />
+            <PersonalisedLearningPost />
+
+            <ZPDPost />
+          </main>
+        </div>
 
         <div className="text-center">
           <a

@@ -1,11 +1,14 @@
 const AboutZPDPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="about-zpd-learning"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         About ZPD Learning: Why We're Obsessed with Helping Kids Learn Better
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-09-09">9 September 2025</time>
+        <time dateTime="2025-11-14">14 November 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -37,8 +40,8 @@ const AboutZPDPost = () => (
         Our founders were educators who kept seeing the same frustrating
         pattern: brilliant kids who struggled in traditional classrooms, not
         because they weren't smart, but because the teaching didn't match how
-        they learned. They knew about the Zone of Proximal Development from
-        their training, but they saw how rarely it was actually applied in real
+        they learnt. They knew about the Zone of Proximal Development from their
+        training, but they saw how rarely it was actually applied in real
         schools.
       </p>
 
@@ -55,7 +58,7 @@ const AboutZPDPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         In a world full of tutoring options, what sets us apart? It's not fancy
         technology or expensive materials. It's our unwavering commitment to
-        personalization. We don't have a "method" that we apply to everyone. We
+        personalisation. We don't have a "method" that we apply to everyone. We
         have a philosophy that guides us to meet each student exactly where they
         are.
       </p>
@@ -151,7 +154,7 @@ const AboutZPDPost = () => (
         Our Vision for the Future
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        We dream of a world where personalized education isn't exceptional –
+        We dream of a world where personalised education isn't exceptional –
         it's standard. Where every child gets teaching that matches how they
         learn, when they learn best, and at the pace that's right for them.
         We're working toward that future, one student at a time.
@@ -207,15 +210,15 @@ const AboutZPDPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/personalised-education"
+              href="https://grokipedia.com/page/Personalised_Education"
             >
-              The power of personalized learning
+              The power of personalised learning
             </a>
           </li>
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/educational-equity"
+              href="https://grokipedia.com/page/Educational_Equity"
             >
               Making quality education accessible
             </a>
@@ -223,7 +226,7 @@ const AboutZPDPost = () => (
           <li>
             <a
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.xai.com/evidence-based-tutoring"
+              href="https://grokipedia.com/page/Evidence_Based_Tutoring"
             >
               Research-backed approaches
             </a>

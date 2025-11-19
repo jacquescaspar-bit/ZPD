@@ -1,11 +1,11 @@
 const Contact = () => (
   <section
-    className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center bg-white dark:bg-gray-900 px-6 z-10"
+    className="min-h-screen flex flex-col justify-center bg-gray-50 dark:bg-gray-800 px-6 z-10"
     id="contact"
   >
-    <div className="max-w-4xl w-full mx-auto py-8">
+    <div className="max-w-4xl w-full mx-auto py-16">
       <h2
-        className="text-4xl font-light mb-8 text-center text-gray-900 dark:text-white"
+        className="text-5xl font-light mb-12 text-center text-gray-900 dark:text-white"
         style={{ letterSpacing: "0.1em" }}
       >
         Contact Us

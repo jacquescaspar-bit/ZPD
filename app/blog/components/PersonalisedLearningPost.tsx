@@ -1,12 +1,15 @@
 const PersonalisedLearningPost = () => (
-  <article className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+  <article
+    className="mb-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+    id="personalised-learning"
+  >
     <header className="mb-6">
       <h2 className="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">
         Why Personalised Learning Actually Works (And Why Schools Struggle With
         It)
       </h2>
       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <time dateTime="2025-07-22">22 July 2025</time>
+        <time dateTime="2025-04-20">20 April 2025</time>
         <span className="mx-2">•</span>
         <span>ZPD Learning Team</span>
       </div>
@@ -43,7 +46,7 @@ const PersonalisedLearningPost = () => (
         way to teach everything. That's why{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/personalised-learning"
+          href="https://grokipedia.com/page/Personalised_Learning"
         >
           personalised learning
         </a>{" "}
@@ -73,7 +76,7 @@ const PersonalisedLearningPost = () => (
         they're a visual learner who loves soccer, we'll use football analogies
         to teach math. If they learn best in the morning, we'll schedule
         sessions then. If they hate worksheets, we'll find other ways to
-        practice.
+        practise.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -121,14 +124,14 @@ const PersonalisedLearningPost = () => (
         perfect learning experience for each student. We pay close attention to{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/learning-styles"
+          href="https://grokipedia.com/page/Learning_Styles"
         >
           different learning styles
         </a>{" "}
         and adapt our approach accordingly. Sometimes we even use{" "}
         <a
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.xai.com/adaptive-learning"
+          href="https://grokipedia.com/page/Adaptive_Learning"
         >
           adaptive learning
         </a>{" "}
