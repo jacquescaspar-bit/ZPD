@@ -8,6 +8,10 @@ import ScienceBehindZPDPost from "@/blog/components/ScienceBehindZPDPost";
 import TutorMatchingPost from "@/blog/components/TutorMatchingPost";
 import SupportingParentsPost from "@/blog/components/SupportingParentsPost";
 import AboutZPDPost from "@/blog/components/AboutZPDPost";
+import InvisibleLadderPost from "@/blog/components/InvisibleLadderPost";
+import ExperiencedTutorsPost from "@/blog/components/ExperiencedTutorsPost";
+import TriangleTutoringPost from "@/blog/components/TriangleTutoringPost";
+import MagicTrickPost from "@/blog/components/MagicTrickPost";
 import BlogNavigation from "@/blog/components/BlogNavigation";
 
 export const metadata: Metadata = {
@@ -48,6 +52,8 @@ const BlogPage = () => (
           </aside>
 
           <main className="lg:col-span-3">
+            <InvisibleLadderPost />
+
             <AboutZPDPost />
 
             <SupportingParentsPost />
@@ -65,17 +71,16 @@ const BlogPage = () => (
             <PersonalisedLearningPost />
 
             <ZPDPost />
+
+            <ExperiencedTutorsPost />
+
+            <TriangleTutoringPost />
+
+            <MagicTrickPost />
           </main>
         </div>
 
-        <div className="text-center">
-          <a
-            className="inline-block px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
-            href="/"
-          >
-            Back to Home
-          </a>
-        </div>
+        <div className="text-center">Back to Home</div>
       </div>
     </div>
   </div>

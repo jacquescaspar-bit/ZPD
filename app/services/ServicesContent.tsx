@@ -1,6 +1,5 @@
 import ZPDApproachSection from "@/services/components/ZPDApproachSection";
 import PersonalisedPlansSection from "@/services/components/PersonalisedPlansSection";
-import ProgressTrackingSection from "@/services/components/ProgressTrackingSection";
 import CertifiedTutorsSection from "@/services/components/CertifiedTutorsSection";
 import SupportingParentsSection from "@/services/components/SupportingParentsSection";
 import TutorMatchingSection from "@/services/components/TutorMatchingSection";
@@ -31,7 +30,6 @@ const ServicesContent = () => (
 
           <ZPDApproachSection />
           <PersonalisedPlansSection />
-          <ProgressTrackingSection />
           <CertifiedTutorsSection />
           <SupportingParentsSection />
           <TutorMatchingSection />

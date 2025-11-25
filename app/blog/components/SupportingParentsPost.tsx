@@ -39,10 +39,9 @@ const SupportingParentsPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Research is clear: parental involvement is one of the strongest
         predictors of academic success. One study found that students with
-        involved parents are 52% more likely to enroll in post-secondary
-        education. But "involvement" doesn't mean hovering or doing homework for
-        your kids. It means being informed, supportive, and engaged in
-        meaningful ways.
+        involved parents are 52% more likely to enroll in higher education. But
+        "involvement" doesn't mean hovering or doing homework for your kids. It
+        means being informed, supportive, and engaged in meaningful ways.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
@@ -57,13 +56,8 @@ const SupportingParentsPost = () => (
         We believe parents deserve to know exactly what's happening in tutoring
         sessions. That's why we provide detailed session reports that go beyond
         "good job today." We share what concepts were covered, how your child
-        engaged, and specific strengths and areas for growth.
-      </p>
-
-      <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Progress dashboards show trends over time, and real-time updates keep
-        you in the loop. No surprises, no mysteries – just clear, actionable
-        information.
+        engaged, and specific strengths and areas for growth. No surprises, no
+        mysteries – just clear, actionable information.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -72,7 +66,7 @@ const SupportingParentsPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         We don't just tell you how your child is doing. We give you concrete
         strategies to support learning at home. Whether it's establishing
-        reading routines, helping with math anxiety, or creating study habits,
+        reading routines, helping with maths anxiety, or creating study habits,
         we provide research-backed approaches that actually work.
       </p>
 
@@ -188,41 +182,6 @@ const SupportingParentsPost = () => (
         everything we do. We believe that when families are empowered and
         supported, children can achieve extraordinary things.
       </p>
-
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border-l-4 border-blue-500 mb-6">
-        <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-          Parent Resources
-        </h4>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-3">
-          Tools and insights for parents:
-        </p>
-        <ul className="text-lg text-gray-600 dark:text-gray-300 space-y-1">
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Parental_Involvement_Education"
-            >
-              Why parent involvement matters
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Family_Engagement"
-            >
-              Building strong family partnerships
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Home_Learning_Support"
-            >
-              Supporting learning at home
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
   </article>
 );

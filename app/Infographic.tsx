@@ -68,7 +68,7 @@ const Infographic = () => {
           ))}
           <motion.div
             animate={{ opacity: 0.2 }}
-            className="absolute border border-current rounded-full w-[300px] h-[300px] md:w-[488px] md:h-[488px]"
+            className="absolute border border-current rounded-full w-[360px] h-[360px] md:w-[488px] md:h-[488px]"
             initial={{ opacity: 0 }}
             transition={{ duration: 3, delay: 4 }}
           />

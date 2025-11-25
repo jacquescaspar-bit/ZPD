@@ -103,26 +103,10 @@ const AboutZPDPost = () => (
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-        Accessibility and Equity
-      </h3>
-      <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Quality education shouldn't be a luxury. We work hard to make our
-        services accessible through flexible pricing, scholarships, and online
-        options. We serve students from all backgrounds, abilities, and
-        circumstances because we believe talent and potential aren't distributed
-        by zip code or family income.
-      </p>
-
-      <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        When we say "every child," we mean every child – regardless of their
-        starting point or challenges.
-      </p>
-
-      <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
         Our Impact in Numbers
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Don't just take our word for it. Our students see average grade
+        Don't just take our word for it. Our students see average year level
         improvements of 1.5 levels within six months. 85% report increased
         academic confidence. We have 95% parent satisfaction and high retention
         rates because families see real, lasting change.
@@ -198,41 +182,6 @@ const AboutZPDPost = () => (
         individual they are, welcome home. We're excited to be part of your
         learning journey.
       </p>
-
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border-l-4 border-blue-500 mb-6">
-        <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-          Our Foundation
-        </h4>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-3">
-          Learn more about what drives us:
-        </p>
-        <ul className="text-lg text-gray-600 dark:text-gray-300 space-y-1">
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Personalised_Education"
-            >
-              The power of personalised learning
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Educational_Equity"
-            >
-              Making quality education accessible
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Evidence_Based_Tutoring"
-            >
-              Research-backed approaches
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
   </article>
 );

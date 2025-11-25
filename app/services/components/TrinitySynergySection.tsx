@@ -28,48 +28,16 @@ const TrinitySynergySection = () => (
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
           At the heart of effective learning lies the powerful synergy between
-          parents, teachers, and children. This trinity partnership creates a
+          parents, teachers, and students. This trinity partnership creates a
           supportive ecosystem where each role is equally vital in nurturing
           academic growth and personal development. Parents provide the
           foundation of values and encouragement, teachers offer expert guidance
-          and knowledge, and children bring their unique perspectives and
-          potential to the learning journey.
+          and knowledge, and students bring their unique perspectives and
+          potential to the learning journey. Our Zone of Proximal Development
+          (ZPD) method and expert tutors facilitate this partnership by bridging
+          knowledge gaps and fostering collaborative learning environments that
+          empower all participants.
         </p>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Parents&apos; Role:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Create a supportive home environment</li>
-              <li>Reinforce learning at home</li>
-              <li>Communicate regularly with teachers</li>
-              <li>Celebrate achievements and efforts</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Teachers&apos; Role:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Deliver expert instruction and guidance</li>
-              <li>Assess progress and adjust strategies</li>
-              <li>Foster a love for learning</li>
-              <li>Collaborate with parents for consistency</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Children&apos;s Role:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Engage actively in the learning process</li>
-              <li>Communicate needs and challenges</li>
-              <li>Take ownership of their growth</li>
-              <li>Build confidence through participation</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </div>

@@ -24,50 +24,16 @@ const SupportingParentsSection = () => (
       </div>
       <div className="flex-1">
         <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          Comprehensive Parent Support
+          Parent Coaching and Support Sessions
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-          We believe that successful tutoring extends beyond session time.
-          Parents are essential partners in their child&apos;s educational
-          journey, which is why we provide extensive resources, communication
-          channels, and guidance to help parents support learning at home
-          effectively.
+          We empower parents to engage in their child&apos;s learning journey.
+          By translating the content and cognitive sequence into lay terms, we
+          allow parents to stay informed, focused, and connected. Our
+          personalised coaching and support sessions help parents gain insight
+          into what their child is experiencing, learn effective questions to
+          ask, and discover the best ways to provide support at home.
         </p>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Communication:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Weekly progress emails</li>
-              <li>Session summary reports</li>
-              <li>Direct tutor-parent messaging</li>
-              <li>Parent-teacher conferences</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Resources:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Home practice guides</li>
-              <li>Learning strategy workshops</li>
-              <li>Educational resource library</li>
-              <li>Parent support webinars</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Tools:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Parent dashboard access</li>
-              <li>Goal tracking tools</li>
-              <li>Practice assignment calendar</li>
-              <li>Achievement sharing platform</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </div>

@@ -4,6 +4,12 @@ import { useEffect, useState, useRef } from "react";
 
 const posts = [
   {
+    id: "invisible-ladder-brain",
+    title:
+      "The Invisible Ladder in Your Child’s Brain (And Why 98% of Tutoring Is Climbing the Wrong Staircase)",
+    date: "16 November 2025",
+  },
+  {
     id: "about-zpd-learning",
     title:
       "About ZPD Learning: Why We're Obsessed with Helping Kids Learn Better",
@@ -52,6 +58,24 @@ const posts = [
       "The Zone of Proximal Development: That Sweet Spot Where Learning Actually Happens",
     date: "12 March 2025",
   },
+  {
+    id: "experienced-tutors",
+    title:
+      "Your Child's Tutor Hasn't Opened a School Textbook Since the Rudd Government (And Other Terrifying Realisations About \"Experienced\" Tutors)",
+    date: "16 October 2024",
+  },
+  {
+    id: "triangle-tutoring",
+    title:
+      "The Triangle That Changed Everything (Why the Most Effective Tutoring on Earth Has Three Adults, Not One)",
+    date: "17 October 2024",
+  },
+  {
+    id: "magic-trick",
+    title:
+      'The 47-Minute Magic Trick That Turns "I\'m Dumb" Into "Wait, That\'s It?" (And How to Manufacture It On Demand)',
+    date: "18 October 2024",
+  },
 ];
 
 const BlogNavigation = () => {
@@ -97,8 +121,14 @@ const BlogNavigation = () => {
         const elementBottom = elementTop + elementRect.height;
         const containerHeight = containerRect.height;
 
-        // Check if element is not fully visible
-        if (elementTop < 0 || elementBottom > containerHeight) {
+        // If it's the last post, scroll to the bottom
+        if (activePost === posts[posts.length - 1].id) {
+          container.scrollTo({
+            top: container.scrollHeight,
+            behavior: "smooth",
+          });
+        } else if (elementTop < 0 || elementBottom > containerHeight) {
+          // Check if element is not fully visible
           const scrollTop =
             container.scrollTop +
             elementTop -
@@ -114,14 +144,14 @@ const BlogNavigation = () => {
   }, [activePost]);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700">
-      <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+    <div className="bg-white dark:bg-gray-800 rounded-t-2xl shadow-lg border border-gray-100 dark:border-gray-700 h-[calc(100vh-8rem)] overflow-hidden flex flex-col">
+      <div className="p-4 border-b border-gray-100 dark:border-gray-700 flex-shrink-0">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Blog Posts
         </h3>
       </div>
-      <div ref={navRef} className="h-[calc(100vh-6rem)] overflow-y-auto">
-        <nav className="p-4">
+      <div ref={navRef} className="flex-1 overflow-y-auto">
+        <nav className="px-4 pt-4 pb-20">
           <ul className="space-y-2">
             {posts.map((post) => (
               <li key={post.id}>

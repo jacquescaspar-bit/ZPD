@@ -192,41 +192,6 @@ const ScienceBehindZPDPost = () => (
         intuition. It's evidence-based education that actually helps kids learn.
         And that's the kind of education worth investing in.
       </p>
-
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border-l-4 border-blue-500 mb-6">
-        <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-          The Research
-        </h4>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-3">
-          Key studies and concepts:
-        </p>
-        <ul className="text-lg text-gray-600 dark:text-gray-300 space-y-1">
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Zone_of_Proximal_Development_Research"
-            >
-              The evidence base for ZPD
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Cognitive_Load_Theory"
-            >
-              How our brains process information
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Dynamic_Assessment"
-            >
-              Testing that shows potential
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
   </article>
 );

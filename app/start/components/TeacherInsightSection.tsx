@@ -1,7 +1,7 @@
-const ZPDApproachSection = () => (
+const TeacherInsightSection = () => (
   <div
     className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
-    id="zpd-approach"
+    id="teacher-insight"
     style={{ scrollMarginTop: "5rem" }}
   >
     <div className="flex items-start space-x-6">
@@ -24,22 +24,21 @@ const ZPDApproachSection = () => (
       </div>
       <div className="flex-1">
         <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          ZPD Approach
+          3. Teacher Insight
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-          Our approach is rooted in Lev Vygotsky&apos;s Zone of Proximal
-          Development theory, targeting the optimal learning zone where students
-          achieve more with guidance than alone. We provide challenging yet
-          achievable tasks with support, gradually reducing guidance as
-          competence increases, and emphasize potential over current ability.
-          Rather than just teaching content, we scaffold experiences that extend
-          comfort zones while guaranteeing success, fostering accelerated
-          learning, confidence through challenges, and independent
-          problem-solving skills.
+          Our experienced educators analyze the assessment data to gain deep
+          insights into your child&apos;s learning patterns, cognitive
+          strengths, and potential challenges. Drawing from years of expertise
+          in ZPD methodology, teachers identify the optimal learning strategies
+          and intervention points that will accelerate progress. This expert
+          analysis ensures that every aspect of the tutoring approach is
+          precisely calibrated to your child&apos;s unique needs and
+          developmental stage.
         </p>
       </div>
     </div>
   </div>
 );
 
-export default ZPDApproachSection;
+export default TeacherInsightSection;

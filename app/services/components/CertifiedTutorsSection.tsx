@@ -24,39 +24,17 @@ const CertifiedTutorsSection = () => (
       </div>
       <div className="flex-1">
         <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          Certified & Experienced Tutors
+          Certified, Experienced, Local Tutors
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-          Our tutors are more than just subject matter experts—they are
-          certified educators with specialised training in ZPD-based tutoring.
-          Each tutor undergoes rigorous screening and continuous professional
-          development to ensure they can provide the highest quality educational
-          experience.
+          Our tutors aren&apos;t just subject matter experts - they&apos;re
+          actively engaged in local schools, bringing fresh insights from the
+          classroom to every session. This ensures they understand the current
+          curriculum and teaching methods your child encounters daily. Every
+          tutor is rigorously vetted, participates in ongoing professional
+          development, has at least 2 years of tutoring experience, and holds a
+          current Working with Children Check.
         </p>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Qualifications:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc ml-4">
-              <li>Teaching certification or equivalent</li>
-              <li>Subject matter expertise</li>
-              <li>Minimum 2 years tutoring experience</li>
-              <li>Background check clearance</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Training:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc ml-4">
-              <li>ZPD methodology certification</li>
-              <li>Differentiated instruction techniques</li>
-              <li>Progress monitoring systems</li>
-              <li>Parent communication skills</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </div>

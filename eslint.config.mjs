@@ -4,7 +4,7 @@ import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
-// import nextConfig from 'eslint-config-next/flat';
+import cspellPlugin from '@cspell/eslint-plugin';
 import noZustandPropDrilling from './eslint-rules/no-zustand-prop-drilling.js';
 import noRelativeImports from './eslint-rules/no-relative-imports.js';
 // import tailwindPlugin from 'eslint-plugin-tailwindcss'; // Temporarily disabled - not compatible with Tailwind v4 yet
@@ -16,7 +16,6 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
-//   nextConfig,
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
@@ -34,6 +33,7 @@ export default tseslint.config(
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
       prettier: prettierPlugin,
+      cspell: cspellPlugin,
       custom: {
         rules: {
           'no-zustand-prop-drilling': noZustandPropDrilling,
@@ -163,6 +163,7 @@ export default tseslint.config(
       // Custom rules
       'custom/no-zustand-prop-drilling': 'error',
       'custom/no-relative-imports': 'error',
+
     },
     settings: {
       react: {

@@ -73,7 +73,7 @@ const EducationalPhilosophyPost = () => (
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Carol Dweck's work on growth mindset transformed how we think about
-        ability. We don't tell kids they're "smart" or "not good at math." We
+        ability. We don't tell kids they're "smart" or "not good at maths." We
         show them that effort, strategy, and persistence can change their
         abilities. Challenges aren't threats – they're opportunities to grow.
       </p>
@@ -97,8 +97,8 @@ const EducationalPhilosophyPost = () => (
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         That's why we pay attention to how students feel about themselves, how
-        they work with others, and how they approach challenges. A great math
-        score means nothing if the child still believes they're "bad at math."
+        they work with others, and how they approach challenges. A great maths
+        score means nothing if the child still believes they're "bad at maths."
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -133,22 +133,6 @@ const EducationalPhilosophyPost = () => (
         curiosity, we encourage questions, and we celebrate the joy of
         discovery. Because the best education doesn't end with graduation – it
         opens doors to a lifetime of growth.
-      </p>
-
-      <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-        Equity and Access Matter
-      </h3>
-      <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Quality education shouldn't be a luxury. We work hard to make our
-        services accessible through flexible pricing, scholarships, and online
-        options. We serve students from all backgrounds, abilities, and
-        circumstances because we believe talent and potential aren't distributed
-        by zip code or family income.
-      </p>
-
-      <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        When we say "every child," we mean every child – regardless of their
-        starting point or challenges.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -199,41 +183,6 @@ const EducationalPhilosophyPost = () => (
         it's the reason we exist: to help every child discover how amazing they
         can be.
       </p>
-
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border-l-4 border-blue-500 mb-6">
-        <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-          Explore Further
-        </h4>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-3">
-          Our philosophy draws from:
-        </p>
-        <ul className="text-lg text-gray-600 dark:text-gray-300 space-y-1">
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Educational_Philosophy"
-            >
-              The foundations of our approach
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Growth_Mindset"
-            >
-              Why effort beats "smart"
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Holistic_Education"
-            >
-              Education for the whole child
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
   </article>
 );

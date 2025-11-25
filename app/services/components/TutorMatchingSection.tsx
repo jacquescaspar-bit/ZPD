@@ -24,39 +24,15 @@ const TutorMatchingSection = () => (
       </div>
       <div className="flex-1">
         <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          Intelligent Tutor Matching
+          Tailored Tutoring for Every Age and Subject
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-          Finding the right tutor-student match is crucial for success. Our
-          sophisticated matching algorithm considers multiple factors to pair
-          students with tutors who can best support their learning needs,
-          personality, and goals. We don&apos;t just assign tutors randomly—we
-          create optimal learning partnerships.
+          From mastering &apos;Friends of Ten&apos; in kindergarten to acing
+          final exams in secondary school, we&apos;ve got you covered. Our
+          diverse network of tutors spans every subject, level and learning
+          style, ensuring we expertly match your child with a tutor perfectly
+          suited to their unique needs.
         </p>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Matching Criteria:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc ml-4">
-              <li>Learning style compatibility</li>
-              <li>Subject expertise alignment</li>
-              <li>Personality and communication style</li>
-              <li>Grade level and curriculum familiarity</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Process:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc ml-4">
-              <li>Detailed student profile assessment</li>
-              <li>Tutor availability and preferences</li>
-              <li>Trial session evaluation</li>
-              <li>Ongoing compatibility monitoring</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </div>

@@ -40,31 +40,18 @@ const ZPDPost = () => (
         The Guy Who Figured This Out
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        This idea comes from{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Lev_Vygotsky"
-        >
-          Lev Vygotsky
-        </a>
-        , this brilliant Russian psychologist from the early 1900s. He was
-        watching kids learn and noticed something weird: Sometimes kids could do
-        stuff on their own, sometimes they couldn't do it even with help, but
-        there was this middle ground where they could do it if someone gave them
-        just the right amount of guidance.
+        This idea comes from Lev Vygotsky, this brilliant Russian psychologist
+        from the early 1900s. He was watching kids learn and noticed something
+        weird: Sometimes kids could do stuff on their own, sometimes they
+        couldn't do it even with help, but there was this middle ground where
+        they could do it if someone gave them just the right amount of guidance.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Vygotsky called this the "
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Zone_of_Proximal_Development"
-        >
-          Zone of Proximal Development
-        </a>
-        " – proximal meaning "next to" or "close to." It's basically the
-        difference between what you can do by yourself and what you can do with
-        a little help from someone who knows more than you.
+        Vygotsky called this the "Zone of Proximal Development" – proximal
+        meaning "next to" or "close to." It's basically the difference between
+        what you can do by yourself and what you can do with a little help from
+        someone who knows more than you.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -103,25 +90,19 @@ const ZPDPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Take Sarah, for example. She's great at reading but struggles with
         fractions. In a regular class, she'd be bored with the reading part and
-        frustrated with the math. But with us? We skip ahead on reading and give
-        her that perfect level of math challenge – not too easy, not too hard,
-        just right.
+        frustrated with the maths. But with us? We skip ahead on reading and
+        give her that perfect level of maths challenge – not too easy, not too
+        hard, just right.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
         The Art of Scaffolding
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        The key to making ZPD work is something called "
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Scaffolding_Theory"
-        >
-          scaffolding
-        </a>
-        ." It's like being a spotter at the gym – you provide just enough
-        support to help someone lift heavier than they could alone, then
-        gradually remove the support as they get stronger.
+        The key to making ZPD work is something called "scaffolding." It's like
+        being a spotter at the gym – you provide just enough support to help
+        someone lift heavier than they could alone, then gradually remove the
+        support as they get stronger.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">

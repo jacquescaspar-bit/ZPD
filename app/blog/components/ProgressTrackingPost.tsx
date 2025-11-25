@@ -28,16 +28,10 @@ const ProgressTrackingPost = () => (
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        At ZPD Learning, we take{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Progress_Tracking_Education"
-        >
-          progress tracking
-        </a>{" "}
-        seriously because we know it's the secret sauce that makes personalised
-        tutoring work. It's not about putting pressure on kids – it's about
-        giving them the information they need to succeed.
+        At ZPD Learning, we take progress tracking seriously because we know
+        it's the secret sauce that makes personalised tutoring work. It's not
+        about putting pressure on kids – it's about giving them the information
+        they need to succeed.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -140,22 +134,9 @@ const ProgressTrackingPost = () => (
         The Science Behind It
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Research shows that regular{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Formative_Assessment"
-        >
-          formative assessment
-        </a>{" "}
-        improves learning outcomes by up to 30%. But it's not just any feedback
-        – it has to be specific, timely, and focused on{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Growth_Mindset"
-        >
-          growth
-        </a>{" "}
-        rather than fixed ability.
+        Research shows that regular formative assessment improves learning
+        outcomes by up to 30%. But it's not just any feedback – it has to be
+        specific, timely, and focused on growth rather than fixed ability.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">

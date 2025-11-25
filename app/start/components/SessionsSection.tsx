@@ -1,7 +1,7 @@
-const ZPDApproachSection = () => (
+const SessionsSection = () => (
   <div
     className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
-    id="zpd-approach"
+    id="sessions"
     style={{ scrollMarginTop: "5rem" }}
   >
     <div className="flex items-start space-x-6">
@@ -14,7 +14,7 @@ const ZPDApproachSection = () => (
             viewBox="0 0 24 24"
           >
             <path
-              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
@@ -24,22 +24,21 @@ const ZPDApproachSection = () => (
       </div>
       <div className="flex-1">
         <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          ZPD Approach
+          5. Interactive Tutoring Sessions
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-          Our approach is rooted in Lev Vygotsky&apos;s Zone of Proximal
-          Development theory, targeting the optimal learning zone where students
-          achieve more with guidance than alone. We provide challenging yet
-          achievable tasks with support, gradually reducing guidance as
-          competence increases, and emphasize potential over current ability.
-          Rather than just teaching content, we scaffold experiences that extend
-          comfort zones while guaranteeing success, fostering accelerated
-          learning, confidence through challenges, and independent
-          problem-solving skills.
+          Each tutoring session is dynamically structured to operate within your
+          child&apos;s ZPD. Our certified tutors employ scaffolding techniques,
+          providing just the right amount of support to help students master
+          challenging concepts. Sessions combine direct instruction, guided
+          practice, and independent problem-solving, gradually reducing support
+          as competence grows. We incorporate engaging activities, real-world
+          applications, and technology tools to maintain motivation and enhance
+          understanding.
         </p>
       </div>
     </div>
   </div>
 );
 
-export default ZPDApproachSection;
+export default SessionsSection;

@@ -31,14 +31,8 @@ const CertifiedTutorsPost = () => (
         At ZPD Learning, we believe that teaching kids is just as important as
         any other skilled profession. That's why we only work with certified
         tutors – people who've not just learnt their subject, but learnt how to
-        teach it effectively. Our tutors hold proper{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Teacher_Certification"
-        >
-          teacher certifications
-        </a>{" "}
-        and meet rigorous standards.
+        teach it effectively. Our tutors hold proper teacher certifications and
+        meet rigorous standards.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -53,7 +47,7 @@ const CertifiedTutorsPost = () => (
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Think about it: Would you rather have a math whiz who can't explain why
+        Think about it: Would you rather have a maths whiz who can't explain why
         dividing fractions works, or a teacher who can make it make sense?
         That's the difference certification makes.
       </p>
@@ -116,14 +110,8 @@ const CertifiedTutorsPost = () => (
         Studies show that certified teachers get better results. One analysis
         found that students taught by certified tutors improved 50% more than
         those taught by uncertified ones. That's not just better grades – that's
-        changed lives. The key is having the right{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Tutor_Qualifications"
-        >
-          tutor qualifications
-        </a>{" "}
-        and ongoing training.
+        changed lives. The key is having the right tutor qualifications and
+        ongoing training.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
@@ -139,15 +127,8 @@ const CertifiedTutorsPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Being certified isn't a one-time thing. Our tutors stay current with the
         latest research, teaching methods, and educational technology. We
-        provide ongoing{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Professional_Development_Education"
-        >
-          professional development
-        </a>
-        , peer learning opportunities, and access to the newest insights in how
-        kids learn.
+        provide ongoing professional development, peer learning opportunities,
+        and access to the newest insights in how kids learn.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">

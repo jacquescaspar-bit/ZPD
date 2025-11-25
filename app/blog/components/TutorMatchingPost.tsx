@@ -20,10 +20,10 @@ const TutorMatchingPost = () => (
 
     <div className="prose prose-lg dark:prose-invert max-w-none">
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        I remember my first tutoring experience as a kid. My tutor was a math
+        I remember my first tutoring experience as a kid. My tutor was a maths
         whiz, but we just didn't click. He knew his stuff, but I felt lost and
         frustrated. It wasn't until I worked with someone who understood how I
-        thought that math finally made sense. That's when I realised: Tutor
+        thought that maths finally made sense. That's when I realised: Tutor
         matching isn't just about expertise. It's about connection.
       </p>
 
@@ -200,30 +200,9 @@ const TutorMatchingPost = () => (
           Learn more about what makes great matches:
         </p>
         <ul className="text-lg text-gray-600 dark:text-gray-300 space-y-1">
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Tutor_Student_Matching"
-            >
-              The science of compatibility
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Learning_Styles"
-            >
-              How different students learn
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-              href="https://grokipedia.com/page/Educational_Relationships"
-            >
-              Building trust in learning
-            </a>
-          </li>
+          <li>The science of compatibility</li>
+          <li>How different students learn</li>
+          <li>Building trust in learning</li>
         </ul>
       </div>
     </div>

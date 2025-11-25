@@ -43,14 +43,8 @@ const PersonalisedLearningPost = () => (
         Every single person learns differently. Some kids need to see things
         drawn out. Others need to hear explanations. Some learn best by doing,
         others by reading. And yet, most schools act like there's one "right"
-        way to teach everything. That's why{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Personalised_Learning"
-        >
-          personalised learning
-        </a>{" "}
-        is so powerful.
+        way to teach everything. That's why personalised learning is so
+        powerful.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
@@ -73,10 +67,10 @@ const PersonalisedLearningPost = () => (
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Then we build their entire learning experience around those answers. If
-        they're a visual learner who loves soccer, we'll use football analogies
-        to teach math. If they learn best in the morning, we'll schedule
-        sessions then. If they hate worksheets, we'll find other ways to
-        practise.
+        they're a visual learner who loves football, we'll use football
+        analogies to teach maths. If they learn best in the morning, we'll
+        schedule sessions then. If they hate worksheets, we'll find other ways
+        to practise.
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -84,8 +78,8 @@ const PersonalisedLearningPost = () => (
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         One of the biggest issues with schools is that everyone has to move at
-        the same speed. If you're fast at math but slow at reading, you're
-        either bored in math class or drowning in English. There's no middle
+        the same speed. If you're fast at maths but slow at reading, you're
+        either bored in maths class or drowning in English. There's no middle
         ground.
       </p>
 
@@ -101,7 +95,7 @@ const PersonalisedLearningPost = () => (
         Making Learning Relevant
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-        Ever wonder why kids ask "when will I ever use this?" in math class?
+        Ever wonder why kids ask "when will I ever use this?" in maths class?
         It's because school often feels disconnected from real life.
         Personalised learning changes that by connecting what students learn to
         what they care about.
@@ -109,7 +103,7 @@ const PersonalisedLearningPost = () => (
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         If a kid loves video games, we'll use gaming analogies to teach
-        programming concepts. If they're into music, we'll explore the math
+        programming concepts. If they're into music, we'll explore the maths
         behind rhythms and scales. Suddenly, learning isn't about passing tests
         – it's about understanding how the world actually works.
       </p>
@@ -121,21 +115,9 @@ const PersonalisedLearningPost = () => (
         You might think personalised learning requires tons of technology, but
         that's not really true. What it really requires is attention to the
         individual. Our tutors use a mix of tech and human insight to create the
-        perfect learning experience for each student. We pay close attention to{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Learning_Styles"
-        >
-          different learning styles
-        </a>{" "}
-        and adapt our approach accordingly. Sometimes we even use{" "}
-        <a
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          href="https://grokipedia.com/page/Adaptive_Learning"
-        >
-          adaptive learning
-        </a>{" "}
-        platforms that adjust in real-time.
+        perfect learning experience for each student. We pay close attention to
+        different learning styles and adapt our approach accordingly. Sometimes
+        we even use adaptive learning platforms that adjust in real-time.
       </p>
 
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">

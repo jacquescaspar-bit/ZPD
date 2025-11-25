@@ -28,45 +28,13 @@ const PersonalisedPlansSection = () => (
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
           No two students are alike, which is why we create individualised
-          learning plans that adapt to each student&apos;s unique needs, goals,
-          and learning style. Our comprehensive assessment process ensures that
-          every plan is tailored for maximum effectiveness and engagement.
+          learning plans featuring weekly learning objectives, customised
+          curriculum pacing, preferred teaching methodologies, and progress
+          milestones that adapt to each student&apos;s unique needs, goals, and
+          learning style. Our comprehensive assessment process ensures that
+          every plan is tailored for maximum effectiveness and engagement, with
+          regular plan reviews to maintain optimal progress.
         </p>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Assessment Process:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Initial diagnostic evaluation</li>
-              <li>Learning style analysis</li>
-              <li>Goal setting session</li>
-              <li>Baseline performance metrics</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Plan Components:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Weekly learning objectives</li>
-              <li>Customised curriculum pacing</li>
-              <li>Preferred teaching methodologies</li>
-              <li>Progress milestones</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xl font-medium mb-3 text-gray-900 dark:text-white">
-              Adaptation:
-            </h4>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm list-disc ml-4">
-              <li>Regular plan reviews</li>
-              <li>Adjustments based on progress</li>
-              <li>Incorporation of student feedback</li>
-              <li>Flexible scheduling options</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </div>
