@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PricingCarousel from "@/pricing/components/PricingCarousel";
 
 export const metadata: Metadata = {
   title:
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
   },
 };
 
-// eslint-disable-next-line max-lines-per-function
 const PricingPage = () => (
   <div className="relative">
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
@@ -34,10 +34,20 @@ const PricingPage = () => (
           </p>
         </section>
 
+        {/* Term Packages */}
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+              Choose Your Term Package
+            </h2>
+            <PricingCarousel />
+          </div>
+        </section>
+
         {/* Paid Trial Card */}
         <section className="py-16">
           <div className="max-w-2xl mx-auto">
-            <div className="bg-yellow-100 dark:bg-yellow-900 border-2 border-yellow-400 dark:border-yellow-600 rounded-2xl p-8 text-center shadow-lg">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 border-2 border-blue-200 dark:border-indigo-700 rounded-2xl p-8 text-center shadow-lg">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 Diagnostic + Trial Session
               </h2>
@@ -51,153 +61,6 @@ const PricingPage = () => (
               <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
                 Book Trial Session
               </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Term Packages */}
-        <section className="py-16">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-              Choose Your Term Package
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Essential */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                  Essential
-                </h3>
-                <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                  $790
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  10 sessions/term upfront (~$79/hr)
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      1 subject
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Standard tutor
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Online only
-                    </span>
-                  </li>
-                </ul>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-                  Select Essential
-                </button>
-              </div>
-
-              {/* Core - Most Popular */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border-2 border-green-500 dark:border-green-400 relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                  Core ★
-                </h3>
-                <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">
-                  $1,340
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  20 sessions/term upfront (~$67/hr)
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Multi-subject
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      ATAR/HSC specialist tutor
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Fortnightly reports
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Priority scheduling
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Free trial credit included
-                    </span>
-                  </li>
-                </ul>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-                  Select Core
-                </button>
-              </div>
-
-              {/* Advanced */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                  Advanced
-                </h3>
-                <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                  $1,890
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  30 sessions/term upfront (~$63/hr)
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Unlimited within term
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Dedicated 99+ ATAR tutor
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Weekly parent calls
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      In-person metro option
-                    </span>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Exam resources pack
-                    </span>
-                  </li>
-                </ul>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-                  Select Advanced
-                </button>
-              </div>
             </div>
           </div>
         </section>
