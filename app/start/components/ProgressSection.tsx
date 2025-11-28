@@ -4,39 +4,44 @@ const ProgressSection = () => (
     id="progress"
     style={{ scrollMarginTop: "5rem" }}
   >
-    <div className="flex items-start space-x-6">
-      <div className="flex-shrink-0">
-        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-          <svg
-            className="w-8 h-8 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-            />
-          </svg>
+    <div>
+      <div className="flex items-start mb-8">
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <svg
+              className="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+              />
+            </svg>
+          </div>
+        </div>
+        <div className="ml-8 sm:ml-6 flex items-start">
+          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">
+            6.
+          </h3>
+          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white ml-3">
+            Continuous Feedback
+          </h3>
         </div>
       </div>
-      <div className="flex-1">
-        <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          6. Continuous Feedback
-        </h3>
-        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-          We maintain detailed progress records and regularly assess your
-          child&apos;s development against learning objectives. Our tutors
-          provide comprehensive feedback after each session, and we conduct
-          periodic evaluations to adjust the learning plan as needed. Parents
-          receive regular progress reports and insights into their child&apos;s
-          growth, ensuring transparency and allowing for collaborative
-          decision-making. This ongoing monitoring ensures that learning remains
-          challenging yet achievable, maximizing growth within the ZPD.
-        </p>
-      </div>
+      <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+        We maintain detailed progress records and regularly assess your
+        child&apos;s development against learning objectives. Our tutors provide
+        comprehensive feedback after each session, and we conduct periodic
+        evaluations to adjust the learning plan as needed. Parents receive
+        regular progress reports and insights into their child&apos;s growth,
+        ensuring transparency and allowing for collaborative decision-making.
+        This ongoing monitoring ensures that learning remains challenging yet
+        achievable, maximizing growth within the ZPD.
+      </p>
     </div>
   </div>
 );

@@ -49,7 +49,7 @@ const Hero = () => {
   }, [ctaThreshold]);
 
   return (
-    <main className="min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center items-center px-6 relative overflow-hidden z-10">
+    <main className="min-h-screen md:min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center items-center px-6 relative overflow-hidden z-10">
       <div className="text-center flex flex-col items-center justify-center relative z-10 animate-fade-in-up">
         {/* ZPD */}
         <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">

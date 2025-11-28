@@ -13,6 +13,7 @@ const Nav = () => {
   const [hasMounted, setHasMounted] = useState(false);
   const [showCtaInNav, setShowCtaInNav] = useState(false);
   const [ctaThreshold, setCtaThreshold] = useState(0);
+  const [vh, setVh] = useState(0);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -24,6 +25,28 @@ const Nav = () => {
     setHasMounted(true);
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const updateVh = () => {
+      setVh(
+        window.visualViewport
+          ? window.visualViewport.height
+          : window.innerHeight,
+      );
+    };
+    updateVh();
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", updateVh);
+    }
+    window.addEventListener("resize", updateVh);
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", updateVh);
+      }
+      window.removeEventListener("resize", updateVh);
+    };
   }, []);
 
   useEffect(() => {
@@ -53,14 +76,13 @@ const Nav = () => {
     if (typeof window === "undefined") return;
     const handleScroll = () => {
       const { scrollY } = window;
-      const vh = window.innerHeight;
       const threshold = vh / 2;
       if (scrollY > threshold) {
         // Note: showBackToTop logic removed as it's page-specific
       } else {
         // Note: showBackToTop logic removed as it's page-specific
       }
-      const maxScroll = Number(vh); // 100% vh for more gradual transition
+      const maxScroll = vh; // 100% vh for more gradual transition
       const opacity = Math.min((scrollY / maxScroll) * 0.3, 0.3);
       setNavOpacity(opacity);
       if (pathname === "/") {
@@ -73,7 +95,7 @@ const Nav = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [ctaThreshold, pathname]);
+  }, [ctaThreshold, pathname, vh]);
 
   useEffect(() => {
     setIsOpen(false);

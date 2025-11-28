@@ -95,40 +95,39 @@ const ProcessCarousel = () => {
   };
 
   return (
-    <div className="space-y-8">
-      <ProcessSteps
-        currentIndex={currentIndex}
-        onNext={nextSlide}
-        onPrev={prevSlide}
-        onStepClick={goToSlide}
-      />
-
-      <div className="relative">
-        <div className="overflow-hidden rounded-3xl min-h-[250px] sm:min-h-[350px] md:min-h-[400px]">
-          <Suspense
-            fallback={
-              <div className="flex items-center justify-center min-h-[250px] sm:min-h-[350px] md:min-h-[400px]">
-                Loading...
-              </div>
-            }
-          >
-            <div
-              ref={carouselRef}
-              className={`flex ${isTransitioning ? "transition-transform duration-500 ease-in-out" : ""}`}
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-              onTouchEnd={handleTouchEnd}
-              onTouchMove={handleTouchMove}
-              onTouchStart={handleTouchStart}
-              onTransitionEnd={handleTransitionEnd}
-            >
-              {sections.map((section, index) => (
-                <div key={`slide-${index}`} className="w-full flex-shrink-0">
-                  {section}
-                </div>
-              ))}
-            </div>
-          </Suspense>
+    <div className="relative">
+      <div className="overflow-hidden rounded-b-3xl min-h-[320px] sm:min-h-[350px] md:min-h-[400px]">
+        <div className="sticky top-0 z-10 md:relative md:z-auto">
+          <ProcessSteps
+            currentIndex={currentIndex}
+            onNext={nextSlide}
+            onPrev={prevSlide}
+            onStepClick={goToSlide}
+          />
         </div>
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center min-h-[250px] sm:min-h-[350px] md:min-h-[400px]">
+              Loading...
+            </div>
+          }
+        >
+          <div
+            ref={carouselRef}
+            className={`flex ${isTransitioning ? "transition-transform duration-500 ease-in-out" : ""}`}
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            onTouchEnd={handleTouchEnd}
+            onTouchMove={handleTouchMove}
+            onTouchStart={handleTouchStart}
+            onTransitionEnd={handleTransitionEnd}
+          >
+            {sections.map((section, index) => (
+              <div key={`slide-${index}`} className="w-full flex-shrink-0">
+                {section}
+              </div>
+            ))}
+          </div>
+        </Suspense>
       </div>
     </div>
   );

@@ -6,26 +6,30 @@ const StartContent = () => (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-6 py-10 sm:py-20">
       <div className="max-w-4xl mx-auto">
         <h1
-          className="text-3xl sm:text-5xl font-light mb-12 text-gray-900 dark:text-white text-center"
+          className="text-3xl sm:text-5xl font-light mb-2 sm:mb-4 text-gray-900 dark:text-white text-center"
           style={{ letterSpacing: "0.1em" }}
         >
           Start Here
         </h1>
 
-        <div className="space-y-8 sm:space-y-16">
-          <div className="text-center mb-8">
+        <div className="space-y-12 sm:space-y-16">
+          <div className="text-center mb-4">
             <p className="text-lg sm:text-xl leading-relaxed text-gray-600 dark:text-gray-300">
-              Proven ZPD methodology for personalised tutoring success.
+              Our proven ZPD methodology for tutoring success.
             </p>
           </div>
 
           <ProcessCarousel />
 
           <div className="text-center mt-16">
-            <p className="text-lg sm:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-8">
+            <p className="hidden md:block text-lg sm:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-4">
               This systematic approach ensures consistent progress and
               measurable results, helping students build confidence and achieve
               academic excellence through personalized, evidence-based tutoring.
+            </p>
+            <p className="md:hidden text-lg sm:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-4">
+              Our systematic approach delivers consistent progress, building
+              confidence through personalized tutoring.
             </p>
           </div>
         </div>

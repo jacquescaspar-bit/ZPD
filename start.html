@@ -4,15 +4,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Start Page</title>
+    <style>
+      .slide-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+      .slide {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+      }
+      .icon {
+        flex-shrink: 0;
+        margin-right: 10px;
+        font-weight: bold;
+        width: 20px; /* Assuming icon width */
+      }
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .header {
+        text-align: left;
+        /* For wrapping, align to the text start position rather than the number */
+        text-indent: 0;
+      }
+      .body {
+        margin-top: 5px; /* Move start point down below the header */
+        text-align: left;
+        /* Align to the icon position */
+        margin-left: 0;
+        /* Since .content is flexed after .icon, it aligns to the right of icon */
+      }
+    </style>
   </head>
   <body>
     <h1>Adjusts process to:</h1>
-    <ol>
-      <li>Discovery</li>
-      <li>Teacher Insight</li>
-      <li>Personalised Plan</li>
-      <li>Sessions Commence</li>
-      <li>Continuous Feedback</li>
-    </ol>
+    <div class="slide-container">
+      <div class="slide">
+        <div class="icon">1</div>
+        <div class="content">
+          <div class="header">Discovery</div>
+          <div class="body"><!-- Body content for Discovery --></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-container">
+      <div class="slide">
+        <div class="icon">2</div>
+        <div class="content">
+          <div class="header">Teacher Insight</div>
+          <div class="body"><!-- Body content for Teacher Insight --></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-container">
+      <div class="slide">
+        <div class="icon">3</div>
+        <div class="content">
+          <div class="header">Personalised Plan</div>
+          <div class="body"><!-- Body content for Personalised Plan --></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-container">
+      <div class="slide">
+        <div class="icon">4</div>
+        <div class="content">
+          <div class="header">Sessions Commence</div>
+          <div class="body"><!-- Body content for Sessions Commence --></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-container">
+      <div class="slide">
+        <div class="icon">5</div>
+        <div class="content">
+          <div class="header">Continuous Feedback</div>
+          <div class="body"><!-- Body content for Continuous Feedback --></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

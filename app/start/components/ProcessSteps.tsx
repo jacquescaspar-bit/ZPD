@@ -45,7 +45,7 @@ const ProcessSteps = ({
   };
 
   return (
-    <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 mb-16">
+    <div className="relative pt-4 md:bg-white md:dark:bg-gray-800 md:rounded-3xl md:p-10 md:shadow-lg md:border md:border-gray-100 md:dark:border-gray-700 mb-8 sm:mb-4">
       {/* Small navigation buttons in corners - hidden on mobile */}
       <button
         aria-label="Previous step"
@@ -63,31 +63,55 @@ const ProcessSteps = ({
       </button>
 
       <div className="absolute left-8 top-8 bottom-8 right-8 bg-gray-200 dark:bg-gray-600 rounded-3xl -z-10 hidden md:block" />
-      <div className="flex md:hidden flex-row justify-between items-center mb-6 w-full">
+      <div className="flex md:hidden justify-center mb-6">
+        <div className="flex-1 text-center" style={{ flexBasis: "66.67%" }}>
+          <span
+            className={
+              currentIndex >= 0 && currentIndex <= 3
+                ? "font-bold text-gray-900 dark:text-white"
+                : "text-sm text-gray-600 dark:text-gray-400"
+            }
+          >
+            Pre-Term Planning
+          </span>
+        </div>
+        <div className="flex-1 text-center" style={{ flexBasis: "33.33%" }}>
+          <span
+            className={
+              currentIndex >= 4 && currentIndex <= 5
+                ? "font-bold text-gray-900 dark:text-white"
+                : "text-sm text-gray-600 dark:text-gray-400"
+            }
+          >
+            Weeks 1 - 10
+          </span>
+        </div>
+      </div>
+      <div className="flex md:hidden flex-row justify-between items-center mb-4 w-full px-3">
         {steps.map((step, index) => {
           const IconComponent = step.icon;
           const isActive = index === currentIndex;
           const borderWidth = "border-2";
           const bgClass = isActive
             ? "bg-blue-500 border-blue-600"
-            : "bg-white dark:bg-gray-800 border-transparent";
+            : "bg-gray-50 dark:bg-gray-900 border-transparent";
           return (
             <button
               key={index}
               aria-label={`Go to step ${step.number}: ${step.label}`}
-              className="relative h-10 flex items-center justify-center focus:outline-none rounded-full"
+              className="relative h-11 flex items-center justify-center focus:outline-none rounded-full"
               onClick={() => onStepClick(index)}
             >
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg" : "bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-105 opacity-60"}`}
+                className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg" : "bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-105 opacity-60"}`}
               >
-                <IconComponent className="w-5 h-5 text-white" strokeWidth={2} />
+                <IconComponent className="w-6 h-6 text-white" strokeWidth={2} />
               </div>
               <div
-                className={`absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center ${borderWidth} ${bgClass}`}
+                className={`absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center ${borderWidth} ${bgClass}`}
               >
                 <span
-                  className={`text-xs font-bold transition-colors duration-300 ${isActive ? "text-white" : "text-blue-500"}`}
+                  className={`text-xs font-bold font-mono transition-colors duration-300 ${isActive ? "text-white" : "text-blue-500"}`}
                 >
                   {step.number}
                 </span>
@@ -123,7 +147,7 @@ const ProcessSteps = ({
                   className={`absolute -top-2 -right-2 w-7 h-7 rounded-full flex items-center justify-center ${borderWidth} ${bgClass}`}
                 >
                   <span
-                    className={`text-xs font-bold transition-colors duration-300 ${
+                    className={`text-xs font-bold font-mono transition-colors duration-300 ${
                       isActive ? "text-white" : "text-blue-500"
                     }`}
                   >
@@ -131,7 +155,7 @@ const ProcessSteps = ({
                   </span>
                 </div>
               </button>
-              <div className="h-8 flex flex-col justify-center w-24">
+              <div className="h-10 flex flex-col justify-center w-24">
                 <span
                   className={`text-sm ${isActive ? "font-bold text-gray-900 dark:text-white" : "font-light text-gray-700 dark:text-gray-300"} text-center`}
                   style={{ whiteSpace: "pre-line" }}
@@ -143,7 +167,7 @@ const ProcessSteps = ({
           );
         })}
       </div>
-      <div className="mt-8 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 flex">
+      <div className="mt-8 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 flex hidden md:flex">
         <div
           className="bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-l-full flex-1 opacity-30"
           style={{ flexBasis: "66.67%" }}
@@ -153,7 +177,7 @@ const ProcessSteps = ({
           style={{ flexBasis: "33.33%" }}
         />
       </div>
-      <div className="flex mt-4">
+      <div className="hidden md:flex mt-4">
         <div className="flex-1 text-center" style={{ flexBasis: "66.67%" }}>
           <span
             className={
