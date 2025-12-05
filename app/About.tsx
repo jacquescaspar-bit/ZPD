@@ -23,10 +23,10 @@ const About = () => (
         fostering growth, confidence, and a lifelong love of learning.
       </p>
       <a
-        className="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+        className="inline-block mt-8 px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded hover:bg-gray-400 dark:hover:bg-gray-500 transition-all duration-300 text-sm"
         href="/blog"
       >
-        Learn More
+        Read Our Blog
       </a>
     </div>
   </section>

@@ -80,7 +80,14 @@ const BlogPage = () => (
           </main>
         </div>
 
-        <div className="text-center">Back to Home</div>
+        <div className="text-center">
+          <a
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm"
+            href="/"
+          >
+            ← Back to Home
+          </a>
+        </div>
       </div>
     </div>
   </div>

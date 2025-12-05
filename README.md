@@ -6,13 +6,24 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+
+This will automatically clean build artifacts and start the server with optimal stability settings.
+
+### Development Scripts
+
+- `npm run dev` - **Recommended**: Auto-cleaning stable development server
+- `npm run dev:direct` - Direct Next.js dev server (may be less stable)
+- `npm run dev:stable` - Next.js with Turbo mode (experimental)
+- `npm run dev:turbopack` - Next.js with Turbopack (fastest but may crash)
+- `npm run clean` - Manually clean build artifacts
+
+### Troubleshooting
+
+If the dev server crashes frequently:
+1. Try `npm run clean` to clear build artifacts
+2. Restart with `npm run dev` (recommended)
+3. If issues persist, use `npm run dev:direct` for a more stable experience
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

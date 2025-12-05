@@ -1,4 +1,4 @@
-const AssessmentSection = () => (
+const AssessmentSection = ({ showNumber = true }) => (
   <div
     className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
     id="assessment"
@@ -24,10 +24,14 @@ const AssessmentSection = () => (
           </div>
         </div>
         <div className="ml-8 sm:ml-6 flex items-start">
-          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">
-            1.
-          </h3>
-          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white ml-3">
+          {showNumber && (
+            <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">
+              1.
+            </h3>
+          )}
+          <h3
+            className={`text-3xl font-semibold text-gray-900 dark:text-white ${showNumber ? "ml-3" : ""}`}
+          >
             Intake & Matching
           </h3>
         </div>

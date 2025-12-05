@@ -31,17 +31,8 @@ const BackToTop = () => {
       }}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      <svg
-        fill="none"
-        height="20"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width="20"
-      >
-        <polyline points="18,15 12,9 6,15" />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M18 15l-6-6-6 6" />
       </svg>
     </button>
   );

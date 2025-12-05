@@ -24,7 +24,7 @@ const TutorMatchingSection = () => (
       </div>
       <div className="flex-1">
         <h3 className="text-3xl font-semibold mb-6 text-gray-900 dark:text-white">
-          Tailored Tutoring for Every Age and Subject
+          Tailored Tuition for Every Age and Subject
         </h3>
         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
           From mastering &apos;Friends of Ten&apos; in kindergarten to acing

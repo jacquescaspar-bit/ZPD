@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
+/* eslint-disable max-lines-per-function */
 const PricingPage = () => (
   <div className="relative">
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
@@ -30,7 +31,7 @@ const PricingPage = () => (
             Lock in Your Tutor for the Term & Save
           </h1>
           <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300">
-            Term-based pricing • GST incl. • Best rates for commitment
+            Term-Based Pricing • GST Incl. • Best Rates for Commitment
           </p>
         </section>
 
@@ -49,14 +50,19 @@ const PricingPage = () => (
           <div className="max-w-2xl mx-auto">
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 border-2 border-blue-200 dark:border-indigo-700 rounded-2xl p-8 text-center shadow-lg">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                Diagnostic + Trial Session
+                Diagnostic & Trial Session
               </h2>
               <div className="text-5xl font-bold text-green-600 dark:text-green-400 mb-2">
                 $129
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6">
-                One-time • 90 min assessment + custom ZPD plan + full credit
-                applied if enrolling in a term package within 7 days
+                One-time • Diagnostic Discovery Session
+                <span className="hidden md:inline"> • </span>
+                <br className="block md:hidden" /> Customised ZPD Plan
+                <span className="md:hidden"> • </span>
+                <br className="hidden md:block" /> Full credit applied when
+                enrolling in an Essential or Intensive term package within 7
+                days.
               </p>
               <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
                 Book Trial Session
@@ -79,13 +85,13 @@ const PricingPage = () => (
                       Feature
                     </th>
                     <th className="p-4 text-center text-gray-900 dark:text-white">
+                      Online
+                    </th>
+                    <th className="p-4 text-center text-gray-900 dark:text-white">
                       Essential
                     </th>
                     <th className="p-4 text-center text-gray-900 dark:text-white">
-                      Core
-                    </th>
-                    <th className="p-4 text-center text-gray-900 dark:text-white">
-                      Advanced
+                      Intensive
                     </th>
                   </tr>
                 </thead>
@@ -98,10 +104,10 @@ const PricingPage = () => (
                       10
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      20
+                      10
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      30
+                      20
                     </td>
                   </tr>
                   <tr className="border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
@@ -112,7 +118,7 @@ const PricingPage = () => (
                       1 subject
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      Multi-subject
+                      2 subjects
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
                       Unlimited
@@ -123,13 +129,13 @@ const PricingPage = () => (
                       Effective $/hr
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      $79
+                      $75
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      $67
+                      $95
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      $63
+                      $85
                     </td>
                   </tr>
                   <tr className="border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
@@ -143,7 +149,7 @@ const PricingPage = () => (
                       Priority
                     </td>
                     <td className="p-4 text-center text-gray-700 dark:text-gray-300">
-                      Weekly calls
+                      Direct Phone & Email Support
                     </td>
                   </tr>
                 </tbody>
@@ -320,3 +326,4 @@ const PricingPage = () => (
 );
 
 export default PricingPage;
+/* eslint-enable max-lines-per-function */

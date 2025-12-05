@@ -162,37 +162,44 @@ const Nav = () => {
             <div className="flex flex-row items-center space-x-6">
               <a
                 className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-500" : ""} text-sm tracking-wide inline-block ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
-                href="#contact"
+                href="/enroll"
               >
                 Book Now
               </a>
               <a
-                className={`text-2xl ${pathname === "/services" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"} text-center`}
+                className={`text-lg ${pathname === "/services" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"} text-center`}
                 href="/services"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
               >
                 Services
               </a>
               <a
-                className={`text-2xl ${pathname === "/pricing" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"} text-center`}
+                className={`text-lg ${pathname === "/pricing" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"} text-center`}
                 href="/pricing"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
               >
                 Pricing
               </a>
               <a
-                className={`text-2xl ${pathname === "/start" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"} text-center`}
+                className={`text-lg ${pathname === "/start" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"} text-center`}
                 href="/start"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
               >
                 Start
               </a>
               <a
-                className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"} text-center`}
+                className={`text-lg ${pathname === "/blog" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"} text-center`}
                 href="/blog"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
               >
                 Blog
+              </a>
+              <a
+                className={`text-lg ${pathname === "/faq" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"} text-center`}
+                href="/faq"
+                style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+              >
+                FAQ
               </a>
             </div>
           </div>
@@ -220,7 +227,7 @@ const Nav = () => {
       {isMobile && (
         <a
           className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-24 h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-300" : ""} text-sm tracking-wide whitespace-nowrap flex items-center justify-center ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
-          href="#contact"
+          href="/enroll"
         >
           Book Now
         </a>
@@ -259,7 +266,7 @@ const Nav = () => {
           }}
         >
           <a
-            className={`text-2xl ${pathname === "/services" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"}`}
+            className={`text-lg ${pathname === "/services" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"}`}
             href="/services"
             style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
             onClick={() => setIsOpen(false)}
@@ -267,7 +274,7 @@ const Nav = () => {
             Services
           </a>
           <a
-            className={`text-2xl ${pathname === "/pricing" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"}`}
+            className={`text-lg ${pathname === "/pricing" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"}`}
             href="/pricing"
             style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
             onClick={() => setIsOpen(false)}
@@ -275,7 +282,7 @@ const Nav = () => {
             Pricing
           </a>
           <a
-            className={`text-2xl ${pathname === "/start" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"}`}
+            className={`text-lg ${pathname === "/start" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"}`}
             href="/start"
             style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
             onClick={() => setIsOpen(false)}
@@ -283,12 +290,20 @@ const Nav = () => {
             Start
           </a>
           <a
-            className={`text-2xl ${pathname === "/blog" ? "font-normal text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300" : "font-light text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"}`}
+            className={`text-lg ${pathname === "/blog" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"}`}
             href="/blog"
             style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
             onClick={() => setIsOpen(false)}
           >
             Blog
+          </a>
+          <a
+            className={`text-lg ${pathname === "/faq" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"}`}
+            href="/faq"
+            style={{ fontFamily: "antipasto", letterSpacing: "0.12em" }}
+            onClick={() => setIsOpen(false)}
+          >
+            FAQ
           </a>
         </div>
       )}

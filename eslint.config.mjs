@@ -7,11 +7,10 @@ import prettierConfig from 'eslint-config-prettier';
 import cspellPlugin from '@cspell/eslint-plugin';
 import noZustandPropDrilling from './eslint-rules/no-zustand-prop-drilling.js';
 import noRelativeImports from './eslint-rules/no-relative-imports.js';
-// import tailwindPlugin from 'eslint-plugin-tailwindcss'; // Temporarily disabled - not compatible with Tailwind v4 yet
 
 export default tseslint.config(
   {
-    ignores: ['eslint-rules-disabled/**', 'node_modules/**'],
+    ignores: ['eslint-rules-disabled/**', 'node_modules/**', 'dev-start.js', 'dev-start.cjs'],
   },
   js.configs.recommended,
   ...tseslint.configs.strict,
@@ -40,7 +39,6 @@ export default tseslint.config(
           'no-relative-imports': noRelativeImports,
         },
       },
-      // tailwindcss: tailwindPlugin, // Temporarily disabled - not compatible with Tailwind v4 yet
     },
     rules: {
       ...reactPlugin.configs.recommended.rules,
@@ -115,7 +113,16 @@ export default tseslint.config(
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      'react/no-unescaped-entities': 'error',
+      'react/no-unescaped-entities': [
+        'error',
+        {
+          forbid: [
+            { char: '"', alternatives: ['&quot;', '&ldquo;', '&#34;', '&rdquo;'] },
+            { char: '>', alternatives: ['&gt;'] },
+            { char: '}', alternatives: ['&#125;'] },
+          ],
+        },
+      ],
       'react/jsx-no-target-blank': 'error',
       'react/jsx-no-duplicate-props': 'error',
       'react/jsx-no-undef': 'error',
@@ -154,11 +161,6 @@ export default tseslint.config(
       // React Hooks
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
-
-      // Tailwind CSS - Temporarily disabled - not compatible with Tailwind v4 yet
-      // 'tailwindcss/classnames-order': 'error',
-      // 'tailwindcss/no-custom-classname': 'error',
-      // 'tailwindcss/no-contradicting-classname': 'error',
 
       // Custom rules
       'custom/no-zustand-prop-drilling': 'error',

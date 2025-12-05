@@ -46,10 +46,10 @@ const ServicesContent = () => (
 
         <div className="text-center">
           <a
-            className="inline-block px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm"
             href="/"
           >
-            Back to Home
+            ← Back to Home
           </a>
         </div>
       </div>

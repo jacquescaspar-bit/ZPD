@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 
 const PricingCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -9,6 +10,7 @@ const PricingCarousel = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [touchStartTime, setTouchStartTime] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const pricingCards = [
     // Essential
@@ -17,14 +19,23 @@ const PricingCarousel = () => {
       className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 h-full"
     >
       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        Essential
+        Online
       </h3>
-      <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-        $790
+      <div className="mb-2">
+        <div className="text-2xl font-bold text-gray-500 dark:text-gray-400 line-through mb-1">
+          $1050
+        </div>
+        <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+          $750
+        </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">
-        10 sessions/term upfront (~$79/hr)
+      <p className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center mb-4">
+        Refer a friend and both get $300 off!
       </p>
+      <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">
+        10 sessions / term
+      </p>
+      <p className="text-gray-600 dark:text-gray-400 mb-4">($75 / session)</p>
       <ul className="space-y-2 mb-6">
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
@@ -32,18 +43,21 @@ const PricingCarousel = () => {
         </li>
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
-          <span className="text-gray-700 dark:text-gray-300">
-            Standard tutor
-          </span>
+          <span className="text-gray-700 dark:text-gray-300">Online only</span>
         </li>
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
-          <span className="text-gray-700 dark:text-gray-300">Online only</span>
+          <span className="text-gray-700 dark:text-gray-300">
+            Email Support
+          </span>
         </li>
       </ul>
-      <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-        Select Essential
-      </button>
+      <Link
+        className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+        href="/enroll?plan=online"
+      >
+        Select Online
+      </Link>
     </div>,
 
     // Core - Most Popular
@@ -57,37 +71,38 @@ const PricingCarousel = () => {
         </span>
       </div>
       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        Core ★
+        Essential ★
       </h3>
-      <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">
-        $1,340
+      <div className="mb-2">
+        <div className="text-2xl font-bold text-gray-500 dark:text-gray-400 line-through mb-1">
+          $1250
+        </div>
+        <div className="text-4xl font-bold text-green-600 dark:text-green-400">
+          $950
+        </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">
-        20 sessions/term upfront (~$67/hr)
+      <p className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center mb-4">
+        Refer a friend and both get $300 off!
       </p>
+      <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">
+        10 sessions / term
+      </p>
+      <p className="text-gray-600 dark:text-gray-400 mb-4">($95 / session)</p>
       <ul className="space-y-2 mb-6">
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
+          <span className="text-gray-700 dark:text-gray-300">2 subjects</span>
+        </li>
+        <li className="flex items-center">
+          <span className="text-green-500 mr-2">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            Multi-subject
+            ATAR/Exam specialist
           </span>
         </li>
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            ATAR/HSC specialist tutor
-          </span>
-        </li>
-        <li className="flex items-center">
-          <span className="text-green-500 mr-2">✓</span>
-          <span className="text-gray-700 dark:text-gray-300">
-            Fortnightly reports
-          </span>
-        </li>
-        <li className="flex items-center">
-          <span className="text-green-500 mr-2">✓</span>
-          <span className="text-gray-700 dark:text-gray-300">
-            Priority scheduling
+            Priority Support
           </span>
         </li>
         <li className="flex items-center">
@@ -97,60 +112,69 @@ const PricingCarousel = () => {
           </span>
         </li>
       </ul>
-      <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-        Select Core
-      </button>
+      <Link
+        className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+        href="/enroll?plan=essential"
+      >
+        Select Essential
+      </Link>
     </div>,
 
-    // Advanced
+    // Intensive
     <div
-      key="advanced"
+      key="intensive"
       className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 h-full"
     >
       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        Advanced
+        Intensive
       </h3>
-      <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-        $1,890
+      <div className="mb-2">
+        <div className="text-2xl font-bold text-gray-500 dark:text-gray-400 line-through mb-1">
+          $2000
+        </div>
+        <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+          $1700
+        </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">
-        30 sessions/term upfront (~$63/hr)
+      <p className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center mb-4">
+        Refer a friend and both get $300 off!
       </p>
+      <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">
+        20 sessions / term
+      </p>
+      <p className="text-gray-600 dark:text-gray-400 mb-4">($85 / session)</p>
       <ul className="space-y-2 mb-6">
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            Unlimited within term
+            Unlimited Subjects
           </span>
         </li>
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            Dedicated 99+ ATAR tutor
+            ATAR/Exam specialist
           </span>
         </li>
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            Weekly parent calls
+            Direct Phone & Email Support
           </span>
         </li>
         <li className="flex items-center">
           <span className="text-green-500 mr-2">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            In-person metro option
-          </span>
-        </li>
-        <li className="flex items-center">
-          <span className="text-green-500 mr-2">✓</span>
-          <span className="text-gray-700 dark:text-gray-300">
-            Exam resources pack
+            Free trial credit included
           </span>
         </li>
       </ul>
-      <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-        Select Advanced
-      </button>
+      <Link
+        className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+        href="/enroll?plan=intensive"
+      >
+        Select Intensive
+      </Link>
     </div>,
   ];
 
@@ -173,6 +197,17 @@ const PricingCarousel = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex(index);
+
+    // Scroll the carousel container into view to ensure selected slide is visible
+    if (isMobile && carouselRef.current) {
+      setTimeout(() => {
+        carouselRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }, 100);
+    }
   };
 
   const handleTransitionEnd = () => {
@@ -206,20 +241,15 @@ const PricingCarousel = () => {
   };
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) setCurrentIndex(1);
+    };
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Auto-advance carousel every 5 seconds (only on mobile)
-  useEffect(() => {
-    if (!isMobile) return;
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [currentIndex, isMobile, nextSlide]);
 
   if (!isMobile) {
     // Desktop: Show all cards in grid layout
@@ -231,6 +261,7 @@ const PricingCarousel = () => {
     <div className="relative overflow-visible">
       <div className="flex items-stretch justify-center px-4">
         <div
+          ref={carouselRef}
           className={`flex items-center ${isTransitioning ? "transition-transform duration-500 ease-out" : ""}`}
           style={{
             transform: `translateX(calc(50% - ${currentIndex * 320}px - 144px))`,
