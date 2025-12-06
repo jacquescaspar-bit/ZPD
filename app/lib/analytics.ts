@@ -45,7 +45,7 @@ export const trackPageView = (pagePath: string, pageTitle: string) => {
 export const enrollmentEvents = {
   // Page visits
   enrollPageVisit: () => trackEvent('enroll_page_visit', {
-    page_location: '/enroll',
+    page_location: '/enrol',
     page_title: 'Enrol with ZPD Tutoring',
   }),
 

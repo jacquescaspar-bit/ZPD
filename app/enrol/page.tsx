@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import EnrollmentForm from "@/enroll/components/EnrollmentForm";
-import EnrollmentAnalytics from "@/enroll/components/EnrollmentAnalytics";
+import EnrollmentForm from "@/enrol/components/EnrollmentForm";
+import EnrollmentAnalytics from "@/enrol/components/EnrollmentAnalytics";
 import type { PlanType } from "@/lib/constants";
 
 export const metadata: Metadata = {

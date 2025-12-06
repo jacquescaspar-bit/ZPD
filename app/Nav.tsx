@@ -162,7 +162,7 @@ const Nav = () => {
             <div className="flex flex-row items-center space-x-6">
               <a
                 className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-500" : ""} text-sm tracking-wide inline-block ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
-                href="/enroll"
+                href="/enrol"
               >
                 Book Now
               </a>
@@ -227,7 +227,7 @@ const Nav = () => {
       {isMobile && (
         <a
           className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-24 h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-300" : ""} text-sm tracking-wide whitespace-nowrap flex items-center justify-center ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
-          href="/enroll"
+          href="/enrol"
         >
           Book Now
         </a>

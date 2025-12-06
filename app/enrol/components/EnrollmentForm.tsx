@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import PaymentForm from "@/enroll/components/PaymentForm";
-import type { EnrollmentPaymentData } from "@/enroll/components/PaymentForm";
+import PaymentForm from "@/enrol/components/PaymentForm";
+import type { EnrollmentPaymentData } from "@/enrol/components/PaymentForm";
 import { PRICING, type PlanType } from "@/lib/constants";
 
 const MAX_NOTES_LENGTH = 8000;

@@ -54,7 +54,7 @@ const PricingCarousel = () => {
       </ul>
       <Link
         className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
-        href="/enroll?plan=online"
+        href="/enrol?plan=online"
       >
         Select Online
       </Link>
@@ -114,7 +114,7 @@ const PricingCarousel = () => {
       </ul>
       <Link
         className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
-        href="/enroll?plan=essential"
+        href="/enrol?plan=essential"
       >
         Select Essential
       </Link>
@@ -171,7 +171,7 @@ const PricingCarousel = () => {
       </ul>
       <Link
         className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
-        href="/enroll?plan=intensive"
+        href="/enrol?plan=intensive"
       >
         Select Intensive
       </Link>
