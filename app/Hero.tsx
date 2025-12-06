@@ -79,7 +79,7 @@ const Hero = () => {
             href="/enrol"
             id="cta-button"
           >
-            Book Now
+            Enrol
           </a>
         </div>
       </div>
