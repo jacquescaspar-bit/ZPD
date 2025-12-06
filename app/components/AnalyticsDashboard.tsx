@@ -153,7 +153,7 @@ const AnalyticsDashboard: React.FC = () => {
             }
           />
           <MetricCard
-            title="Enrollment Starts"
+            title="Enrolment Starts"
             value={mockData.metrics.enrollmentStarts.value}
             change={mockData.metrics.enrollmentStarts.change}
             icon={

@@ -39,7 +39,7 @@ const SupportingParentsPost = () => (
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Research is clear: parental involvement is one of the strongest
         predictors of academic success. One study found that students with
-        involved parents are 52% more likely to enroll in higher education. But
+        involved parents are 52% more likely to enrol in higher education. But
         "involvement" doesn't mean hovering or doing homework for your kids. It
         means being informed, supportive, and engaged in meaningful ways.
       </p>

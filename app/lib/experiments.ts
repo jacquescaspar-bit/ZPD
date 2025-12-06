@@ -26,7 +26,7 @@ export interface Variant {
 const experiments: Experiment[] = [
   {
     id: 'enrollment_flow_v1',
-    name: 'Enrollment Flow Optimization',
+    name: 'Enrolment Flow Optimization',
     status: 'active',
     startDate: new Date(),
     variants: [

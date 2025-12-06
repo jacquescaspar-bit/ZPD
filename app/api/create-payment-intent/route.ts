@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         notes: notesPreview,
         attachment_count: attachmentCount.toString(),
       },
-      description: `${plan.name} - ZPD Tutoring Enrollment`,
+      description: `${plan.name} - ZPD Tutoring Enrolment`,
     });
 
     return NextResponse.json({
