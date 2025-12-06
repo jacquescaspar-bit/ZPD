@@ -15,13 +15,19 @@ export const getStripe = () => {
   return stripePromise;
 };
 
-// Server-side Stripe instance
-const secretKey = process.env.STRIPE_SECRET_KEY;
-if (!secretKey) {
-  throw new Error("STRIPE_SECRET_KEY is not set");
-}
+// Server-side Stripe instance - lazy initialization
+let stripeInstance: Stripe | null = null;
 
-export const stripe = new Stripe(secretKey, {
-  apiVersion: "2025-11-17.clover",
-  typescript: true,
-});
+export const stripe = (): Stripe => {
+  if (!stripeInstance) {
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey) {
+      throw new Error("STRIPE_SECRET_KEY is not set");
+    }
+    stripeInstance = new Stripe(secretKey, {
+      apiVersion: "2025-11-17.clover",
+      typescript: true,
+    });
+  }
+  return stripeInstance;
+};

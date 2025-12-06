@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const notesPreview = (enrollmentData?.notes ?? "").slice(0, 500);
     const attachmentCount = enrollmentData?.attachmentNames?.length ?? 0;
 
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe().paymentIntents.create({
       amount: finalAmount,
       currency: CURRENCY,
       automatic_payment_methods: {
