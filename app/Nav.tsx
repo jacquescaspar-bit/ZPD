@@ -164,7 +164,7 @@ const Nav = () => {
                 className={`bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-500" : ""} text-sm tracking-wide inline-block ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
                 href="/enrol"
               >
-                Book Now
+                Enrol
               </a>
               <a
                 className={`text-lg ${pathname === "/services" ? "font-normal text-gray-700 dark:text-gray-200" : "font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"} text-center`}
