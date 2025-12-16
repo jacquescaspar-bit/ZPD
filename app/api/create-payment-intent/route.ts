@@ -13,10 +13,7 @@ export async function POST(request: NextRequest) {
     const plan = PRICING[planType as keyof typeof PRICING];
 
     let finalAmount: number = plan.price;
-    if (
-      typeof amountOverride === "number" &&
-      Number.isFinite(amountOverride)
-    ) {
+    if (typeof amountOverride === "number" && Number.isFinite(amountOverride)) {
       const rounded = Math.round(amountOverride);
       finalAmount = Math.max(100, Math.min(plan.price, rounded));
     }

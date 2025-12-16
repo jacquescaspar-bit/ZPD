@@ -121,7 +121,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
 
       if (error) {
         onPaymentError(error.message || "Payment failed");
-      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      } else if (paymentIntent?.status === "succeeded") {
         onPaymentSuccess();
       }
     } catch (error: any) {
@@ -175,8 +175,8 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
             <div className="mt-4 space-y-1 text-sm">
               {adjustments.map((item) => (
                 <div
-                  className="flex justify-between text-gray-600 dark:text-gray-300"
                   key={item.label}
+                  className="flex justify-between text-gray-600 dark:text-gray-300"
                 >
                   <span>{item.label}</span>
                   <span>- AUD ${(item.amount / 100).toFixed(2)}</span>

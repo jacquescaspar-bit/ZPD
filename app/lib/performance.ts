@@ -1,10 +1,10 @@
-import React from 'react';
-import { performanceEvents } from './analytics';
+import React from "react";
+import { performanceEvents } from "@/lib/analytics";
 
 // Performance monitoring utilities
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
-  private observers: Map<string, PerformanceObserver> = new Map();
+  private observers = new Map<string, PerformanceObserver>();
 
   static getInstance(): PerformanceMonitor {
     if (!PerformanceMonitor.instance) {
@@ -15,8 +15,8 @@ export class PerformanceMonitor {
 
   // Initialize performance monitoring
   init(): void {
-    if (typeof window === 'undefined' || !window.PerformanceObserver) {
-      console.warn('Performance monitoring not supported in this browser');
+    if (typeof window === "undefined" || !window.PerformanceObserver) {
+      console.warn("Performance monitoring not supported in this browser");
       return;
     }
 
@@ -32,12 +32,12 @@ export class PerformanceMonitor {
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1] as any;
-        performanceEvents.pageLoadTime(lastEntry.startTime, 'LCP');
+        performanceEvents.pageLoadTime(lastEntry.startTime, "LCP");
       });
-      lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-      this.observers.set('lcp', lcpObserver);
+      lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
+      this.observers.set("lcp", lcpObserver);
     } catch (e) {
-      console.warn('LCP observation not supported');
+      console.warn("LCP observation not supported");
     }
 
     // First Input Delay (FID)
@@ -45,13 +45,16 @@ export class PerformanceMonitor {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry: any) => {
-          performanceEvents.pageLoadTime(entry.processingStart - entry.startTime, 'FID');
+          performanceEvents.pageLoadTime(
+            entry.processingStart - entry.startTime,
+            "FID",
+          );
         });
       });
-      fidObserver.observe({ entryTypes: ['first-input'] });
-      this.observers.set('fid', fidObserver);
+      fidObserver.observe({ entryTypes: ["first-input"] });
+      this.observers.set("fid", fidObserver);
     } catch (e) {
-      console.warn('FID observation not supported');
+      console.warn("FID observation not supported");
     }
 
     // Cumulative Layout Shift (CLS)
@@ -64,19 +67,19 @@ export class PerformanceMonitor {
             clsValue += entry.value;
           }
         });
-        performanceEvents.pageLoadTime(clsValue, 'CLS');
+        performanceEvents.pageLoadTime(clsValue, "CLS");
       });
-      clsObserver.observe({ entryTypes: ['layout-shift'] });
-      this.observers.set('cls', clsObserver);
+      clsObserver.observe({ entryTypes: ["layout-shift"] });
+      this.observers.set("cls", clsObserver);
     } catch (e) {
-      console.warn('CLS observation not supported');
+      console.warn("CLS observation not supported");
     }
   }
 
   // Track page load time
   private trackPageLoadTime(): void {
-    if (typeof window !== 'undefined' && window.performance) {
-      window.addEventListener('load', () => {
+    if (typeof window !== "undefined" && window.performance) {
+      window.addEventListener("load", () => {
         const loadTime = window.performance.now();
         performanceEvents.pageLoadTime(loadTime, window.location.pathname);
       });
@@ -85,15 +88,18 @@ export class PerformanceMonitor {
 
   // Track resource timing
   private trackResourceTiming(): void {
-    if (typeof window !== 'undefined' && window.performance) {
-      window.addEventListener('load', () => {
+    if (typeof window !== "undefined" && window.performance) {
+      window.addEventListener("load", () => {
         setTimeout(() => {
-          const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+          const resources = performance.getEntriesByType(
+            "resource",
+          ) as PerformanceResourceTiming[];
           resources.forEach((resource) => {
-            if (resource.duration > 1000) { // Only track slow resources
+            if (resource.duration > 1000) {
+              // Only track slow resources
               performanceEvents.apiResponseTime(
                 resource.name,
-                resource.duration
+                resource.duration,
               );
             }
           });
@@ -112,24 +118,32 @@ export class PerformanceMonitor {
   }
 
   // Track user interactions
-  trackInteraction(interactionType: string, element: string, timeToAction: number): void {
+  trackInteraction(
+    interactionType: string,
+    element: string,
+    timeToAction: number,
+  ): void {
     // Custom event for interaction tracking
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'user_interaction', {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "user_interaction", {
         interaction_type: interactionType,
-        element: element,
+        element,
         time_to_action: timeToAction,
       });
     }
   }
 
   // Track form interactions
-  trackFormInteraction(formName: string, fieldName: string, action: string): void {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'form_interaction', {
+  trackFormInteraction(
+    formName: string,
+    fieldName: string,
+    action: string,
+  ): void {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_interaction", {
         form_name: formName,
         field_name: fieldName,
-        action: action,
+        action,
       });
     }
   }
@@ -141,12 +155,12 @@ export class PerformanceMonitor {
 
   // Memory usage tracking
   trackMemoryUsage(): void {
-    if (typeof window !== 'undefined' && (window.performance as any).memory) {
-      const memory = (window.performance as any).memory;
-      console.log('Memory Usage:', {
-        used: Math.round(memory.usedJSHeapSize / 1048576 * 100) / 100 + ' MB',
-        total: Math.round(memory.totalJSHeapSize / 1048576 * 100) / 100 + ' MB',
-        limit: Math.round(memory.jsHeapSizeLimit / 1048576 * 100) / 100 + ' MB',
+    if (typeof window !== "undefined" && (window.performance as any).memory) {
+      const { memory } = window.performance as any;
+      console.log("Memory Usage:", {
+        used: `${Math.round((memory.usedJSHeapSize / 1048576) * 100) / 100} MB`,
+        total: `${Math.round((memory.totalJSHeapSize / 1048576) * 100) / 100} MB`,
+        limit: `${Math.round((memory.jsHeapSizeLimit / 1048576) * 100) / 100} MB`,
       });
     }
   }
@@ -177,7 +191,7 @@ export const usePerformanceTracking = (componentName: string) => {
 // Utility functions for common performance measurements
 export const measureExecutionTime = async <T>(
   fn: () => Promise<T> | T,
-  label: string
+  label: string,
 ): Promise<T> => {
   const startTime = performance.now();
   try {
@@ -196,7 +210,7 @@ export const measureExecutionTime = async <T>(
 export const trackApiCall = async (
   url: string,
   method: string,
-  fn: () => Promise<any>
+  fn: () => Promise<any>,
 ): Promise<any> => {
   const startTime = performance.now();
   try {
@@ -213,26 +227,26 @@ export const trackApiCall = async (
 
 // Error tracking
 export const trackError = (error: Error, context?: string): void => {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'exception', {
+  if (typeof window !== "undefined" && (window as any).gtag) {
+    (window as any).gtag("event", "exception", {
       description: error.message,
       fatal: false,
-      context: context || 'unknown',
+      context: context || "unknown",
     });
   }
 
   // Also log to console
-  console.error(`Error in ${context || 'unknown'}:`, error);
+  console.error(`Error in ${context || "unknown"}:`, error);
 };
 
 // User journey timing
 export class UserJourneyTimer {
-  private startTime: number = 0;
-  private checkpoints: Map<string, number> = new Map();
+  private startTime = 0;
+  private checkpoints = new Map<string, number>();
 
   start(): void {
     this.startTime = performance.now();
-    this.checkpoints.set('start', this.startTime);
+    this.checkpoints.set("start", this.startTime);
   }
 
   checkpoint(name: string): void {
@@ -261,7 +275,7 @@ export class UserJourneyTimer {
 }
 
 // Initialize performance monitoring when the module loads
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   // Delay initialization to ensure DOM is ready
   setTimeout(() => {
     performanceMonitor.init();

@@ -1,11 +1,11 @@
-import { experimentEvents } from './analytics';
+import { experimentEvents } from "@/lib/analytics";
 
 // Experiment configuration
 export interface Experiment {
   id: string;
   name: string;
   variants: Variant[];
-  status: 'active' | 'paused' | 'completed';
+  status: "active" | "paused" | "completed";
   startDate: Date;
   endDate?: Date;
   targetAudience?: {
@@ -25,39 +25,39 @@ export interface Variant {
 // Active experiments
 const experiments: Experiment[] = [
   {
-    id: 'enrollment_flow_v1',
-    name: 'Enrolment Flow Optimization',
-    status: 'active',
+    id: "enrollment_flow_v1",
+    name: "Enrolment Flow Optimization",
+    status: "active",
     startDate: new Date(),
     variants: [
       {
-        id: 'control',
-        name: 'Current Flow',
+        id: "control",
+        name: "Current Flow",
         weight: 50,
         config: {
           showValueDemo: true,
-          pricingDisplay: 'standard',
-          chatbotPersonality: 'professional',
+          pricingDisplay: "standard",
+          chatbotPersonality: "professional",
         },
       },
       {
-        id: 'variant_a',
-        name: 'Simplified Flow',
+        id: "variant_a",
+        name: "Simplified Flow",
         weight: 30,
         config: {
           showValueDemo: false,
-          pricingDisplay: 'prominent',
-          chatbotPersonality: 'friendly',
+          pricingDisplay: "prominent",
+          chatbotPersonality: "friendly",
         },
       },
       {
-        id: 'variant_b',
-        name: 'Detailed Flow',
+        id: "variant_b",
+        name: "Detailed Flow",
         weight: 20,
         config: {
           showValueDemo: true,
-          pricingDisplay: 'detailed',
-          chatbotPersonality: 'educational',
+          pricingDisplay: "detailed",
+          chatbotPersonality: "educational",
         },
       },
     ],
@@ -71,17 +71,22 @@ const getUserExperimentKey = (experimentId: string, userId?: string) => {
 };
 
 const getAnonymousUserId = (): string => {
-  let userId = localStorage.getItem('anonymous_user_id');
+  let userId = localStorage.getItem("anonymous_user_id");
   if (!userId) {
     userId = `anon_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem('anonymous_user_id', userId);
+    localStorage.setItem("anonymous_user_id", userId);
   }
   return userId;
 };
 
 // Variant assignment using weighted random selection
-export const assignVariant = (experimentId: string, userId?: string): Variant | null => {
-  const experiment = experiments.find(exp => exp.id === experimentId && exp.status === 'active');
+export const assignVariant = (
+  experimentId: string,
+  userId?: string,
+): Variant | null => {
+  const experiment = experiments.find(
+    (exp) => exp.id === experimentId && exp.status === "active",
+  );
   if (!experiment) return null;
 
   const storageKey = getUserExperimentKey(experimentId, userId);
@@ -105,12 +110,17 @@ export const assignVariant = (experimentId: string, userId?: string): Variant | 
     }
   }
 
-  const assignedVariant = experiment.variants.find(v => v.id === assignedVariantId);
+  const assignedVariant = experiment.variants.find(
+    (v) => v.id === assignedVariantId,
+  );
   return assignedVariant || null;
 };
 
 // Get experiment configuration for current user
-export const getExperimentConfig = (experimentId: string, userId?: string): Record<string, any> => {
+export const getExperimentConfig = (
+  experimentId: string,
+  userId?: string,
+): Record<string, any> => {
   const variant = assignVariant(experimentId, userId);
   return variant?.config || {};
 };
@@ -119,7 +129,7 @@ export const getExperimentConfig = (experimentId: string, userId?: string): Reco
 export const trackExperimentConversion = (
   experimentId: string,
   goal: string,
-  userId?: string
+  userId?: string,
 ): void => {
   const variant = assignVariant(experimentId, userId);
   if (variant) {
@@ -128,13 +138,11 @@ export const trackExperimentConversion = (
 };
 
 // Experiment management functions
-export const getActiveExperiments = (): Experiment[] => {
-  return experiments.filter(exp => exp.status === 'active');
-};
+export const getActiveExperiments = (): Experiment[] =>
+  experiments.filter((exp) => exp.status === "active");
 
-export const getExperiment = (experimentId: string): Experiment | undefined => {
-  return experiments.find(exp => exp.id === experimentId);
-};
+export const getExperiment = (experimentId: string): Experiment | undefined =>
+  experiments.find((exp) => exp.id === experimentId);
 
 // Utility functions for common experiment use cases
 export const useExperiment = (experimentId: string) => {
@@ -143,9 +151,10 @@ export const useExperiment = (experimentId: string) => {
 
   return {
     config,
-    variant: variant?.name || 'control',
-    variantId: variant?.id || 'control',
-    trackConversion: (goal: string) => trackExperimentConversion(experimentId, goal),
+    variant: variant?.name || "control",
+    variantId: variant?.id || "control",
+    trackConversion: (goal: string) =>
+      trackExperimentConversion(experimentId, goal),
   };
 };
 
@@ -153,13 +162,13 @@ export const useExperiment = (experimentId: string) => {
 export const createExperiment = (
   id: string,
   name: string,
-  variants: Omit<Variant, 'id'>[],
-  options: Partial<Pick<Experiment, 'targetAudience' | 'endDate'>> = {}
+  variants: Omit<Variant, "id">[],
+  options: Partial<Pick<Experiment, "targetAudience" | "endDate">> = {},
 ): Experiment => {
   const experiment: Experiment = {
     id,
     name,
-    status: 'active',
+    status: "active",
     startDate: new Date(),
     variants: variants.map((variant, index) => ({
       ...variant,
@@ -173,27 +182,27 @@ export const createExperiment = (
 };
 
 export const pauseExperiment = (experimentId: string): boolean => {
-  const experiment = experiments.find(exp => exp.id === experimentId);
+  const experiment = experiments.find((exp) => exp.id === experimentId);
   if (experiment) {
-    experiment.status = 'paused';
+    experiment.status = "paused";
     return true;
   }
   return false;
 };
 
 export const resumeExperiment = (experimentId: string): boolean => {
-  const experiment = experiments.find(exp => exp.id === experimentId);
+  const experiment = experiments.find((exp) => exp.id === experimentId);
   if (experiment) {
-    experiment.status = 'active';
+    experiment.status = "active";
     return true;
   }
   return false;
 };
 
 export const endExperiment = (experimentId: string): boolean => {
-  const experiment = experiments.find(exp => exp.id === experimentId);
+  const experiment = experiments.find((exp) => exp.id === experimentId);
   if (experiment) {
-    experiment.status = 'completed';
+    experiment.status = "completed";
     experiment.endDate = new Date();
     return true;
   }
@@ -210,7 +219,7 @@ export const getExperimentStats = (experimentId: string) => {
   return {
     experimentId,
     totalParticipants: 1000,
-    variants: experiment.variants.map(variant => ({
+    variants: experiment.variants.map((variant) => ({
       id: variant.id,
       name: variant.name,
       participants: Math.floor(1000 * (variant.weight / 100)),
@@ -228,10 +237,13 @@ export const featureFlags = {
   progressIndicators: true,
 };
 
-export const isFeatureEnabled = (featureName: keyof typeof featureFlags): boolean => {
-  return featureFlags[featureName];
-};
+export const isFeatureEnabled = (
+  featureName: keyof typeof featureFlags,
+): boolean => featureFlags[featureName];
 
-export const toggleFeature = (featureName: keyof typeof featureFlags, enabled: boolean): void => {
+export const toggleFeature = (
+  featureName: keyof typeof featureFlags,
+  enabled: boolean,
+): void => {
   featureFlags[featureName] = enabled;
 };

@@ -19,12 +19,20 @@ const planDescriptions: Record<
   essential: {
     title: "Essential",
     blurb: "10 sessions per term • 2 subjects • Priority support",
-    highlights: ["ATAR specialist tutors", "Trial credit included", "Most popular"],
+    highlights: [
+      "ATAR specialist tutors",
+      "Trial credit included",
+      "Most popular",
+    ],
   },
   intensive: {
     title: "Intensive",
     blurb: "20 sessions per term • Unlimited subjects",
-    highlights: ["Direct phone support", "Fast-tracked progress", "Best for Year 11/12"],
+    highlights: [
+      "Direct phone support",
+      "Fast-tracked progress",
+      "Best for Year 11/12",
+    ],
   },
 };
 
@@ -136,13 +144,14 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   const selectedPlanLabel = useMemo(() => {
     const data = PRICING[selectedPlan];
     const description = planDescriptions[selectedPlan];
-    return `${description.title} • ${(
-      data.price / 100
-    ).toLocaleString("en-AU", {
-      style: "currency",
-      currency: "AUD",
-      minimumFractionDigits: 0,
-    })}`;
+    return `${description.title} • ${(data.price / 100).toLocaleString(
+      "en-AU",
+      {
+        style: "currency",
+        currency: "AUD",
+        minimumFractionDigits: 0,
+      },
+    )}`;
   }, [selectedPlan]);
 
   const applyReferral = (code: string, message?: string) => {
@@ -150,7 +159,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     setAppliedPromoValue(REFERRAL_VALUE);
     setAppliedPromoKind("referral");
     setPromoStatus(
-      message || "Referral thank-you applied! That's $300 off your term."
+      message || "Referral thank-you applied! That's $300 off your term.",
     );
   };
 
@@ -159,15 +168,12 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     setAppliedPromoValue(LUCKY_VALUE);
     setAppliedPromoKind("discount");
     setPromoStatus(
-      message || "Discount unlocked! A further $200 has been taken off."
+      message || "Discount unlocked! A further $200 has been taken off.",
     );
   };
 
   const basePriceCents = PRICING[selectedPlan].price;
-  const finalAmountCents = Math.max(
-    100,
-    basePriceCents - appliedPromoValue,
-  );
+  const finalAmountCents = Math.max(100, basePriceCents - appliedPromoValue);
 
   const promoAdjustments = useMemo(() => {
     const list: { label: string; amount: number }[] = [];
@@ -214,9 +220,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
           </span>
           <span className="leading-relaxed">
             {notes
-              ? `${notes.substring(0, 140)}${
-                  notes.length > 140 ? "…" : ""
-                }`
+              ? `${notes.substring(0, 140)}${notes.length > 140 ? "…" : ""}`
               : "No details added yet"}
           </span>
         </div>
@@ -241,8 +245,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             <div className="mt-2 space-y-1">
               {promoAdjustments.map((adj) => (
                 <div
-                  className="flex justify-between text-emerald-600 dark:text-emerald-300"
                   key={adj.label}
+                  className="flex justify-between text-emerald-600 dark:text-emerald-300"
                 >
                   <span>- {adj.label}</span>
                   <span>- AUD ${(adj.amount / 100).toFixed(2)}</span>
@@ -297,8 +301,13 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
           onChange={(event) => setNotes(event.target.value)}
         />
         <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-          <span>Single open text field • up to {MAX_NOTES_LENGTH.toLocaleString()} characters</span>
-          <span>{notes.length}/{MAX_NOTES_LENGTH}</span>
+          <span>
+            Single open text field • up to {MAX_NOTES_LENGTH.toLocaleString()}{" "}
+            characters
+          </span>
+          <span>
+            {notes.length}/{MAX_NOTES_LENGTH}
+          </span>
         </div>
 
         <div className="space-y-3">
@@ -306,9 +315,9 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             Upload files (optional)
           </label>
           <input
+            multiple
             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.ppt,.pptx"
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 dark:file:bg-emerald-500/20 dark:file:text-emerald-200"
-            multiple
             type="file"
             onChange={handleAttachmentChange}
           />
@@ -322,8 +331,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                   <span className="truncate">{file.name}</span>
                   <button
                     className="text-xs font-semibold text-rose-600 dark:text-rose-300 hover:underline"
-                    onClick={() => removeAttachment(file.name)}
                     type="button"
+                    onClick={() => removeAttachment(file.name)}
                   >
                     Remove
                   </button>
@@ -350,19 +359,20 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             </label>
             <div className="flex">
               <input
-                className="flex-1 border-r-0 rounded-l-2xl border border-white/60 dark:border-gray-700 bg-white/90 dark:bg-gray-950/40 px-3 py-2 h-10 text-sm text-gray-500 dark:text-gray-400"
                 readOnly
-                value={referralLink || ''}
+                className="flex-1 border-r-0 rounded-l-2xl border border-white/60 dark:border-gray-700 bg-white/90 dark:bg-gray-950/40 px-3 py-2 h-10 text-sm text-gray-500 dark:text-gray-400"
+                value={referralLink || ""}
               />
               <button
                 className="flex justify-center items-center text-center rounded-r-2xl px-4 py-2 h-10 text-sm font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-200 bg-white/90 dark:bg-gray-950/40 border border-white/60 dark:border-gray-700 border-l-0"
+                type="button"
                 onClick={() => {
                   if (!referralLink) {
                     // Generate a referral code for the URL only
                     const code = `REF-${Math.random()
-                        .toString(36)
-                        .toUpperCase()
-                        .slice(2, 8)}`;
+                      .toString(36)
+                      .toUpperCase()
+                      .slice(2, 8)}`;
                     try {
                       if (typeof window !== "undefined") {
                         const url = new URL(window.location.href);
@@ -370,7 +380,11 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                         url.searchParams.set("plan", selectedPlan);
                         const fullLink = url.toString();
                         setReferralLink(fullLink);
-                        if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                        if (
+                          navigator &&
+                          navigator.clipboard &&
+                          navigator.clipboard.writeText
+                        ) {
                           navigator.clipboard
                             .writeText(fullLink)
                             .then(() => {
@@ -394,7 +408,11 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     }
                   } else {
                     // Just copy existing link
-                    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                    if (
+                      navigator &&
+                      navigator.clipboard &&
+                      navigator.clipboard.writeText
+                    ) {
                       navigator.clipboard
                         .writeText(referralLink)
                         .then(() => {
@@ -414,7 +432,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     }
                   }
                 }}
-                type="button"
               >
                 Copy
               </button>
@@ -441,6 +458,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     : "bg-gray-200 text-gray-400 dark:bg-gray-800 dark:text-gray-500 cursor-not-allowed shadow-none"
                 }`}
                 disabled={appliedPromoValue === 0 && !promoCode.trim()}
+                type="button"
                 onClick={() => {
                   if (appliedPromoValue > 0) {
                     setAppliedPromoValue(0);
@@ -455,7 +473,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     );
                   }
                 }}
-                type="button"
               >
                 {appliedPromoValue > 0 ? "Remove" : "Apply"}
               </button>
@@ -470,8 +487,9 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     : "border border-emerald-500 bg-white text-emerald-700 shadow-md transition-colors duration-200 hover:bg-emerald-50 hover:border-emerald-600 focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-gray-900 dark:border-emerald-400 dark:text-emerald-300 dark:hover:bg-emerald-950/20"
                 }`}
                 disabled={appliedPromoValue > 0}
+                type="button"
                 onClick={() => {
-                  if (promoCode.trim() === '') {
+                  if (promoCode.trim() === "") {
                     const lucky = `LUCKY-${Math.random()
                       .toString(36)
                       .toUpperCase()
@@ -479,7 +497,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     setPromoCode(lucky);
                   }
                 }}
-                type="button"
               >
                 I'm feeling lucky
               </button>
@@ -499,7 +516,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             Choose your plan
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Mirrors the cards on our pricing page so you always know what you’re selecting.
+            Mirrors the cards on our pricing page so you always know what you’re
+            selecting.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
@@ -515,8 +533,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
               <button
                 key={plan.id}
                 className={`relative text-left rounded-3xl border-2 p-6 transition-all duration-300 ${cardClasses}`}
-                onClick={() => setSelectedPlan(plan.id)}
                 type="button"
+                onClick={() => setSelectedPlan(plan.id)}
               >
                 {isSelected && (
                   <span className="absolute -top-3 right-6 rounded-full bg-emerald-500/90 px-3 py-1 text-[11px] font-semibold tracking-[0.3em] text-white shadow-lg">
@@ -533,15 +551,13 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     </p>
                   </div>
                 </div>
-                <div className={`${priceClasses} mb-2`}>
-                  {plan.price}
-                </div>
+                <div className={`${priceClasses} mb-2`}>{plan.price}</div>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                   {plan.sessionsPerTerm} sessions / term
                 </p>
                 <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                   {plan.highlights.map((item) => (
-                    <li className="flex items-center" key={item}>
+                    <li key={item} className="flex items-center">
                       <span className="text-green-500 mr-2">✓</span>
                       {item}
                     </li>
@@ -603,8 +619,13 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
         </div>
 
         <PaymentForm
+          adjustments={promoAdjustments}
+          amountOverrideCents={finalAmountCents}
           enrollmentData={enrollmentData}
           isReady={isPaymentReady}
+          planType={selectedPlan}
+          submitLabel="Confirm & Pay"
+          summarySlot={summaryContent}
           onPaymentError={(message) => {
             setErrorMessage(message);
             setStatusMessage(null);
@@ -615,11 +636,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             );
             setErrorMessage(null);
           }}
-          planType={selectedPlan}
-          submitLabel="Confirm & Pay"
-          amountOverrideCents={finalAmountCents}
-          adjustments={promoAdjustments}
-          summarySlot={summaryContent}
         />
 
         {!isPaymentReady && (
@@ -633,4 +649,3 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 };
 
 export default EnrollmentForm;
-

@@ -206,8 +206,8 @@ const Features = () => (
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               Rooted in Lev Vygotsky's Zone of Proximal Development theory,
-              targeting optimal learning zones where students' achieve more
-              with guidance.
+              targeting optimal learning zones where students' achieve more with
+              guidance.
             </p>
           </div>
         </Link>
