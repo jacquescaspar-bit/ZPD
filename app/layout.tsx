@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import "@/globals.css";
-import Nav from "@/Nav";
-import BackToTop from "@/BackToTop";
-import PrivacyConsent from "@/components/PrivacyConsent";
-import { initGA } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Where Learning Happens",
@@ -21,53 +17,8 @@ const RootLayout = ({
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
       />
-      {/* Google Analytics 4 - conditionally loaded based on consent */}
-      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-        <>
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-
-                // Check for existing consent
-                var consent = localStorage.getItem('analytics_consent');
-                if (consent === 'granted') {
-                  gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
-                    anonymize_ip: true,
-                    allow_google_signals: false,
-                    allow_ad_features: false
-                  });
-                }
-
-                // Listen for consent changes
-                window.addEventListener('storage', function(e) {
-                  if (e.key === 'analytics_consent' && e.newValue === 'granted') {
-                    gtag('js', new Date());
-                    gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
-                      anonymize_ip: true,
-                      allow_google_signals: false,
-                      allow_ad_features: false
-                    });
-                  }
-                });
-              `,
-            }}
-          />
-        </>
-      )}
     </head>
-    <body className="antialiased">
-      <Nav />
-      {children}
-      <BackToTop />
-      <PrivacyConsent />
-    </body>
+    <body className="antialiased">{children}</body>
   </html>
 );
 

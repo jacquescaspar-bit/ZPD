@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Features = () => (
   <section
-    className="min-h-screen flex flex-col justify-center bg-gray-50 dark:bg-gray-800 px-6 z-10"
+    className="min-h-screen flex flex-col justify-center bg-gray-100 dark:bg-gray-900 px-6 z-10"
     id="features"
   >
     <div className="max-w-6xl text-center mx-auto py-16">

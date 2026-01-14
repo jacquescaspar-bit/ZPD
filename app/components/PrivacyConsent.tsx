@@ -5,7 +5,6 @@ import {
   privacyEvents,
   enableAnalytics,
   disableAnalytics,
-  isAnalyticsEnabled,
 } from "@/lib/analytics";
 
 interface PrivacyConsentProps {

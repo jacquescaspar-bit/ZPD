@@ -19,7 +19,7 @@ export interface Variant {
   id: string;
   name: string;
   weight: number; // Percentage of traffic (0-100)
-  config: Record<string, any>;
+  config: Record<string, unknown>;
 }
 
 // Active experiments
@@ -66,7 +66,7 @@ const experiments: Experiment[] = [
 
 // User assignment storage
 const getUserExperimentKey = (experimentId: string, userId?: string) => {
-  const identifier = userId || getAnonymousUserId();
+  const identifier = userId ?? getAnonymousUserId();
   return `exp_${experimentId}_${identifier}`;
 };
 
@@ -113,16 +113,16 @@ export const assignVariant = (
   const assignedVariant = experiment.variants.find(
     (v) => v.id === assignedVariantId,
   );
-  return assignedVariant || null;
+  return assignedVariant ?? null;
 };
 
 // Get experiment configuration for current user
 export const getExperimentConfig = (
   experimentId: string,
   userId?: string,
-): Record<string, any> => {
+): Record<string, unknown> => {
   const variant = assignVariant(experimentId, userId);
-  return variant?.config || {};
+  return variant?.config ?? {};
 };
 
 // Track experiment conversion
@@ -151,8 +151,8 @@ export const useExperiment = (experimentId: string) => {
 
   return {
     config,
-    variant: variant?.name || "control",
-    variantId: variant?.id || "control",
+    variant: variant?.name ?? "control",
+    variantId: variant?.id ?? "control",
     trackConversion: (goal: string) =>
       trackExperimentConversion(experimentId, goal),
   };

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface MetricCardProps {
   title: string;
@@ -31,7 +31,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
             className={`text-sm ${change >= 0 ? "text-green-600" : "text-red-600"}`}
           >
             {change >= 0 ? "+" : ""}
-            {change}% {changeLabel || "from last month"}
+            {change}% {changeLabel ?? "from last month"}
           </p>
         )}
       </div>

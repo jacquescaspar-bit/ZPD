@@ -44,15 +44,83 @@ const Infographic = () => {
   return (
     <section
       ref={sectionRef}
-      className="w-full h-[100vh] relative bg-white dark:bg-gray-900 z-0 flex justify-center items-center"
+      className="w-full h-[100vh] relative bg-white dark:bg-gray-800 z-0 flex justify-center items-center"
     >
+      <div className="absolute inset-0 flex flex-col z-0">
+        <div className="flex justify-between w-full flex-1 items-center">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            W
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            H
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            E
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            R
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            E
+          </span>
+        </div>
+        <div className="flex justify-between w-full flex-1 items-center">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            L
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            E
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            A
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            R
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            N
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            I
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            N
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            G
+          </span>
+        </div>
+        <div className="flex justify-between w-full flex-1 items-center">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            H
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            A
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            P
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            P
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            E
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            N
+          </span>
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+            S
+          </span>
+        </div>
+      </div>
       <div
         ref={zpdCircleRef}
-        className="zpd-circle absolute w-[250px] h-[250px] md:w-[309px] md:h-[309px] border border-current rounded-full transition-opacity duration-1000"
+        className="zpd-circle absolute w-[250px] h-[250px] md:w-[309px] md:h-[309px] rounded-full backdrop-blur-md bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 border border-current transition-opacity duration-1000"
         style={{ opacity: circleOpacity }}
       />
       <div
-        className="absolute w-[250px] h-[250px] md:w-[309px] md:h-[309px] border border-current rounded-full"
+        className="absolute w-[250px] h-[250px] md:w-[309px] md:h-[309px] rounded-full backdrop-blur-md bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 border border-current"
         style={{ opacity: 0.2 }}
       />
       {showGrown && (
@@ -68,7 +136,7 @@ const Infographic = () => {
           ))}
           <motion.div
             animate={{ opacity: 0.2 }}
-            className="absolute border border-current rounded-full w-[360px] h-[360px] md:w-[488px] md:h-[488px]"
+            className="absolute rounded-full w-[360px] h-[360px] md:w-[488px] md:h-[488px] backdrop-blur-md bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 border border-current"
             initial={{ opacity: 0 }}
             transition={{ duration: 3, delay: 4 }}
           />

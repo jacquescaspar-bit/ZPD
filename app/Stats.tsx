@@ -1,6 +1,6 @@
 const Stats = () => (
   <section
-    className="min-h-screen flex flex-col justify-center bg-white dark:bg-gray-900 px-6 z-10"
+    className="min-h-screen flex flex-col justify-center bg-white dark:bg-gray-800 px-6 z-10"
     id="stats"
   >
     <div className="max-w-6xl text-center mx-auto py-16">

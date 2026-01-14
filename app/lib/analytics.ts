@@ -1,6 +1,6 @@
 // Declare global gtag function
 declare global {
-  function gtag(...args: any[]): void;
+  function gtag(...args: unknown[]): void;
 }
 
 // Google Analytics 4 Measurement ID
@@ -21,7 +21,7 @@ export const initGA = () => {
 // Generic event tracking
 export const trackEvent = (
   eventName: string,
-  parameters: Record<string, any> = {},
+  parameters: Record<string, unknown> = {},
 ) => {
   if (
     typeof window !== "undefined" &&
@@ -86,7 +86,7 @@ export const enrollmentEvents = {
       event_label: "assessment",
       child_age: data.childAge,
       current_grade: data.currentGrade,
-      subjects_count: data.subjects?.length || 0,
+      subjects_count: data.subjects?.length ?? 0,
       has_goals: Boolean(data.goals),
     }),
 
@@ -291,7 +291,7 @@ export const experimentEvents = {
 };
 
 // Utility functions
-export const setUserProperties = (properties: Record<string, any>) => {
+export const setUserProperties = (properties: Record<string, unknown>) => {
   if (
     typeof window !== "undefined" &&
     GA_MEASUREMENT_ID &&

@@ -3,6 +3,11 @@ export const CURRENCY = "aud";
 
 // Pricing configuration (in cents)
 export const PRICING = {
+  trial: {
+    name: "Diagnostic Discovery",
+    price: 11000, // $110.00 AUD (diagnostic discovery session)
+    sessionsPerTerm: 1,
+  },
   online: {
     name: "Online Plan",
     price: 75000, // $750.00 AUD per term

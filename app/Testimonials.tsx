@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -41,7 +43,7 @@ const Testimonials = () => {
 
   return (
     <section
-      className="min-h-screen flex flex-col justify-center bg-white dark:bg-gray-900 px-6 z-10"
+      className="min-h-screen flex flex-col justify-center bg-gray-100 dark:bg-gray-900 px-6 z-10"
       id="testimonials"
     >
       <div className="max-w-4xl text-center mx-auto py-16">

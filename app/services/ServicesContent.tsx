@@ -1,3 +1,4 @@
+import Nav from "@/Nav";
 import ZPDApproachSection from "@/services/components/ZPDApproachSection";
 import PersonalisedPlansSection from "@/services/components/PersonalisedPlansSection";
 import CertifiedTutorsSection from "@/services/components/CertifiedTutorsSection";
@@ -7,27 +8,27 @@ import TrinitySynergySection from "@/services/components/TrinitySynergySection";
 
 const ServicesContent = () => (
   <div className="relative">
+    <Nav />
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-6 py-20">
-      <div className="max-w-4xl mx-auto">
-        <h1
-          className="text-5xl font-light mb-12 text-gray-900 dark:text-white text-center"
-          style={{ letterSpacing: "0.1em" }}
-        >
-          The ZPD Difference
-        </h1>
+    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+      <div className="max-w-6xl mx-auto space-y-6">
+        <section className="text-center pb-20">
+          <h1
+            className="text-5xl font-light mb-2 text-gray-900 dark:text-white text-center"
+            style={{ letterSpacing: "0.1em" }}
+          >
+            The ZPD Difference
+          </h1>
+          <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            At ZPD Learning, we offer comprehensive tutoring services designed
+            around the Zone of Proximal Development (ZPD) principle. Our expert
+            tutors provide personalised education that challenges students just
+            enough to foster growth, building confidence and academic excellence
+            through tailored learning experiences.
+          </p>
+        </section>
 
-        <div className="space-y-16">
-          <div className="text-center mb-16">
-            <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300">
-              At ZPD Learning, we offer comprehensive tutoring services designed
-              around the Zone of Proximal Development (ZPD) principle. Our
-              expert tutors provide personalised education that challenges
-              students just enough to foster growth, building confidence and
-              academic excellence through tailored learning experiences.
-            </p>
-          </div>
-
+        <div className="space-y-6">
           <ZPDApproachSection />
           <PersonalisedPlansSection />
           <CertifiedTutorsSection />

@@ -49,7 +49,7 @@ const Hero = () => {
   }, [ctaThreshold]);
 
   return (
-    <main className="min-h-screen md:min-h-[calc(var(--vh,1vh)*100-4rem)] flex flex-col justify-center items-center px-6 relative overflow-hidden z-10">
+    <main className="min-h-screen flex flex-col justify-start items-center px-6 pt-24 pb-16 relative overflow-hidden z-10">
       <div className="text-center flex flex-col items-center justify-center relative z-10 animate-fade-in-up">
         {/* ZPD */}
         <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -61,11 +61,10 @@ const Hero = () => {
           className={`${antipasto.className} text-4xl sm:text-5xl md:text-6xl font-[200] text-center text-gray-700 dark:text-gray-300 mb-8`}
         >
           <span className="tracking-wide">
-            where{" "}
+            Personalised{" "}
             <span className="font-[400] text-blue-600 dark:text-blue-400">
-              learning
-            </span>{" "}
-            happens
+              Tutoring
+            </span>
           </span>
         </div>
 

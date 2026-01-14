@@ -31,12 +31,15 @@ export class PerformanceMonitor {
     try {
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        const lastEntry = entries[entries.length - 1] as any;
-        performanceEvents.pageLoadTime(lastEntry.startTime, "LCP");
+        const lastEntry = entries[entries.length - 1] as unknown;
+        performanceEvents.pageLoadTime(
+          (lastEntry as { startTime: number }).startTime,
+          "LCP",
+        );
       });
       lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
       this.observers.set("lcp", lcpObserver);
-    } catch (e) {
+    } catch (_e) {
       console.warn("LCP observation not supported");
     }
 
@@ -44,16 +47,19 @@ export class PerformanceMonitor {
     try {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
+        entries.forEach((entry: unknown) => {
           performanceEvents.pageLoadTime(
-            entry.processingStart - entry.startTime,
+            (entry as { processingStart: number; startTime: number })
+              .processingStart -
+              (entry as { processingStart: number; startTime: number })
+                .startTime,
             "FID",
           );
         });
       });
       fidObserver.observe({ entryTypes: ["first-input"] });
       this.observers.set("fid", fidObserver);
-    } catch (e) {
+    } catch (_e) {
       console.warn("FID observation not supported");
     }
 
@@ -62,16 +68,16 @@ export class PerformanceMonitor {
       let clsValue = 0;
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value;
+        entries.forEach((entry: unknown) => {
+          if (!(entry as { hadRecentInput: boolean }).hadRecentInput) {
+            clsValue += (entry as { value: number }).value;
           }
         });
         performanceEvents.pageLoadTime(clsValue, "CLS");
       });
       clsObserver.observe({ entryTypes: ["layout-shift"] });
       this.observers.set("cls", clsObserver);
-    } catch (e) {
+    } catch (_e) {
       console.warn("CLS observation not supported");
     }
   }
@@ -114,7 +120,7 @@ export class PerformanceMonitor {
     performanceEvents.widgetLoadTime(loadTime);
 
     // Log to console for development
-    console.log(`${componentName} loaded in ${loadTime.toFixed(2)}ms`);
+    console.warn(`${componentName} loaded in ${loadTime.toFixed(2)}ms`);
   }
 
   // Track user interactions
@@ -124,8 +130,9 @@ export class PerformanceMonitor {
     timeToAction: number,
   ): void {
     // Custom event for interaction tracking
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "user_interaction", {
+    const { gtag } = window as { gtag?: (...args: unknown[]) => void };
+    if (typeof window !== "undefined" && gtag) {
+      gtag("event", "user_interaction", {
         interaction_type: interactionType,
         element,
         time_to_action: timeToAction,
@@ -139,8 +146,9 @@ export class PerformanceMonitor {
     fieldName: string,
     action: string,
   ): void {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "form_interaction", {
+    const { gtag } = window as { gtag?: (...args: unknown[]) => void };
+    if (typeof window !== "undefined" && gtag) {
+      gtag("event", "form_interaction", {
         form_name: formName,
         field_name: fieldName,
         action,
@@ -155,9 +163,16 @@ export class PerformanceMonitor {
 
   // Memory usage tracking
   trackMemoryUsage(): void {
-    if (typeof window !== "undefined" && (window.performance as any).memory) {
-      const { memory } = window.performance as any;
-      console.log("Memory Usage:", {
+    const perf = window.performance as unknown as {
+      memory?: {
+        usedJSHeapSize: number;
+        totalJSHeapSize: number;
+        jsHeapSizeLimit: number;
+      };
+    };
+    if (typeof window !== "undefined" && perf.memory) {
+      const { memory } = perf;
+      console.warn("Memory Usage:", {
         used: `${Math.round((memory.usedJSHeapSize / 1048576) * 100) / 100} MB`,
         total: `${Math.round((memory.totalJSHeapSize / 1048576) * 100) / 100} MB`,
         limit: `${Math.round((memory.jsHeapSizeLimit / 1048576) * 100) / 100} MB`,
@@ -197,7 +212,7 @@ export const measureExecutionTime = async <T>(
   try {
     const result = await fn();
     const endTime = performance.now();
-    console.log(`${label} took ${endTime - startTime}ms`);
+    console.warn(`${label} took ${endTime - startTime}ms`);
     return result;
   } catch (error) {
     const endTime = performance.now();
@@ -210,8 +225,8 @@ export const measureExecutionTime = async <T>(
 export const trackApiCall = async (
   url: string,
   method: string,
-  fn: () => Promise<any>,
-): Promise<any> => {
+  fn: () => Promise<unknown>,
+): Promise<unknown> => {
   const startTime = performance.now();
   try {
     const result = await fn();
@@ -227,16 +242,17 @@ export const trackApiCall = async (
 
 // Error tracking
 export const trackError = (error: Error, context?: string): void => {
-  if (typeof window !== "undefined" && (window as any).gtag) {
-    (window as any).gtag("event", "exception", {
+  const { gtag } = window as { gtag?: (...args: unknown[]) => void };
+  if (typeof window !== "undefined" && gtag) {
+    gtag("event", "exception", {
       description: error.message,
       fatal: false,
-      context: context || "unknown",
+      context: context ?? "unknown",
     });
   }
 
   // Also log to console
-  console.error(`Error in ${context || "unknown"}:`, error);
+  console.error(`Error in ${context ?? "unknown"}:`, error);
 };
 
 // User journey timing

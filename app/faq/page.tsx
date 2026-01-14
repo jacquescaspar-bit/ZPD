@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Nav from "@/Nav";
 
 export const metadata: Metadata = {
   title: "FAQ | ZPD Learning - Frequently Asked Questions",
@@ -16,24 +17,28 @@ export const metadata: Metadata = {
 
 const FAQPage = () => (
   <div className="relative">
+    <Nav />
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-6 py-20">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+      <div className="max-w-6xl mx-auto space-y-6">
         {/* Hero Section */}
-        <section className="text-center mb-16">
+        <section className="text-center pb-20">
           <h1
-            className="text-5xl font-light mb-12 text-gray-900 dark:text-white"
-            style={{ letterSpacing: "0.1em" }}
+            className="text-4xl sm:text-6xl font-semibold mb-2 sm:mb-4 text-gray-900 dark:text-white text-center leading-tight"
+            style={{ letterSpacing: "0.02em" }}
           >
             Frequently Asked Questions
           </h1>
-          <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-8">
+          <p
+            className="text-gray-600 dark:text-gray-400 text-base sm:text-lg font-normal mt-2 sm:mt-4 max-w-2xl mx-auto leading-relaxed"
+            style={{ letterSpacing: "0.01em" }}
+          >
             Everything you need to know about ZPD Learning
           </p>
         </section>
 
         {/* Why Choose ZPD Section */}
-        <section className="py-16 bg-blue-50 dark:bg-gray-800 rounded-2xl mb-16">
+        <section className="py-16 bg-blue-50 dark:bg-gray-800 rounded-2xl">
           <div className="max-w-6xl mx-auto px-8">
             <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
               Why Choose ZPD Learning?
