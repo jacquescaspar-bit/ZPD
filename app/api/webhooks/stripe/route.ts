@@ -5,12 +5,11 @@ import { EmailService } from "@/lib/email";
 import { validateWebhookRequest } from "@/lib/webhookSecurity";
 import type Stripe from "stripe";
 
-if (!process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error("STRIPE_WEBHOOK_SECRET is not set");
-}
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
 export async function POST(request: NextRequest) {
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!endpointSecret) {
+    throw new Error("STRIPE_WEBHOOK_SECRET is not set");
+  }
   try {
     // Check rate limiting and other security measures
     const securityCheck = validateWebhookRequest(request);
