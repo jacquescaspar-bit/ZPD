@@ -1,10 +1,27 @@
 // Email service using SendGrid
 
+interface MailData {
+  to: string;
+  from: string;
+  subject: string;
+  html: string;
+  text?: string;
+  attachments?: EmailAttachment[];
+}
+
+export interface EmailAttachment {
+  content: string; // base64 encoded content
+  filename: string;
+  type: string;
+  disposition: string;
+}
+
 export interface EmailData {
   to: string;
   subject: string;
   html: string;
   text?: string;
+  attachments?: EmailAttachment[];
 }
 
 const sendEmail = async (data: EmailData): Promise<boolean> => {
@@ -23,13 +40,19 @@ const sendEmail = async (data: EmailData): Promise<boolean> => {
     const sgMail = (await import("@sendgrid/mail")).default;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-    await sgMail.send({
+    const mailData: MailData = {
       to: data.to,
       from: process.env.FROM_EMAIL ?? "noreply@zpd-tutoring.com",
       subject: data.subject,
       html: data.html,
       text: data.text,
-    });
+    };
+
+    if (data.attachments && data.attachments.length > 0) {
+      mailData.attachments = data.attachments;
+    }
+
+    await sgMail.send(mailData);
 
     console.warn(`📧 Email sent successfully to ${data.to}: ${data.subject}`);
     return true;
@@ -47,7 +70,7 @@ const sendReferralCodeEmail = async (
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h1 style="color: #059669;">Welcome to ZPD Tutoring!</h1>
-      <p>Thank you for your enrollment. Here's your unique referral code:</p>
+      <p>Thank you for your enrolment. Here's your unique referral code:</p>
       <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
         <h2 style="color: #059669; font-size: 24px; margin: 0;">${referralCode}</h2>
       </div>
@@ -76,7 +99,7 @@ const sendNewReferralCodeEmail = async (
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h1 style="color: #059669;">🎉 New Referral Code!</h1>
-      <p>Great news! Someone used your referral code <strong>${originalCode}</strong> to enroll.</p>
+      <p>Great news! Someone used your referral code <strong>${originalCode}</strong> to enrol.</p>
       <p>You've earned a new referral code to share:</p>
       <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
         <h2 style="color: #059669; font-size: 24px; margin: 0;">${newReferralCode}</h2>

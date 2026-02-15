@@ -5,7 +5,7 @@ const Features = () => (
     className="min-h-screen flex flex-col justify-center bg-gray-100 dark:bg-gray-900 px-6 z-10"
     id="features"
   >
-    <div className="max-w-6xl text-center mx-auto py-16">
+    <div className="text-center py-16">
       <h2
         className="text-5xl font-light mb-12 text-gray-900 dark:text-white"
         style={{ letterSpacing: "0.1em" }}
@@ -74,7 +74,7 @@ const Features = () => (
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               Individualized learning plans featuring weekly objectives,
-              customized curriculum pacing, preferred teaching methodologies,
+              customised curriculum pacing, preferred teaching methodologies,
               and adaptive progress milestones.
             </p>
           </div>

@@ -82,21 +82,21 @@ CREATE INDEX IF NOT EXISTS idx_promo_analytics_code_id ON promo_analytics(promo_
 CREATE INDEX IF NOT EXISTS idx_promo_analytics_event_type ON promo_analytics(event_type);
 CREATE INDEX IF NOT EXISTS idx_promo_analytics_created_at ON promo_analytics(created_at);
 
--- Function to update updated_at timestamp for promo codes
-CREATE TRIGGER update_promo_codes_updated_at
-    BEFORE UPDATE ON promo_codes
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS '
 BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
-$$ language 'plpgsql';
+' language 'plpgsql';
 
--- Trigger to automatically update updated_at
+-- Trigger to automatically update updated_at for promo codes
+CREATE TRIGGER update_promo_codes_updated_at
+    BEFORE UPDATE ON promo_codes
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Trigger to automatically update updated_at for referral codes
 CREATE TRIGGER update_referral_codes_updated_at
     BEFORE UPDATE ON referral_codes
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

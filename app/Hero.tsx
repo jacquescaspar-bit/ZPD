@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import localFont from "next/font/local";
+import { Button, Container } from "@/components/ui";
 
 const antipasto = localFont({
   src: [
@@ -23,7 +24,7 @@ const antipasto = localFont({
 const Hero = () => {
   const [hideCta, setHideCta] = useState(false);
   const [ctaThreshold, setCtaThreshold] = useState(0);
-  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const ctaRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -49,39 +50,52 @@ const Hero = () => {
   }, [ctaThreshold]);
 
   return (
-    <main className="min-h-screen flex flex-col justify-start items-center px-6 pt-24 pb-16 relative overflow-hidden z-10">
-      <div className="text-center flex flex-col items-center justify-center relative z-10 animate-fade-in-up">
-        {/* ZPD */}
-        <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          ZPD
-        </div>
+    <main
+      className="min-h-screen relative overflow-hidden z-10"
+      style={{
+        paddingTop: "0",
+        paddingBottom: "var(--spacing-16)",
+      }}
+    >
+      <Container
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        size="full"
+      >
+        <div className="text-center flex flex-col items-center justify-center relative z-10 animate-fade-in-up">
+          {/* ZPD */}
+          <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] bg-clip-text text-transparent">
+            ZPD
+          </div>
 
-        {/* Learning */}
-        <div
-          className={`${antipasto.className} text-4xl sm:text-5xl md:text-6xl font-[200] text-center text-gray-700 dark:text-gray-300 mb-8`}
-        >
-          <span className="tracking-wide">
-            Personalised{" "}
-            <span className="font-[400] text-blue-600 dark:text-blue-400">
-              Tutoring
-            </span>
-          </span>
-        </div>
-
-        {/* CTA Button */}
-        <div
-          className={`mt-8 transition-opacity duration-500 ${hideCta ? "opacity-0" : "opacity-100"}`}
-        >
-          <a
-            ref={ctaRef}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-base sm:text-lg tracking-wide inline-block"
-            href="/enrol"
-            id="cta-button"
+          {/* Learning */}
+          <div
+            className={`${antipasto.className} text-4xl sm:text-5xl md:text-6xl font-[200] text-center text-[var(--gray-700)] dark:text-[var(--gray-300)] mb-8`}
           >
-            Enrol Now
-          </a>
+            <span className="tracking-wide">
+              <span className="text-black dark:text-white">Personalised </span>
+              <span className="font-[400] text-[var(--primary)] dark:text-[var(--primary)]">
+                Tutoring
+              </span>
+            </span>
+          </div>
+
+          {/* CTA Button */}
+          <div
+            className={`mt-8 transition-opacity duration-500 ${hideCta ? "opacity-0" : "opacity-100"}`}
+          >
+            <Button
+              ref={ctaRef}
+              className="rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide px-6 sm:px-10 py-4 sm:py-5"
+              id="cta-button"
+              size="lg"
+              variant="gradient"
+              onClick={() => (window.location.href = "/enrol")}
+            >
+              Enrol Now
+            </Button>
+          </div>
         </div>
-      </div>
+      </Container>
     </main>
   );
 };

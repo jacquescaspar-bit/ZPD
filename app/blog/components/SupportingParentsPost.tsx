@@ -122,7 +122,7 @@ const SupportingParentsPost = () => (
       </p>
 
       <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-        Specialized Support for Tough Situations
+        Specialised Support for Tough Situations
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Some families face particularly challenging circumstances – learning

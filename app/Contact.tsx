@@ -3,7 +3,7 @@ const Contact = () => (
     className="min-h-screen flex flex-col justify-center bg-gray-50 dark:bg-gray-800 px-6 z-10"
     id="contact"
   >
-    <div className="max-w-4xl w-full mx-auto py-16">
+    <div className="w-full py-16">
       <h2
         className="text-5xl font-light mb-12 text-center text-gray-900 dark:text-white"
         style={{ letterSpacing: "0.1em" }}

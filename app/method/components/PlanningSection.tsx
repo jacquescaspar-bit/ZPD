@@ -33,7 +33,7 @@ const PlanningSection = () => (
         </div>
       </div>
       <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-        Based on the assessment results, we develop a customized learning plan
+        Based on the assessment results, we develop a customised learning plan
         that targets specific areas for improvement while building on existing
         strengths. Our educational specialists design a curriculum that aligns
         with school requirements and your child&apos;s learning goals, ensuring

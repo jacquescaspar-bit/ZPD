@@ -150,7 +150,7 @@ const PersonalisedLearningPost = () => (
       </h3>
       <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
         Schools want to personalise learning, but they face huge obstacles.
-        Class sizes, standardized testing, and limited resources make it nearly
+        Class sizes, standardised testing, and limited resources make it nearly
         impossible. That's why tutoring services like ours are so important – we
         can provide the individual attention that schools can't.
       </p>

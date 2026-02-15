@@ -11,14 +11,124 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => (
-  <html lang="en">
+  <html dir="ltr" lang="en">
     <head>
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
       />
     </head>
-    <body className="antialiased">{children}</body>
+    <body className="antialiased bg-[var(--background)] text-[var(--foreground)] min-h-screen">
+      {children}
+      <footer className="bg-gray-900 dark:bg-black text-white py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4">
+                {/* PLACEHOLDER: Business Name */} ZPD Learning Pty Ltd
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Personalised tutoring in the Zone of Proximal Development
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Services</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/services"
+                  >
+                    Our Services
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/method"
+                  >
+                    Our Method
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/enrol"
+                  >
+                    Enroll Now
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/faq"
+                  >
+                    FAQ
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/privacy"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/terms"
+                  >
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/refund-policy"
+                  >
+                    Refund Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-gray-400 hover:text-white transition-colors"
+                    href="/child-protection"
+                  >
+                    Child Protection
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact</h4>
+              <div className="text-sm text-gray-400 space-y-2">
+                <p>
+                  {/* PLACEHOLDER: Business Address */} 123 Education Street,
+                  Sydney NSW 2000, Australia
+                </p>
+                <p>{/* PLACEHOLDER: Business Phone */} +61 400 123 456</p>
+                <p>
+                  {/* PLACEHOLDER: Support Email */} support@zpdtutoring.com
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+            <p>
+              &copy; {/* PLACEHOLDER: Current Year */} 2024{" "}
+              {/* PLACEHOLDER: Business Name */} ZPD Learning Pty Ltd. All
+              rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </body>
   </html>
 );
 

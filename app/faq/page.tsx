@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Nav from "@/Nav";
 
 export const metadata: Metadata = {
-  title: "FAQ | ZPD Learning - Frequently Asked Questions",
   description:
     "Find answers to common questions about ZPD tutoring, our approach, pricing, and how we support families and tutors in Sydney.",
   keywords:
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ZPD Learning FAQ",
     description:
-      "Answers to your questions about personalized tutoring and ZPD approach.",
+      "Answers to your questions about personalised tutoring and ZPD approach.",
     type: "website",
   },
 };
@@ -20,7 +19,7 @@ const FAQPage = () => (
     <Nav />
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
     <div className="min-h-screen px-6 pt-16 pb-12 z-10">
-      <div className="max-w-6xl mx-auto space-y-6">
+      <div className="space-y-6">
         {/* Hero Section */}
         <section className="text-center pb-20">
           <h1
@@ -39,7 +38,7 @@ const FAQPage = () => (
 
         {/* Why Choose ZPD Section */}
         <section className="py-16 bg-blue-50 dark:bg-gray-800 rounded-2xl">
-          <div className="max-w-6xl mx-auto px-8">
+          <div className="px-8">
             <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
               Why Choose ZPD Learning?
             </h2>
@@ -259,7 +258,7 @@ const FAQPage = () => (
             <p className="mt-4 text-gray-700 dark:text-gray-300">
               Most families can start within 1-2 weeks. We begin with a
               diagnostic assessment, then match you with the perfect tutor and
-              create a customized learning plan.
+              create a customised learning plan.
             </p>
           </details>
 
@@ -269,7 +268,7 @@ const FAQPage = () => (
             </summary>
             <p className="mt-4 text-gray-700 dark:text-gray-300">
               Unlike traditional tutoring that focuses on content delivery, ZPD
-              uses scientific learning theory to optimize challenge levels. This
+              uses scientific learning theory to optimise challenge levels. This
               results in faster progress, better retention, and increased
               confidence.
             </p>

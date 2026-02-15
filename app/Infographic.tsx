@@ -48,68 +48,68 @@ const Infographic = () => {
     >
       <div className="absolute inset-0 flex flex-col z-0">
         <div className="flex justify-between w-full flex-1 items-center">
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             W
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             H
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             E
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             R
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             E
           </span>
         </div>
         <div className="flex justify-between w-full flex-1 items-center">
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             L
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             E
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             A
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             R
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             N
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             I
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             N
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             G
           </span>
         </div>
         <div className="flex justify-between w-full flex-1 items-center">
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             H
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             A
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             P
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             P
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             E
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             N
           </span>
-          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-200 dark:text-gray-700 select-none opacity-30">
+          <span className="text-6xl md:text-8xl lg:text-[12rem] font-light text-gray-400 dark:text-gray-700 select-none opacity-30">
             S
           </span>
         </div>

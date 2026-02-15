@@ -196,7 +196,7 @@ Returns:
 
 - Implement Redis for session/rate limiting
 - Use CDN for static assets
-- Monitor memory usage and optimize
+- Monitor memory usage and optimise
 
 ## Backup & Recovery
 

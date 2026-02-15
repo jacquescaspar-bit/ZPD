@@ -89,7 +89,7 @@ const PrivacyConsent: React.FC<PrivacyConsentProps> = ({ onConsentChange }) => {
               </h3>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
                 We use cookies and similar technologies to improve your
-                experience, analyze site usage, and assist in our marketing
+                experience, analyse site usage, and assist in our marketing
                 efforts. By continuing to use our site, you agree to our use of
                 cookies.
               </p>
@@ -99,7 +99,7 @@ const PrivacyConsent: React.FC<PrivacyConsentProps> = ({ onConsentChange }) => {
                 className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                 onClick={handleCustomize}
               >
-                Customize
+                Customise
               </button>
               <button
                 className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
@@ -156,7 +156,7 @@ const CookieCustomization: React.FC<CookieCustomizationProps> = ({
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-        Customize Your Cookie Preferences
+        Customise Your Cookie Preferences
       </h3>
 
       <div className="space-y-3">
@@ -200,7 +200,7 @@ const CookieCustomization: React.FC<CookieCustomizationProps> = ({
               Marketing Cookies
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-300">
-              Used to deliver personalized advertisements and marketing content.
+              Used to deliver personalised advertisements and marketing content.
             </p>
           </div>
           <input

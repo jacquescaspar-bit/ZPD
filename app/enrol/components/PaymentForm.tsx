@@ -28,7 +28,7 @@ export interface EnrollmentPaymentData {
 interface PaymentFormProps {
   planType: PlanType;
   enrollmentData: EnrollmentPaymentData;
-  onPaymentSuccess: () => void;
+  onPaymentSuccess: (paymentIntentId: string) => void;
   onPaymentError: (error: string) => void;
   summarySlot?: React.ReactNode;
   submitLabel?: string;
@@ -165,7 +165,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
       // Bypass Stripe validation for testing
       console.warn("🧪 TEST MODE: Bypassing Stripe payment validation");
       setValidationError(null);
-      onPaymentSuccess();
+      onPaymentSuccess(`test_payment_intent_${Date.now()}`);
       return;
     }
 
@@ -202,7 +202,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
         onPaymentError(error.message ?? "Payment failed");
       } else if (paymentIntent?.status === "succeeded") {
         setValidationError(null);
-        onPaymentSuccess();
+        onPaymentSuccess(paymentIntent.id);
       }
     } catch {
       onPaymentError("Payment processing failed");

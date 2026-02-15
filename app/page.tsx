@@ -9,16 +9,20 @@ import Stats from "@/Stats";
 import Testimonials from "@/Testimonials";
 import TrinitySynergy from "@/TrinitySynergy";
 import BackToTop from "@/BackToTop";
+import BodyBackground from "@/BodyBackground";
+import { Card } from "@/components/ui";
 
 const Home = () => (
   <>
     <Nav />
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
+    <BodyBackground />
     <Hero />
     <ZPDDefinitionSection />
     <Infographic />
     <Features />
-    <Stats />
+    <Card>
+      <Stats />
+    </Card>
     <Testimonials />
     <TrinitySynergy />
     <BackToTop />

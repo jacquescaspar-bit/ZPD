@@ -33,7 +33,7 @@ const TeacherInsightSection = () => (
         </div>
       </div>
       <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-        Our experienced educators analyze the assessment data to gain deep
+        Our experienced educators analyse the assessment data to gain deep
         insights into your child&apos;s learning patterns, cognitive strengths,
         and potential challenges. Drawing from years of expertise in ZPD
         methodology, teachers identify the optimal learning strategies and

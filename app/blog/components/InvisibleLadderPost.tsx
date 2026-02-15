@@ -89,18 +89,23 @@ const InvisibleLadderPost = () => {
         </p>
 
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          Which brings us to the single weird trick we do at ZPD Learning that
-          sounds almost stupidly obvious once you hear it, yet literally no one
-          else in Australia is doing systematically for K-12 tutoring:
+          Which brings us to our systematic ZPD methodology that ensures every
+          child gets tutoring perfectly aligned with their needs and classroom:
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          We ring the teacher.
+          We begin with a thorough intake and matching process to understand
+          your child's learning profile and optimal Zone of Proximal Development
+          (ZPD).
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          Not in a creepy way. With your permission, we have a short,
-          professional conversation (or secure email exchange) with the one
-          adult who has 20+ hours a week of fresh data on your child. We ask
-          questions like:
+          Then, we conduct comprehensive diagnostic assessments to identify
+          strengths, weaknesses, and learning gaps across key academic areas.
+        </p>
+        <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
+          To ensure perfect alignment with their classroom, we collaborate with
+          parents to obtain insights from the child's teacher through a
+          professional conversation or secure email exchange. We ask questions
+          like:
         </p>
         <div className="ml-6 space-y-2 mb-6">
           <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 flex items-start">
@@ -121,39 +126,43 @@ const InvisibleLadderPost = () => {
           </p>
         </div>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          Fifteen minutes later, we have an x-ray of your child’s exact ZPD in
-          the topic that’s currently causing homework wars – whether it’s
-          reading comprehension in Year 3 or quadratic equations in Year 10.
+          This gives us an x-ray of your child's exact ZPD in the topic that's
+          currently causing homework wars – whether it's reading comprehension
+          in Year 3 or quadratic equations in Year 10.
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          Then – and only then – do we design a 45 – 60 minute diagnostic
-          session built entirely around that intelligence. No generic quizzes;
-          this is personalised ZPD learning at its core, probing the edges of
-          what your child can almost do independently.
+          Based on all this data, we create a personalised learning plan that
+          targets specific areas for improvement while building on existing
+          strengths, aligned with school requirements and your child's goals.
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          Then – and only then – do we match your child with a tutor who was
-          literally standing in a classroom in your local government area last
-          week, teaching the identical content as a casual or relief teacher.
-          These aren’t retired educators or uni students; they’re active pros
-          engaged with the current curriculum, ensuring relevance in every
-          session.
+          Then, we match your child with a certified tutor who was literally
+          standing in a classroom in your local government area last week,
+          teaching the identical content as a casual or relief teacher. These
+          aren't retired educators or uni students; they're active pros engaged
+          with the current curriculum, ensuring relevance in every session.
+        </p>
+        <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
+          Sessions commence within the ZPD, employing scaffolding techniques for
+          just the right amount of support, gradually reducing it as competence
+          grows. We maintain detailed progress records and provide regular
+          feedback, adjusting the plan as needed for optimal growth.
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
           The first session feels like watching someone hand your kid the exact
-          missing Lego piece they’ve been searching for under the couch for six
-          weeks. Tears turn to triumphs, and growth happens fast because we’re
-          meeting them precisely where they are – thanks to that
-          teacher-partnered tutoring approach.
+          missing Lego piece they've been searching for under the couch for six
+          weeks. Tears turn to triumphs, and growth happens fast because we're
+          meeting them precisely where they are – thanks to our evidence-based
+          ZPD approach.
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
-          This isn’t just theory; it’s how we transform unknown concepts into
+          This isn't just theory; it's how we transform unknown concepts into
           known strengths, session by session, across all K-12 subjects.
         </p>
         <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
           Want to find out where your child is really standing on their
-          invisible ladder? Fill in the short contact form below, and we’ll
-          start the (free) teacher conversation to uncover their ZPD and
+          invisible ladder? Fill in the short contact form below, and we'll
+          guide you through our intake process to uncover their ZPD and
           kickstart personalised growth.
         </p>
         {/* Contact Form CTA would be integrated here */}
@@ -215,7 +224,7 @@ const InvisibleLadderPost = () => {
                     rows of kids hunched over identical booklets, ticking boxes
                     on long division or comprehension passages. It's efficient,
                     scalable, and… utterly blind to the individual child's ZPD.
-                    Why? Because these systems use standardized placement tests
+                    Why? Because these systems use standardised placement tests
                     from years ago. Your Year 5 kid gets plopped into "Level E"
                     based on a quiz that hasn't been updated since the Howard
                     era. Meanwhile, their actual classroom is deep into the
@@ -252,7 +261,7 @@ const InvisibleLadderPost = () => {
                     franchise factories to gig-economy Zoom calls – has one
                     thing in common: it ignores the teacher in the room. The
                     actual classroom teacher, who sees your child's work samples
-                    daily, tracks their running records, analyzes their NAPLAN
+                    daily, tracks their running records, analyses their NAPLAN
                     data, and plans units around the exact curriculum sequence
                     happening right now. They're the air traffic controller of
                     your child's learning journey, yet traditional tutoring

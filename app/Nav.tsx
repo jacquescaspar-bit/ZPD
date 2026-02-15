@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { Button, Container } from "@/components/ui";
 
 const Nav = () => {
   const pathname = usePathname();
@@ -118,12 +119,15 @@ const Nav = () => {
     <>
       {/* Desktop Navigation */}
       {!isMobile && (
-        <nav className="sticky top-0 z-20 px-6 py-4 min-h-16 relative transition-all duration-500 backdrop-blur-md">
+        <nav className="sticky top-0 z-20 py-4 min-h-16 relative transition-all duration-500 backdrop-blur-md">
           <div
             className={`absolute inset-0 bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 ${pathname === "/" ? "transition-opacity duration-500" : ""}`}
             style={{ opacity: navOpacity }}
           />
-          <div className="flex items-center justify-between w-full relative z-10">
+          <Container
+            className="flex items-center justify-between w-full relative z-10"
+            size="full"
+          >
             <a
               className="text-3xl md:text-4xl whitespace-nowrap leading-tight"
               href="/"
@@ -133,49 +137,68 @@ const Nav = () => {
               <span className="font-light ml-1">learning</span>
             </a>
             <div className="flex flex-row items-center space-x-6 md:space-x-8">
+              {pathname === "/enrol" ? (
+                <a
+                  className="text-lg md:text-xl text-center leading-snug relative transition-all duration-300 font-bold after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:transform after:scale-x-100"
+                  href="/enrol"
+                  style={
+                    {
+                      fontFamily: "antipasto",
+                      letterSpacing: "0.1em",
+                      color: "var(--gray-800)",
+                      "--after-bg": "var(--gray-800)",
+                    } as React.CSSProperties
+                  }
+                >
+                  Enrol
+                </a>
+              ) : showCtaInNav ? (
+                <Button
+                  className="px-3 md:px-4 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 text-lg md:text-xl tracking-wide transition-all duration-300"
+                  style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
+                  onClick={() => (window.location.href = "/enrol")}
+                >
+                  Enrol
+                </Button>
+              ) : (
+                <a
+                  className="text-lg md:text-xl text-center leading-snug relative transition-all duration-300 font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"
+                  href="/enrol"
+                  style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
+                >
+                  Enrol
+                </a>
+              )}
               <a
-                className={`text-lg md:text-xl text-center leading-snug relative ${pathname === "/" ? "transition-all duration-300" : ""} ${
-                  pathname === "/enrol"
-                    ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100"
-                    : showCtaInNav
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-3 md:px-4 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 text-lg md:text-xl tracking-wide flex items-center justify-center"
-                      : "font-light text-gray-700 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"
-                }`}
-                href="/enrol"
-                style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
-              >
-                Enrol
-              </a>
-              <a
-                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/services" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-700 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
+                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/services" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
                 href="/services"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
               >
                 Services
               </a>
               <a
-                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/method" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-700 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
+                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/method" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
                 href="/method"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
               >
                 Method
               </a>
               <a
-                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/blog" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-700 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
+                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/blog" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
                 href="/blog"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
               >
                 Blog
               </a>
               <a
-                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/faq" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-700 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
+                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/faq" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
                 href="/faq"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
               >
                 FAQ
               </a>
             </div>
-          </div>
+          </Container>
         </nav>
       )}
 
@@ -214,12 +237,13 @@ const Nav = () => {
 
       {/* Mobile CTA - Show on all pages except enrol */}
       {isMobile && pathname !== "/enrol" && (
-        <a
-          className={`fixed bottom-8 left-8 z-50 w-24 h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 ${pathname === "/" ? "transition-all duration-300" : ""} text-sm tracking-wide whitespace-nowrap flex items-center justify-center leading-tight ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
-          href="/enrol"
+        <Button
+          className={`fixed bottom-8 left-8 z-50 w-24 h-12 px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm tracking-wide whitespace-nowrap leading-tight ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
+          style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
+          onClick={() => (window.location.href = "/enrol")}
         >
           Enrol
-        </a>
+        </Button>
       )}
 
       {/* Mobile Menu */}

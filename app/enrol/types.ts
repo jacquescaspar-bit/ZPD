@@ -7,6 +7,7 @@ export interface EnrollmentFormProps {
   initialPromoCode?: string;
   initialStep?: Step;
   onPaymentProcessingChange?: (isProcessing: boolean) => void;
+  onStepChange?: (step: Step) => void;
 }
 
 export interface ReferralCode {

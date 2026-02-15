@@ -6,7 +6,7 @@ const StartContent = () => (
     <Nav />
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
     <div className="min-h-screen px-6 pt-16 pb-12 z-10">
-      <div className="max-w-6xl mx-auto space-y-6">
+      <div className="space-y-6">
         <section className="text-center pb-20">
           <h1
             className="text-4xl sm:text-6xl font-semibold mb-2 sm:mb-4 text-gray-900 dark:text-white text-center leading-tight"
@@ -29,11 +29,11 @@ const StartContent = () => (
             <p className="hidden md:block text-lg sm:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-4">
               This systematic approach ensures consistent progress and
               measurable results, helping students build confidence and achieve
-              academic excellence through personalized, evidence-based tutoring.
+              academic excellence through personalised, evidence-based tutoring.
             </p>
             <p className="md:hidden text-lg sm:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-4">
               Our systematic approach delivers consistent progress, building
-              confidence through personalized tutoring.
+              confidence through personalised tutoring.
             </p>
           </div>
         </div>

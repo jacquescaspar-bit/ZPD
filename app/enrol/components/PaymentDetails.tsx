@@ -256,7 +256,7 @@ export interface PaymentDetailsProps {
   isPaymentReady: boolean;
   missingFields?: string[];
   onPaymentError: (message: string) => void;
-  onPaymentSuccess: () => void;
+  onPaymentSuccess: (paymentIntentId: string) => void;
   finalAmountCents: number;
   promoAdjustments: { label: string; amount: number }[];
   selectedPlanLabel: string;
@@ -538,7 +538,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
               setPhone("0408453241");
               // Immediately trigger payment success
               setTimeout(() => {
-                onPaymentSuccess();
+                onPaymentSuccess(`test_payment_intent_${Date.now()}`);
               }, 100);
             }}
           >

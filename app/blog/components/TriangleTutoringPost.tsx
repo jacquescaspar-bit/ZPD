@@ -125,7 +125,7 @@ const TriangleTutoringPost = () => {
                     rows of kids hunched over identical booklets, ticking boxes
                     on long division or comprehension passages. It's efficient,
                     scalable, and… utterly blind to the individual child's ZPD.
-                    Why? Because these systems use standardized placement tests
+                    Why? Because these systems use standardised placement tests
                     from years ago. Your Year 5 kid gets plopped into "Level E"
                     based on a quiz that hasn't been updated since the Howard
                     era. Meanwhile, their actual classroom is deep into the
@@ -162,7 +162,7 @@ const TriangleTutoringPost = () => {
                     franchise factories to gig-economy Zoom calls – has one
                     thing in common: it ignores the teacher in the room. The
                     actual classroom teacher, who sees your child's work samples
-                    daily, tracks their running records, analyzes their NAPLAN
+                    daily, tracks their running records, analyses their NAPLAN
                     data, and plans units around the exact curriculum sequence
                     happening right now. They're the air traffic controller of
                     your child's learning journey, yet traditional tutoring

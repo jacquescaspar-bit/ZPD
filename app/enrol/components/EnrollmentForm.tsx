@@ -18,8 +18,9 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   initialPromoCode,
   initialStep = "plan",
   onPaymentProcessingChange,
+  onStepChange,
 }) => {
-  const [currentStep, setCurrentStep] = useState<Step>(initialStep);
+  const [currentStep, _setCurrentStep] = useState<Step>(initialStep);
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(
     initialPlan ?? null,
   );
@@ -97,6 +98,11 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     }
   }, [selectedPlan, isDesktop, currentStep]);
 
+  // Notify parent when step changes
+  useEffect(() => {
+    onStepChange?.(currentStep);
+  }, [currentStep, onStepChange]);
+
   const handleAttachmentChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -143,7 +149,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   const basePriceCents = selectedPlan ? PRICING[selectedPlan].price : 0;
   const finalAmountCents = calculateFinalAmount(basePriceCents);
 
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccess = async (paymentIntentId: string) => {
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -152,6 +158,81 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     setIsFadingOut(false);
     setShowReviewStep(false);
     setPaymentStatus("processing");
+
+    // Check if this is a test payment
+    const isTestPayment = paymentIntentId.startsWith("test_payment_intent_");
+
+    if (isTestPayment) {
+      // For test payments, skip API call and directly redirect
+      console.warn("🧪 TEST PAYMENT: Skipping enrollment session creation");
+      setTimeout(() => {
+        setPaymentStatus("success");
+        window.location.href = `/enrol/insights`;
+      }, 1500);
+      return;
+    }
+
+    try {
+      // Generate unique session ID
+      const sessionId = crypto.randomUUID();
+
+      // Prepare enrollment data
+      const enrollmentPayload = {
+        sessionId,
+        email,
+        currentStep: "insights",
+        enrollmentData: {
+          plan: selectedPlan,
+          parentName,
+          email,
+          phone,
+          notes,
+          attachmentNames: attachments.map((file) => file.name),
+          finalAmountCents,
+          promoCode: promoCode || undefined,
+          appliedPromoValue,
+          appliedPromoKind,
+        },
+        insightsData: {},
+        progressStatus: {},
+        stripePaymentIntentId: paymentIntentId,
+      };
+
+      // Create enrollment session
+      const response = await fetch("/api/enrollment-sessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(enrollmentPayload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error ?? "Failed to create enrollment session",
+        );
+      }
+
+      const result = await response.json();
+
+      // Store session ID for insights page
+      sessionStorage.setItem("enrollmentSessionId", result.session.sessionId);
+
+      // Show success message and redirect simultaneously
+      setTimeout(() => {
+        setPaymentStatus("success");
+        window.location.href = `/enrol/insights`;
+      }, 1500);
+    } catch (error) {
+      console.error("Error creating enrollment session:", error);
+
+      // Fallback to current behavior but still redirect
+      setTimeout(() => {
+        setPaymentStatus("success");
+        window.location.href = `/enrol/insights`;
+      }, 1500);
+    }
   };
 
   // Notify parent when payment processing state changes
@@ -168,12 +249,10 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
         // Then start fading after another 0.5 seconds
         setTimeout(() => {
           setIsFadingOut(true);
-          // After fade out animation completes, show review step
+          // After fade out animation completes
           setTimeout(() => {
             setIsPaymentProcessing(false);
             setIsFadingOut(false);
-            setCurrentStep("review");
-            setShowReviewStep(true);
           }, 300); // Match the fade duration
         }, 500);
       }, 1500);
@@ -282,7 +361,17 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                       setErrorMessage(message);
                       setStatusMessage(null);
                     },
-                    onPaymentSuccess: handlePaymentSuccess,
+                    onPaymentSuccess: (paymentIntentId) => {
+                      handlePaymentSuccess(paymentIntentId).catch((error) => {
+                        console.error(
+                          "Payment success handling failed:",
+                          error,
+                        );
+                        setErrorMessage(
+                          "An error occurred after payment. Please contact support.",
+                        );
+                      });
+                    },
                     finalAmountCents,
                     promoAdjustments,
                     selectedPlanLabel,
@@ -332,7 +421,14 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
               setErrorMessage(message);
               setStatusMessage(null);
             }}
-            onPaymentSuccess={handlePaymentSuccess}
+            onPaymentSuccess={(paymentIntentId) => {
+              handlePaymentSuccess(paymentIntentId).catch((error) => {
+                console.error("Payment success handling failed:", error);
+                setErrorMessage(
+                  "An error occurred after payment. Please contact support.",
+                );
+              });
+            }}
             onSubmitAttempt={() => setHasAttemptedSubmit(true)}
           />
         );
