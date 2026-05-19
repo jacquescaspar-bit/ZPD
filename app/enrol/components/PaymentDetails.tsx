@@ -264,6 +264,8 @@ export interface PaymentDetailsProps {
   attachments: File[];
   basePriceCents: number;
   showHeader?: boolean;
+  /** When false, only the "Payment details" title is shown (no subtitle). */
+  showHeaderSubtitle?: boolean;
   hasAttemptedSubmit: boolean;
   onSubmitAttempt: () => void;
   forceTestMode?: boolean;
@@ -296,12 +298,18 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   attachments: _attachments,
   basePriceCents: _basePriceCents,
   showHeader = true,
+  showHeaderSubtitle = true,
   hasAttemptedSubmit,
   onSubmitAttempt,
   forceTestMode = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [testModeEnabled, _setTestModeEnabled] = useState(forceTestMode);
+  const paymentsDisabled =
+    process.env.NEXT_PUBLIC_PAYMENTS_DISABLED === "1" ||
+    !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+  const [testModeEnabled, _setTestModeEnabled] = useState(
+    forceTestMode || paymentsDisabled,
+  );
 
   // Validate promo code when input changes
   const handlePromoCodeChange = async (code: string) => {
@@ -332,13 +340,49 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       }`}
     >
       {showHeader && (
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Payment details
+        <div
+          className={
+            showHeaderSubtitle ? "space-y-1" : "mb-2 flex min-h-[3rem] items-center justify-start"
+          }
+        >
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Payment Details
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Complete your enrolment with secure payment.
+          {showHeaderSubtitle ? (
+            <p className="text-gray-600 dark:text-gray-400">
+              Complete your enrolment with secure payment.
+            </p>
+          ) : null}
+        </div>
+      )}
+      {paymentsDisabled && (
+        <div className="rounded-2xl border border-sky-200/70 bg-sky-50/80 dark:bg-sky-950/30 dark:border-sky-900 px-6 py-4 text-sky-900 dark:text-sky-200 shadow-lg">
+          <p className="text-sm sm:text-base font-medium">
+            Payments are disabled right now (UX mode).
           </p>
+          <p className="mt-2 text-sm text-sky-800/90 dark:text-sky-200/90">
+            You can continue through the enrolment flow without entering card
+            details. We’ll re-enable Stripe once the UX is locked in.
+          </p>
+          <div className="mt-4 flex flex-col sm:flex-row gap-3">
+            <button
+              className="inline-flex items-center justify-center rounded-xl bg-sky-600 px-4 py-2.5 text-white font-semibold hover:bg-sky-700 transition-colors"
+              type="button"
+              onClick={() => {
+                onSubmitAttempt();
+                onPaymentSuccess(`test_payment_intent_${Date.now()}`);
+              }}
+            >
+              Continue (skip payment)
+            </button>
+            <button
+              className="inline-flex items-center justify-center rounded-xl border border-sky-300/70 dark:border-sky-800 px-4 py-2.5 text-sky-900 dark:text-sky-100 font-semibold hover:bg-sky-100/70 dark:hover:bg-sky-900/30 transition-colors"
+              type="button"
+              onClick={() => _setTestModeEnabled(true)}
+            >
+              Show test payment button
+            </button>
+          </div>
         </div>
       )}
 
@@ -352,8 +396,9 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
         setPhone={setPhone}
       />
 
-      {/* Discount Code Section - Merged at end of payment section */}
-      <div className="border-t border-white/60 dark:border-gray-700 pt-6 space-y-4">
+      {/* Discount Code Section - Hidden for Discovery plan (trial) */}
+      {selectedPlan !== "trial" && (
+        <div className="border-t border-white/60 dark:border-gray-700 pt-6 space-y-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
             Referral or Promo Code
@@ -440,6 +485,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
           </div>
         )}
       </div>
+      )}
 
       <PaymentForm
         adjustments={promoAdjustments}

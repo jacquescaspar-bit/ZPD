@@ -27,10 +27,8 @@ const ProcessSteps = ({
   const steps = [
     { icon: UserCheck, label: "Intake & Matching", number: 1 },
     { icon: Search, label: "Diagnostic Discovery", number: 2 },
-    { icon: Lightbulb, label: "Teacher Insight", number: 3 },
-    { icon: Target, label: "Personalised Plan", number: 4 },
-    { icon: Users, label: "Sessions Commence", number: 5 },
-    { icon: MessageSquare, label: "Continuous Feedback", number: 6 },
+    { icon: Target, label: "Personalised Plan", number: 3 },
+    { icon: Users, label: "Sessions Commence", number: 4 },
   ];
 
   const formatLabel = (label: string): string => {
@@ -87,40 +85,7 @@ const ProcessSteps = ({
           </span>
         </div>
       </div>
-      <div className="flex md:hidden flex-row justify-between items-center mb-4 w-full px-3">
-        {steps.map((step, index) => {
-          const IconComponent = step.icon;
-          const isActive = index === currentIndex;
-          const borderWidth = "border-2";
-          const bgClass = isActive
-            ? "bg-blue-500 border-blue-600"
-            : "bg-gray-50 dark:bg-gray-900 border-transparent";
-          return (
-            <button
-              key={index}
-              aria-label={`Go to step ${step.number}: ${step.label}`}
-              className="relative h-11 flex items-center justify-center focus:outline-none rounded-full"
-              onClick={() => onStepClick(index)}
-            >
-              <div
-                className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg" : "bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-105 opacity-60"}`}
-              >
-                <IconComponent className="w-6 h-6 text-white" strokeWidth={2} />
-              </div>
-              <div
-                className={`absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center ${borderWidth} ${bgClass}`}
-              >
-                <span
-                  className={`text-xs font-bold font-mono transition-colors duration-300 ${isActive ? "text-white" : "text-blue-500"}`}
-                >
-                  {step.number}
-                </span>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-      <div className="hidden md:flex md:justify-between md:items-center relative px-8">
+      <div className="hidden md:block relative h-28 px-8">
         {steps.map((step, index) => {
           const IconComponent = step.icon;
           const isActive = index === currentIndex;
@@ -129,11 +94,15 @@ const ProcessSteps = ({
             ? "bg-blue-500 border-blue-600"
             : "bg-white dark:bg-gray-800 border-transparent";
           return (
-            <div key={index} className="flex flex-col items-center">
+            <div
+              key={index}
+              className="absolute flex flex-col items-center cursor-pointer"
+              style={{ left: `${(index + 0.5) * 25}%`, transform: "translateX(-50%)" }}
+              onClick={() => onStepClick(index)}
+            >
               <button
                 aria-label={`Go to step ${step.number}: ${step.label}`}
                 className="relative h-16 flex items-center justify-center mb-6 focus:outline-none rounded-full"
-                onClick={() => onStepClick(index)}
               >
                 <div
                   className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${isActive ? "bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg" : "bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-105 opacity-60"}`}
@@ -157,7 +126,7 @@ const ProcessSteps = ({
               </button>
               <div className="h-10 flex flex-col justify-center w-24">
                 <span
-                  className={`text-sm ${isActive ? "font-bold text-gray-900 dark:text-white" : "font-light text-gray-700 dark:text-gray-300"} text-center`}
+                  className={`text-base ${isActive ? "font-bold text-gray-900 dark:text-white" : "font-light text-gray-700 dark:text-gray-300"} text-center`}
                   style={{ whiteSpace: "pre-line" }}
                 >
                   {formatLabel(step.label)}
@@ -169,19 +138,19 @@ const ProcessSteps = ({
       </div>
       <div className="mt-8 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 flex hidden md:flex">
         <div
-          className={`bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-l-full flex-1 ${currentIndex >= 0 && currentIndex <= 3 ? "" : "opacity-30"}`}
-          style={{ flexBasis: "66.67%" }}
+          className={`bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-l-full flex-1 ${currentIndex <= 2 ? "" : "opacity-30"}`}
+          style={{ flexBasis: "75%" }}
         />
         <div
-          className={`bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-r-full flex-1 ${currentIndex >= 4 && currentIndex <= 5 ? "" : "opacity-30"}`}
-          style={{ flexBasis: "33.33%" }}
+          className={`bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-r-full flex-1 ${currentIndex === 3 ? "" : "opacity-30"}`}
+          style={{ flexBasis: "25%" }}
         />
       </div>
       <div className="hidden md:flex mt-4">
-        <div className="flex-1 text-center" style={{ flexBasis: "66.67%" }}>
+        <div className="flex-1 text-center" style={{ flexBasis: "75%" }}>
           <span
             className={
-              currentIndex >= 0 && currentIndex <= 3
+              currentIndex <= 2
                 ? "font-bold text-gray-900 dark:text-white"
                 : "text-sm text-gray-600 dark:text-gray-400"
             }
@@ -189,10 +158,10 @@ const ProcessSteps = ({
             Pre-Term Discovery & Planning
           </span>
         </div>
-        <div className="flex-1 text-center" style={{ flexBasis: "33.33%" }}>
+        <div className="flex-1 text-center" style={{ flexBasis: "25%" }}>
           <span
             className={
-              currentIndex >= 4 && currentIndex <= 5
+              currentIndex === 3
                 ? "font-bold text-gray-900 dark:text-white"
                 : "text-sm text-gray-600 dark:text-gray-400"
             }

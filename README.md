@@ -2,29 +2,35 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
 
 ```bash
-npm run dev
+pnpm install
+```
+
+Then run the development server:
+
+```bash
+pnpm dev
 ```
 
 This will automatically clean build artifacts and start the server with optimal stability settings.
 
 ### Development Scripts
 
-- `npm run dev` - **Recommended**: Auto-cleaning stable development server
-- `npm run dev:direct` - Direct Next.js dev server (may be less stable)
-- `npm run dev:stable` - Next.js with Turbo mode (experimental)
-- `npm run dev:turbopack` - Next.js with Turbopack (fastest but may crash)
-- `npm run clean` - Manually clean build artifacts
+- `pnpm dev` - **Recommended**: Auto-cleaning stable development server
+- `pnpm dev:direct` - Direct Next.js dev server (may be less stable)
+- `pnpm dev:stable` - Next.js with Turbo mode (experimental)
+- `pnpm dev:turbopack` - Next.js with Turbopack (fastest but may crash)
+- `pnpm clean` - Manually clean build artifacts
 
 ### Troubleshooting
 
 If the dev server crashes frequently:
 
-1. Try `npm run clean` to clear build artifacts
-2. Restart with `npm run dev` (recommended)
-3. If issues persist, use `npm run dev:direct` for a more stable experience
+1. Try `pnpm clean` to clear build artifacts
+2. Restart with `pnpm dev` (recommended)
+3. If issues persist, use `pnpm dev:direct` for a more stable experience
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

@@ -1,7 +1,7 @@
 export const step3ParentAvailability = {
   id: 3,
   text: "Is there any other information that could help us plan for the upcoming term?",
-  guidance: `Considerations: Any additional context can help us create a more supportive and effective tutoring environment. Consider sharing information about:
+  guidance: `Any additional context can help us create a more supportive and effective tutoring environment. Consider sharing information about:
   • Learning needs or accommodations (e.g., dyslexia support, ASD / ADHD considerations)
   • Medical conditions that might affect learning or energy levels
   • Family circumstances that could impact scheduling or focus

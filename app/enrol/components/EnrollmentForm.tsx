@@ -57,18 +57,9 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
   const {
     currentPlanIndex,
-    isTransitioning,
     isMobile,
     fadeOthers,
     setFadeOthers,
-    carouselRef,
-    nextSlide,
-    prevSlide,
-    goToSlide,
-    handleTransitionEnd,
-    handleTouchStart,
-    handleTouchMove,
-    handleTouchEnd,
   } = useMobileCarousel();
 
   useEffect(() => {
@@ -321,24 +312,14 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     switch (currentStep) {
       case "plan":
         return (
-          <PlanSelection
-            carouselHookValues={{
-              currentPlanIndex,
-              isTransitioning,
-              isMobile,
-              fadeOthers,
-              setFadeOthers,
-              carouselRef,
-              nextSlide,
-              prevSlide,
-              goToSlide,
-              handleTransitionEnd,
-              handleTouchStart,
-              handleTouchMove,
-              handleTouchEnd,
-            }}
+            <PlanSelection
+              carouselHookValues={{
+                isMobile,
+                fadeOthers,
+                setFadeOthers,
+              }}
             paymentProps={
-              selectedPlan && isDesktop
+              selectedPlan
                 ? {
                     parentName,
                     setParentName,
@@ -378,7 +359,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     notes,
                     attachments,
                     basePriceCents,
-                    showHeader: false,
+                     showHeader: true,
                     hasAttemptedSubmit,
                     onSubmitAttempt: () => setHasAttemptedSubmit(true),
                   }

@@ -29,10 +29,10 @@ const ParentQuestionsHeader: React.FC<ParentQuestionsHeaderProps> = ({
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-            {isTeacherQuestion
-              ? "Email this to your child's teacher(s)"
-              : isDocumentUpload
-                ? "Teacher Insight & Documents"
+            {isDocumentUpload
+              ? "Teacher Insight & Documents"
+              : isTeacherQuestion
+                ? "Email this to your child's teacher(s)"
                 : isSchedulingQuestion
                   ? "Schedule your tutoring sessions"
                   : isReviewQuestion
@@ -40,10 +40,10 @@ const ParentQuestionsHeader: React.FC<ParentQuestionsHeaderProps> = ({
                     : "Tell us about your child as a learner"}
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            {isTeacherQuestion
-              ? "Teacher insights complement parental perspectives to provide a complete picture of your child's learning journey."
-              : isDocumentUpload
-                ? "Professional teacher insights provide the targeted expertise needed for curriculum-aligned, effective tutoring."
+            {isDocumentUpload
+              ? "Professional teacher insights provide the targeted expertise needed for curriculum-aligned, effective tutoring."
+              : isTeacherQuestion
+                ? "Teacher insights complement parental perspectives to provide a complete picture of your child's learning journey."
                 : isSchedulingQuestion
                   ? "Help us find the best times for your child's tutoring sessions."
                   : isReviewQuestion
@@ -317,7 +317,7 @@ const ParentQuestionsSection = ({
   const currentStep = steps[currentQuestionIndex];
   const isDocumentUpload = currentStep?.type === "document_upload";
   const isReviewQuestion = currentStep?.type === "grouped_review";
-  const isTeacherQuestion = false;
+  const isTeacherQuestion = currentStep?.type === "document_upload";
 
   if (isSubmitted) {
     return (

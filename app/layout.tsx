@@ -45,9 +45,9 @@ const RootLayout = ({
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/method"
+                    href="/about"
                   >
-                    Our Method
+                    About
                   </a>
                 </li>
                 <li>

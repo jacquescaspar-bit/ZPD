@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ParentQuestionsSection from "@/enrol/components/ParentQuestionsSection";
-import ReferralProgramSection from "@/enrol/components/ReferralProgramSection";
+
 
 type AutoSaveStatus = "idle" | "saving" | "saved" | "error";
 
@@ -42,7 +42,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
   onProgressUpdate,
   onSubmit,
   isSubmitting = false,
-  _showTermsCheckbox = true,
+  showTermsCheckbox: _showTermsCheckbox = true,
 }) => {
   const [referralLinkCopied, setReferralLinkCopied] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -93,12 +93,6 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
         removeAttachment={removeAttachment}
         setNotes={setNotes}
         onValidationChange={setValidationData}
-      />
-
-      {/* Referral Program Section - Shows after successful payment */}
-      <ReferralProgramSection
-        handleCopyReferralLink={handleCopyReferralLink}
-        referralLink={referralLink}
       />
 
       {/* Terms and Privacy Agreement - Only show when all fields are valid and on review step */}

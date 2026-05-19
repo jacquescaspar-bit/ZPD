@@ -74,7 +74,7 @@ STRIPE_WEBHOOK_SECRET=whsec_your_live_webhook_secret
 2. **Security Features**
    - Rate limiting (10 requests/minute per IP)
    - Signature verification
-   - Request validation
+   - Basic request validation hooks (extensible)
 
 ## Analytics Dashboard
 
@@ -120,15 +120,15 @@ Returns:
 
 ### Data Protection
 
-- All referral data is encrypted at rest
-- Email addresses are hashed for analytics
-- No sensitive payment data is stored locally
+- **Database encryption at rest**: depends on your Postgres provider (e.g. managed Postgres commonly provides disk encryption). This app does not add application-level encryption.
+- **Email addresses**: currently stored in plaintext in the database tables and used for operational emails/analytics events. If you need hashed/pseudonymized emails, you’ll need to implement it in the storage layer.
+- **Payments**: the app does not store full card details; it relies on Stripe. It does store Stripe PaymentIntent IDs and basic enrollment metadata.
 
 ### Rate Limiting
 
-- Webhook endpoints are rate-limited by IP
-- API endpoints include basic protection
-- Consider adding API keys for analytics access
+- **Webhook endpoint**: currently rate-limited by IP using an in-memory map (works for a single process; not reliable across multiple instances/serverless cold starts).
+- For production scaling, consider Redis/Upstash (shared rate-limit store) or a WAF/CDN-level rate limit.
+- Consider adding authentication (or restricting by role) for admin/analytics endpoints.
 
 ### Backup Strategy
 
@@ -140,15 +140,13 @@ Returns:
 
 ### Database
 
-- Connection pooling configured
+- Uses `pg.Pool` (basic pooling within a single Node process). For high traffic or many server instances, consider an external pooler (e.g. PgBouncer) and/or serverless-friendly Postgres.
 - Indexes on frequently queried columns
 - Query optimization for analytics
 
 ### Email Delivery
 
-- Asynchronous email sending
-- Retry logic for failed deliveries
-- Batch processing for bulk operations
+- Email sending happens inline during webhook processing. For higher reliability, move email sends to a queue/background job and add retries + dead-letter handling.
 
 ## Troubleshooting
 
@@ -194,7 +192,7 @@ Returns:
 
 ### Application Scaling
 
-- Implement Redis for session/rate limiting
+- Implement Redis for shared rate limiting (and any future queue/session needs)
 - Use CDN for static assets
 - Monitor memory usage and optimise
 
@@ -319,4 +317,4 @@ GROUP BY pc.id, pc.code, pc.discount_cents, pc.current_uses;
 - [ ] Backup strategy implemented
 - [ ] Test referral flow end-to-end
 
-The referral system is now production-ready with enterprise-grade security, monitoring, and scalability features! 🚀
+The referral system is ready to deploy, but for production at scale you’ll want shared rate limiting (Redis/WAF) and background job processing for webhook side-effects (email).

@@ -8,7 +8,11 @@ export const getStripe = () => {
   if (!stripePromise) {
     const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     if (!publishableKey) {
-      throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
+      // In local/dev it’s common for Stripe env vars to be missing.
+      // Returning null lets the UI render a friendly “not configured” state
+      // instead of crashing the entire route at module evaluation time.
+      stripePromise = Promise.resolve(null);
+      return stripePromise;
     }
     stripePromise = loadStripe(publishableKey);
   }

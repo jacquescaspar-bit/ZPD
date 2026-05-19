@@ -2,24 +2,20 @@
 
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 const AssessmentSection = lazy(
-  () => import("@/method/components/AssessmentSection"),
+  () => import("@/about/components/AssessmentSection"),
 );
 const DiagnosticSection = lazy(
-  () => import("@/method/components/DiagnosticSection"),
+  () => import("@/about/components/DiagnosticSection"),
 );
-const TeacherInsightSection = lazy(
-  () => import("@/method/components/TeacherInsightSection"),
-);
+
 const PlanningSection = lazy(
-  () => import("@/method/components/PlanningSection"),
+  () => import("@/about/components/PlanningSection"),
 );
 const SessionsSection = lazy(
-  () => import("@/method/components/SessionsSection"),
+  () => import("@/about/components/SessionsSection"),
 );
-const ProgressSection = lazy(
-  () => import("@/method/components/ProgressSection"),
-);
-import ProcessSteps from "@/method/components/ProcessSteps";
+
+import ProcessSteps from "@/about/components/ProcessSteps";
 
 const ProcessCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // Start at 0 (first slide)
@@ -27,7 +23,7 @@ const ProcessCarousel = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [touchStartTime, setTouchStartTime] = useState(0);
-  const [_isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,10 +36,8 @@ const ProcessCarousel = () => {
   const sections = [
     <AssessmentSection key="assessment" />,
     <DiagnosticSection key="diagnostic" />,
-    <TeacherInsightSection key="teacher-insight" />,
     <PlanningSection key="planning" />,
     <SessionsSection key="sessions" />,
-    <ProgressSection key="progress" />,
   ];
 
   const nextSlide = () => {
@@ -93,6 +87,16 @@ const ProcessCarousel = () => {
   const handleTransitionEnd = () => {
     setIsTransitioning(false);
   };
+
+  if (isMobile) {
+    return (
+      <div className="space-y-8">
+        {sections.map((section, index) => (
+          <div key={index}>{section}</div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="relative">

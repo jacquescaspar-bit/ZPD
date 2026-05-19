@@ -31,7 +31,7 @@ const ParentQuestionsNavigation = ({
   setHasClickedResolveIssues,
   onSubmit,
   agreedToTerms = false,
-  _setAgreedToTerms,
+  setAgreedToTerms: _setAgreedToTerms,
 }: ParentQuestionsNavigationProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -118,14 +118,14 @@ const ParentQuestionsNavigation = ({
   // Validation logic for review step
   const validateReviewStep = () => {
     // Steps 0-2: non-blank text responses
-    for (let i = 0; i < 3; i++) {
+    for (let i = 1; i <= 3; i++) {
       const response = questionResponses[i];
       if (typeof response !== "string" || response.trim() === "") {
         return false;
       }
     }
-    // Step 3: non-blank text response AND at least one file uploaded
-    const { "3": step3Text } = questionResponses;
+    // Step 3 (id=4): non-blank text response AND at least one file uploaded
+    const { "4": step3Text } = questionResponses;
     if (
       typeof step3Text !== "string" ||
       step3Text.trim() === "" ||
@@ -133,7 +133,7 @@ const ParentQuestionsNavigation = ({
     ) {
       return false;
     }
-    // Step 4 (scheduling): at least one checkbox selected
+    // Step 4 (scheduling id=5): at least one checkbox selected
     const { "5": step5Checkboxes } = questionResponses;
     if (!Array.isArray(step5Checkboxes) || step5Checkboxes.length === 0) {
       return false;
@@ -144,14 +144,14 @@ const ParentQuestionsNavigation = ({
   // Find first invalid step for navigation
   const findFirstInvalidStep = () => {
     // Steps 0-2: non-blank text responses
-    for (let i = 0; i < 3; i++) {
+    for (let i = 1; i <= 3; i++) {
       const response = questionResponses[i];
       if (typeof response !== "string" || response.trim() === "") {
-        return i;
+        return i - 1; // return array index
       }
     }
-    // Step 3: non-blank text response AND at least one file uploaded
-    const { "3": step3Text } = questionResponses;
+    // Step 3 (id=4): non-blank text response AND at least one file uploaded
+    const { "4": step3Text } = questionResponses;
     if (
       typeof step3Text !== "string" ||
       step3Text.trim() === "" ||
@@ -159,7 +159,7 @@ const ParentQuestionsNavigation = ({
     ) {
       return 3;
     }
-    // Step 4 (scheduling): at least one checkbox selected
+    // Step 4 (scheduling id=5): at least one checkbox selected
     const { "5": step5Checkboxes } = questionResponses;
     if (!Array.isArray(step5Checkboxes) || step5Checkboxes.length === 0) {
       return 4;
@@ -206,11 +206,9 @@ const ParentQuestionsNavigation = ({
                     : isSubmitting
                       ? "bg-emerald-600 text-white opacity-75 cursor-not-allowed"
                       : "bg-emerald-600 text-white hover:bg-emerald-700"
-              : isTeacherQuestion
-                ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                : "bg-emerald-600 text-white hover:bg-emerald-700"
+              : "bg-emerald-600 text-white hover:bg-emerald-700"
           }`}
-          disabled={isTeacherQuestion || isSubmitting}
+          disabled={isSubmitting}
           onClick={() => {
             if (isReviewQuestion) {
               if (allQuestionsValid) {

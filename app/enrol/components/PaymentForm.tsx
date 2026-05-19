@@ -1,21 +1,19 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
-  CardElement,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+  PaymentRequestButtonElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 import { PRICING, type PlanType } from "@/lib/constants";
+import { getStripe } from "@/lib/stripe";
 
-const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-if (!publishableKey) {
-  throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
-}
-
-const stripePromise = loadStripe(publishableKey);
+const stripePromise = getStripe();
 
 export interface EnrollmentPaymentData {
   parentName?: string;
@@ -63,6 +61,8 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [cardholderName, setCardholderName] = useState("");
+  const [paymentRequest, setPaymentRequest] = useState<any>(null);
 
   const plan = PRICING[planType];
   const finalAmountCents =
@@ -82,6 +82,12 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
 
   const createPaymentIntent = useCallback(async () => {
     try {
+      if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && !isTestMode) {
+        onPaymentError(
+          "Stripe is not configured for this environment. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY to enable card payments.",
+        );
+        return;
+      }
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: {
@@ -115,6 +121,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
     finalAmountCents,
     onPaymentError,
     appliedReferralCode,
+    isTestMode,
   ]);
 
   useEffect(() => {
@@ -132,6 +139,28 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
       setValidationError(null);
     }
   }, [isReady]);
+
+  // Setup Apple Pay / Google Pay via Payment Request for mobile
+  useEffect(() => {
+    if (!stripe) return;
+
+    const pr = stripe.paymentRequest({
+      country: "AU",
+      currency: "aud",
+      total: {
+        label: "ZPD Enrolment",
+        amount: finalAmountCents,
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+
+    pr.canMakePayment().then((result) => {
+      if (result) {
+        setPaymentRequest(pr);
+      }
+    });
+  }, [stripe, finalAmountCents]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -175,10 +204,12 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
 
     setIsProcessing(true);
 
-    const cardElement = elements.getElement(CardElement);
+    const cardNumber = elements.getElement(CardNumberElement);
+    const cardExpiry = elements.getElement(CardExpiryElement);
+    const cardCvc = elements.getElement(CardCvcElement);
 
-    if (!cardElement) {
-      onPaymentError("Card element not found");
+    if (!cardNumber || !cardExpiry || !cardCvc) {
+      onPaymentError("Card elements not found");
       setIsProcessing(false);
       return;
     }
@@ -188,9 +219,13 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
         clientSecret,
         {
           payment_method: {
-            card: cardElement,
+            card: {
+              number: cardNumber,
+              expiry: cardExpiry,
+              cvc: cardCvc,
+            } as any,
             billing_details: {
-              name: enrollmentData.parentName,
+              name: cardholderName || enrollmentData.parentName,
               email: enrollmentData.email,
               phone: enrollmentData.phone,
             },
@@ -226,8 +261,57 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
     },
   };
 
+  // Handle Apple Pay / mobile payment request
+  const handlePaymentRequest = async () => {
+    if (!paymentRequest || !clientSecret) return;
+
+    setIsProcessing(true);
+    onSubmitAttempt();
+
+    paymentRequest.on("paymentmethod", async (ev: any) => {
+      const { error: confirmError } = await stripe!.confirmCardPayment(
+        clientSecret,
+        { payment_method: ev.paymentMethod.id },
+        { handleActions: false }
+      );
+
+      if (confirmError) {
+        ev.complete("fail");
+        onPaymentError(confirmError.message ?? "Payment failed");
+      } else {
+        ev.complete("success");
+        onPaymentSuccess("apple_pay_success");
+      }
+      setIsProcessing(false);
+    });
+
+    const { error: prError } = await paymentRequest.show();
+    if (prError) {
+      onPaymentError(prError.message ?? "Apple Pay not available");
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && !isTestMode && (
+        <div className="rounded-2xl border border-amber-200/70 bg-amber-50/80 dark:bg-amber-950/30 dark:border-amber-900 px-6 py-4 text-amber-900 dark:text-amber-200 shadow-lg">
+          <p className="text-sm sm:text-base font-medium">
+            Stripe isn’t configured for this environment.
+          </p>
+          <p className="mt-2 text-sm text-amber-800/90 dark:text-amber-200/90">
+            Add{" "}
+            <code className="font-mono">
+              NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+            </code>{" "}
+            (and server-side keys for the API routes) to your{" "}
+            <code className="font-mono">.env.local</code> to enable card
+            payments. You can also append{" "}
+            <code className="font-mono">?test=true</code> to bypass Stripe for
+            UX testing.
+          </p>
+        </div>
+      )}
       <form
         className="space-y-6"
         onSubmit={(event) => void handleSubmit(event)}
@@ -280,21 +364,72 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Card Information <span className="text-red-500">*</span>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Cardholder Name
           </label>
-          <div
-            className={`border rounded-lg p-3 bg-white dark:bg-gray-700 ${
-              missingFields.length > 0 && hasAttemptedSubmit
-                ? "border-red-500 dark:border-red-400"
-                : "border-gray-300 dark:border-gray-600"
-            }`}
-          >
-            <CardElement options={cardElementOptions} />
-          </div>
-        </div>
+          <input
+            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white mb-4"
+            placeholder="Name on card"
+            type="text"
+            value={cardholderName}
+            onChange={(e) => setCardholderName(e.target.value)}
+          />
 
-        {summarySlot}
+          <div className="grid grid-cols-1 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Card Number <span className="text-red-500">*</span>
+              </label>
+              <div className="border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                <CardNumberElement options={cardElementOptions} />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Expiry <span className="text-red-500">*</span>
+                </label>
+                <div className="border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                  <CardExpiryElement options={cardElementOptions} />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  CVC <span className="text-red-500">*</span>
+                </label>
+                <div className="border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                  <CardCvcElement options={cardElementOptions} />
+                </div>
+              </div>
+            </div>
+           </div>
+         </div>
+
+         {/* Apple Pay for mobile / supported devices */}
+         {paymentRequest && (
+           <div className="pt-2">
+             <div className="text-center mb-2">
+               <span className="text-xs text-gray-500 dark:text-gray-400">or</span>
+             </div>
+             <PaymentRequestButtonElement
+               options={{
+                 paymentRequest,
+                 style: {
+                   paymentRequestButton: {
+                     theme: "dark",
+                     height: "48px",
+                   },
+                 },
+               }}
+               onClick={handlePaymentRequest}
+             />
+             <p className="text-[10px] text-center text-gray-500 dark:text-gray-400 mt-1">
+               Apple Pay available on supported devices
+             </p>
+           </div>
+         )}
+
+         {summarySlot}
 
         <button
           className={`w-full py-3 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium ${
@@ -303,7 +438,12 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
               : "bg-green-500 text-white hover:bg-green-600"
           }`}
           disabled={
-            isTestMode ? false : !stripe || isProcessing || !clientSecret
+            isTestMode
+              ? false
+              : !stripe ||
+                isProcessing ||
+                !clientSecret ||
+                !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
           }
           type="submit"
         >

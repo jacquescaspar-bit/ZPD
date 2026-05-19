@@ -1,4 +1,4 @@
-import StartContent from "@/method/StartContent";
+import StartContent from "@/about/StartContent";
 
 const Start = () => <StartContent />;
 

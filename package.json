@@ -11,7 +11,7 @@
     "build": "next build",
     "build:turbopack": "next build --turbopack",
     "clean": "rm -rf .next node_modules/.cache .turbo",
-    "start": "nodemon --exec \"next dev --turbopack\"",
+    "start": "next start",
     "lint": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",

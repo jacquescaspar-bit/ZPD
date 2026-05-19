@@ -23,6 +23,7 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
 
   // Auto-save hook - only active when we have a session
   const { status: autoSaveStatus, error: autoSaveError } = useAutoSave({
@@ -94,6 +95,8 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
       });
 
       if (response.ok) {
+        const code = `REF-${Math.random().toString(36).toUpperCase().slice(2, 8)}`;
+        setReferralCode(code);
         setSubmissionSuccess(true);
       } else {
         setStatusMessage("Submission failed. Please try again.");
@@ -111,8 +114,8 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
       <div className="relative">
         <Nav />
         <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-        <div className="min-h-screen px-6 pt-16 pb-12 z-10 flex items-center justify-center">
-          <SubmissionConfirmation />
+        <div className="min-h-screen px-4 sm:px-6 lg:px-8 pt-16 pb-12 z-10 flex items-center justify-center">
+          <SubmissionConfirmation referralCode={referralCode ?? undefined} />
         </div>
       </div>
     );
@@ -122,7 +125,7 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
     <div className="relative">
       <Nav />
       <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-      <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 pt-16 pb-12 z-10">
         <div className="space-y-6">
           {/* Hero Section */}
           <section className="text-center pb-8">
@@ -136,6 +139,17 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
               </div>
             </h1>
             <PostPurchaseHero />
+            {process.env.NODE_ENV === "development" && (
+              <button
+                onClick={() => {
+                  setReferralCode(`REF-TEST${Math.random().toString(36).slice(2, 8).toUpperCase()}`);
+                  setSubmissionSuccess(true);
+                }}
+                className="mt-4 px-3 py-1 text-xs bg-gray-800 text-white rounded opacity-60 hover:opacity-100"
+              >
+                Test Success Screen
+              </button>
+            )}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-xl text-left">
               <div className="flex items-start gap-3">
                 <svg
@@ -191,11 +205,11 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
                 void handleSubmit();
               }}
             />
-          </section>
-        </div>
-      </div>
-    </div>
-  );
-};
+           </section>
+         </div>
+       </div>
+     </div>
+   );
+ };
 
 export default InsightsCollectionClient;

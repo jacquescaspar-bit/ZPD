@@ -5,11 +5,11 @@ const AssessmentSection = ({ showNumber = true }) => (
     style={{ scrollMarginTop: "5rem" }}
   >
     <div>
-      <div className="flex items-start mb-8">
+      <div className="flex items-start mb-6">
         <div className="flex-shrink-0">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
             <svg
-              className="w-8 h-8 text-white"
+              className="w-6 h-6 md:w-8 md:h-8 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -23,26 +23,25 @@ const AssessmentSection = ({ showNumber = true }) => (
             </svg>
           </div>
         </div>
-        <div className="ml-8 sm:ml-6 flex items-start">
+        <div className="ml-4 md:ml-6 flex items-start">
           {showNumber && (
-            <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
               1.
             </h3>
           )}
           <h3
-            className={`text-3xl font-semibold text-gray-900 dark:text-white ${showNumber ? "ml-3" : ""}`}
+            className={`text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white ${showNumber ? "ml-2 md:ml-3" : ""}`}
           >
             Intake & Matching
           </h3>
         </div>
       </div>
       <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-        We begin with a thorough evaluation of your child&apos;s current
-        academic standing, learning style, strengths, and areas for improvement.
-        Our certified tutors conduct diagnostic assessments and review previous
-        academic records to understand their unique learning profile and
-        identify the optimal Zone of Proximal Development (ZPD) for targeted
-        growth.
+        We begin by collecting targeted insights from you about your goals and
+        hopes for your child, along with observations of their abilities and
+        challenges. We also seek input from their teacher to gain a fuller
+        picture. These questions help us understand what matters most and
+        match your child with the right tutor from the start.
       </p>
     </div>
   </div>

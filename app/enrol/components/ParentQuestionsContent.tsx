@@ -76,8 +76,8 @@ const getValidationMessage = (
 const ParentQuestionsContent = ({
   currentQuestionIndex,
   isTeacherQuestion,
-  _isDocumentUpload,
-  _isReviewQuestion,
+  isDocumentUpload: _isDocumentUpload,
+  isReviewQuestion: _isReviewQuestion,
   attachments,
   handleAttachmentChange,
   removeAttachment,
@@ -92,7 +92,7 @@ const ParentQuestionsContent = ({
 }: ParentQuestionsContentProps) => {
   const contentAreaRef = useRef<HTMLDivElement>(null);
   const selectAllRef = useRef<HTMLInputElement>(null);
-  const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
+
 
   const currentStep = steps[currentQuestionIndex];
   const currentQuestion = currentStep.text;
@@ -144,42 +144,86 @@ const ParentQuestionsContent = ({
         )}
         {currentStep.type === "document_upload" ? (
           <>
-            <div className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden">
-              <textarea
-                className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[150px] resize-none"
-                dir="ltr"
-                placeholder="Please enter your teacher's response to the question above..."
-                style={{ direction: "ltr", textAlign: "left" }}
-                value={
-                  (questionResponses[currentQuestionIndex] as string) || ""
-                }
-                onChange={(e) => {
-                  setIsEditing(true);
-                  updateQuestionResponse(currentQuestionIndex, e.target.value);
-                  if (editTimerRef.current) clearTimeout(editTimerRef.current);
-                  editTimerRef.current = setTimeout(
-                    () => setIsEditing(false),
-                    2000,
-                  );
-                }}
-              />
-              <GuidanceSection
-                guidance={steps[currentQuestionIndex].guidance}
-                isGuidanceExpanded={isGuidanceExpanded}
-                setIsGuidanceExpanded={setIsGuidanceExpanded}
-              />
+            <div className="space-y-3">
+              {/* Titles row - independent of input areas */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <h4 className="text-base font-medium text-gray-800 dark:text-gray-200">
+                  {currentQuestion}
+                  <span className="text-red-500 ml-1">*</span>
+                </h4>
+                <h4 className="hidden md:block text-base font-medium text-gray-800 dark:text-gray-200">
+                  Please upload the Term Overview, most recent Report Card and any
+                  samples of school/homework.
+                  <span className="text-red-500 ml-1">*</span>
+                </h4>
+              </div>
+
+              {/* Input areas row - perfectly aligned regardless of title height */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                <div className="flex flex-col">
+                  <div className="rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden flex-1">
+                    <textarea
+                      className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none resize-none h-full"
+                      dir="ltr"
+                      placeholder="Please enter your teacher's response to the question above..."
+                      style={{ direction: "ltr", textAlign: "left" }}
+                      value={
+                        (questionResponses[currentStep.id] as string) || ""
+                      }
+                      onChange={(e) => {
+                        setIsEditing(true);
+                        updateQuestionResponse(currentStep.id, e.target.value);
+                        if (editTimerRef.current) clearTimeout(editTimerRef.current);
+                        editTimerRef.current = setTimeout(
+                          () => setIsEditing(false),
+                          2000,
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <h4 className="md:hidden text-base font-medium text-gray-800 dark:text-gray-200 mb-2">
+                    Please upload the Term Overview, most recent Report Card and any
+                    samples of school/homework.
+                    <span className="text-red-500 ml-1">*</span>
+                  </h4>
+                  <DocumentUploadSection
+                    attachments={attachments}
+                    handleAttachmentChange={handleAttachmentChange}
+                    removeAttachment={removeAttachment}
+                  />
+                </div>
+              </div>
             </div>
-            <h4 className="text-base font-medium text-gray-800 dark:text-gray-200 flex-shrink-0 mt-4 mb-4">
-              Please upload the Term Overview, most recent Report Card and any
-              samples of school/homework.
-              <span className="text-red-500 ml-1">*</span>
-            </h4>
-            <div>
-              <DocumentUploadSection
-                attachments={attachments}
-                handleAttachmentChange={handleAttachmentChange}
-                removeAttachment={removeAttachment}
-              />
+
+            {/* Guidance sections - full width below inputs */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+              <div className="max-w-[92.5%] text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap">
+                <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">Considerations</div>
+                <div style={{ paddingLeft: '1.2em', textIndent: '-1.2em' }}>
+                  {`Teacher insights are crucial for creating an effective tutoring programme. Please reach out to your child's teacher and ask them the question above. Their professional assessment, combined with the uploaded documents and your parental insights, will help us develop targeted support for your child's learning needs.
+
+In the text area above, please enter your teacher's response verbatim. This will help us understand:
+  • Specific concepts or topics that may need additional attention
+  • Areas where your child excels or struggles
+  • Skills requiring reinforcement or extension
+  • Any individual learning preferences or needs`}
+                </div>
+              </div>
+
+              <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap">
+                <div className="h-[1.25rem] mb-1" />
+                <div style={{ paddingLeft: '1.2em', textIndent: '-1.2em' }}>
+                  {`Please upload the following documents to provide context for your child's current abilities:
+  • Term Overview: Shows the curriculum and learning objectives for the upcoming term
+  • Most recent Report Card: Indicates current academic performance and achievements
+  • Work samples: Recent assignments, homework sheets, or projects that demonstrate your child's current ability
+
+These documents help us assess your child's starting point and create a personalized tutoring plan that builds on their existing strengths.`}
+                </div>
+              </div>
             </div>
           </>
         ) : currentStep.type === "scheduling" ? (
@@ -247,21 +291,47 @@ const ParentQuestionsContent = ({
                 );
               })}
             </div>
+            <div className="space-y-3">
+              <div className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden">
+                <textarea
+                  className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[100px] resize-none"
+                  dir="ltr"
+                  placeholder="Please provide any additional context about your preferred tutoring days (e.g., specific time preferences, conflicts, or other scheduling issues)..."
+                  style={{ direction: "ltr", textAlign: "left" }}
+                  value={
+                    (questionResponses[`${currentStep.id}_notes`] as string) || ""
+                  }
+                  onChange={(e) => {
+                    setIsEditing(true);
+                    updateQuestionResponse(
+                      `${currentStep.id}_notes`,
+                      e.target.value,
+                    );
+                    if (editTimerRef.current) clearTimeout(editTimerRef.current);
+                    editTimerRef.current = setTimeout(
+                      () => setIsEditing(false),
+                      2000,
+                    );
+                  }}
+                />
+              </div>
+              <GuidanceSection guidance={steps[currentQuestionIndex].guidance} />
+            </div>
+          </div>
+        ) : currentStep.type === "parent_goals" ||
+          currentStep.type === "parent_academic" ||
+          currentStep.type === "parent_availability" ? (
+          <div className="space-y-3">
             <div className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden">
               <textarea
-                className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[100px] resize-none"
+                className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[150px] resize-none"
                 dir="ltr"
-                placeholder="Please provide any additional context about your preferred tutoring days (e.g., specific time preferences, conflicts, or other scheduling issues)..."
+                placeholder="Your answer here..."
                 style={{ direction: "ltr", textAlign: "left" }}
-                value={
-                  (questionResponses[`${currentStep.id}_notes`] as string) || ""
-                }
+                value={(questionResponses[currentStep.id] as string) || ""}
                 onChange={(e) => {
                   setIsEditing(true);
-                  updateQuestionResponse(
-                    `${currentStep.id}_notes`,
-                    e.target.value,
-                  );
+                  updateQuestionResponse(currentStep.id, e.target.value);
                   if (editTimerRef.current) clearTimeout(editTimerRef.current);
                   editTimerRef.current = setTimeout(
                     () => setIsEditing(false),
@@ -269,39 +339,8 @@ const ParentQuestionsContent = ({
                   );
                 }}
               />
-              <GuidanceSection
-                guidance={steps[currentQuestionIndex].guidance}
-                isGuidanceExpanded={isGuidanceExpanded}
-                setIsGuidanceExpanded={setIsGuidanceExpanded}
-              />
             </div>
-          </div>
-        ) : currentStep.type === "parent_goals" ||
-          currentStep.type === "parent_academic" ||
-          currentStep.type === "parent_availability" ||
-          currentStep.type === "document_upload" ? (
-          <div className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden">
-            <textarea
-              className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[150px] resize-none"
-              dir="ltr"
-              placeholder="Your answer here..."
-              style={{ direction: "ltr", textAlign: "left" }}
-              value={(questionResponses[currentQuestionIndex] as string) || ""}
-              onChange={(e) => {
-                setIsEditing(true);
-                updateQuestionResponse(currentQuestionIndex, e.target.value);
-                if (editTimerRef.current) clearTimeout(editTimerRef.current);
-                editTimerRef.current = setTimeout(
-                  () => setIsEditing(false),
-                  2000,
-                );
-              }}
-            />
-            <GuidanceSection
-              guidance={steps[currentQuestionIndex].guidance}
-              isGuidanceExpanded={isGuidanceExpanded}
-              setIsGuidanceExpanded={setIsGuidanceExpanded}
-            />
+            <GuidanceSection guidance={steps[currentQuestionIndex].guidance} />
           </div>
         ) : currentStep.type === "grouped_review" ? (
           steps[currentQuestionIndex].type === "grouped_review" ? (
@@ -580,32 +619,29 @@ const ParentQuestionsContent = ({
             </div>
           )
         ) : (
-          <div className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden">
-            <textarea
-              className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[150px] resize-none"
-              dir="ltr"
-              placeholder={
-                currentStep.type === "parent_academic"
-                  ? "Most engaging subject / topic:\nLeast engaging subject / topic:\nMost challenging subject / topic:\nLeast challenging subject / topic:"
-                  : ""
-              }
-              value={(questionResponses[currentQuestionIndex] as string) || ""}
-              onBlur={() => setIsEditing(false)}
-              onChange={(e) => {
-                setIsEditing(true);
-                updateQuestionResponse(currentQuestionIndex, e.target.value);
-                if (editTimerRef.current) clearTimeout(editTimerRef.current);
-                editTimerRef.current = setTimeout(
-                  () => setIsEditing(false),
-                  2000,
-                );
-              }}
-            />
-            <GuidanceSection
-              guidance={steps[currentQuestionIndex].guidance}
-              isGuidanceExpanded={isGuidanceExpanded}
-              setIsGuidanceExpanded={setIsGuidanceExpanded}
-            />
+          <div className="space-y-3">
+            <div className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 focus-within:ring-1 focus-within:ring-gray-400 shadow-sm overflow-hidden">
+              <textarea
+                className="force-ltr content-editable-fix w-full bg-transparent text-gray-900 dark:text-white focus:outline-none min-h-[150px] resize-none"
+                dir="ltr"
+                placeholder={
+                  currentStep.type === "parent_academic"
+                    ? "Most engaging subject / topic:\nLeast engaging subject / topic:\nMost challenging subject / topic:\nLeast challenging subject / topic:"
+                    : ""
+                }
+            value={(questionResponses[currentStep.id] as string) || ""}
+            onChange={(e) => {
+              setIsEditing(true);
+              updateQuestionResponse(currentStep.id, e.target.value);
+                  if (editTimerRef.current) clearTimeout(editTimerRef.current);
+                  editTimerRef.current = setTimeout(
+                    () => setIsEditing(false),
+                    2000,
+                  );
+                }}
+              />
+            </div>
+            <GuidanceSection guidance={steps[currentQuestionIndex].guidance} />
           </div>
         )}
       </div>

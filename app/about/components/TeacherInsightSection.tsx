@@ -5,11 +5,11 @@ const TeacherInsightSection = () => (
     style={{ scrollMarginTop: "5rem" }}
   >
     <div>
-      <div className="flex items-start mb-8">
+      <div className="flex items-start mb-6">
         <div className="flex-shrink-0">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
             <svg
-              className="w-8 h-8 text-white"
+              className="w-6 h-6 md:w-8 md:h-8 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -23,11 +23,11 @@ const TeacherInsightSection = () => (
             </svg>
           </div>
         </div>
-        <div className="ml-8 sm:ml-6 flex items-start">
-          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">
+        <div className="ml-4 md:ml-6 flex items-start">
+          <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             3.
           </h3>
-          <h3 className="text-3xl font-semibold text-gray-900 dark:text-white ml-3">
+          <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white ml-2 md:ml-3">
             Teacher Insight
           </h3>
         </div>
