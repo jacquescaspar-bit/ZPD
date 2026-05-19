@@ -35,11 +35,12 @@ const DiagnosticSection = () => (
       <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
         Insights in hand, your tutor will schedule the Diagnostic Discovery
         session, aimed at understanding and defining your child&apos;s Zone of
-        Proximal Development. Your tutor will evaluate your child&apos;s ability;
-        identify their strengths, challenges and opportunities for optimal
-        learning. This initial session establishes rapport and frames parents&apos;
-        and teacher&apos;s goals from the students perspective, creating ownership
-        of stated goals. This sets clear direction and motivation forward.
+        Proximal Development. Your tutor will evaluate your child&apos;s
+        ability; identify their strengths, challenges and opportunities for
+        optimal learning. This initial session establishes rapport and frames
+        parents&apos; and teacher&apos;s goals from the students perspective,
+        creating ownership of stated goals. This sets clear direction and
+        motivation forward.
       </p>
     </div>
   </div>

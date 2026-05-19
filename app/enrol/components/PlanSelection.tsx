@@ -23,6 +23,7 @@ interface PlanSelectionProps {
   showHighlights: boolean;
 }
 
+/* eslint-disable max-lines-per-function */
 const PlanSelection: React.FC<PlanSelectionProps> = ({
   selectedPlan,
   onPlanSelect,
@@ -40,12 +41,10 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
   const [lockedCardHeight, setLockedCardHeight] = useState<number | null>(null);
 
   const isDesktopPaymentLayout =
-    !isMobile &&
-    Boolean(paymentProps && showPaymentDetails && selectedPlan);
+    !isMobile && Boolean(paymentProps && showPaymentDetails && selectedPlan);
 
   const isMobilePaymentLayout =
-    isMobile &&
-    Boolean(paymentProps && showPaymentDetails && selectedPlan);
+    isMobile && Boolean(paymentProps && showPaymentDetails && selectedPlan);
 
   useEffect(() => {
     if (!selectedPlan) {
@@ -76,7 +75,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
       }
     }, 100);
     return () => window.clearTimeout(scrollTimer);
-  }, [selectedPlan, planCards, isDesktopPaymentLayout]);
+  }, [selectedPlan, planCards, isDesktopPaymentLayout, isMobile]);
 
   useEffect(() => {
     if (selectedPlan) {
@@ -103,10 +102,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
   }, [paymentProps, showPaymentDetails, isMobilePaymentLayout]);
 
   return (
-    <section
-      ref={sectionRef}
-      className={`${SECTION_CARD_CLASS} p-4 relative`}
-    >
+    <section ref={sectionRef} className={`${SECTION_CARD_CLASS} p-4 relative`}>
       <div className="space-y-4">
         <div className="flex flex-col gap-2">
           {isDesktopPaymentLayout ? (
@@ -114,7 +110,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
               <div className="md:col-span-1">
                 <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-500 opacity-50">
                   <span className="font-semibold">
-                    {planDescriptions[selectedPlan!].title}
+                    {planDescriptions[selectedPlan ?? ""].title}
                   </span>{" "}
                   <span className="font-light">Selected</span>
                 </h2>
@@ -129,20 +125,30 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             <div className="flex justify-between items-center">
               <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-500 opacity-50">
                 <span className="font-semibold">
-                  {planDescriptions[selectedPlan!].title}
+                  {planDescriptions[selectedPlan ?? ""].title}
                 </span>{" "}
                 <span className="font-light">Selected</span>
               </h2>
               <button
+                aria-label="Change plan"
+                className="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
                 onClick={() => {
                   onPlanSelect(null);
                   setFadeOthers(false);
                 }}
-                className="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-                aria-label="Change plan"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                  />
                 </svg>
               </button>
             </div>
@@ -162,7 +168,9 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
           )}
         </div>
         {!isMobile ? (
-          <div className={`grid md:grid-cols-4 md:gap-6 ${isDesktopPaymentLayout ? "md:items-start" : "md:items-stretch"}`}>
+          <div
+            className={`grid md:grid-cols-4 md:gap-6 ${isDesktopPaymentLayout ? "md:items-start" : "md:items-stretch"}`}
+          >
             {isDesktopPaymentLayout && selectedPlan ? (
               <>
                 {planCards
@@ -176,11 +184,15 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                           cardRefs.current[index] = el;
                         }}
                         className="min-w-0 md:col-span-1 self-start"
-                        style={lockedCardHeight ? { height: `${lockedCardHeight}px` } : undefined}
+                        style={
+                          lockedCardHeight
+                            ? { height: `${lockedCardHeight}px` }
+                            : undefined
+                        }
                       >
                         <PlanCard
-                          highlights={plan.highlights}
                           isSelected
+                          highlights={plan.highlights}
                           planId={plan.id}
                           price={plan.price}
                           sessions={plan.sessionsPerTerm}
@@ -213,11 +225,11 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                   ref={(el) => {
                     cardRefs.current[index] = el;
                   }}
-                    className={`${
-                      fadeOthers && selectedPlan !== plan.id
-                        ? "opacity-0 pointer-events-none"
-                        : ""
-                    } transition-opacity duration-500` }
+                  className={`${
+                    fadeOthers && selectedPlan !== plan.id
+                      ? "opacity-0 pointer-events-none"
+                      : ""
+                  } transition-opacity duration-500`}
                 >
                   <PlanCard
                     highlights={plan.highlights}
@@ -249,8 +261,8 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             {planCards
               .filter((plan) => plan.id === selectedPlan)
               .map((plan) => {
-                const index = planCards.findIndex((p) => p.id === plan.id);
-                const handleChangePlan = () => {
+                const _index = planCards.findIndex((p) => p.id === plan.id);
+                const _handleChangePlan = () => {
                   onPlanSelect(null);
                   setFadeOthers(false);
                 };
@@ -264,8 +276,8 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                     }}
                   >
                     <PlanCard
-                      highlights={plan.highlights}
                       isSelected
+                      highlights={plan.highlights}
                       planId={plan.id}
                       price={plan.price}
                       sessions={plan.sessionsPerTerm}
@@ -281,10 +293,14 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                   </div>
                 );
               })}
-            <h2 className={`text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-500 ease-in-out ${isHeaderVisible ? "opacity-100" : "opacity-0"}`}>
+            <h2
+              className={`text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-500 ease-in-out ${isHeaderVisible ? "opacity-100" : "opacity-0"}`}
+            >
               Payment Details
             </h2>
-            <div className={`${isHeaderVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`}>
+            <div
+              className={`${isHeaderVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`}
+            >
               <PaymentDetails
                 {...paymentProps}
                 showHeader={false}

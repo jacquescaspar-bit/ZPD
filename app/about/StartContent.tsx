@@ -25,8 +25,6 @@ const StartContent = () => (
         <div className="space-y-6">
           <ProcessCarousel />
         </div>
-
-
       </div>
     </div>
   </div>

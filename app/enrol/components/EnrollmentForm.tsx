@@ -55,12 +55,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     validateCode,
   } = useReferralSystem(selectedPlan, initialPromoCode);
 
-  const {
-    currentPlanIndex,
-    isMobile,
-    fadeOthers,
-    setFadeOthers,
-  } = useMobileCarousel();
+  const { _currentPlanIndex, isMobile, fadeOthers, setFadeOthers } =
+    useMobileCarousel();
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -312,12 +308,12 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     switch (currentStep) {
       case "plan":
         return (
-            <PlanSelection
-              carouselHookValues={{
-                isMobile,
-                fadeOthers,
-                setFadeOthers,
-              }}
+          <PlanSelection
+            carouselHookValues={{
+              isMobile,
+              fadeOthers,
+              setFadeOthers,
+            }}
             paymentProps={
               selectedPlan
                 ? {
@@ -359,7 +355,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     notes,
                     attachments,
                     basePriceCents,
-                     showHeader: true,
+                    showHeader: true,
                     hasAttemptedSubmit,
                     onSubmitAttempt: () => setHasAttemptedSubmit(true),
                   }

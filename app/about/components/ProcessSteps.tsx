@@ -4,10 +4,8 @@ import React from "react";
 import {
   UserCheck,
   Search,
-  Lightbulb,
   Target,
   Users,
-  MessageSquare,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -97,7 +95,10 @@ const ProcessSteps = ({
             <div
               key={index}
               className="absolute flex flex-col items-center cursor-pointer"
-              style={{ left: `${(index + 0.5) * 25}%`, transform: "translateX(-50%)" }}
+              style={{
+                left: `${(index + 0.5) * 25}%`,
+                transform: "translateX(-50%)",
+              }}
               onClick={() => onStepClick(index)}
             >
               <button

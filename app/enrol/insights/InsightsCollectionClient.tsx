@@ -141,11 +141,13 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
             <PostPurchaseHero />
             {process.env.NODE_ENV === "development" && (
               <button
+                className="mt-4 px-3 py-1 text-xs bg-gray-800 text-white rounded opacity-60 hover:opacity-100"
                 onClick={() => {
-                  setReferralCode(`REF-TEST${Math.random().toString(36).slice(2, 8).toUpperCase()}`);
+                  setReferralCode(
+                    `REF-TEST${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
+                  );
                   setSubmissionSuccess(true);
                 }}
-                className="mt-4 px-3 py-1 text-xs bg-gray-800 text-white rounded opacity-60 hover:opacity-100"
               >
                 Test Success Screen
               </button>
@@ -205,11 +207,11 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
                 void handleSubmit();
               }}
             />
-           </section>
-         </div>
-       </div>
-     </div>
-   );
- };
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default InsightsCollectionClient;

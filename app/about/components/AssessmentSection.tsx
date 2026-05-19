@@ -40,8 +40,8 @@ const AssessmentSection = ({ showNumber = true }) => (
         We begin by collecting targeted insights from you about your goals and
         hopes for your child, along with observations of their abilities and
         challenges. We also seek input from their teacher to gain a fuller
-        picture. These questions help us understand what matters most and
-        match your child with the right tutor from the start.
+        picture. These questions help us understand what matters most and match
+        your child with the right tutor from the start.
       </p>
     </div>
   </div>

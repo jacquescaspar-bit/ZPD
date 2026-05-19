@@ -8,8 +8,15 @@ interface GuidanceSectionProps {
 
 const GuidanceSection = ({ guidance }: GuidanceSectionProps) => (
   <div className="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-    <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">Considerations</div>
-    <div className="whitespace-pre-wrap" style={{ paddingLeft: '1.2em', textIndent: '-1.2em' }} dangerouslySetInnerHTML={{ __html: guidance }} />
+    <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">
+      Considerations
+    </div>
+    {/* eslint-disable react/no-danger */}
+    <div
+      className="whitespace-pre-wrap"
+      dangerouslySetInnerHTML={{ __html: guidance }}
+      style={{ paddingLeft: "1.2em", textIndent: "-1.2em" }}
+    />
   </div>
 );
 

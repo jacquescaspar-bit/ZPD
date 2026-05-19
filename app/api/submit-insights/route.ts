@@ -64,11 +64,13 @@ export async function POST(request: NextRequest) {
       `;
 
       await page.setContent(html);
-      pdfBuffer = Buffer.from(await page.pdf({
-        format: "A4",
-        printBackground: true,
-        margin: { top: "20px", right: "20px", bottom: "20px", left: "20px" },
-      }));
+      pdfBuffer = Buffer.from(
+        await page.pdf({
+          format: "A4",
+          printBackground: true,
+          margin: { top: "20px", right: "20px", bottom: "20px", left: "20px" },
+        }),
+      );
       await browser.close();
     } catch (pdfError) {
       console.error("PDF generation failed, proceeding without PDF:", pdfError);

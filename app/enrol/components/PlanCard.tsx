@@ -30,11 +30,12 @@ const PlanCard: React.FC<PlanCardProps> = ({
   const pricePerSession =
     sessions > 0 ? `($${Math.round(priceNumber / sessions)} / session)` : "";
 
-  const isCompactMobile = variant === "mobile" && isSelected && showPaymentDetails;
+  const isCompactMobile =
+    variant === "mobile" && isSelected && showPaymentDetails;
   const cardContent = isCompactMobile ? (
     <div
       className={`bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-emerald-300 dark:border-emerald-700 flex flex-col ${onSelect ? "cursor-pointer" : ""} relative bg-gradient-to-br from-emerald-50/90 via-white to-emerald-100/80 dark:from-emerald-900/40 dark:via-gray-900/60 dark:to-green-900/30 shadow-emerald-100/70 dark:shadow-emerald-800/40 transition-all duration-300`}
-      onClick={onSelect ? onSelect : undefined}
+      onClick={onSelect ?? undefined}
     >
       <div className="flex justify-between items-start mb-1">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white transition-opacity duration-300 opacity-50">
@@ -45,7 +46,9 @@ const PlanCard: React.FC<PlanCardProps> = ({
         </div>
       </div>
       <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 transition-opacity duration-300 opacity-50">
-        <span>{sessions === 1 ? "1 session" : `${sessions} sessions / term`}</span>
+        <span>
+          {sessions === 1 ? "1 session" : `${sessions} sessions / term`}
+        </span>
         <span>{pricePerSession}</span>
       </div>
     </div>
@@ -60,7 +63,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
           ? "border-emerald-300 shadow-emerald-100/70 dark:shadow-emerald-800/40"
           : ""
       } transition-all duration-300`}
-      onClick={onSelect ? onSelect : undefined}
+      onClick={onSelect ?? undefined}
     >
       {planId === "essential" && !isSelected && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">

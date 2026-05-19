@@ -37,7 +37,7 @@ const PlanningSection = () => (
         documents and Diagnostic Discovery results, look ahead to the term, and
         consider our defined goals. We design learning experiences for the
         remainder of the term that are intentional yet flexible, challenging yet
-        fun,         and always aligned with what your child is learning at school. This
+        fun, and always aligned with what your child is learning at school. This
         ensures every session builds deliberately on their progress - turning
         your goals into real, measurable success.
       </p>

@@ -271,6 +271,7 @@ export interface PaymentDetailsProps {
   forceTestMode?: boolean;
 }
 
+/* eslint-disable max-lines-per-function */
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   parentName,
   setParentName,
@@ -342,7 +343,9 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       {showHeader && (
         <div
           className={
-            showHeaderSubtitle ? "space-y-1" : "mb-2 flex min-h-[3rem] items-center justify-start"
+            showHeaderSubtitle
+              ? "space-y-1"
+              : "mb-2 flex min-h-[3rem] items-center justify-start"
           }
         >
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -399,92 +402,92 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       {/* Discount Code Section - Hidden for Discovery plan (trial) */}
       {selectedPlan !== "trial" && (
         <div className="border-t border-white/60 dark:border-gray-700 pt-6 space-y-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Referral or Promo Code
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Have a referral or promo code? Enter it here for $100 off.
-          </p>
-        </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Referral or Promo Code
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              Have a referral or promo code? Enter it here for $100 off.
+            </p>
+          </div>
 
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Referral or promo code
-            </label>
-            <div className="relative">
-              <input
-                className={`w-full rounded-2xl border bg-white/90 dark:bg-gray-950/40 px-4 py-3 pr-10 text-gray-900 dark:text-white focus:outline-none shadow-sm ${
-                  appliedPromoValue > 0
-                    ? "border-green-500 dark:border-green-400 focus:ring-2 focus:ring-green-400 focus:border-green-500"
-                    : promoCode.trim() && appliedPromoValue === 0
-                      ? "border-red-500 dark:border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-500"
-                      : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-emerald-400"
-                }`}
-                placeholder="Enter your code"
-                type="text"
-                value={promoCode}
-                onChange={(event) =>
-                  void handlePromoCodeChange(event.target.value)
-                }
-              />
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Referral or promo code
+              </label>
+              <div className="relative">
+                <input
+                  className={`w-full rounded-2xl border bg-white/90 dark:bg-gray-950/40 px-4 py-3 pr-10 text-gray-900 dark:text-white focus:outline-none shadow-sm ${
+                    appliedPromoValue > 0
+                      ? "border-green-500 dark:border-green-400 focus:ring-2 focus:ring-green-400 focus:border-green-500"
+                      : promoCode.trim() && appliedPromoValue === 0
+                        ? "border-red-500 dark:border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-500"
+                        : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-emerald-400"
+                  }`}
+                  placeholder="Enter your code"
+                  type="text"
+                  value={promoCode}
+                  onChange={(event) =>
+                    void handlePromoCodeChange(event.target.value)
+                  }
+                />
+                {appliedPromoValue > 0 && (
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-500 dark:text-green-400">
+                    <svg
+                      aria-hidden="true"
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        clipRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        fillRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                )}
+                {promoCode.trim() && appliedPromoValue === 0 && (
+                  <button
+                    aria-label="Clear promo code"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-400 rounded"
+                    type="button"
+                    onClick={() => setPromoCode("")}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        clipRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        fillRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {promoStatus && promoCode.trim() && (
+            <div className="rounded-2xl border border-emerald-200/70 dark:border-emerald-800 bg-emerald-50/70 dark:bg-emerald-900/40 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-200 shadow-inner flex justify-between items-center">
+              <span>{promoStatus}</span>
               {appliedPromoValue > 0 && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-500 dark:text-green-400">
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      fillRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              )}
-              {promoCode.trim() && appliedPromoValue === 0 && (
                 <button
-                  aria-label="Clear promo code"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-400 rounded"
+                  className="text-xs text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400 rounded px-1 ml-2"
                   type="button"
-                  onClick={() => setPromoCode("")}
+                  onClick={removePromo}
                 >
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      fillRule="evenodd"
-                    />
-                  </svg>
+                  Remove
                 </button>
               )}
             </div>
-          </div>
+          )}
         </div>
-
-        {promoStatus && promoCode.trim() && (
-          <div className="rounded-2xl border border-emerald-200/70 dark:border-emerald-800 bg-emerald-50/70 dark:bg-emerald-900/40 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-200 shadow-inner flex justify-between items-center">
-            <span>{promoStatus}</span>
-            {appliedPromoValue > 0 && (
-              <button
-                className="text-xs text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400 rounded px-1 ml-2"
-                type="button"
-                onClick={removePromo}
-              >
-                Remove
-              </button>
-            )}
-          </div>
-        )}
-      </div>
       )}
 
       <PaymentForm

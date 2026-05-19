@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import ParentQuestionsSection from "@/enrol/components/ParentQuestionsSection";
 
-
 type AutoSaveStatus = "idle" | "saving" | "saved" | "error";
 
 interface ReviewStepProps {
@@ -35,7 +34,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
   attachments,
   handleAttachmentChange,
   removeAttachment,
-  referralLink,
+  _referralLink,
   copyReferralLink,
   setStatusMessage: _setStatusMessage,
   autoSaveStatus,
@@ -63,7 +62,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
   }, [notes, referralLinkCopied, onProgressUpdate]);
 
   // Wrapper for copyReferralLink to track completion
-  const handleCopyReferralLink = () => {
+  const _handleCopyReferralLink = () => {
     copyReferralLink();
     setReferralLinkCopied(true);
   };

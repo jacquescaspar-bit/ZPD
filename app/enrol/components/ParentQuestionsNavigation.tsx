@@ -21,7 +21,7 @@ interface ParentQuestionsNavigationProps {
 const ParentQuestionsNavigation = ({
   currentQuestionIndex,
   questionsLength,
-  isTeacherQuestion,
+  _isTeacherQuestion,
   isReviewQuestion,
   questionResponses,
   attachments,

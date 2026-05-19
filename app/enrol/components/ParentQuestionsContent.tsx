@@ -2,7 +2,7 @@
 
 /* eslint-disable max-lines */
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import DocumentUploadSection from "@/enrol/components/DocumentUploadSection";
 import GuidanceSection from "@/enrol/components/GuidanceSection";
 import { steps } from "@/enrol/insights/questions/steps";
@@ -93,7 +93,6 @@ const ParentQuestionsContent = ({
   const contentAreaRef = useRef<HTMLDivElement>(null);
   const selectAllRef = useRef<HTMLInputElement>(null);
 
-
   const currentStep = steps[currentQuestionIndex];
   const currentQuestion = currentStep.text;
   const validationMessage = getValidationMessage(
@@ -152,8 +151,8 @@ const ParentQuestionsContent = ({
                   <span className="text-red-500 ml-1">*</span>
                 </h4>
                 <h4 className="hidden md:block text-base font-medium text-gray-800 dark:text-gray-200">
-                  Please upload the Term Overview, most recent Report Card and any
-                  samples of school/homework.
+                  Please upload the Term Overview, most recent Report Card and
+                  any samples of school/homework.
                   <span className="text-red-500 ml-1">*</span>
                 </h4>
               </div>
@@ -173,7 +172,8 @@ const ParentQuestionsContent = ({
                       onChange={(e) => {
                         setIsEditing(true);
                         updateQuestionResponse(currentStep.id, e.target.value);
-                        if (editTimerRef.current) clearTimeout(editTimerRef.current);
+                        if (editTimerRef.current)
+                          clearTimeout(editTimerRef.current);
                         editTimerRef.current = setTimeout(
                           () => setIsEditing(false),
                           2000,
@@ -185,8 +185,8 @@ const ParentQuestionsContent = ({
 
                 <div className="flex flex-col">
                   <h4 className="md:hidden text-base font-medium text-gray-800 dark:text-gray-200 mb-2">
-                    Please upload the Term Overview, most recent Report Card and any
-                    samples of school/homework.
+                    Please upload the Term Overview, most recent Report Card and
+                    any samples of school/homework.
                     <span className="text-red-500 ml-1">*</span>
                   </h4>
                   <DocumentUploadSection
@@ -201,8 +201,10 @@ const ParentQuestionsContent = ({
             {/* Guidance sections - full width below inputs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
               <div className="max-w-[92.5%] text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap">
-                <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">Considerations</div>
-                <div style={{ paddingLeft: '1.2em', textIndent: '-1.2em' }}>
+                <div className="font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Considerations
+                </div>
+                <div style={{ paddingLeft: "1.2em", textIndent: "-1.2em" }}>
                   {`Teacher insights are crucial for creating an effective tutoring programme. Please reach out to your child's teacher and ask them the question above. Their professional assessment, combined with the uploaded documents and your parental insights, will help us develop targeted support for your child's learning needs.
 
 In the text area above, please enter your teacher's response verbatim. This will help us understand:
@@ -215,7 +217,7 @@ In the text area above, please enter your teacher's response verbatim. This will
 
               <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap">
                 <div className="h-[1.25rem] mb-1" />
-                <div style={{ paddingLeft: '1.2em', textIndent: '-1.2em' }}>
+                <div style={{ paddingLeft: "1.2em", textIndent: "-1.2em" }}>
                   {`Please upload the following documents to provide context for your child's current abilities:
   • Term Overview: Shows the curriculum and learning objectives for the upcoming term
   • Most recent Report Card: Indicates current academic performance and achievements
@@ -299,7 +301,8 @@ These documents help us assess your child's starting point and create a personal
                   placeholder="Please provide any additional context about your preferred tutoring days (e.g., specific time preferences, conflicts, or other scheduling issues)..."
                   style={{ direction: "ltr", textAlign: "left" }}
                   value={
-                    (questionResponses[`${currentStep.id}_notes`] as string) || ""
+                    (questionResponses[`${currentStep.id}_notes`] as string) ||
+                    ""
                   }
                   onChange={(e) => {
                     setIsEditing(true);
@@ -307,7 +310,8 @@ These documents help us assess your child's starting point and create a personal
                       `${currentStep.id}_notes`,
                       e.target.value,
                     );
-                    if (editTimerRef.current) clearTimeout(editTimerRef.current);
+                    if (editTimerRef.current)
+                      clearTimeout(editTimerRef.current);
                     editTimerRef.current = setTimeout(
                       () => setIsEditing(false),
                       2000,
@@ -315,7 +319,9 @@ These documents help us assess your child's starting point and create a personal
                   }}
                 />
               </div>
-              <GuidanceSection guidance={steps[currentQuestionIndex].guidance} />
+              <GuidanceSection
+                guidance={steps[currentQuestionIndex].guidance}
+              />
             </div>
           </div>
         ) : currentStep.type === "parent_goals" ||
@@ -629,10 +635,10 @@ These documents help us assess your child's starting point and create a personal
                     ? "Most engaging subject / topic:\nLeast engaging subject / topic:\nMost challenging subject / topic:\nLeast challenging subject / topic:"
                     : ""
                 }
-            value={(questionResponses[currentStep.id] as string) || ""}
-            onChange={(e) => {
-              setIsEditing(true);
-              updateQuestionResponse(currentStep.id, e.target.value);
+                value={(questionResponses[currentStep.id] as string) || ""}
+                onChange={(e) => {
+                  setIsEditing(true);
+                  updateQuestionResponse(currentStep.id, e.target.value);
                   if (editTimerRef.current) clearTimeout(editTimerRef.current);
                   editTimerRef.current = setTimeout(
                     () => setIsEditing(false),
