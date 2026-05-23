@@ -10,7 +10,7 @@ import noRelativeImports from './eslint-rules/no-relative-imports.js';
 
 export default tseslint.config(
   {
-    ignores: ['eslint-rules-disabled/**', 'node_modules/**', 'dev-start.js', 'dev-start.cjs'],
+    ignores: ['eslint-rules-disabled/**', 'node_modules/**', 'dev-start.js', 'dev-start.cjs', '.kilo/**'],
   },
   js.configs.recommended,
   ...tseslint.configs.strict,

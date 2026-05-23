@@ -100,9 +100,15 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const recipient =
+      (formData.get("testRecipient") as string) ??
+      process.env.ADMIN_EMAIL ??
+      "admin@zpd-tutoring.com";
+    const userEmail = formData.get("email") as string | null;
+
     // Send email with PDF attachment
     await EmailService.sendEmail({
-      to: process.env.ADMIN_EMAIL ?? "admin@zpd-tutoring.com",
+      to: recipient,
       subject: "New Enrolment Insights Submission",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -115,6 +121,23 @@ export async function POST(request: NextRequest) {
       `,
       attachments,
     });
+
+    // Send confirmation to user if email provided
+    if (userEmail) {
+      await EmailService.sendEmail({
+        to: userEmail,
+        subject: "Enrolment Insights Received - ZPD Learning",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #059669;">Thank you for submitting your enrolment insights!</h1>
+            <p>We've received your responses and any uploaded documents.</p>
+            <p>Our team will review your submission within 2-3 business days and match you with the perfect tutor.</p>
+            <p>You'll receive further details shortly from grow@zpdlearning.com.</p>
+            <p>The ZPD Tutoring Team</p>
+          </div>
+        `,
+      });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

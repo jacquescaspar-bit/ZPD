@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import PlanCard from "@/enrol/components/PlanCard";
 import PaymentDetails, {
   type PaymentDetailsProps,
@@ -38,7 +39,9 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
   const sectionRef = useRef<HTMLElement>(null);
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
+  const [paymentFormReady, setPaymentFormReady] = useState(false);
   const [lockedCardHeight, setLockedCardHeight] = useState<number | null>(null);
+  const [slideOffset, setSlideOffset] = useState(0);
 
   const isDesktopPaymentLayout =
     !isMobile && Boolean(paymentProps && showPaymentDetails && selectedPlan);
@@ -49,46 +52,33 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
   useEffect(() => {
     if (!selectedPlan) {
       setLockedCardHeight(null);
+      setSlideOffset(0);
       return;
     }
-
-    // Lock the card height only for desktop to prevent snap; mobile uses compact thumbnail
-    if (isMobile) {
-      setLockedCardHeight(null);
-      return;
-    }
+    if (isMobile) return;
     const selectedIndex = planCards.findIndex((p) => p.id === selectedPlan);
     const selectedEl = cardRefs.current[selectedIndex];
-    if (selectedEl) {
-      setLockedCardHeight(selectedEl.offsetHeight);
-    }
-
-    const scrollTimer = window.setTimeout(() => {
-      if (sectionRef.current) {
-        const navbarHeight = 100;
-        const sectionTop =
-          sectionRef.current.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({
-          top: sectionTop - navbarHeight,
-          behavior: "smooth",
-        });
-      }
-    }, 100);
-    return () => window.clearTimeout(scrollTimer);
-  }, [selectedPlan, planCards, isDesktopPaymentLayout, isMobile]);
+    if (selectedEl) setLockedCardHeight(selectedEl.offsetHeight);
+  }, [selectedPlan, planCards, isMobile]);
 
   useEffect(() => {
-    if (selectedPlan) {
-      if (isMobile) {
-        setShowPaymentDetails(true);
-      } else {
-        const timer = setTimeout(() => setShowPaymentDetails(true), 500);
-        return () => clearTimeout(timer);
-      }
-    } else {
+    if (!selectedPlan) {
       setShowPaymentDetails(false);
+      setPaymentFormReady(false);
+      return;
+    }
+    if (!isMobile) {
+      const timer = setTimeout(() => {
+        setShowPaymentDetails(true);
+        setPaymentFormReady(true);
+      }, 680);
+      return () => clearTimeout(timer);
     }
   }, [selectedPlan, isMobile]);
+
+  // When mobile selection happens, immediately show compact thumbnail.
+  // The actual payment form reveal is delayed in the handler.
+  const _showCompactThumbnail = isMobile && Boolean(selectedPlan);
 
   useEffect(() => {
     if (paymentProps && showPaymentDetails) {
@@ -108,7 +98,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
           {isDesktopPaymentLayout ? (
             <div className="grid md:grid-cols-4 md:items-start md:gap-6">
               <div className="md:col-span-1">
-                <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-500 opacity-50">
+                <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-300 opacity-50">
                   <span className="font-semibold">
                     {planDescriptions[selectedPlan ?? ""].title}
                   </span>{" "}
@@ -123,7 +113,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             </div>
           ) : isMobilePaymentLayout ? (
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-500 opacity-50">
+              <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-300 opacity-50">
                 <span className="font-semibold">
                   {planDescriptions[selectedPlan ?? ""].title}
                 </span>{" "}
@@ -154,7 +144,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             </div>
           ) : selectedPlan ? (
             <h2
-              className={`text-2xl text-gray-900 dark:text-white transition-opacity duration-500 ${showPaymentDetails ? "opacity-50" : "opacity-100"}`}
+              className={`text-2xl text-gray-900 dark:text-white transition-opacity duration-300 ${showPaymentDetails ? "opacity-50" : "opacity-100"}`}
             >
               <span className="font-semibold">
                 {planDescriptions[selectedPlan].title}
@@ -209,7 +199,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                     );
                   })}
                 <div
-                  className={`min-w-0 md:col-span-3 [&>section]:!p-6 ${isHeaderVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`}
+                  className={`min-w-0 md:col-span-3 [&>section]:!p-6 ${isHeaderVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-300 ease-in-out`}
                 >
                   <PaymentDetails
                     {...paymentProps}
@@ -219,40 +209,62 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                 </div>
               </>
             ) : (
-              planCards.map((plan, index) => (
-                <div
-                  key={plan.id}
-                  ref={(el) => {
-                    cardRefs.current[index] = el;
-                  }}
-                  className={`${
-                    fadeOthers && selectedPlan !== plan.id
-                      ? "opacity-0 pointer-events-none"
-                      : ""
-                  } transition-opacity duration-500`}
-                >
-                  <PlanCard
-                    highlights={plan.highlights}
-                    isSelected={selectedPlan === plan.id}
-                    planId={plan.id}
-                    price={plan.price}
-                    sessions={plan.sessionsPerTerm}
-                    showHighlights={showHighlights}
-                    showPaymentDetails={showPaymentDetails}
-                    title={plan.title}
-                    variant="desktop"
-                    onSelect={() => {
-                      if (selectedPlan === plan.id) {
-                        onPlanSelect(null);
-                        setFadeOthers(false);
-                      } else {
-                        onPlanSelect(plan.id);
-                        setFadeOthers(true);
-                      }
+              planCards.map((plan, index) => {
+                const isThisSelected = selectedPlan === plan.id;
+                const _distance = isThisSelected ? index * 25 : 0; // % based on 4-col grid
+                return (
+                  <motion.div
+                    key={plan.id}
+                    ref={(el) => {
+                      cardRefs.current[index] = el;
                     }}
-                  />
-                </div>
-              ))
+                    animate={
+                      isThisSelected && fadeOthers
+                        ? { x: slideOffset }
+                        : { x: 0 }
+                    }
+                    transition={{
+                      type: "spring",
+                      stiffness: 130,
+                      damping: 24,
+                      mass: 1.2,
+                    }}
+                  >
+                    <PlanCard
+                      highlights={plan.highlights}
+                      isSelected={isThisSelected}
+                      planId={plan.id}
+                      price={plan.price}
+                      sessions={plan.sessionsPerTerm}
+                      showHighlights={showHighlights}
+                      showPaymentDetails={showPaymentDetails}
+                      title={plan.title}
+                      variant="desktop"
+                      onSelect={() => {
+                        if (selectedPlan === plan.id) {
+                          onPlanSelect(null);
+                          setFadeOthers(false);
+                          setSlideOffset(0);
+                        } else {
+                          onPlanSelect(plan.id);
+                          setFadeOthers(true);
+                          // compute exact px offset so selected card lands precisely on first column
+                          const [firstEl] = cardRefs.current;
+                          const selEl = cardRefs.current[index];
+                          if (firstEl && selEl) {
+                            const delta =
+                              firstEl.getBoundingClientRect().left -
+                              selEl.getBoundingClientRect().left;
+                            setSlideOffset(delta);
+                          } else {
+                            setSlideOffset(0);
+                          }
+                        }
+                      }}
+                    />
+                  </motion.div>
+                );
+              })
             )}
           </div>
         ) : isMobilePaymentLayout && selectedPlan ? (
@@ -267,9 +279,12 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                   setFadeOthers(false);
                 };
                 return (
-                  <div
+                  <motion.div
                     key={plan.id}
-                    className="min-w-0 h-auto transition-all duration-500 ease-out"
+                    animate={{ opacity: 1, y: 0 }}
+                    className="min-w-0 h-auto"
+                    initial={{ opacity: 0, y: 30 }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0 }}
                     onClick={() => {
                       onPlanSelect(null);
                       setFadeOthers(false);
@@ -290,16 +305,16 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                         setFadeOthers(false);
                       }}
                     />
-                  </div>
+                  </motion.div>
                 );
               })}
             <h2
-              className={`text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-500 ease-in-out ${isHeaderVisible ? "opacity-100" : "opacity-0"}`}
+              className={`text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-300 ease-in-out ${paymentFormReady ? "opacity-100" : "opacity-0"}`}
             >
               Payment Details
             </h2>
             <div
-              className={`${isHeaderVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`}
+              className={`${paymentFormReady ? "opacity-100" : "opacity-0"} transition-opacity duration-300 ease-in-out`}
             >
               <PaymentDetails
                 {...paymentProps}
@@ -309,15 +324,19 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             </div>
           </div>
         ) : (
-          // Mobile: Vertical scroll stack - full visibility, easy comparison
+          // Mobile: thumbnail + viewport scroll in perfect sync
           <div className="space-y-4">
             {planCards.map((plan, index) => (
-              <div
+              <motion.div
                 key={plan.id}
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
-                className={`${fadeOthers && selectedPlan !== plan.id ? "opacity-0 pointer-events-none" : ""} transition-opacity duration-500`}
+                animate={
+                  selectedPlan === plan.id ? { scale: 0.55 } : { scale: 1 }
+                }
+                className={`${fadeOthers && selectedPlan !== plan.id ? "opacity-0 pointer-events-none" : ""} transition-opacity duration-300`}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
               >
                 <PlanCard
                   highlights={plan.highlights}
@@ -333,13 +352,31 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                     if (selectedPlan === plan.id) {
                       onPlanSelect(null);
                       setFadeOthers(false);
+                      setPaymentFormReady(false);
                     } else {
                       onPlanSelect(plan.id);
                       setFadeOthers(true);
+                      setShowPaymentDetails(true); // thumbnail in place
+
+                      // Force instant snap only on mobile (override global smooth scroll)
+                      if (isMobile) {
+                        const html = document.documentElement;
+                        const prev = html.style.scrollBehavior;
+                        html.style.scrollBehavior = "auto";
+                        try {
+                          sectionRef.current?.scrollIntoView({
+                            block: "start",
+                          });
+                        } finally {
+                          html.style.scrollBehavior = prev;
+                        }
+                      }
+
+                      setTimeout(() => setPaymentFormReady(true), 550);
                     }
                   }}
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
         )}

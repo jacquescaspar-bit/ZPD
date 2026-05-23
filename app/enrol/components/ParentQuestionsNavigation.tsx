@@ -47,8 +47,10 @@ const ParentQuestionsNavigation = ({
     const handleScroll = (e?: Event) => {
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
-          const target = (e?.target as HTMLElement) || document.scrollingElement;
-          const currentScrollY = target instanceof HTMLElement ? target.scrollTop : window.scrollY;
+          const target =
+            (e?.target as HTMLElement) || document.scrollingElement;
+          const currentScrollY =
+            target instanceof HTMLElement ? target.scrollTop : window.scrollY;
           const delta = currentScrollY - lastScrollY.current;
           const navHeight = 72;
 
@@ -69,16 +71,19 @@ const ParentQuestionsNavigation = ({
 
     // Listen on window + any inner scroll containers (overflow-y-auto)
     const containers: (Window | HTMLElement)[] = [window];
-    const scrollables = document.querySelectorAll<HTMLElement>(".overflow-y-auto");
+    const scrollables =
+      document.querySelectorAll<HTMLElement>(".overflow-y-auto");
     scrollables.forEach((el) => containers.push(el));
 
     containers.forEach((c) =>
-      c.addEventListener("scroll", handleScroll as EventListener, { passive: true })
+      c.addEventListener("scroll", handleScroll as EventListener, {
+        passive: true,
+      }),
     );
 
     return () => {
       containers.forEach((c) =>
-        c.removeEventListener("scroll", handleScroll as EventListener)
+        c.removeEventListener("scroll", handleScroll as EventListener),
       );
     };
   }, [navOffset]);
@@ -220,9 +225,9 @@ const ParentQuestionsNavigation = ({
         </span>
         <div className="flex items-center gap-2">
           <button
-            onClick={handleTestSubmit}
-            disabled={isSubmitting}
             className="px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors min-w-[60px] sm:min-w-[100px] bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-75"
+            disabled={isSubmitting}
+            onClick={() => void handleTestSubmit()}
           >
             Test
           </button>

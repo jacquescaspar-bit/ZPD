@@ -271,7 +271,6 @@ export interface PaymentDetailsProps {
   forceTestMode?: boolean;
 }
 
-/* eslint-disable max-lines-per-function */
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   parentName,
   setParentName,
@@ -302,15 +301,9 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   showHeaderSubtitle = true,
   hasAttemptedSubmit,
   onSubmitAttempt,
-  forceTestMode = false,
+  _forceTestMode = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const paymentsDisabled =
-    process.env.NEXT_PUBLIC_PAYMENTS_DISABLED === "1" ||
-    !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-  const [testModeEnabled, _setTestModeEnabled] = useState(
-    forceTestMode || paymentsDisabled,
-  );
 
   // Validate promo code when input changes
   const handlePromoCodeChange = async (code: string) => {
@@ -356,36 +349,6 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
               Complete your enrolment with secure payment.
             </p>
           ) : null}
-        </div>
-      )}
-      {paymentsDisabled && (
-        <div className="rounded-2xl border border-sky-200/70 bg-sky-50/80 dark:bg-sky-950/30 dark:border-sky-900 px-6 py-4 text-sky-900 dark:text-sky-200 shadow-lg">
-          <p className="text-sm sm:text-base font-medium">
-            Payments are disabled right now (UX mode).
-          </p>
-          <p className="mt-2 text-sm text-sky-800/90 dark:text-sky-200/90">
-            You can continue through the enrolment flow without entering card
-            details. We’ll re-enable Stripe once the UX is locked in.
-          </p>
-          <div className="mt-4 flex flex-col sm:flex-row gap-3">
-            <button
-              className="inline-flex items-center justify-center rounded-xl bg-sky-600 px-4 py-2.5 text-white font-semibold hover:bg-sky-700 transition-colors"
-              type="button"
-              onClick={() => {
-                onSubmitAttempt();
-                onPaymentSuccess(`test_payment_intent_${Date.now()}`);
-              }}
-            >
-              Continue (skip payment)
-            </button>
-            <button
-              className="inline-flex items-center justify-center rounded-xl border border-sky-300/70 dark:border-sky-800 px-4 py-2.5 text-sky-900 dark:text-sky-100 font-semibold hover:bg-sky-100/70 dark:hover:bg-sky-900/30 transition-colors"
-              type="button"
-              onClick={() => _setTestModeEnabled(true)}
-            >
-              Show test payment button
-            </button>
-          </div>
         </div>
       )}
 
@@ -497,7 +460,6 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
           appliedPromoKind === "referral" ? promoCode : undefined
         }
         enrollmentData={enrollmentData}
-        forceTestMode={testModeEnabled}
         hasAttemptedSubmit={hasAttemptedSubmit}
         isReady={isPaymentReady}
         missingFields={missingFields}
@@ -573,31 +535,6 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Test Button - Development Only */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="mt-4 p-4 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg">
-          <button
-            className="w-full bg-orange-500 text-white py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors font-medium"
-            type="button"
-            onClick={() => {
-              // Auto-fill test data
-              setParentName("Jacques Test");
-              setEmail("jacquescaspar@gmail.com");
-              setPhone("0408453241");
-              // Immediately trigger payment success
-              setTimeout(() => {
-                onPaymentSuccess(`test_payment_intent_${Date.now()}`);
-              }, 100);
-            }}
-          >
-            🧪 Test Complete Payment Flow
-          </button>
-          <p className="text-xs text-orange-700 dark:text-orange-300 mt-2 text-center">
-            Auto-fills form and advances to post-payment UX
-          </p>
-        </div>
-      )}
     </section>
   );
 };
