@@ -184,21 +184,6 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
       return;
     }
 
-    // Check for test mode (bypass Stripe validation for UX testing)
-    const isTestMode =
-      typeof window !== "undefined" &&
-      (window.location.search.includes("test=true") ||
-        (process.env.NODE_ENV === "development" &&
-          window.location.search.includes("bypass=true")));
-
-    if (isTestMode) {
-      // Bypass Stripe validation for testing
-      console.warn("🧪 TEST MODE: Bypassing Stripe payment validation");
-      setValidationError(null);
-      onPaymentSuccess(`test_payment_intent_${Date.now()}`);
-      return;
-    }
-
     if (!stripe || !elements || !clientSecret) {
       return;
     }
@@ -437,33 +422,37 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
 
         {summarySlot}
 
-        <button
-          className={`w-full py-3 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium ${
-            isTestMode
-              ? "bg-orange-500 text-white hover:bg-orange-600"
-              : "bg-green-500 text-white hover:bg-green-600"
-          }`}
-          disabled={
-            isTestMode
-              ? false
-              : !stripe ||
-                isProcessing ||
-                !clientSecret ||
-                !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-          }
-          type="submit"
-        >
-          {isProcessing ? (
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Processing secure payment</span>
-            </div>
-          ) : isTestMode ? (
-            "🧪 Test Payment (Skip Stripe)"
-          ) : (
-            submitLabel || `Pay AUD $${finalAmountDisplay}`
-          )}
-        </button>
+        <div className="flex gap-3">
+          <button
+            className="flex-1 py-3 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium bg-green-500 text-white hover:bg-green-600"
+            disabled={
+              !stripe ||
+              isProcessing ||
+              !clientSecret ||
+              !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+            }
+            type="submit"
+          >
+            {isProcessing ? (
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Processing secure payment</span>
+              </div>
+            ) : (
+              submitLabel || `Pay AUD $${finalAmountDisplay}`
+            )}
+          </button>
+          <button
+            className="flex-1 py-3 px-4 rounded-lg transition-colors font-medium bg-gray-500 text-white hover:bg-gray-600"
+            type="button"
+            onClick={() => {
+              onSubmitAttempt();
+              onPaymentSuccess(`test_payment_intent_${Date.now()}`);
+            }}
+          >
+            Skip payment (testing)
+          </button>
+        </div>
 
         {validationError && (
           <p className="text-sm text-amber-600 text-center">

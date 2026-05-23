@@ -1,9 +1,25 @@
 {
-  "worktrees": {},
-  "sessions": {},
+  "worktrees": {
+    "wt-1779540009426-1": {
+      "branch": "mirage-primrose",
+      "path": "/Users/squanch/Documents/GitHub/ZPD/.kilo/worktrees/mirage-primrose",
+      "parentBranch": "main",
+      "createdAt": "2026-05-23T12:40:09.426Z",
+      "remote": "origin"
+    }
+  },
+  "sessions": {
+    "ses_1ab263459ffeekCElWsTX77oow": {
+      "worktreeId": "wt-1779540009426-1",
+      "createdAt": "2026-05-23T12:40:20.147Z"
+    }
+  },
   "tabOrder": {
     "local": [
       "pending:1"
     ]
-  }
+  },
+  "worktreeOrder": [
+    "wt-1779540009426-1"
+  ]
 }

@@ -32,14 +32,14 @@ const RootLayout = ({
               </p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4">Services</h4>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2 text-sm">
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/services"
+                    href="/enrol"
                   >
-                    Our Services
+                    Enrol
                   </a>
                 </li>
                 <li>
@@ -53,28 +53,30 @@ const RootLayout = ({
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/enrol"
+                    href="/blog"
                   >
-                    Enroll Now
+                    Blog
                   </a>
                 </li>
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/faq"
+                    href="/contact"
                   >
-                    FAQ
+                    Contact
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              <a className="hover:text-white transition-colors" href="/legal">
+                <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              </a>
               <ul className="space-y-2 text-sm">
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/privacy"
+                    href="/legal#privacy"
                   >
                     Privacy Policy
                   </a>
@@ -82,7 +84,7 @@ const RootLayout = ({
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/terms"
+                    href="/legal#terms"
                   >
                     Terms of Service
                   </a>
@@ -90,7 +92,7 @@ const RootLayout = ({
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/refund-policy"
+                    href="/legal#refund"
                   >
                     Refund Policy
                   </a>
@@ -98,7 +100,7 @@ const RootLayout = ({
                 <li>
                   <a
                     className="text-gray-400 hover:text-white transition-colors"
-                    href="/child-protection"
+                    href="/legal#child"
                   >
                     Child Protection
                   </a>
@@ -113,9 +115,8 @@ const RootLayout = ({
                   Sydney NSW 2000, Australia
                 </p>
                 <p>{/* PLACEHOLDER: Business Phone */} +61 400 123 456</p>
-                <p>
-                  {/* PLACEHOLDER: Support Email */} support@zpdtutoring.com
-                </p>
+                <p>{/* PLACEHOLDER: Support Email */} grow@zpdlearning.com</p>
+                <p>ABN: 12 345 678 901</p>
               </div>
             </div>
           </div>

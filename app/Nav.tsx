@@ -170,13 +170,6 @@ const Nav = () => {
                 </a>
               )}
               <a
-                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/services" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
-                href="/services"
-                style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
-              >
-                Services
-              </a>
-              <a
                 className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/about" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
                 href="/about"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
@@ -191,11 +184,11 @@ const Nav = () => {
                 Blog
               </a>
               <a
-                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/faq" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
-                href="/faq"
+                className={`text-lg md:text-xl leading-snug relative transition-colors duration-300 ${pathname === "/contact" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"} text-center`}
+                href="/contact"
                 style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
               >
-                FAQ
+                Contact
               </a>
             </div>
           </Container>
@@ -235,8 +228,8 @@ const Nav = () => {
         </div>
       )}
 
-      {/* Mobile CTA - Show on all pages except enrol */}
-      {isMobile && pathname !== "/enrol" && (
+      {/* Mobile CTA - Show on all pages except enrol and insights */}
+      {isMobile && pathname !== "/enrol" && pathname !== "/enrol/insights" && (
         <Button
           className={`fixed bottom-8 left-8 z-50 w-24 h-12 px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm tracking-wide whitespace-nowrap leading-tight ${showCtaInNav ? "opacity-100" : "opacity-0"}`}
           style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
@@ -268,14 +261,6 @@ const Nav = () => {
             Enrol
           </a>
           <a
-            className={`text-xl leading-snug relative transition-colors duration-300 ${pathname === "/services" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"}`}
-            href="/services"
-            style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
-            onClick={() => setIsOpen(false)}
-          >
-            Services
-          </a>
-          <a
             className={`text-xl leading-snug relative transition-colors duration-300 ${pathname === "/about" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"}`}
             href="/about"
             style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
@@ -292,12 +277,12 @@ const Nav = () => {
             Blog
           </a>
           <a
-            className={`text-xl leading-snug relative transition-colors duration-300 ${pathname === "/faq" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"}`}
-            href="/faq"
+            className={`text-xl leading-snug relative transition-colors duration-300 ${pathname === "/contact" ? "font-bold text-gray-600 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-600 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"}`}
+            href="/contact"
             style={{ fontFamily: "antipasto", letterSpacing: "0.1em" }}
             onClick={() => setIsOpen(false)}
           >
-            FAQ
+            Contact
           </a>
         </div>
       )}

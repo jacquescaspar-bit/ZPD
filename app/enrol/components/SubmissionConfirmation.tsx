@@ -29,7 +29,7 @@ const SubmissionConfirmation = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full p-6 sm:p-8 text-center w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="flex flex-col items-center justify-center w-full max-w-lg p-6 sm:p-8 text-center bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
       <div className="mb-6">
         <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg
@@ -62,6 +62,11 @@ const SubmissionConfirmation = ({
         <ul className="text-left text-blue-950 dark:text-blue-50 space-y-2">
           <li className="flex items-start">
             <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
+            You'll receive a confirmation email shortly from
+            grow@zpdlearning.com
+          </li>
+          <li className="flex items-start">
+            <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
             Our team will review your submission within 2-3 business days
           </li>
           <li className="flex items-start">
@@ -70,11 +75,7 @@ const SubmissionConfirmation = ({
           </li>
           <li className="flex items-start">
             <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
-            You'll receive a confirmation email with next steps
-          </li>
-          <li className="flex items-start">
-            <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
-            Your personalized learning plan will be created
+            We'll reach out to you to schedule your first session
           </li>
         </ul>
         <div className="mt-4 pt-4 border-t border-blue-200 dark:border-blue-700">

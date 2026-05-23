@@ -323,7 +323,7 @@ const ParentQuestionsSection = ({
     return (
       <section
         ref={sectionRef}
-        className="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col h-[calc(100vh-6rem)] max-h-[calc(100vh-6rem)]"
+        className="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col items-center justify-center p-4"
       >
         <SubmissionConfirmation />
       </section>

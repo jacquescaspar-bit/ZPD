@@ -7,10 +7,8 @@ import Infographic from "@/Infographic";
 import Features from "@/Features";
 import Stats from "@/Stats";
 import Testimonials from "@/Testimonials";
-import TrinitySynergy from "@/TrinitySynergy";
 import BackToTop from "@/BackToTop";
 import BodyBackground from "@/BodyBackground";
-import { Card } from "@/components/ui";
 
 const Home = () => (
   <>
@@ -20,11 +18,8 @@ const Home = () => (
     <ZPDDefinitionSection />
     <Infographic />
     <Features />
-    <Card>
-      <Stats />
-    </Card>
+    <Stats />
     <Testimonials />
-    <TrinitySynergy />
     <BackToTop />
   </>
 );
