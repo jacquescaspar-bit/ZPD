@@ -224,13 +224,15 @@ const ParentQuestionsNavigation = ({
           {`${currentQuestionIndex + 1} of ${questionsLength}`}
         </span>
         <div className="flex items-center gap-2">
-          <button
-            className="px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors min-w-[60px] sm:min-w-[100px] bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-75"
-            disabled={isSubmitting}
-            onClick={() => void handleTestSubmit()}
-          >
-            Test
-          </button>
+          {isReviewQuestion && (
+            <button
+              className="px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors min-w-[60px] sm:min-w-[100px] bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-75"
+              disabled={isSubmitting}
+              onClick={() => void handleTestSubmit()}
+            >
+              Test
+            </button>
+          )}
           <button
             className={`px-4 py-2 rounded-lg font-medium transition-colors min-w-[100px] ${
               isReviewQuestion
