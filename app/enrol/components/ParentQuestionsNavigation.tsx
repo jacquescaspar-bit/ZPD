@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface ParentQuestionsNavigationProps {
   currentQuestionIndex: number;
@@ -35,64 +35,62 @@ const ParentQuestionsNavigation = ({
 }: ParentQuestionsNavigationProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Mobile sticky nav: show on scroll up, hide on scroll down (match scroll speed)
+  const [navOffset, setNavOffset] = useState(0);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 640;
+    if (!isMobile) return;
+
+    const handleScroll = (e?: Event) => {
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const target = (e?.target as HTMLElement) || document.scrollingElement;
+          const currentScrollY = target instanceof HTMLElement ? target.scrollTop : window.scrollY;
+          const delta = currentScrollY - lastScrollY.current;
+          const navHeight = 72;
+
+          let newOffset = navOffset;
+          if (delta > 0) {
+            newOffset = Math.min(navHeight, navOffset + delta * 1.2);
+          } else {
+            newOffset = Math.max(0, navOffset + delta * 1.2);
+          }
+
+          setNavOffset(Math.max(0, Math.min(navHeight, newOffset)));
+          lastScrollY.current = currentScrollY;
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
+    };
+
+    // Listen on window + any inner scroll containers (overflow-y-auto)
+    const containers: (Window | HTMLElement)[] = [window];
+    const scrollables = document.querySelectorAll<HTMLElement>(".overflow-y-auto");
+    scrollables.forEach((el) => containers.push(el));
+
+    containers.forEach((c) =>
+      c.addEventListener("scroll", handleScroll as EventListener, { passive: true })
+    );
+
+    return () => {
+      containers.forEach((c) =>
+        c.removeEventListener("scroll", handleScroll as EventListener)
+      );
+    };
+  }, [navOffset]);
+
   const handleSubmit = async () => {
     if (!onSubmit) return;
 
     setIsSubmitting(true);
     try {
-      // Convert files to base64 for email attachments
-      const _emailAttachments = await Promise.all(
-        attachments.map(async (file) => {
-          const base64 = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
-          // Remove the data: prefix to get just the base64 content
-          const [, base64Content] = base64.split(",");
-
-          return {
-            content: base64Content,
-            filename: file.name,
-            type: file.type,
-            disposition: "attachment",
-          };
-        }),
-      );
-
-      // Create email content with responses
-      const responsesHtml = Object.entries(questionResponses)
-        .filter(([key]) => key !== "5") // Exclude review step
-        .map(([stepIndex, response]) => {
-          const stepNum = parseInt(stepIndex) + 1;
-          let responseText = "";
-          if (typeof response === "string") {
-            responseText = response;
-          } else if (Array.isArray(response)) {
-            responseText = response.join(", ");
-          }
-          return `<div><strong>Step ${stepNum}:</strong> ${responseText}</div>`;
-        })
-        .join("");
-
-      const _html = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1 style="color: #059669;">New Enrolment Insights Submission</h1>
-          <p>A parent has completed their enrolment insights. Here are their responses:</p>
-          <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            ${responsesHtml}
-          </div>
-          ${attachments.length > 0 ? "<p><strong>Attachments:</strong> See attached files for uploaded documents.</p>" : "<p><strong>No attachments uploaded.</strong></p>"}
-          <p>Please review this submission and proceed with tutor matching.</p>
-          <p>The ZPD Tutoring Team</p>
-        </div>
-      `;
-
       const formData = new FormData();
       formData.append("responses", JSON.stringify(questionResponses));
 
-      // Append actual file objects to form data
       attachments.forEach((file, index) => {
         formData.append(`attachment_${index}`, file);
       });
@@ -109,7 +107,30 @@ const ParentQuestionsNavigation = ({
       onSubmit();
     } catch (error) {
       console.error("Failed to submit:", error);
-      // TODO: Show error message to user
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleTestSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("responses", JSON.stringify({})); // blank form
+      formData.append("testRecipient", "jacquescaspar@gmail.com");
+
+      const response = await fetch("/api/submit-insights", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit test");
+      }
+
+      if (onSubmit) onSubmit();
+    } catch (error) {
+      console.error("Test submit failed:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -175,7 +196,10 @@ const ParentQuestionsNavigation = ({
   const isQuestion6 = currentQuestionIndex === 5;
 
   return (
-    <div className="flex-shrink-0 p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div
+      className="sm:static fixed bottom-0 left-0 right-0 z-50 flex-shrink-0 p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 sm:transform-none"
+      style={{ transform: `translateY(${navOffset}px)` }}
+    >
       <div className="flex justify-between items-center">
         <button
           className={`px-4 py-2 rounded-lg font-medium transition-colors min-w-[100px] ${
@@ -194,77 +218,83 @@ const ParentQuestionsNavigation = ({
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {`${currentQuestionIndex + 1} of ${questionsLength}`}
         </span>
-        <button
-          className={`px-4 py-2 rounded-lg font-medium transition-colors min-w-[100px] ${
-            isReviewQuestion
-              ? allQuestionsValid && !isSubmitting
-                ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                : questionsOnlyValid && !agreedToTerms
-                  ? "bg-gray-400 text-white cursor-pointer hover:bg-gray-500"
-                  : !questionsOnlyValid
-                    ? "bg-amber-600 text-white hover:bg-amber-700 cursor-pointer"
-                    : isSubmitting
-                      ? "bg-emerald-600 text-white opacity-75 cursor-not-allowed"
-                      : "bg-emerald-600 text-white hover:bg-emerald-700"
-              : "bg-emerald-600 text-white hover:bg-emerald-700"
-          }`}
-          disabled={isSubmitting}
-          onClick={() => {
-            if (isReviewQuestion) {
-              if (allQuestionsValid) {
-                void handleSubmit();
-              } else if (questionsOnlyValid && !agreedToTerms) {
-                // Scroll to checkbox
-                const checkboxElement = document.querySelector(
-                  'input[type="checkbox"]',
-                );
-                if (checkboxElement) {
-                  checkboxElement.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                  });
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleTestSubmit}
+            disabled={isSubmitting}
+            className="px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors min-w-[60px] sm:min-w-[100px] bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-75"
+          >
+            Test
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg font-medium transition-colors min-w-[100px] ${
+              isReviewQuestion
+                ? allQuestionsValid && !isSubmitting
+                  ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                  : questionsOnlyValid && !agreedToTerms
+                    ? "bg-gray-400 text-white cursor-pointer hover:bg-gray-500"
+                    : !questionsOnlyValid
+                      ? "bg-amber-600 text-white hover:bg-amber-700 cursor-pointer"
+                      : isSubmitting
+                        ? "bg-emerald-600 text-white opacity-75 cursor-not-allowed"
+                        : "bg-emerald-600 text-white hover:bg-emerald-700"
+                : "bg-emerald-600 text-white hover:bg-emerald-700"
+            }`}
+            disabled={isSubmitting}
+            onClick={() => {
+              if (isReviewQuestion) {
+                if (allQuestionsValid) {
+                  void handleSubmit();
+                } else if (questionsOnlyValid && !agreedToTerms) {
+                  const checkboxElement = document.querySelector(
+                    'input[type="checkbox"]',
+                  );
+                  if (checkboxElement) {
+                    checkboxElement.scrollIntoView({
+                      behavior: "smooth",
+                      block: "center",
+                    });
+                  }
+                } else {
+                  setHasClickedResolveIssues(true);
+                  const firstInvalidStep = findFirstInvalidStep();
+                  if (firstInvalidStep !== -1) {
+                    setCurrentQuestionIndex(firstInvalidStep);
+                  }
                 }
               } else {
-                // Not all questions valid - resolve issues
-                setHasClickedResolveIssues(true);
-                const firstInvalidStep = findFirstInvalidStep();
-                if (firstInvalidStep !== -1) {
-                  setCurrentQuestionIndex(firstInvalidStep);
+                const currentResponse = questionResponses[currentQuestionIndex];
+                const hasContent =
+                  currentResponse &&
+                  (typeof currentResponse === "string"
+                    ? currentResponse.trim() !== ""
+                    : currentResponse.length > 0);
+
+                if (hasContent) {
+                  setCompletedQuestions(
+                    (prev) => new Set([...prev, currentQuestionIndex]),
+                  );
+                }
+
+                if (!isLastQuestion) {
+                  setCurrentQuestionIndex(currentQuestionIndex + 1);
                 }
               }
-            } else {
-              // Mark current question as completed if it has content
-              const currentResponse = questionResponses[currentQuestionIndex];
-              const hasContent =
-                currentResponse &&
-                (typeof currentResponse === "string"
-                  ? currentResponse.trim() !== ""
-                  : currentResponse.length > 0);
-
-              if (hasContent) {
-                setCompletedQuestions(
-                  (prev) => new Set([...prev, currentQuestionIndex]),
-                );
-              }
-
-              if (!isLastQuestion) {
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
-              }
-            }
-          }}
-        >
-          {isReviewQuestion
-            ? isSubmitting
-              ? "Submitting..."
-              : allQuestionsValid
-                ? "Submit"
-                : questionsOnlyValid && !agreedToTerms
+            }}
+          >
+            {isReviewQuestion
+              ? isSubmitting
+                ? "Submitting..."
+                : allQuestionsValid
                   ? "Submit"
-                  : "Resolve Issues"
-            : isQuestion6
-              ? "Review"
-              : "Next"}
-        </button>
+                  : questionsOnlyValid && !agreedToTerms
+                    ? "Submit"
+                    : "Resolve Issues"
+              : isQuestion6
+                ? "Review"
+                : "Next"}
+          </button>
+        </div>
       </div>
     </div>
   );
