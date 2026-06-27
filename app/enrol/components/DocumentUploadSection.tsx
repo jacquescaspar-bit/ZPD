@@ -1,18 +1,23 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
+import type { InsightAttachmentRecord } from "@/lib/insightsAttachments";
 
 interface DragDropAreaProps {
   onFilesSelected: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
-const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
+const DragDropArea: React.FC<DragDropAreaProps> = ({
+  onFilesSelected,
+  disabled = false,
+}) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    setIsDragOver(true);
+    if (!disabled) setIsDragOver(true);
   };
 
   const handleDragLeave = (e: React.DragEvent) => {
@@ -23,10 +28,10 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
+    if (disabled) return;
 
     const { files } = e.dataTransfer;
     if (files.length > 0) {
-      // Create a synthetic event to match the expected interface
       const syntheticEvent = {
         target: { files },
       } as React.ChangeEvent<HTMLInputElement>;
@@ -35,15 +40,19 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
   };
 
   const handleClick = () => {
-    fileInputRef.current?.click();
+    if (!disabled) fileInputRef.current?.click();
   };
 
   return (
     <div
-      className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
-        isDragOver
-          ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20"
-          : "border-gray-300 dark:border-gray-600 hover:border-emerald-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+      className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+        disabled
+          ? "cursor-not-allowed opacity-60 border-gray-300 dark:border-gray-600"
+          : `cursor-pointer ${
+              isDragOver
+                ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20"
+                : "border-gray-300 dark:border-gray-600 hover:border-emerald-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+            }`
       }`}
       onClick={handleClick}
       onDragLeave={handleDragLeave}
@@ -68,7 +77,11 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
         </svg>
         <div>
           <p className="text-lg font-medium text-gray-900 dark:text-white mb-1">
-            {isDragOver ? "Drop files here" : "Drag & drop files here"}
+            {disabled
+              ? "Uploading…"
+              : isDragOver
+                ? "Drop files here"
+                : "Drag & drop files here"}
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             or{" "}
@@ -77,7 +90,8 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
             </span>
           </p>
           <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-            Supports PDF, DOC, DOCX, JPG, JPEG, PNG, PPT, PPTX
+            Supports PDF, DOC, DOCX, JPG, JPEG, PNG, PPT, PPTX · Saved
+            automatically
           </p>
         </div>
       </div>
@@ -86,6 +100,7 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
         multiple
         accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.ppt,.pptx"
         className="hidden"
+        disabled={disabled}
         type="file"
         onChange={onFilesSelected}
       />
@@ -94,29 +109,52 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({ onFilesSelected }) => {
 };
 
 interface DocumentUploadSectionProps {
-  attachments: File[];
+  attachments: InsightAttachmentRecord[];
+  uploadingCount?: number;
+  uploadError?: string | null;
   handleAttachmentChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  removeAttachment: (name: string) => void;
+  removeAttachment: (attachmentId: string) => void;
 }
 
 const DocumentUploadSection: React.FC<DocumentUploadSectionProps> = ({
   attachments,
+  uploadingCount = 0,
+  uploadError,
   handleAttachmentChange,
   removeAttachment,
 }) => (
   <div className="space-y-3 flex-1">
-    <DragDropArea onFilesSelected={handleAttachmentChange} />
+    <DragDropArea
+      disabled={uploadingCount > 0}
+      onFilesSelected={handleAttachmentChange}
+    />
+    {uploadError ? (
+      <p className="text-sm text-red-600 dark:text-red-400">{uploadError}</p>
+    ) : null}
+    {uploadingCount > 0 ? (
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        Saving {uploadingCount} file{uploadingCount === 1 ? "" : "s"}…
+      </p>
+    ) : null}
     {attachments.length > 0 && (
       <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
         {attachments.map((file) => (
           <li
-            key={file.name}
+            key={file.id}
             className="flex items-center justify-between bg-gray-50 dark:bg-gray-800 rounded-lg p-2"
           >
-            <span className="truncate">{file.name}</span>
+            <span className="truncate">
+              {file.filename}
+              <span className="ml-2 text-xs text-emerald-600 dark:text-emerald-400">
+                Saved
+              </span>
+            </span>
             <button
               className="text-red-500 hover:text-red-700 ml-2"
-              onClick={() => removeAttachment(file.name)}
+              type="button"
+              onClick={() => {
+                void removeAttachment(file.id);
+              }}
             >
               ✕
             </button>

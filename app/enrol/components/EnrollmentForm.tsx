@@ -6,8 +6,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import type { EnrollmentPaymentData } from "@/enrol/components/PaymentForm";
 import PaymentDetails from "@/enrol/components/PaymentDetails";
 import PlanSelection from "@/enrol/components/PlanSelection";
-import ReviewStep from "@/enrol/components/ReviewStep";
 import { PRICING, type PlanType } from "@/lib/constants";
+import { buildInsightsResumeUrl } from "@/lib/insightsResume";
 import type { Step, EnrollmentFormProps } from "@/enrol/types";
 import { planDescriptions } from "@/enrol/data";
 import { useMobileCarousel } from "@/enrol/hooks/useMobileCarousel";
@@ -24,19 +24,18 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(
     initialPlan ?? null,
   );
-  const [notes, setNotes] = useState("");
-  const [attachments, setAttachments] = useState<File[]>([]);
+  const [notes] = useState("");
+  const [attachments] = useState<File[]>([]);
   const [parentName, setParentName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [_statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [_errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const [showHighlights, setShowHighlights] = useState(false);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [showReviewStep, setShowReviewStep] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<"processing" | "success">(
     "processing",
   );
@@ -47,9 +46,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     promoStatus,
     appliedPromoValue,
     appliedPromoKind,
-    referralLink,
     removePromo,
-    copyReferralLink,
     promoAdjustments,
     calculateFinalAmount,
     validateCode,
@@ -88,17 +85,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   useEffect(() => {
     onStepChange?.(currentStep);
   }, [currentStep, onStepChange]);
-
-  const handleAttachmentChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (!event.target.files) return;
-    setAttachments(Array.from(event.target.files));
-  };
-
-  const removeAttachment = (name: string) => {
-    setAttachments((prev) => prev.filter((file) => file.name !== name));
-  };
 
   const isPaymentReady = Boolean(parentName.trim()) && Boolean(email.trim());
 
@@ -142,7 +128,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     // Show loading screen
     setIsPaymentProcessing(true);
     setIsFadingOut(false);
-    setShowReviewStep(false);
     setPaymentStatus("processing");
 
     // Check if this is a test payment
@@ -157,7 +142,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
       }
       setTimeout(() => {
         setPaymentStatus("success");
-        window.location.href = `/enrol/insights`;
+        window.location.href = "/enrol/insights";
       }, 1500);
       return;
     }
@@ -209,18 +194,18 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
       sessionStorage.setItem("enrollmentSessionId", result.session.sessionId);
       sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
 
-      // Show success message and redirect simultaneously
+      const resumeUrl = buildInsightsResumeUrl(result.session.sessionId);
+
       setTimeout(() => {
         setPaymentStatus("success");
-        window.location.href = `/enrol/insights`;
+        window.location.href = resumeUrl;
       }, 1500);
     } catch (error) {
       console.error("Error creating enrollment session:", error);
 
-      // Fallback to current behavior but still redirect
       setTimeout(() => {
         setPaymentStatus("success");
-        window.location.href = `/enrol/insights`;
+        window.location.href = "/enrol/insights";
       }, 1500);
     }
   };
@@ -415,23 +400,17 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
       case "review":
         return (
-          <div
-            className={`transition-opacity duration-500 ease-in-out ${
-              showReviewStep ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <ReviewStep
-              attachments={attachments}
-              copyReferralLink={copyReferralLink}
-              errorMessage={errorMessage}
-              handleAttachmentChange={handleAttachmentChange}
-              notes={notes}
-              referralLink={referralLink}
-              removeAttachment={removeAttachment}
-              setNotes={setNotes}
-              setStatusMessage={setStatusMessage}
-              statusMessage={statusMessage}
-            />
+          <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-700 dark:bg-gray-900">
+            <p className="text-gray-700 dark:text-gray-300">
+              Your onboarding questionnaire lives on a separate page after
+              payment.
+            </p>
+            <a
+              className="mt-4 inline-flex rounded-full bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
+              href="/enrol/insights"
+            >
+              Go to onboarding
+            </a>
           </div>
         );
 

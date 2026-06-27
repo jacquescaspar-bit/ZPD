@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { EmailService } from "@/lib/email";
 import { SITE_URL } from "@/lib/constants";
+import { buildInsightsResumeUrl } from "@/lib/insightsResume";
 
 const authorizeCron = (request: NextRequest): boolean => {
   const secret = process.env.CRON_SECRET;
@@ -43,13 +44,12 @@ const wasNurtureSent = async (
   }
 };
 
-export async function POST(request: NextRequest) {
-  if (!authorizeCron(request)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+const runNurtureCron = async () => {
   const results = {
     abandonedCart: 0,
+    insightsNudge4h: 0,
+    insightsReminder3d: 0,
+    insightsEscalation: 0,
     postDiagnostic: 0,
     errors: 0,
   };
@@ -94,6 +94,110 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const insightsIncomplete = `
+      email IS NOT NULL
+      AND current_step = 'insights'
+      AND stripe_payment_intent_id IS NOT NULL
+      AND expires_at > NOW()
+      AND COALESCE(progress_status->>'insightsSubmitted', 'false') <> 'true'
+    `;
+
+    const insightsNudge = await query(
+      `
+      SELECT session_id, email, enrollment_data, updated_at
+      FROM enrollment_sessions
+      WHERE ${insightsIncomplete}
+        AND updated_at < NOW() - INTERVAL '4 hours'
+        AND updated_at > NOW() - INTERVAL '7 days'
+      LIMIT 50
+    `,
+    );
+
+    for (const row of insightsNudge.rows as {
+      session_id: string;
+      email: string;
+      enrollment_data: { parentName?: string };
+    }[]) {
+      const emailType = `insights_nudge_4h_${row.session_id}`;
+      if (await wasNurtureSent(row.email, emailType)) continue;
+
+      const resumeUrl = buildInsightsResumeUrl(row.session_id);
+      const sent = await EmailService.sendInsightsResumeEmail(
+        row.email,
+        resumeUrl,
+      );
+      if (sent) {
+        await recordNurtureSent(row.email, emailType, row.session_id);
+        results.insightsNudge4h += 1;
+      } else {
+        results.errors += 1;
+      }
+    }
+
+    const insightsReminder = await query(
+      `
+      SELECT session_id, email, enrollment_data
+      FROM enrollment_sessions
+      WHERE ${insightsIncomplete}
+        AND created_at < NOW() - INTERVAL '3 days'
+      LIMIT 50
+    `,
+    );
+
+    for (const row of insightsReminder.rows as {
+      session_id: string;
+      email: string;
+      enrollment_data: { parentName?: string };
+    }[]) {
+      const emailType = `insights_reminder_3d_${row.session_id}`;
+      if (await wasNurtureSent(row.email, emailType)) continue;
+
+      const resumeUrl = buildInsightsResumeUrl(row.session_id);
+      const sent = await EmailService.sendInsightsReminderEmail(
+        row.email,
+        resumeUrl,
+      );
+      if (sent) {
+        await recordNurtureSent(row.email, emailType, row.session_id);
+        results.insightsReminder3d += 1;
+      } else {
+        results.errors += 1;
+      }
+    }
+
+    const insightsEscalation = await query(
+      `
+      SELECT session_id, email, enrollment_data
+      FROM enrollment_sessions
+      WHERE ${insightsIncomplete}
+        AND created_at < NOW() - INTERVAL '3 days'
+      LIMIT 50
+    `,
+    );
+
+    for (const row of insightsEscalation.rows as {
+      session_id: string;
+      email: string;
+      enrollment_data: { parentName?: string };
+    }[]) {
+      const emailType = `insights_escalation_${row.session_id}`;
+      if (await wasNurtureSent(row.email, emailType)) continue;
+
+      const resumeUrl = buildInsightsResumeUrl(row.session_id);
+      const sent = await EmailService.sendInsightsEscalationEmail(
+        row.email,
+        row.session_id,
+        resumeUrl,
+        row.enrollment_data?.parentName,
+      );
+      if (sent) {
+        await recordNurtureSent(row.email, emailType, row.session_id);
+        results.insightsEscalation += 1;
+      } else {
+        results.errors += 1;
+      }
+    }
+
     const diagnostics = await query(
       `
       SELECT e.email
@@ -133,4 +237,19 @@ export async function POST(request: NextRequest) {
   }
 
   return NextResponse.json({ ok: true, results });
+};
+
+const handleCronRequest = (request: NextRequest) => {
+  if (!authorizeCron(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  return runNurtureCron();
+};
+
+export function GET(request: NextRequest) {
+  return handleCronRequest(request);
+}
+
+export function POST(request: NextRequest) {
+  return handleCronRequest(request);
 }

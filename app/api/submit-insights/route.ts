@@ -1,15 +1,64 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { query } from "@/lib/db";
 import { SUPPORT_EMAIL } from "@/lib/constants";
 import { EmailService } from "@/lib/email";
+import { getInsightsAttachmentManifest } from "@/lib/insightsAttachments";
+import { readInsightAttachment } from "@/lib/insightsAttachmentStorage";
 import puppeteer from "puppeteer";
+
+const parseResponses = (
+  responsesJson: string | null,
+): Record<string, unknown> => {
+  if (!responsesJson) return {};
+  try {
+    return JSON.parse(responsesJson) as Record<string, unknown>;
+  } catch {
+    return {};
+  }
+};
+
+const loadSession = async (sessionId: string) => {
+  const result = await query(
+    `
+    SELECT session_id, email, insights_data, progress_status
+    FROM enrollment_sessions
+    WHERE session_id = $1 AND expires_at > NOW()
+  `,
+    [sessionId],
+  );
+  return result.rows[0] as
+    | {
+        session_id: string;
+        email: string | null;
+        insights_data: Record<string, unknown>;
+        progress_status: Record<string, unknown>;
+      }
+    | undefined;
+};
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const responsesJson = formData.get("responses") as string;
-    const responses = JSON.parse(responsesJson);
+    const sessionId = formData.get("sessionId") as string | null;
+    const responsesJson = formData.get("responses") as string | null;
+    const responses = parseResponses(responsesJson);
 
-    // Generate PDF (optional - skip on failure)
+    if (sessionId) {
+      const session = await loadSession(sessionId);
+      if (!session) {
+        return NextResponse.json(
+          { error: "Session not found or expired" },
+          { status: 404 },
+        );
+      }
+      if (session.progress_status?.insightsSubmitted === true) {
+        return NextResponse.json(
+          { error: "Insights already submitted" },
+          { status: 409 },
+        );
+      }
+    }
+
     let pdfBuffer: Buffer | null = null;
     try {
       const browser = await puppeteer.launch({
@@ -21,7 +70,7 @@ export async function POST(request: NextRequest) {
       const responsesHtml = Object.entries(responses)
         .filter(([key]) => key !== "5")
         .map(([stepIndex, response]) => {
-          const stepNum = parseInt(stepIndex) + 1;
+          const stepNum = parseInt(stepIndex, 10) + 1;
           let responseText = "";
           if (typeof response === "string") {
             responseText = response;
@@ -77,21 +126,47 @@ export async function POST(request: NextRequest) {
       console.error("PDF generation failed, proceeding without PDF:", pdfError);
     }
 
-    // Prepare attachments
-    const attachments = [];
-    for (const [key, value] of formData.entries()) {
-      if (key !== "responses" && value instanceof File) {
-        const buffer = Buffer.from(await value.arrayBuffer());
-        attachments.push({
-          content: buffer.toString("base64"),
-          filename: value.name,
-          type: value.type,
-          disposition: "attachment",
-        });
+    const attachments: {
+      content: string;
+      filename: string;
+      type: string;
+      disposition: string;
+    }[] = [];
+
+    if (sessionId) {
+      const session = await loadSession(sessionId);
+      const manifest = getInsightsAttachmentManifest(session?.insights_data);
+      for (const record of manifest) {
+        try {
+          const buffer = await readInsightAttachment(record.storageKey);
+          attachments.push({
+            content: buffer.toString("base64"),
+            filename: record.filename,
+            type: record.contentType,
+            disposition: "attachment",
+          });
+        } catch (error) {
+          console.error(`Failed to load attachment ${record.id}:`, error);
+        }
+      }
+    } else {
+      for (const [key, value] of formData.entries()) {
+        if (
+          key !== "responses" &&
+          key !== "sessionId" &&
+          value instanceof File
+        ) {
+          const buffer = Buffer.from(await value.arrayBuffer());
+          attachments.push({
+            content: buffer.toString("base64"),
+            filename: value.name,
+            type: value.type,
+            disposition: "attachment",
+          });
+        }
       }
     }
 
-    // Add PDF attachment if generated
     if (pdfBuffer) {
       attachments.push({
         content: pdfBuffer.toString("base64"),
@@ -105,9 +180,11 @@ export async function POST(request: NextRequest) {
       (formData.get("testRecipient") as string) ??
       process.env.ADMIN_EMAIL ??
       SUPPORT_EMAIL;
-    const userEmail = formData.get("email") as string | null;
+    const userEmail =
+      (formData.get("email") as string | null) ??
+      (sessionId ? (await loadSession(sessionId))?.email : null) ??
+      null;
 
-    // Send email with PDF attachment
     await EmailService.sendEmail({
       to: recipient,
       subject: "New Enrolment Insights Submission",
@@ -116,6 +193,7 @@ export async function POST(request: NextRequest) {
           <h1 style="color: #059669;">New Enrolment Insights Submission</h1>
           <p>A parent has completed their enrolment insights. The detailed responses are attached as a PDF.</p>
           ${attachments.length > 1 ? "<p><strong>Additional attachments:</strong> See attached files for uploaded documents.</p>" : "<p><strong>No additional attachments uploaded.</strong></p>"}
+          ${sessionId ? `<p><strong>Session ID:</strong> ${sessionId}</p>` : ""}
           <p>Please review this submission and proceed with tutor matching.</p>
           <p>The ZPD Learning Team</p>
         </div>
@@ -123,7 +201,6 @@ export async function POST(request: NextRequest) {
       attachments,
     });
 
-    // Send confirmation to user if email provided
     if (userEmail) {
       await EmailService.sendEmail({
         to: userEmail,
@@ -138,6 +215,26 @@ export async function POST(request: NextRequest) {
           </div>
         `,
       });
+    }
+
+    if (sessionId) {
+      await query(
+        `
+        UPDATE enrollment_sessions
+        SET
+          progress_status = COALESCE(progress_status, '{}'::jsonb) || '{"insightsSubmitted": true}'::jsonb,
+          insights_data = COALESCE(insights_data, '{}'::jsonb) || $1::jsonb,
+          updated_at = NOW()
+        WHERE session_id = $2
+      `,
+        [
+          JSON.stringify({
+            responses,
+            submittedAt: new Date().toISOString(),
+          }),
+          sessionId,
+        ],
+      );
     }
 
     return NextResponse.json({ success: true });

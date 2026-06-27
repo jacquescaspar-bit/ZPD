@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Nav from "@/Nav";
 import ReviewStep from "@/enrol/components/ReviewStep";
 import { useAutoSave } from "@/enrol/hooks/useAutoSave";
+import { useInsightAttachments } from "@/enrol/hooks/useInsightAttachments";
+import { SUPPORT_EMAIL } from "@/lib/constants";
 import PostPurchaseHero from "@/enrol/components/PostPurchaseHero";
 import SubmissionConfirmation from "@/enrol/components/SubmissionConfirmation";
 import ReferralShareCard from "@/enrol/components/ReferralShareCard";
@@ -19,8 +21,8 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
   const [notes, setNotes] = useState("");
-  const [attachments, setAttachments] = useState<File[]>([]);
   const [responses, setResponses] = useState<Record<string, unknown>>({});
+  const [sessionLoadError, setSessionLoadError] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
@@ -33,6 +35,14 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
     data: { notes },
     delay: 2500,
   });
+
+  const {
+    attachments,
+    uploadingCount,
+    error: uploadError,
+    handleAttachmentChange,
+    removeAttachment,
+  } = useInsightAttachments({ sessionId: currentSessionId });
 
   useEffect(() => {
     const loadSession = async () => {
@@ -57,21 +67,32 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
         setPlanType(storedPlan as PlanType);
       }
 
-      if (sessionId && !currentSessionId) {
+      if (sessionId) {
         try {
           const response = await fetch(`/api/enrollment-sessions/${sessionId}`);
           if (response.ok) {
             const data = await response.json();
             setCurrentSessionId(sessionId);
+            setSessionLoadError(null);
+            sessionStorage.setItem("enrollmentSessionId", sessionId);
 
             if (data.session.email) {
               setUserEmail(data.session.email);
+              sessionStorage.setItem("enrollmentEmail", data.session.email);
             }
             if (data.session.stripePaymentIntentId) {
               setPaymentIntentId(data.session.stripePaymentIntentId);
+              sessionStorage.setItem(
+                "enrollmentPaymentIntentId",
+                data.session.stripePaymentIntentId,
+              );
             }
             if (data.session.enrollmentData?.plan) {
               setPlanType(data.session.enrollmentData.plan as PlanType);
+              sessionStorage.setItem(
+                "enrollmentPlan",
+                data.session.enrollmentData.plan,
+              );
             }
             if (data.session.insightsData?.notes) {
               setNotes(data.session.insightsData.notes);
@@ -79,9 +100,16 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
             if (data.session.insightsData?.responses) {
               setResponses(data.session.insightsData.responses);
             }
+          } else {
+            setSessionLoadError(
+              `This onboarding link has expired or is invalid. Email ${SUPPORT_EMAIL} and we'll help.`,
+            );
           }
         } catch (err) {
           console.error("Error loading session:", err);
+          setSessionLoadError(
+            `We couldn't load your saved progress. Try again or contact ${SUPPORT_EMAIL}.`,
+          );
         }
       }
     };
@@ -91,17 +119,6 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
-
-  const handleAttachmentChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const files = Array.from(event.target.files ?? []);
-    setAttachments((prev) => [...prev, ...files]);
-  };
-
-  const removeAttachment = (name: string) => {
-    setAttachments((prev) => prev.filter((file) => file.name !== name));
-  };
 
   const copyReferralLink = () => {
     setStatusMessage(
@@ -116,10 +133,8 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
     try {
       const formData = new FormData();
       formData.append("responses", JSON.stringify(responses));
+      formData.append("sessionId", currentSessionId);
       if (userEmail) formData.append("email", userEmail);
-      attachments.forEach((file) => {
-        formData.append("attachments", file);
-      });
 
       const response = await fetch("/api/submit-insights", {
         method: "POST",
@@ -174,6 +189,16 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
               </div>
             </h1>
             <PostPurchaseHero />
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-gray-600 dark:text-gray-400">
+              Your answers and uploaded documents save automatically. You can
+              leave and return anytime using the link in your confirmation email
+              — thorough responses matter more than fast ones.
+            </p>
+            {sessionLoadError ? (
+              <p className="mx-auto mt-4 max-w-2xl text-sm text-red-600 dark:text-red-400">
+                {sessionLoadError}
+              </p>
+            ) : null}
             {userEmail && (
               <div className="mx-auto mt-6 flex justify-center">
                 <ReferralShareCard
@@ -224,17 +249,25 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
               attachments={attachments}
               autoSaveStatus={autoSaveStatus}
               copyReferralLink={copyReferralLink}
-              errorMessage={autoSaveError}
+              errorMessage={autoSaveError ?? uploadError}
               handleAttachmentChange={handleAttachmentChange}
               isSubmitting={isSubmitting}
               notes={notes}
               referralLink={null}
-              removeAttachment={removeAttachment}
+              removeAttachment={(attachmentId) => {
+                void removeAttachment(attachmentId);
+              }}
+              sessionId={currentSessionId}
               setNotes={setNotes}
               setStatusMessage={setStatusMessage}
               statusMessage={statusMessage}
+              uploadError={uploadError}
+              uploadingCount={uploadingCount}
+              userEmail={userEmail}
               onSubmit={() => {
-                void handleSubmit();
+                handleSubmit().catch((error) => {
+                  console.error("Submission error:", error);
+                });
               }}
             />
           </section>

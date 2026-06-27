@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { steps } from "@/enrol/insights/questions/steps";
+import type { InsightAttachmentRecord } from "@/lib/insightsAttachments";
 import ParentQuestionsContent from "@/enrol/components/ParentQuestionsContent";
 import ParentQuestionsNavigation from "@/enrol/components/ParentQuestionsNavigation";
 import SubmissionConfirmation from "@/enrol/components/SubmissionConfirmation";
@@ -106,10 +107,14 @@ const ParentQuestionsProgressIndicator: React.FC<
 interface ParentQuestionsSectionProps {
   notes: string;
   setNotes: (notes: string) => void;
-  attachments: File[];
+  sessionId: string | null;
+  attachments: InsightAttachmentRecord[];
+  uploadingCount?: number;
+  uploadError?: string | null;
   handleAttachmentChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  removeAttachment: (name: string) => void;
+  removeAttachment: (attachmentId: string) => void;
   autoSaveStatus?: AutoSaveStatus;
+  userEmail?: string | null;
   onValidationChange?: (data: {
     isValid: boolean;
     isReviewStep: boolean;
@@ -119,10 +124,14 @@ interface ParentQuestionsSectionProps {
 const ParentQuestionsSection = ({
   notes,
   setNotes,
+  sessionId,
   attachments,
+  uploadingCount = 0,
+  uploadError = null,
   handleAttachmentChange,
   removeAttachment,
   autoSaveStatus,
+  userEmail,
   onValidationChange,
 }: ParentQuestionsSectionProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -371,9 +380,12 @@ const ParentQuestionsSection = ({
         isTeacherQuestion={isTeacherQuestion}
         questionResponses={questionResponses}
         removeAttachment={removeAttachment}
+        sessionId={sessionId}
         setAgreedToTerms={setAgreedToTerms}
         setIsEditing={setIsEditing}
         updateQuestionResponse={updateQuestionResponse}
+        uploadError={uploadError}
+        uploadingCount={uploadingCount}
       />
       <ParentQuestionsNavigation
         agreedToTerms={agreedToTerms}
@@ -382,9 +394,11 @@ const ParentQuestionsSection = ({
         isReviewQuestion={isReviewQuestion}
         questionResponses={questionResponses}
         questionsLength={questions.length}
+        sessionId={sessionId}
         setCompletedQuestions={setCompletedQuestions}
         setCurrentQuestionIndex={setCurrentQuestionIndex}
         setHasClickedResolveIssues={setHasClickedResolveIssues}
+        userEmail={userEmail}
         onSubmit={() => setIsSubmitted(true)}
       />
     </section>

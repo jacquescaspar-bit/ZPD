@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import ParentQuestionsSection from "@/enrol/components/ParentQuestionsSection";
+import type { InsightAttachmentRecord } from "@/lib/insightsAttachments";
 
 type AutoSaveStatus = "idle" | "saving" | "saved" | "error";
 
@@ -10,9 +11,13 @@ interface ReviewStepProps {
   errorMessage: string | null;
   notes: string;
   setNotes: (notes: string) => void;
-  attachments: File[];
+  sessionId: string | null;
+  userEmail?: string | null;
+  attachments: InsightAttachmentRecord[];
+  uploadingCount?: number;
+  uploadError?: string | null;
   handleAttachmentChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  removeAttachment: (name: string) => void;
+  removeAttachment: (attachmentId: string) => void;
   referralLink: string | null;
   copyReferralLink: () => void;
   setStatusMessage: (message: string | null) => void;
@@ -30,7 +35,11 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
   errorMessage,
   notes,
   setNotes,
+  sessionId,
+  userEmail,
   attachments,
+  uploadingCount,
+  uploadError,
   handleAttachmentChange,
   removeAttachment,
   copyReferralLink,
@@ -86,7 +95,11 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
         handleAttachmentChange={handleAttachmentChange}
         notes={notes}
         removeAttachment={removeAttachment}
+        sessionId={sessionId}
         setNotes={setNotes}
+        uploadError={uploadError}
+        uploadingCount={uploadingCount}
+        userEmail={userEmail}
         onValidationChange={setValidationData}
       />
 

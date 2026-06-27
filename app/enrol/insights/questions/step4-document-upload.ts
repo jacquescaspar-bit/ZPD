@@ -1,6 +1,11 @@
+import {
+  TEACHER_EMAIL_INTRO,
+  TEACHER_EMAIL_QUESTION_DISPLAY,
+} from "@/enrol/lib/teacherEmailQuestion";
+
 export const step4DocumentUpload = {
   id: 4,
-  text: "Please email your child's teacher: '[Student] will be receiving weekly tutoring throughout the upcoming term. What are the key concepts and curriculum areas where they would benefit from additional support or extension?'",
+  text: `${TEACHER_EMAIL_INTRO} '${TEACHER_EMAIL_QUESTION_DISPLAY}'`,
   guidance: `Teacher insights are crucial for creating an effective tutoring programme. Please reach out to your child's teacher and ask them the question above. Their professional assessment, combined with the uploaded documents and your parental insights, will help us develop targeted support for your child's learning needs.
 
 In the text area above, please enter your teacher's response verbatim. This will help us understand:

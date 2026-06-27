@@ -146,14 +146,8 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          if (email && parentName) {
-            await EmailService.sendEnrollmentConfirmationEmail(
-              email,
-              parentName,
-              planType ?? "essential",
-              paymentIntent.amount,
-            );
-          }
+          // Payment confirmation with onboarding link is sent when the
+          // client creates the enrollment session after redirect.
         } catch (error) {
           console.error("Error processing referral codes:", error);
           // Don't fail the webhook for referral processing errors

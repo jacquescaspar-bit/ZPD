@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import type { InsightAttachmentRecord } from "@/lib/insightsAttachments";
 
 interface ParentQuestionsNavigationProps {
   currentQuestionIndex: number;
   questionsLength: number;
   isReviewQuestion: boolean;
   questionResponses: Record<string, string | string[]>;
-  attachments: File[];
+  attachments: InsightAttachmentRecord[];
+  sessionId: string | null;
+  userEmail?: string | null;
   setCompletedQuestions: React.Dispatch<React.SetStateAction<Set<number>>>;
   setCurrentQuestionIndex: (index: number) => void;
   setHasClickedResolveIssues: (value: boolean) => void;
@@ -22,6 +25,8 @@ const ParentQuestionsNavigation = ({
   isReviewQuestion,
   questionResponses,
   attachments,
+  sessionId,
+  userEmail,
   setCompletedQuestions,
   setCurrentQuestionIndex,
   setHasClickedResolveIssues,
@@ -90,10 +95,8 @@ const ParentQuestionsNavigation = ({
     try {
       const formData = new FormData();
       formData.append("responses", JSON.stringify(questionResponses));
-
-      attachments.forEach((file, index) => {
-        formData.append(`attachment_${index}`, file);
-      });
+      if (sessionId) formData.append("sessionId", sessionId);
+      if (userEmail) formData.append("email", userEmail);
 
       const response = await fetch("/api/submit-insights", {
         method: "POST",

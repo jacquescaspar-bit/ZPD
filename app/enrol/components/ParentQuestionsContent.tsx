@@ -5,16 +5,21 @@
 import React, { useEffect, useRef } from "react";
 import DocumentUploadSection from "@/enrol/components/DocumentUploadSection";
 import GuidanceSection from "@/enrol/components/GuidanceSection";
+import TeacherEmailPrompt from "@/enrol/components/TeacherEmailPrompt";
 import { steps } from "@/enrol/insights/questions/steps";
+import type { InsightAttachmentRecord } from "@/lib/insightsAttachments";
 
 interface ParentQuestionsContentProps {
   currentQuestionIndex: number;
   isTeacherQuestion: boolean;
   isDocumentUpload: boolean;
   isReviewQuestion: boolean;
-  attachments: File[];
+  sessionId: string | null;
+  attachments: InsightAttachmentRecord[];
+  uploadingCount?: number;
+  uploadError?: string | null;
   handleAttachmentChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  removeAttachment: (name: string) => void;
+  removeAttachment: (attachmentId: string) => void;
   questionResponses: Record<string, string | string[]>;
   daysOfWeek: string[];
   hasClickedResolveIssues: boolean;
@@ -32,7 +37,7 @@ interface ParentQuestionsContentProps {
 const getValidationMessage = (
   step: { id: number; type: string },
   questionResponses: Record<string, string | string[]>,
-  attachments: File[],
+  attachments: InsightAttachmentRecord[],
 ): string | null => {
   const stepId = step.id;
   const stepType = step.type;
@@ -78,7 +83,10 @@ const ParentQuestionsContent = ({
   isTeacherQuestion,
   isDocumentUpload: _isDocumentUpload,
   isReviewQuestion: _isReviewQuestion,
+  sessionId: _sessionId,
   attachments,
+  uploadingCount = 0,
+  uploadError = null,
   handleAttachmentChange,
   removeAttachment,
   questionResponses,
@@ -146,10 +154,7 @@ const ParentQuestionsContent = ({
             <div className="space-y-3">
               {/* Titles row - independent of input areas */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <h4 className="text-base font-medium text-gray-800 dark:text-gray-200">
-                  {currentQuestion}
-                  <span className="text-red-500 ml-1">*</span>
-                </h4>
+                <TeacherEmailPrompt />
                 <h4 className="hidden md:block text-base font-medium text-gray-800 dark:text-gray-200">
                   Please upload the Term Overview, most recent Report Card and
                   any samples of school/homework.
@@ -193,6 +198,8 @@ const ParentQuestionsContent = ({
                     attachments={attachments}
                     handleAttachmentChange={handleAttachmentChange}
                     removeAttachment={removeAttachment}
+                    uploadError={uploadError}
+                    uploadingCount={uploadingCount}
                   />
                 </div>
               </div>
@@ -414,12 +421,7 @@ These documents help us assess your child's starting point and create a personal
                 <div className="space-y-4">
                   {/* Teacher Insight */}
                   <div className="text-gray-700 dark:text-gray-300">
-                    <div className="mb-2 font-medium">
-                      Please email your child's teacher: '[Student] will be
-                      receiving weekly tutoring throughout the upcoming term.
-                      What are the key concepts and curriculum areas where they
-                      would benefit from additional support or extension?'
-                    </div>
+                    <TeacherEmailPrompt showRequired={false} />
                     {(() => {
                       const docStep = steps.find(
                         (s) => s.type === "document_upload",
@@ -458,8 +460,8 @@ These documents help us assess your child's starting point and create a personal
                     {attachments.length > 0 ? (
                       <div className="ml-4 mt-2">
                         <ul className="list-disc list-inside space-y-1">
-                          {attachments.map((att, index) => (
-                            <li key={index}>{att.name}</li>
+                          {attachments.map((att) => (
+                            <li key={att.id}>{att.filename}</li>
                           ))}
                         </ul>
                       </div>

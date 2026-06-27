@@ -14,7 +14,8 @@ Is there any other information that could help us plan for the upcoming term?
 [response_2]
 
 **Teacher Insight & Documents**
-Please email your child's teacher: '[Student] will be receiving weekly tutoring throughout the upcoming term. What are the key concepts and curriculum areas where they would benefit from additional support or extension?'
+Please email your child's teacher:
+'[Student] will be receiving weekly tutoring throughout the upcoming term. What are the key concepts and curriculum areas where they would benefit from additional support or extension?'
 as
 Please upload the Term Overview, most recent Report Card and any samples of school/homework.
 Screenshot 2026-01-17 at 8.00.29 pm.png

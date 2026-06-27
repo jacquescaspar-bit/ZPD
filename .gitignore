@@ -5,7 +5,9 @@
 /.pnp
 .pnp.js
 .pnpm/
-.pnpm/
+
+# local account recovery codes (2FA backup — not app secrets)
+/secrets/recovery-codes.md
 
 # testing
 /coverage
@@ -16,6 +18,9 @@
 
 # production
 /build
+
+# local insights attachment uploads (dev fallback when BLOB_READ_WRITE_TOKEN unset)
+.data/
 
 # misc
 .DS_Store
