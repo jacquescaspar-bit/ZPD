@@ -39,7 +39,7 @@ export const useReferralSystem = (
   const [appliedPromoKind, setAppliedPromoKind] = useState<
     "referral" | "promo" | null
   >(null);
-  const [referralLink, setReferralLink] = useState<string | null>(null);
+  const referralLink: string | null = null;
 
   const validateReferralCode = useCallback(
     async (
@@ -129,25 +129,6 @@ export const useReferralSystem = (
       );
     }
   }, [selectedPlan, appliedPromoKind]);
-
-  // Generate referral link when selectedPlan changes
-  useEffect(() => {
-    if (typeof window !== "undefined" && selectedPlan) {
-      const code = `REF-${Math.random()
-        .toString(36)
-        .toUpperCase()
-        .slice(2, 8)}`;
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.set("ref", code);
-        url.searchParams.set("plan", selectedPlan);
-        const fullLink = url.toString();
-        setReferralLink(fullLink);
-      } catch {
-        // ignore URL errors in non-browser environments
-      }
-    }
-  }, [selectedPlan]);
 
   const validatePromoCode = useCallback(
     async (
@@ -280,32 +261,16 @@ export const useReferralSystem = (
   }, []);
 
   const copyReferralLink = useCallback(() => {
-    if (!referralLink && selectedPlan) {
-      const code = `REF-${Math.random()
-        .toString(36)
-        .toUpperCase()
-        .slice(2, 8)}`;
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.set("ref", code);
-        url.searchParams.set("plan", selectedPlan);
-        const fullLink = url.toString();
-        setReferralLink(fullLink);
-        if (navigator?.clipboard?.writeText) {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          navigator.clipboard.writeText(fullLink).catch(() => {});
-        }
-      } catch {
-        // ignore URL errors in non-browser environments
-      }
-    } else if (referralLink) {
-      if (navigator?.clipboard?.writeText) {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        navigator.clipboard.writeText(referralLink).catch(() => {});
-      }
+    if (referralLink && navigator?.clipboard?.writeText) {
+      void navigator.clipboard.writeText(referralLink).catch(console.error);
+      setPromoStatus("Referral link copied! Share it with friends and family.");
+      return;
     }
-    setPromoStatus("Referral link copied! Share it with friends and family.");
-  }, [referralLink, selectedPlan]);
+
+    setPromoStatus(
+      "Your personal referral link is created after payment — you'll find it on the next screen and in your email.",
+    );
+  }, [referralLink]);
 
   const promoAdjustments = useMemo(() => {
     const list: PromoAdjustment[] = [];

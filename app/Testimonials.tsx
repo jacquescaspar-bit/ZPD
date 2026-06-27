@@ -1,109 +1,173 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const testimonials = [
+  {
+    quote:
+      "Six weeks in, she stopped dreading maths homework. That's the bit I cared about.",
+    author: "Parent of a Year 9 student",
+    role: "Sydney",
+  },
+  {
+    quote:
+      "The tutor explained things in plain language — I finally understood what she was working on each week.",
+    author: "Parent of a Year 7 student",
+    role: "Melbourne",
+  },
+  {
+    quote:
+      "I get stuck less now. They don't just hand me the answer — they help me work it out.",
+    author: "Year 10 student",
+    role: "Online tutoring",
+  },
+  {
+    quote:
+      "His report wasn't glowing, but for the first time he could tell me what he was learning. That felt like progress.",
+    author: "Parent of a Year 8 student",
+    role: "Brisbane",
+  },
+  {
+    quote:
+      "We'd tried a few things that didn't stick. This one fit — same tutor, same time each week, no drama getting started.",
+    author: "Parent of twin Year 5 students",
+    role: "Canberra",
+  },
+  {
+    quote:
+      "When I don't get it, they break it into smaller steps. Maths still isn't my favourite — but I'm not scared of it anymore.",
+    author: "Year 5 student",
+    role: "In-home tutoring",
+  },
+];
+
+const ROTATE_MS = 12000;
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const testimonials = [
-    {
-      quote:
-        "ZPD Learning helped me understand math concepts I struggled with for years. My tutor's personalised approach made all the difference!",
-      author: "Alex J.",
-      role: "High School Student",
-      color: "blue",
-    },
-    {
-      quote:
-        "As a parent, I was amazed by how quickly my daughter improved her grades. The tutors truly care about each student's success.",
-      author: "Sarah C.",
-      role: "Parent",
-      color: "purple",
-    },
-    {
-      quote:
-        "The science tutoring sessions were engaging and fun. I finally understand complex topics that seemed impossible before.",
-      author: "Michael R.",
-      role: "Middle School Student",
-      color: "green",
-    },
-  ];
+  const [isPaused, setIsPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [testimonials.length]);
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+  const goToSlide = useCallback((index: number) => {
+    setCurrentIndex((index + testimonials.length) % testimonials.length);
+  }, []);
+
+  const goNext = useCallback(() => {
+    goToSlide(currentIndex + 1);
+  }, [currentIndex, goToSlide]);
+
+  const goPrev = useCallback(() => {
+    goToSlide(currentIndex - 1);
+  }, [currentIndex, goToSlide]);
+
+  useEffect(() => {
+    if (isPaused || prefersReducedMotion) return;
+    const timer = setInterval(goNext, ROTATE_MS);
+    return () => clearInterval(timer);
+  }, [goNext, isPaused, prefersReducedMotion]);
+
+  const current = testimonials[currentIndex];
 
   return (
     <section
-      className="min-h-screen flex flex-col justify-center bg-gray-100 dark:bg-gray-900 px-6 z-10"
+      className="relative z-10 flex min-h-screen flex-col justify-center bg-white/70 px-6 backdrop-blur-sm dark:bg-gray-900/70"
       id="testimonials"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="text-center py-16">
+      <div className="mx-auto w-full max-w-3xl py-16 text-center">
         <h2
-          className="text-5xl font-light mb-12 text-gray-900 dark:text-white"
-          style={{ letterSpacing: "0.1em" }}
+          className="font-antipasto mb-3 text-4xl font-light text-gray-900 dark:text-white sm:text-5xl"
+          style={{ letterSpacing: "0.08em" }}
         >
-          What Our Students Say
+          What Families Say
         </h2>
-        <div className="relative overflow-hidden">
+        <p className="mb-12 text-base text-gray-600 dark:text-gray-400 sm:text-lg">
+          Confidence, clarity, and tutors who actually understand your child.
+        </p>
+
+        <div className="relative">
           <AnimatePresence mode="wait">
-            <motion.div
+            <motion.article
               key={currentIndex}
               animate={{ opacity: 1, x: 0 }}
-              className="p-8 bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 max-w-2xl mx-auto"
-              exit={{ opacity: 0, x: -100 }}
-              initial={{ opacity: 0, x: 100 }}
-              transition={{ duration: 0.5 }}
+              className="relative mx-auto max-w-2xl overflow-hidden rounded-2xl border border-gray-200/80 bg-white/90 p-8 shadow-lg dark:border-gray-700/80 dark:bg-gray-800/90 sm:p-10"
+              exit={
+                prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: -40 }
+              }
+              initial={
+                prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: 40 }
+              }
+              transition={{ duration: prefersReducedMotion ? 0.15 : 0.45 }}
             >
               <div
-                className={`text-6xl mb-6 ${testimonials[currentIndex].color === "blue" ? "text-blue-500" : testimonials[currentIndex].color === "purple" ? "text-purple-500" : "text-green-500"}`}
-              >
-                &ldquo;
-              </div>
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8 italic">
-                &ldquo;{testimonials[currentIndex].quote}&rdquo;
-              </p>
-              <div className="flex items-center justify-center">
-                <div
-                  className={`w-12 h-12 bg-gradient-to-r ${testimonials[currentIndex].color === "blue" ? "from-blue-500 to-purple-600" : testimonials[currentIndex].color === "purple" ? "from-purple-500 to-pink-600" : "from-green-500 to-blue-600"} rounded-full flex items-center justify-center mr-4`}
-                >
-                  <span className="text-white font-semibold text-sm">
-                    {testimonials[currentIndex].author.charAt(0)}
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)]"
+              />
+              <blockquote className="text-xl leading-relaxed text-gray-700 dark:text-gray-200 sm:text-2xl">
+                &ldquo;{current.quote}&rdquo;
+              </blockquote>
+              <footer className="mt-8 flex items-center justify-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)]">
+                  <span className="text-sm font-semibold text-white">
+                    {current.author.charAt(0)}
                   </span>
                 </div>
                 <div className="text-left">
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {testimonials[currentIndex].author}
+                    {current.author}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {testimonials[currentIndex].role}
+                    {current.role}
                   </p>
                 </div>
-              </div>
-            </motion.div>
+              </footer>
+            </motion.article>
           </AnimatePresence>
-        </div>
-        <div className="flex justify-center mt-8 space-x-2">
-          {testimonials.map((_, index) => (
+
+          <div className="mt-8 flex items-center justify-center gap-4">
             <button
-              key={index}
-              aria-label={`Go to testimonial ${index + 1}`}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? "bg-blue-500 scale-125"
-                  : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
-              }`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
+              aria-label="Previous testimonial"
+              className="rounded-full border border-gray-300 px-3 py-1.5 text-sm text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-900 dark:border-gray-600 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-white"
+              type="button"
+              onClick={goPrev}
+            >
+              Prev
+            </button>
+            <div className="flex space-x-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  aria-current={index === currentIndex ? "true" : undefined}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                  className={`h-3 w-3 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? "scale-125 bg-[var(--gradient-start)]"
+                      : "bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500"
+                  }`}
+                  type="button"
+                  onClick={() => goToSlide(index)}
+                />
+              ))}
+            </div>
+            <button
+              aria-label="Next testimonial"
+              className="rounded-full border border-gray-300 px-3 py-1.5 text-sm text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-900 dark:border-gray-600 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-white"
+              type="button"
+              onClick={goNext}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </section>

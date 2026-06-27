@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Antipasto";
-  src: url("/antipasto/Antipasto_extralight.otf") format("opentype");
-  font-weight: 200;
-  font-style: normal;
+.font-antipasto {
+  font-family: var(--font-antipasto);
 }
 
 :root {
+  font-family: var(--font-inter);
   /* Color Palette */
   /* Primary */
   --primary-50: #eff6ff;
@@ -273,6 +271,7 @@ body {
 }
 
 html {
+  color-scheme: light dark;
   scroll-behavior: smooth;
 }
 

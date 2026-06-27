@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="210 210 604 604" fill="none" role="img" aria-label="ZPD Learning">
+  <style>
+    .ring { fill: none; stroke-width: 16; }
+    .mark {
+      font-family: Inter, Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 300;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-anchor: middle;
+    }
+    @media (prefers-color-scheme: dark) {
+      .ring { stroke: #64748B; }
+      .mark { fill: #F8FAFC; }
+    }
+    @media (prefers-color-scheme: light) {
+      .ring { stroke: #374151; }
+      .mark { fill: #0F172A; }
+    }
+  </style>
+  <circle class="ring" cx="512" cy="512" r="285"/>
+  <text class="mark" x="512" y="612">ZPD</text>
+</svg>

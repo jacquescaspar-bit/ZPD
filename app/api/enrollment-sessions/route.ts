@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminApi";
 import { query } from "@/lib/db";
 
 // POST /api/enrollment-sessions - Create new enrollment session
@@ -116,6 +117,9 @@ export async function POST(request: NextRequest) {
 
 // GET /api/enrollment-sessions - List sessions for admin (with optional filtering)
 export async function GET(request: NextRequest) {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   try {
     const { searchParams } = new URL(request.url);
     const email = searchParams.get("email");

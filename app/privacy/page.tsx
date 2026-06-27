@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Nav from "@/Nav";
+import PageShell from "@/components/PageShell";
+import LegalContactInfo from "@/components/LegalContactInfo";
+import { LEGAL_TRADING_AS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | ZPD Tutoring Services",
+  title: "Privacy Policy | ZPD Learning",
   description:
-    "Learn how ZPD Tutoring Services collects, uses, and protects your personal information in accordance with Australian privacy laws.",
+    "Learn how ZPD Learning collects, uses, and protects your personal information in accordance with Australian privacy laws.",
   keywords:
-    "privacy policy, data protection, Australian privacy law, ZPD tutoring privacy",
+    "privacy policy, data protection, Australian privacy law, ZPD Learning privacy",
   openGraph: {
-    title: "Privacy Policy - ZPD Tutoring Services",
+    title: "Privacy Policy - ZPD Learning",
     description:
       "Our commitment to protecting your privacy and personal information.",
     type: "website",
@@ -16,10 +19,9 @@ export const metadata: Metadata = {
 };
 
 const PrivacyPage = () => (
-  <div className="relative">
+  <PageShell>
     <Nav />
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+    <div className="px-6 pt-16 pb-12">
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <section className="text-center pb-12">
@@ -36,7 +38,7 @@ const PrivacyPage = () => (
             How we collect, use, and protect your personal information
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
-            Last updated: {/* PLACEHOLDER: Last Updated Date */} [Current Date]
+            Last updated: 19 June 2026
           </p>
         </section>
 
@@ -44,8 +46,7 @@ const PrivacyPage = () => (
         <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
           <div className="prose dark:prose-invert max-w-none text-sm leading-relaxed">
             <p className="text-base">
-              This Privacy Policy describes how{" "}
-              {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services Pty Ltd
+              This Privacy Policy describes how {LEGAL_TRADING_AS}{" "}
               (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects,
               uses, and protects your personal information in accordance with
               the Privacy Act 1988 (Cth) and other applicable Australian privacy
@@ -310,25 +311,12 @@ const PrivacyPage = () => (
             <p className="mb-4">
               For privacy-related inquiries or to exercise your rights:
             </p>
-            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-              <p>
-                <strong>Privacy Officer</strong>
-              </p>
-              <p>
-                {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services Pty Ltd
-              </p>
-              <p>
-                {/* PLACEHOLDER: Business Address */} 123 Education Street,
-                Sydney NSW 2000, Australia
-              </p>
-              <p>{/* PLACEHOLDER: Business Phone */} +61 400 123 456</p>
-              <p>{/* PLACEHOLDER: Privacy Email */} privacy@zpdtutoring.com</p>
-            </div>
+            <LegalContactInfo role="Privacy Officer" />
           </div>
         </section>
       </div>
     </div>
-  </div>
+  </PageShell>
 );
 
 export default PrivacyPage;

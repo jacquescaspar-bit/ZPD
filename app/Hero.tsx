@@ -1,25 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import localFont from "next/font/local";
 import { Button, Container } from "@/components/ui";
-
-const antipasto = localFont({
-  src: [
-    {
-      path: "../public/antipasto/Antipasto_extralight.otf",
-      weight: "200",
-    },
-    {
-      path: "../public/antipasto/Antipasto_regular.otf",
-      weight: "400",
-    },
-    {
-      path: "../public/antipasto/Antipasto_extrabold.otf",
-      weight: "800",
-    },
-  ],
-});
+import { formatAudWholeDollars, LOWEST_TERM_PLAN_PRICE } from "@/lib/constants";
 
 const Hero = () => {
   const [hideCta, setHideCta] = useState(false);
@@ -68,9 +51,7 @@ const Hero = () => {
           </div>
 
           {/* Learning */}
-          <div
-            className={`${antipasto.className} text-4xl sm:text-5xl md:text-6xl font-[200] text-center text-[var(--gray-700)] dark:text-[var(--gray-300)] mb-8`}
-          >
+          <div className="font-antipasto text-4xl sm:text-5xl md:text-6xl font-[200] text-center text-[var(--gray-700)] dark:text-[var(--gray-300)] mb-6">
             <span className="tracking-wide">
               <span className="text-black dark:text-white">Personalised </span>
               <span className="font-[400] text-[var(--primary)] dark:text-[var(--primary)]">
@@ -78,6 +59,11 @@ const Hero = () => {
               </span>
             </span>
           </div>
+
+          <p className="mb-8 max-w-xl px-4 text-base text-gray-600 dark:text-gray-400 sm:text-lg">
+            Classroom-active tutors · Term-based plans from{" "}
+            {formatAudWholeDollars(LOWEST_TERM_PLAN_PRICE)}
+          </p>
 
           {/* CTA Button */}
           <div

@@ -4,13 +4,13 @@ import type { PlanType } from "@/lib/constants";
 
 export const metadata: Metadata = {
   description:
-    "Choose from term packages or one-off sessions with ZPD's Australian pricing. GST included, upfront payment. Sydney HSC tutoring, ATAR tutor Sydney. Start your personalised tutoring journey today.",
+    "Term-based tutoring across Australia — start with a $110 diagnostic discovery, then choose online or in-home plans. GST included, upfront payment.",
   keywords:
-    "Sydney HSC tutoring, ATAR tutor Sydney, tutoring pricing, ZPD tutoring Australia, GST included tutoring, discovery session, enrol ZPD tutoring, start tutoring, personalised learning enrolment",
+    "tutoring pricing, ZPD Learning Australia, diagnostic discovery session, term tutoring plans, GST included tutoring, enrol ZPD Learning, personalised learning enrolment",
   openGraph: {
-    title: "ZPD Tutoring Pricing & Enrolment | Choose Your Plan",
+    title: "ZPD Learning Pricing & Enrolment | Choose Your Plan",
     description:
-      "Flexible pricing with term packages and one-off options. GST included. Best rates for Sydney HSC & ATAR tutoring. Start your journey today.",
+      "Start with a diagnostic discovery session, then term plans online or in-home. GST included. Australia-wide.",
     type: "website",
   },
 };

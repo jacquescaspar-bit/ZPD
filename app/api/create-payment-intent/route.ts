@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         attachment_count: attachmentCount.toString(),
         referralCode: appliedReferralCode ?? "",
       },
-      description: `${plan.name} - ZPD Tutoring Enrolment`,
+      description: `${plan.name} - ZPD Learning Enrolment`,
     });
 
     return NextResponse.json({

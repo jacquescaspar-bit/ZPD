@@ -48,10 +48,10 @@ const LegalPage = () => {
             Privacy Policy
           </h2>
           <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
-            ZPD Learning Pty Ltd collects personal information including student
-            details, parent/guardian contact, academic records, and assessment
-            data to deliver personalised tutoring services to children aged
-            5-18.
+            Squanch Systems (trading as ZPD Learning) collects personal
+            information including student details, parent/guardian contact,
+            academic records, and assessment data to deliver personalised
+            tutoring services to children aged 5-18.
           </p>
           <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
             We comply with the Australian Privacy Principles (APPs) under the

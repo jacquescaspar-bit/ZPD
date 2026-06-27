@@ -1,8 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminApi";
 import { PromoCodeStorage } from "@/lib/promoStorage";
 import { query } from "@/lib/db";
 
 export async function GET() {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   try {
     // Get all promo codes with usage stats
     const result = await query(`
@@ -43,6 +47,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   try {
     const {
       code,

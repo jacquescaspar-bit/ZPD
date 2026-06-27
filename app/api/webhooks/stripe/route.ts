@@ -5,10 +5,21 @@ import { EmailService } from "@/lib/email";
 import { validateWebhookRequest } from "@/lib/webhookSecurity";
 import type Stripe from "stripe";
 
+export function GET() {
+  return NextResponse.json({
+    ok: true,
+    message:
+      "Stripe webhook endpoint is live. Stripe sends POST requests only.",
+  });
+}
+
 export async function POST(request: NextRequest) {
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  if (!endpointSecret) {
-    throw new Error("STRIPE_WEBHOOK_SECRET is not set");
+  if (!endpointSecret || endpointSecret === "whsec_your_webhook_secret_here") {
+    return NextResponse.json(
+      { error: "STRIPE_WEBHOOK_SECRET is not configured" },
+      { status: 503 },
+    );
   }
   try {
     // Check rate limiting and other security measures
@@ -135,8 +146,14 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          // TODO: Send confirmation email with enrollment details
-          // TODO: Schedule tutor matching
+          if (email && parentName) {
+            await EmailService.sendEnrollmentConfirmationEmail(
+              email,
+              parentName,
+              planType ?? "essential",
+              paymentIntent.amount,
+            );
+          }
         } catch (error) {
           console.error("Error processing referral codes:", error);
           // Don't fail the webhook for referral processing errors

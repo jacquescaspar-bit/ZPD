@@ -11,20 +11,18 @@ This guide covers the production setup for the referral code system with databas
 
 ## Environment Setup
 
-Update your `.env.local` file with production values:
+Update your `.env.local` file with production values (copy from `.env.example` first and replace the placeholder values with your production secrets):
 
-```bash
-# Database Configuration
-DATABASE_URL=postgresql://username:password@your-host:5432/zpd_db
+- Use live Stripe keys + real webhook secret from dashboard.
+- See `.env.example` for the full list and comments.
 
-# Email Configuration (SendGrid)
-SENDGRID_API_KEY=SG.your-sendgrid-api-key-here
-FROM_EMAIL=noreply@zpd-tutoring.com
-
-# Stripe Configuration (existing)
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_publishable_key
-STRIPE_SECRET_KEY=sk_live_your_secret_key
-STRIPE_WEBHOOK_SECRET=whsec_your_live_webhook_secret
+```
+# (example - see .env.example for complete template)
+DATABASE_URL=postgresql://...
+SENDGRID_API_KEY=SG_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
 ```
 
 ## Database Setup
@@ -67,7 +65,7 @@ STRIPE_WEBHOOK_SECRET=whsec_your_live_webhook_secret
 
 1. **Create Webhook Endpoint**
    - In your Stripe dashboard, go to Webhooks
-   - Add endpoint: `https://yourdomain.com/api/webhooks/stripe`
+   - Add endpoint: `https://zpdlearning.com/api/webhooks/stripe`
    - Select events: `payment_intent.succeeded`
    - Copy the webhook secret to `STRIPE_WEBHOOK_SECRET`
 

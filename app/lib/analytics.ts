@@ -55,7 +55,7 @@ export const enrollmentEvents = {
   enrollPageVisit: () =>
     trackEvent("enroll_page_visit", {
       page_location: "/enrol",
-      page_title: "Enrol with ZPD Tutoring",
+      page_title: "Enrol with ZPD Learning",
     }),
 
   // Widget interactions

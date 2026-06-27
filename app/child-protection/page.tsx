@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import Nav from "@/Nav";
+import PageShell from "@/components/PageShell";
 import ContentSection from "@/child-protection/ContentSection";
 
 export const metadata: Metadata = {
-  title: "Child Protection & Safety | ZPD Tutoring Services",
+  title: "Child Protection & Safety | ZPD Learning",
   description:
     "Learn about our child protection policies, Working With Children Check requirements, and commitment to child safety.",
   keywords:
     "child protection, child safety, WWCC, working with children check, mandatory reporting",
   openGraph: {
-    title: "Child Protection & Safety - ZPD Tutoring Services",
+    title: "Child Protection & Safety - ZPD Learning",
     description:
       "Our commitment to child safety and protection in tutoring services.",
     type: "website",
@@ -17,10 +18,9 @@ export const metadata: Metadata = {
 };
 
 const ChildProtectionPage = () => (
-  <div className="relative">
+  <PageShell>
     <Nav />
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+    <div className="px-6 pt-16 pb-12">
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <section className="text-center pb-12">
@@ -37,7 +37,7 @@ const ChildProtectionPage = () => (
             Our unwavering commitment to child safety and protection
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
-            Last updated: {/* PLACEHOLDER: Last Updated Date */} [Current Date]
+            Last updated: 19 June 2026
           </p>
         </section>
 
@@ -45,7 +45,7 @@ const ChildProtectionPage = () => (
         <ContentSection />
       </div>
     </div>
-  </div>
+  </PageShell>
 );
 
 export default ChildProtectionPage;

@@ -1,10 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminApi";
 import { PromoCodeStorage } from "@/lib/promoStorage";
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ code: string }> },
 ) {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   try {
     const { code } = await params;
 

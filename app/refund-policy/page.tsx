@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import Nav from "@/Nav";
+import PageShell from "@/components/PageShell";
+import LegalContactInfo from "@/components/LegalContactInfo";
+import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Refund Policy | ZPD Tutoring Services",
+  title: "Refund Policy | ZPD Learning",
   description:
     "Learn about our refund policy for tutoring services, including eligibility criteria and processing times.",
   keywords: "refund policy, tutoring refunds, cancellation policy, ZPD refund",
   openGraph: {
-    title: "Refund Policy - ZPD Tutoring Services",
+    title: "Refund Policy - ZPD Learning",
     description:
       "Our refund policy and cancellation terms for tutoring services.",
     type: "website",
@@ -15,10 +18,9 @@ export const metadata: Metadata = {
 };
 
 const RefundPolicyPage = () => (
-  <div className="relative">
+  <PageShell>
     <Nav />
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+    <div className="px-6 pt-16 pb-12">
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <section className="text-center pb-12">
@@ -35,7 +37,7 @@ const RefundPolicyPage = () => (
             Our commitment to fair and transparent refund processes
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
-            Last updated: {/* PLACEHOLDER: Last Updated Date */} [Current Date]
+            Last updated: 19 June 2026
           </p>
         </section>
 
@@ -43,10 +45,10 @@ const RefundPolicyPage = () => (
         <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
           <div className="prose dark:prose-invert max-w-none text-sm leading-relaxed">
             <p className="text-base">
-              At {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services, we
-              strive to provide high-quality tutoring services. This refund
-              policy outlines the circumstances under which refunds may be
-              granted and our process for handling refund requests.
+              At {SITE_NAME}, we strive to provide high-quality tutoring
+              services. This refund policy outlines the circumstances under
+              which refunds may be granted and our process for handling refund
+              requests.
             </p>
 
             <h2 className="text-lg font-semibold mt-8 mb-4">Full Refunds</h2>
@@ -248,25 +250,8 @@ const RefundPolicyPage = () => (
             <h2 className="text-lg font-semibold mt-8 mb-4">
               Contact Information
             </h2>
-            <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mt-4">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3">
-                Refund Requests
-              </h3>
-              <div className="space-y-2 text-sm">
-                <p className="font-medium">
-                  {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services Pty
-                  Ltd
-                </p>
-                <p>
-                  {/* PLACEHOLDER: Business Address */} 123 Education Street,
-                  Sydney NSW 2000, Australia
-                </p>
-                <p>{/* PLACEHOLDER: Business Phone */} +61 400 123 456</p>
-                <p>
-                  <strong>Email:</strong> {/* PLACEHOLDER: Refund Email */}{" "}
-                  refunds@zpdtutoring.com
-                </p>
-              </div>
+            <div className="mt-4">
+              <LegalContactInfo role="Refund Requests" />
             </div>
 
             <h2 className="text-lg font-semibold mt-8 mb-4">Policy Updates</h2>
@@ -288,7 +273,7 @@ const RefundPolicyPage = () => (
         </section>
       </div>
     </div>
-  </div>
+  </PageShell>
 );
 
 export default RefundPolicyPage;

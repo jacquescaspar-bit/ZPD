@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminApi";
 import pool from "@/lib/db";
 
 type EventType = "generated" | "used" | "converted";
@@ -11,6 +12,9 @@ interface AnalyticsEntry {
 }
 
 export async function GET(request: NextRequest) {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   try {
     const { searchParams } = new URL(request.url);
     const period = searchParams.get("period") ?? "30d"; // 7d, 30d, 90d

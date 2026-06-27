@@ -1,11 +1,11 @@
 import Nav from "@/Nav";
+import PageShell from "@/components/PageShell";
 import ProcessCarousel from "@/about/components/ProcessCarousel";
 
 const StartContent = () => (
-  <div className="relative">
+  <PageShell>
     <Nav />
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+    <div className="px-6 pt-16 pb-12">
       <div className="space-y-6">
         <section className="text-center pb-20">
           <h1
@@ -27,7 +27,7 @@ const StartContent = () => (
         </div>
       </div>
     </div>
-  </div>
+  </PageShell>
 );
 
 export default StartContent;

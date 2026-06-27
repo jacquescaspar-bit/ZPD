@@ -1,23 +1,23 @@
-// eslint-disable-next-line max-lines-per-function
+import LegalContactInfo from "@/components/LegalContactInfo";
+import { SITE_NAME } from "@/lib/constants";
+
 const ContentSection = () => (
   <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
     <div className="prose dark:prose-invert max-w-none text-sm leading-relaxed">
       <p className="text-base">
-        At {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services, the safety
-        and protection of children is our highest priority. We are committed to
-        providing a safe environment for all children participating in our
-        tutoring programs and comply with all relevant Australian laws and
-        regulations.
+        At {SITE_NAME}, the safety and protection of children is our highest
+        priority. We are committed to providing a safe environment for all
+        children participating in our tutoring programs and comply with all
+        relevant Australian laws and regulations.
       </p>
 
       <h2 className="text-lg font-semibold mt-8 mb-4">
         Working With Children Check (WWCC)
       </h2>
       <p>
-        All tutors and staff members engaged by{" "}
-        {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services must hold a
-        current Working With Children Check clearance appropriate to their state
-        or territory of operation.
+        All tutors and staff members engaged by {SITE_NAME} must hold a current
+        Working With Children Check clearance appropriate to their state or
+        territory of operation.
       </p>
 
       <h3 className="text-base font-medium mt-6 mb-2">Requirements</h3>
@@ -220,12 +220,11 @@ const ContentSection = () => (
 
       <h3 className="text-base font-medium mt-6 mb-2">Tutor Status</h3>
       <p>
-        All tutors engaged by {/* PLACEHOLDER: Business Name */} ZPD Tutoring
-        Services are independent contractors and not employees of our company.
-        While we take all reasonable steps to ensure tutors hold appropriate
-        clearances and training, {/* PLACEHOLDER: Business Name */} ZPD Tutoring
-        Services accepts no liability for the actions, omissions, or conduct of
-        tutors outside of scheduled tutoring sessions.
+        All tutors engaged by {SITE_NAME} are independent contractors and not
+        employees of our company. While we take all reasonable steps to ensure
+        tutors hold appropriate clearances and training, {SITE_NAME} accepts no
+        liability for the actions, omissions, or conduct of tutors outside of
+        scheduled tutoring sessions.
       </p>
 
       <h3 className="text-base font-medium mt-6 mb-2">
@@ -295,24 +294,8 @@ const ContentSection = () => (
       </ul>
 
       <h2 className="text-lg font-semibold mt-8 mb-4">Contact Information</h2>
-      <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mt-4">
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-3">
-          Child Protection Officer
-        </h3>
-        <div className="space-y-2 text-sm">
-          <p className="font-medium">
-            {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services Pty Ltd
-          </p>
-          <p>
-            {/* PLACEHOLDER: Business Address */} 123 Education Street, Sydney
-            NSW 2000, Australia
-          </p>
-          <p>{/* PLACEHOLDER: Business Phone */} +61 400 123 456</p>
-          <p>
-            <strong>Email:</strong> {/* PLACEHOLDER: Safety Email */}{" "}
-            safety@zpdtutoring.com
-          </p>
-        </div>
+      <div className="mt-4">
+        <LegalContactInfo role="Child Protection Officer" />
       </div>
 
       <h2 className="text-lg font-semibold mt-8 mb-4">

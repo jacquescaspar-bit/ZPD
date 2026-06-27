@@ -24,6 +24,31 @@ This will automatically clean build artifacts and start the server with optimal 
 - `pnpm dev:turbopack` - Next.js with Turbopack (fastest but may crash)
 - `pnpm clean` - Manually clean build artifacts
 
+### Environment Setup (required for full functionality including Stripe payments)
+
+1. Copy the example env file:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Fill in the values in `.env.local` (see comments in the file).
+
+3. **Stripe local setup (to enable real test payments):**
+   - Create a free Stripe account at https://stripe.com
+   - Go to Developers → API keys and copy your **Test** publishable key (`pk_test_...`) and secret key (`sk_test_...`)
+   - Install Stripe CLI: https://stripe.com/docs/stripe-cli
+   - Run `stripe login`
+   - In a separate terminal: `stripe listen --forward-to http://localhost:3000/api/webhooks/stripe`
+   - Copy the `whsec_...` secret shown by the CLI into `STRIPE_WEBHOOK_SECRET` in `.env.local`
+   - (For production, replace with live keys + dashboard webhook pointing to your deployed URL)
+
+4. Set up the database (Postgres required):
+   - Update `DATABASE_URL` in `.env.local`
+   - Run: `pnpm db:setup`
+
+5. (Optional) Set up SendGrid for referral emails (otherwise emails are skipped).
+
 ### Troubleshooting
 
 If the dev server crashes frequently:

@@ -24,7 +24,7 @@ const BackToTop = () => {
   return (
     <button
       aria-label="Back to top"
-      className="fixed bottom-8 right-6 w-12 h-12 bg-white/10 dark:bg-black/20 backdrop-blur-md hover:bg-white/20 dark:hover:bg-black/30 border border-white/20 text-gray-900 dark:text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 z-50"
+      className="fixed bottom-8 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-gray-300/70 bg-white/85 text-gray-900 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white hover:shadow-2xl dark:border-white/20 dark:bg-gray-900/80 dark:text-white dark:hover:bg-gray-900"
       style={{
         opacity: showBackToTop,
         pointerEvents: showBackToTop > 0 ? "auto" : "none",

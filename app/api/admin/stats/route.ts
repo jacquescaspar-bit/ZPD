@@ -1,7 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminApi";
 import { query } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   try {
     const { searchParams } = new URL(request.url);
     const period = searchParams.get("period") ?? "30d";
@@ -78,6 +82,47 @@ export async function GET(request: NextRequest) {
 
     const promoResult = await query(promoQuery, [startDate]);
 
+    const recentEnrollmentsResult = await query(
+      `
+      SELECT email, plan_type, amount_cents, referral_code_used, created_at
+      FROM enrollments
+      ORDER BY created_at DESC
+      LIMIT 8
+    `,
+    );
+
+    const dailyTrendResult = await query(
+      `
+      SELECT
+        DATE(created_at) as date,
+        COUNT(*) as enrollments,
+        SUM(amount_cents) as revenue
+      FROM enrollments
+      WHERE created_at >= $1
+      GROUP BY DATE(created_at)
+      ORDER BY date ASC
+    `,
+      [startDate],
+    );
+
+    const funnelResult = await query(
+      `
+      SELECT current_step, COUNT(*) as count
+      FROM enrollment_sessions
+      WHERE expires_at >= NOW()
+      GROUP BY current_step
+    `,
+    );
+
+    const referralCountResult = await query(
+      `
+      SELECT COUNT(*) as count
+      FROM enrollments
+      WHERE created_at >= $1 AND referral_code_used IS NOT NULL
+    `,
+      [startDate],
+    );
+
     // Calculate growth metrics
     const previousPeriodQuery = `
       SELECT COUNT(*) as prev_enrollments, SUM(amount_cents) as prev_revenue
@@ -115,9 +160,10 @@ export async function GET(request: NextRequest) {
       period,
       overview: {
         totalEnrollments: currentEnrollments,
-        totalRevenue: currentRevenue / 100, // Convert cents to dollars
+        totalRevenue: currentRevenue / 100,
         avgOrderValue: (parseInt(enrollmentStats.avg_order_value) || 0) / 100,
         activeDays: parseInt(enrollmentStats.active_days) || 0,
+        referralEnrollments: parseInt(referralCountResult.rows[0].count) || 0,
         enrollmentGrowth,
         revenueGrowth,
       },
@@ -132,6 +178,22 @@ export async function GET(request: NextRequest) {
         maxUses: row.max_uses,
         enrollments: parseInt(row.enrollments_with_promo ?? 0),
         revenue: (parseInt(row.revenue_with_promo ?? 0) / 100).toFixed(2),
+      })),
+      recentEnrollments: recentEnrollmentsResult.rows.map((row) => ({
+        email: row.email,
+        plan: row.plan_type,
+        amount: (parseInt(row.amount_cents) / 100).toFixed(2),
+        referralCode: row.referral_code_used,
+        createdAt: row.created_at,
+      })),
+      dailyTrend: dailyTrendResult.rows.map((row) => ({
+        date: row.date,
+        enrollments: parseInt(row.enrollments),
+        revenue: (parseInt(row.revenue) / 100).toFixed(2),
+      })),
+      enrollmentFunnel: funnelResult.rows.map((row) => ({
+        step: row.current_step,
+        count: parseInt(row.count),
       })),
     });
   } catch (error) {

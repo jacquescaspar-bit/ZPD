@@ -12,6 +12,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { PRICING, type PlanType } from "@/lib/constants";
 import { getStripe } from "@/lib/stripe";
+import type { PaymentRequest } from "@stripe/stripe-js";
 
 const stripePromise = getStripe();
 
@@ -53,7 +54,6 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   amountOverrideCents,
   adjustments = [],
   appliedReferralCode,
-  _hasAttemptedSubmit,
   onSubmitAttempt,
   forceTestMode = false,
 }) => {
@@ -63,7 +63,9 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [cardholderName, setCardholderName] = useState("");
-  const [paymentRequest, setPaymentRequest] = useState<unknown>(null);
+  const [paymentRequest, setPaymentRequest] = useState<PaymentRequest | null>(
+    null,
+  );
 
   const plan = PRICING[planType];
   const finalAmountCents =
@@ -73,13 +75,12 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   const baseAmountDisplay = (plan.price / 100).toFixed(2);
   const finalAmountDisplay = (finalAmountCents / 100).toFixed(2);
 
-  // Check for test mode
   const isTestMode =
     forceTestMode ||
-    (typeof window !== "undefined" &&
+    (process.env.NODE_ENV === "development" &&
+      typeof window !== "undefined" &&
       (window.location.search.includes("test=true") ||
-        (process.env.NODE_ENV === "development" &&
-          window.location.search.includes("bypass=true"))));
+        window.location.search.includes("bypass=true")));
 
   const createPaymentIntent = useCallback(async () => {
     try {
@@ -205,11 +206,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
         clientSecret,
         {
           payment_method: {
-            card: {
-              number: cardNumber,
-              expiry: cardExpiry,
-              cvc: cardCvc,
-            } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+            card: cardNumber,
             billing_details: {
               name: cardholderName || enrollmentData.parentName,
               email: enrollmentData.email,
@@ -254,11 +251,9 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
     setIsProcessing(true);
     onSubmitAttempt();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    paymentRequest.on("paymentmethod", async (ev: any) => {
-      const { error: confirmError } = await (
-        stripe as unknown
-      ).confirmCardPayment(
+    paymentRequest.on("paymentmethod", async (ev) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const { error: confirmError } = await stripe!.confirmCardPayment(
         clientSecret,
         { payment_method: ev.paymentMethod.id },
         { handleActions: false },
@@ -274,9 +269,13 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
       setIsProcessing(false);
     });
 
-    const { error: prError } = await paymentRequest.show();
-    if (prError) {
-      onPaymentError(prError.message ?? "Apple Pay not available");
+    try {
+      // show may not return promise in types, but call it
+      await (paymentRequest.show() as unknown as Promise<void>);
+    } catch (prError: unknown) {
+      const msg =
+        prError instanceof Error ? prError.message : "Apple Pay not available";
+      onPaymentError(msg);
       setIsProcessing(false);
     }
   };
@@ -295,9 +294,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
             </code>{" "}
             (and server-side keys for the API routes) to your{" "}
             <code className="font-mono">.env.local</code> to enable card
-            payments. You can also append{" "}
-            <code className="font-mono">?test=true</code> to bypass Stripe for
-            UX testing.
+            payments.
           </p>
         </div>
       )}
@@ -442,16 +439,18 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
               submitLabel || `Pay AUD $${finalAmountDisplay}`
             )}
           </button>
-          <button
-            className="flex-1 py-3 px-4 rounded-lg transition-colors font-medium bg-gray-500 text-white hover:bg-gray-600"
-            type="button"
-            onClick={() => {
-              onSubmitAttempt();
-              onPaymentSuccess(`test_payment_intent_${Date.now()}`);
-            }}
-          >
-            Skip payment (testing)
-          </button>
+          {process.env.NODE_ENV === "development" && (
+            <button
+              className="flex-1 py-3 px-4 rounded-lg transition-colors font-medium bg-gray-500 text-white hover:bg-gray-600"
+              type="button"
+              onClick={() => {
+                onSubmitAttempt();
+                onPaymentSuccess(`test_payment_intent_${Date.now()}`);
+              }}
+            >
+              Skip payment (testing)
+            </button>
+          )}
         </div>
 
         {validationError && (

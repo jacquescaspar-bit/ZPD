@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="210 210 604 604" fill="none" role="img" aria-label="ZPD Learning">
+  <circle cx="512" cy="512" r="285" stroke="#374151" stroke-width="16" fill="none"/>
+  <text
+    x="512"
+    y="612"
+    text-anchor="middle"
+    font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="300"
+    font-weight="700"
+    letter-spacing="0.01em"
+    fill="#0F172A"
+  >ZPD</text>
+</svg>

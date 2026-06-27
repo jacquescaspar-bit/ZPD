@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { SUPPORT_EMAIL } from "@/lib/constants";
 import { EmailService } from "@/lib/email";
 import puppeteer from "puppeteer";
 
@@ -103,7 +104,7 @@ export async function POST(request: NextRequest) {
     const recipient =
       (formData.get("testRecipient") as string) ??
       process.env.ADMIN_EMAIL ??
-      "admin@zpd-tutoring.com";
+      SUPPORT_EMAIL;
     const userEmail = formData.get("email") as string | null;
 
     // Send email with PDF attachment
@@ -116,7 +117,7 @@ export async function POST(request: NextRequest) {
           <p>A parent has completed their enrolment insights. The detailed responses are attached as a PDF.</p>
           ${attachments.length > 1 ? "<p><strong>Additional attachments:</strong> See attached files for uploaded documents.</p>" : "<p><strong>No additional attachments uploaded.</strong></p>"}
           <p>Please review this submission and proceed with tutor matching.</p>
-          <p>The ZPD Tutoring Team</p>
+          <p>The ZPD Learning Team</p>
         </div>
       `,
       attachments,
@@ -133,7 +134,7 @@ export async function POST(request: NextRequest) {
             <p>We've received your responses and any uploaded documents.</p>
             <p>Our team will review your submission within 2-3 business days and match you with the perfect tutor.</p>
             <p>You'll receive further details shortly from grow@zpdlearning.com.</p>
-            <p>The ZPD Tutoring Team</p>
+            <p>The ZPD Learning Team</p>
           </div>
         `,
       });

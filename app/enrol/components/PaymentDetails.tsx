@@ -1,7 +1,5 @@
 "use client";
 
-/* eslint-disable max-lines */
-
 import React, { useState, useEffect } from "react";
 import PaymentForm from "@/enrol/components/PaymentForm";
 import type { EnrollmentPaymentData } from "@/enrol/components/PaymentForm";
@@ -268,7 +266,6 @@ export interface PaymentDetailsProps {
   showHeaderSubtitle?: boolean;
   hasAttemptedSubmit: boolean;
   onSubmitAttempt: () => void;
-  forceTestMode?: boolean;
 }
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
@@ -301,7 +298,6 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   showHeaderSubtitle = true,
   hasAttemptedSubmit,
   onSubmitAttempt,
-  _forceTestMode = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 

@@ -376,15 +376,12 @@ const ParentQuestionsSection = ({
         updateQuestionResponse={updateQuestionResponse}
       />
       <ParentQuestionsNavigation
-        _hasClickedResolveIssues={hasClickedResolveIssues}
         agreedToTerms={agreedToTerms}
         attachments={attachments}
         currentQuestionIndex={currentQuestionIndex}
         isReviewQuestion={isReviewQuestion}
-        isTeacherQuestion={isTeacherQuestion}
         questionResponses={questionResponses}
         questionsLength={questions.length}
-        setAgreedToTerms={setAgreedToTerms}
         setCompletedQuestions={setCompletedQuestions}
         setCurrentQuestionIndex={setCurrentQuestionIndex}
         setHasClickedResolveIssues={setHasClickedResolveIssues}

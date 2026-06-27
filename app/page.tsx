@@ -1,27 +1,24 @@
-"use client";
-
+import dynamic from "next/dynamic";
 import Nav from "@/Nav";
 import Hero from "@/Hero";
 import ZPDDefinitionSection from "@/ZPDDefinitionSection";
-import Infographic from "@/Infographic";
-import Features from "@/Features";
-import Stats from "@/Stats";
-import Testimonials from "@/Testimonials";
-import BackToTop from "@/BackToTop";
-import BodyBackground from "@/BodyBackground";
+import EnrolCta from "@/EnrolCta";
+import PageShell from "@/components/PageShell";
+
+const Features = dynamic(() => import("@/Features"));
+const Testimonials = dynamic(() => import("@/Testimonials"));
+const BackToTop = dynamic(() => import("@/BackToTop"));
 
 const Home = () => (
-  <>
+  <PageShell>
     <Nav />
-    <BodyBackground />
     <Hero />
-    <ZPDDefinitionSection />
-    <Infographic />
     <Features />
-    <Stats />
+    <ZPDDefinitionSection />
     <Testimonials />
+    <EnrolCta />
     <BackToTop />
-  </>
+  </PageShell>
 );
 
 export default Home;

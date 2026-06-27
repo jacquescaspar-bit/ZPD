@@ -1,0 +1,24 @@
+{
+  "brand": {
+    "name": "ZPD Indigo",
+    "hex": "#4F46E5",
+    "usage": "Primary brand colour \u2014 matches site gradient and CTAs"
+  },
+  "accent": {
+    "name": "ZPD Violet",
+    "hex": "#7C3AED",
+    "usage": "Accent colour \u2014 gradient end-point and highlights"
+  },
+  "logo": {
+    "light": {
+      "mark": "#0F172A",
+      "ring": "#D1D5DB",
+      "background": "#FFFFFF"
+    },
+    "dark": {
+      "mark": "#F8FAFC",
+      "ring": "#64748B",
+      "background": "#0F172A"
+    }
+  }
+}

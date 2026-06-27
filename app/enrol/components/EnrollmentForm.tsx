@@ -55,8 +55,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     validateCode,
   } = useReferralSystem(selectedPlan, initialPromoCode);
 
-  const { _currentPlanIndex, isMobile, fadeOthers, setFadeOthers } =
-    useMobileCarousel();
+  const { isMobile, fadeOthers, setFadeOthers } = useMobileCarousel();
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -150,8 +149,12 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     const isTestPayment = paymentIntentId.startsWith("test_payment_intent_");
 
     if (isTestPayment) {
-      // For test payments, skip API call and directly redirect
       console.warn("🧪 TEST PAYMENT: Skipping enrollment session creation");
+      sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
+      sessionStorage.setItem("enrollmentEmail", email);
+      if (selectedPlan) {
+        sessionStorage.setItem("enrollmentPlan", selectedPlan);
+      }
       setTimeout(() => {
         setPaymentStatus("success");
         window.location.href = `/enrol/insights`;
@@ -203,8 +206,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
       const result = await response.json();
 
-      // Store session ID for insights page
       sessionStorage.setItem("enrollmentSessionId", result.session.sessionId);
+      sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
 
       // Show success message and redirect simultaneously
       setTimeout(() => {

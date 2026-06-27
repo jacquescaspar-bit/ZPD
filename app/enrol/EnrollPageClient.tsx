@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Nav from "@/Nav";
+import PageShell from "@/components/PageShell";
 import EnrollmentForm from "@/enrol/components/EnrollmentForm";
 import EnrollmentAnalytics from "@/enrol/components/EnrollmentAnalytics";
 import PostPurchaseHero from "@/enrol/components/PostPurchaseHero";
@@ -17,11 +18,10 @@ const EnrollPageClient: React.FC<{
   const [currentStep, setCurrentStep] = useState<Step>(initialStep);
 
   return (
-    <div className="relative">
+    <PageShell>
       <Nav />
       <EnrollmentAnalytics />
-      <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-      <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+      <div className="px-6 pt-16 pb-12">
         <div className="space-y-6">
           {/* Hero Section */}
           <section
@@ -103,7 +103,7 @@ const EnrollPageClient: React.FC<{
           </section>
         </div>
       </div>
-    </div>
+    </PageShell>
   );
 };
 

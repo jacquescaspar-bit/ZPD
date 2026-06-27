@@ -23,7 +23,6 @@ interface ReviewStepProps {
   }) => void;
   onSubmit?: () => void;
   isSubmitting?: boolean;
-  showTermsCheckbox?: boolean;
 }
 
 const ReviewStep: React.FC<ReviewStepProps> = ({
@@ -34,14 +33,11 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
   attachments,
   handleAttachmentChange,
   removeAttachment,
-  _referralLink,
   copyReferralLink,
-  setStatusMessage: _setStatusMessage,
   autoSaveStatus,
   onProgressUpdate,
   onSubmit,
   isSubmitting = false,
-  showTermsCheckbox: _showTermsCheckbox = true,
 }) => {
   const [referralLinkCopied, setReferralLinkCopied] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);

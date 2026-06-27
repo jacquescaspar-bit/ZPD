@@ -5,11 +5,9 @@ import React, { useState, useEffect, useRef } from "react";
 interface ParentQuestionsNavigationProps {
   currentQuestionIndex: number;
   questionsLength: number;
-  isTeacherQuestion: boolean;
   isReviewQuestion: boolean;
   questionResponses: Record<string, string | string[]>;
   attachments: File[];
-  _hasClickedResolveIssues: boolean;
   setCompletedQuestions: React.Dispatch<React.SetStateAction<Set<number>>>;
   setCurrentQuestionIndex: (index: number) => void;
   setHasClickedResolveIssues: (value: boolean) => void;
@@ -21,17 +19,14 @@ interface ParentQuestionsNavigationProps {
 const ParentQuestionsNavigation = ({
   currentQuestionIndex,
   questionsLength,
-  _isTeacherQuestion,
   isReviewQuestion,
   questionResponses,
   attachments,
-  _hasClickedResolveIssues,
   setCompletedQuestions,
   setCurrentQuestionIndex,
   setHasClickedResolveIssues,
   onSubmit,
   agreedToTerms = false,
-  setAgreedToTerms: _setAgreedToTerms,
 }: ParentQuestionsNavigationProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 

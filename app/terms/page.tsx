@@ -1,24 +1,26 @@
 import type { Metadata } from "next";
 import Nav from "@/Nav";
+import PageShell from "@/components/PageShell";
+import LegalContactInfo from "@/components/LegalContactInfo";
+import { LEGAL_TRADING_AS, SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | ZPD Tutoring Services",
+  title: "Terms of Service | ZPD Learning",
   description:
     "Read our terms of service for tutoring services, including payment terms, service conditions, and user responsibilities.",
   keywords:
     "terms of service, terms and conditions, tutoring agreement, ZPD terms",
   openGraph: {
-    title: "Terms of Service - ZPD Tutoring Services",
+    title: "Terms of Service - ZPD Learning",
     description: "Terms and conditions for using our tutoring services.",
     type: "website",
   },
 };
 
 const TermsPage = () => (
-  <div className="relative">
+  <PageShell>
     <Nav />
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 -z-10" />
-    <div className="min-h-screen px-6 pt-16 pb-12 z-10">
+    <div className="px-6 pt-16 pb-12">
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <section className="text-center pb-12">
@@ -35,7 +37,7 @@ const TermsPage = () => (
             Terms and conditions for using our tutoring services
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
-            Last updated: {/* PLACEHOLDER: Last Updated Date */} [Current Date]
+            Last updated: 19 June 2026
           </p>
         </section>
 
@@ -44,10 +46,9 @@ const TermsPage = () => (
           <div className="prose dark:prose-invert max-w-none text-sm leading-relaxed">
             <p className="text-base">
               These Terms of Service (&quot;Terms&quot;) govern your use of the
-              tutoring services provided by {/* PLACEHOLDER: Business Name */}{" "}
-              ZPD Tutoring Services Pty Ltd (&quot;we&quot;, &quot;us&quot;, or
-              &quot;our&quot;). By enrolling in our services, you agree to be
-              bound by these Terms.
+              tutoring services provided by {LEGAL_TRADING_AS} (&quot;we&quot;,
+              &quot;us&quot;, or &quot;our&quot;). By enrolling in our services,
+              you agree to be bound by these Terms.
             </p>
 
             <h2 className="text-lg font-semibold mt-8 mb-4">Services</h2>
@@ -191,10 +192,9 @@ const TermsPage = () => (
 
             <h3 className="text-base font-medium mt-6 mb-2">Tutor Status</h3>
             <p>
-              All tutors engaged by {/* PLACEHOLDER: Business Name */} ZPD
-              Tutoring Services are independent contractors, not employees.
-              While we take reasonable steps to ensure service quality, we
-              accept no liability for:
+              All tutors engaged by {SITE_NAME} are independent contractors, not
+              employees. While we take reasonable steps to ensure service
+              quality, we accept no liability for:
             </p>
             <ul className="list-disc pl-6 space-y-1">
               <li>Tutor actions or conduct outside of scheduled sessions</li>
@@ -276,10 +276,9 @@ const TermsPage = () => (
 
             <h2 className="text-lg font-semibold mt-8 mb-4">Governing Law</h2>
             <p>
-              These Terms are governed by the laws of{" "}
-              {/* PLACEHOLDER: Governing State */} New South Wales, Australia.
-              Any disputes will be resolved through the appropriate Australian
-              courts or dispute resolution processes.
+              These Terms are governed by the laws of New South Wales,
+              Australia. Any disputes will be resolved through the appropriate
+              Australian courts or dispute resolution processes.
             </p>
 
             <h2 className="text-lg font-semibold mt-8 mb-4">
@@ -293,22 +292,14 @@ const TermsPage = () => (
             </p>
 
             <h2>Contact Information</h2>
-            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mt-4">
-              <p>
-                {/* PLACEHOLDER: Business Name */} ZPD Tutoring Services Pty Ltd
-              </p>
-              <p>
-                {/* PLACEHOLDER: Business Address */} 123 Education Street,
-                Sydney NSW 2000, Australia
-              </p>
-              <p>{/* PLACEHOLDER: Business Phone */} +61 400 123 456</p>
-              <p>{/* PLACEHOLDER: Support Email */} support@zpdtutoring.com</p>
+            <div className="mt-4">
+              <LegalContactInfo />
             </div>
           </div>
         </section>
       </div>
     </div>
-  </div>
+  </PageShell>
 );
 
 export default TermsPage;

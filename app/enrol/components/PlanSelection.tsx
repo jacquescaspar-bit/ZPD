@@ -100,7 +100,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
               <div className="md:col-span-1">
                 <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-300 opacity-50">
                   <span className="font-semibold">
-                    {planDescriptions[selectedPlan ?? ""].title}
+                    {selectedPlan ? planDescriptions[selectedPlan].title : ""}
                   </span>{" "}
                   <span className="font-light">Selected</span>
                 </h2>
@@ -115,7 +115,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             <div className="flex justify-between items-center">
               <h2 className="text-2xl text-gray-900 dark:text-white transition-opacity duration-300 opacity-50">
                 <span className="font-semibold">
-                  {planDescriptions[selectedPlan ?? ""].title}
+                  {selectedPlan ? planDescriptions[selectedPlan].title : ""}
                 </span>{" "}
                 <span className="font-light">Selected</span>
               </h2>
@@ -202,7 +202,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                   className={`min-w-0 md:col-span-3 [&>section]:!p-6 ${isHeaderVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-300 ease-in-out`}
                 >
                   <PaymentDetails
-                    {...paymentProps}
+                    {...(paymentProps as PaymentDetailsProps)}
                     showHeader={false}
                     showHeaderSubtitle={false}
                   />
@@ -223,6 +223,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                         ? { x: slideOffset }
                         : { x: 0 }
                     }
+                    className={`${fadeOthers && !isThisSelected ? "opacity-0 pointer-events-none" : ""} transition-opacity duration-300`}
                     transition={{
                       type: "spring",
                       stiffness: 130,
@@ -317,7 +318,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
               className={`${paymentFormReady ? "opacity-100" : "opacity-0"} transition-opacity duration-300 ease-in-out`}
             >
               <PaymentDetails
-                {...paymentProps}
+                {...(paymentProps as PaymentDetailsProps)}
                 showHeader={false}
                 showHeaderSubtitle={false}
               />

@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Plus, Ticket } from "lucide-react";
 import type { PlanType } from "@/lib/constants";
 import { PRICING } from "@/lib/constants";
+import PageHeader from "@/admin/components/PageHeader";
+import LoadingState from "@/admin/components/LoadingState";
+import EmptyState from "@/admin/components/EmptyState";
+import StatusBadge from "@/admin/components/StatusBadge";
+import { Button } from "@/components/ui";
 
 interface PromoCode {
   code: string;
@@ -12,7 +18,6 @@ interface PromoCode {
   currentUses: number;
   expiresAt: string | null;
   isActive: boolean;
-  createdAt: string;
   allowedPlans: string[];
 }
 
@@ -22,18 +27,15 @@ const PromoCodesPage = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [formData, setFormData] = useState({
     code: "",
-    discountCents: "",
+    discountDollars: "",
     description: "",
     maxUses: "",
     expiresAt: "",
     allowedPlans: ["trial", "online", "essential", "intensive"] as PlanType[],
   });
 
-  useEffect(() => {
-    void fetchPromoCodes();
-  }, []);
-
   const fetchPromoCodes = async () => {
+    setLoading(true);
     try {
       const response = await fetch("/api/admin/promo-codes");
       if (!response.ok) {
@@ -50,6 +52,10 @@ const PromoCodesPage = () => {
     }
   };
 
+  useEffect(() => {
+    void fetchPromoCodes();
+  }, []);
+
   const handleCreatePromoCode = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -58,7 +64,7 @@ const PromoCodesPage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           code: formData.code,
-          discountCents: parseInt(formData.discountCents),
+          discountCents: Math.round(parseFloat(formData.discountDollars) * 100),
           description: formData.description,
           maxUses: formData.maxUses ? parseInt(formData.maxUses) : null,
           expiresAt: formData.expiresAt || null,
@@ -69,7 +75,7 @@ const PromoCodesPage = () => {
       if (response.ok) {
         setFormData({
           code: "",
-          discountCents: "",
+          discountDollars: "",
           description: "",
           maxUses: "",
           expiresAt: "",
@@ -77,8 +83,6 @@ const PromoCodesPage = () => {
         });
         setShowCreateForm(false);
         void fetchPromoCodes();
-      } else {
-        console.error("Error creating promo code");
       }
     } catch (error) {
       console.error("Error creating promo code:", error);
@@ -90,94 +94,80 @@ const PromoCodesPage = () => {
       const response = await fetch(`/api/admin/promo-codes/${code}`, {
         method: "DELETE",
       });
-
-      if (response.ok) {
-        void fetchPromoCodes();
-      } else {
-        console.error("Error deactivating promo code");
-      }
+      if (response.ok) void fetchPromoCodes();
     } catch (error) {
       console.error("Error deactivating promo code:", error);
     }
   };
 
-  if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
-  }
-
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
-      <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">Promo Codes</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            Manage promotional codes and discounts.
-          </p>
-        </div>
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button
-            className="inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500"
-            onClick={() => setShowCreateForm(true)}
+    <div className="space-y-6">
+      <PageHeader
+        actions={
+          <Button
+            className="cursor-pointer"
+            variant="primary"
+            onClick={() => setShowCreateForm((open) => !open)}
           >
-            Add Promo Code
-          </button>
-        </div>
-      </div>
+            <Plus className="mr-2 h-4 w-4" />
+            New promo code
+          </Button>
+        }
+        description="Create and manage discount codes for campaigns and partnerships."
+        title="Promo codes"
+      />
 
-      {/* Create Form */}
       {showCreateForm && (
-        <div className="mt-8 bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
-            Create New Promo Code
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-base font-semibold text-slate-900">
+            Create promo code
           </h2>
           <form
-            className="space-y-4"
+            className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2"
             onSubmit={(e) => void handleCreatePromoCode(e)}
           >
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Code
-                </label>
-                <input
-                  required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="SUMMER2024"
-                  type="text"
-                  value={formData.code}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      code: e.target.value.toUpperCase(),
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Discount (cents)
-                </label>
-                <input
-                  required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="1000"
-                  type="number"
-                  value={formData.discountCents}
-                  onChange={(e) =>
-                    setFormData({ ...formData, discountCents: e.target.value })
-                  }
-                />
-              </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-slate-700">
+                Code
+              </label>
+              <input
+                required
+                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm uppercase"
+                placeholder="TERMSTART"
+                value={formData.code}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    code: e.target.value.toUpperCase(),
+                  })
+                }
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-slate-700">
+                Discount (AUD)
+              </label>
+              <input
+                required
+                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+                min="1"
+                placeholder="50"
+                step="0.01"
+                type="number"
+                value={formData.discountDollars}
+                onChange={(e) =>
+                  setFormData({ ...formData, discountDollars: e.target.value })
+                }
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="mb-1 block text-sm font-medium text-slate-700">
                 Description
               </label>
               <input
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                placeholder="$10 off your first term"
-                type="text"
+                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+                placeholder="$50 off your first term"
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
@@ -185,15 +175,44 @@ const PromoCodesPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Allowed Plans
+              <label className="mb-1 block text-sm font-medium text-slate-700">
+                Max uses
               </label>
-              <div className="space-y-2">
+              <input
+                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+                placeholder="Unlimited"
+                type="number"
+                value={formData.maxUses}
+                onChange={(e) =>
+                  setFormData({ ...formData, maxUses: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-slate-700">
+                Expires
+              </label>
+              <input
+                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+                type="date"
+                value={formData.expiresAt}
+                onChange={(e) =>
+                  setFormData({ ...formData, expiresAt: e.target.value })
+                }
+              />
+            </div>
+            <div className="md:col-span-2">
+              <p className="mb-2 text-sm font-medium text-slate-700">
+                Allowed plans
+              </p>
+              <div className="flex flex-wrap gap-3">
                 {(Object.keys(PRICING) as PlanType[]).map((plan) => (
-                  <label key={plan} className="flex items-center">
+                  <label
+                    key={plan}
+                    className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-sm"
+                  >
                     <input
                       checked={formData.allowedPlans.includes(plan)}
-                      className="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-500 focus:ring-green-500"
                       type="checkbox"
                       onChange={(e) => {
                         if (e.target.checked) {
@@ -211,109 +230,83 @@ const PromoCodesPage = () => {
                         }
                       }}
                     />
-                    <span className="ml-2 text-sm text-gray-700">
-                      {PRICING[plan].name}
-                    </span>
+                    {PRICING[plan].name}
                   </label>
                 ))}
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Max Uses (optional)
-                </label>
-                <input
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="100"
-                  type="number"
-                  value={formData.maxUses}
-                  onChange={(e) =>
-                    setFormData({ ...formData, maxUses: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Expires At (optional)
-                </label>
-                <input
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  type="date"
-                  value={formData.expiresAt}
-                  onChange={(e) =>
-                    setFormData({ ...formData, expiresAt: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div className="flex justify-end space-x-3">
-              <button
-                className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50"
+            <div className="flex gap-3 md:col-span-2">
+              <Button
+                className="cursor-pointer"
+                type="submit"
+                variant="primary"
+              >
+                Create code
+              </Button>
+              <Button
+                className="cursor-pointer"
                 type="button"
+                variant="outline"
                 onClick={() => setShowCreateForm(false)}
               >
                 Cancel
-              </button>
-              <button
-                className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500"
-                type="submit"
-              >
-                Create
-              </button>
+              </Button>
             </div>
           </form>
         </div>
       )}
 
-      {/* Promo Codes Table */}
-      <div className="mt-8 bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
-          {promoCodes.map((promo) => (
-            <li key={promo.code} className="px-6 py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center">
-                    <p className="text-sm font-medium text-gray-900">
-                      {promo.code}
+      {loading ? (
+        <LoadingState label="Loading promo codes..." />
+      ) : promoCodes.length === 0 ? (
+        <EmptyState
+          description="Create your first promo code for a launch campaign or partnership."
+          icon={Ticket}
+          title="No promo codes yet"
+        />
+      ) : (
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <ul className="divide-y divide-slate-100">
+            {promoCodes.map((promo) => (
+              <li key={promo.code} className="px-6 py-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-base font-semibold text-slate-900">
+                        {promo.code}
+                      </p>
+                      <StatusBadge tone={promo.isActive ? "success" : "danger"}>
+                        {promo.isActive ? "Active" : "Inactive"}
+                      </StatusBadge>
+                      <StatusBadge tone="info">
+                        ${(promo.discountCents / 100).toFixed(0)} off
+                      </StatusBadge>
+                    </div>
+                    <p className="mt-1 text-sm text-slate-600">
+                      {promo.description}
                     </p>
-                    <span
-                      className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        promo.isActive
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
+                    <p className="mt-2 text-xs text-slate-400">
+                      {promo.currentUses}
+                      {promo.maxUses ? ` / ${promo.maxUses}` : ""} uses
+                      {promo.expiresAt &&
+                        ` · Expires ${new Date(promo.expiresAt).toLocaleDateString("en-AU")}`}
+                    </p>
+                  </div>
+                  {promo.isActive && (
+                    <button
+                      className="cursor-pointer text-sm font-medium text-rose-600 hover:text-rose-700"
+                      type="button"
+                      onClick={() => void handleDeactivate(promo.code)}
                     >
-                      {promo.isActive ? "Active" : "Inactive"}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-500">{promo.description}</p>
-                  <div className="mt-1 text-xs text-gray-500">
-                    ${(promo.discountCents / 100).toFixed(2)} off
-                    {promo.maxUses &&
-                      ` • ${promo.currentUses}/${promo.maxUses} uses`}
-                    {promo.expiresAt &&
-                      ` • Expires ${new Date(promo.expiresAt).toLocaleDateString()}`}
-                  </div>
+                      Deactivate
+                    </button>
+                  )}
                 </div>
-                {promo.isActive && (
-                  <button
-                    className="ml-4 text-red-600 hover:text-red-900 text-sm font-medium"
-                    onClick={() => void handleDeactivate(promo.code)}
-                  >
-                    Deactivate
-                  </button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-        {promoCodes.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            No promo codes found. Create your first one above.
-          </div>
-        )}
-      </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

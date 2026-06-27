@@ -142,8 +142,10 @@ const getReferralCodesByOwner = async (
 ): Promise<ReferralCode[]> => {
   try {
     const result = await query(
-      "SELECT * FROM referral_codes WHERE owner_email = $1",
-      [email],
+      `SELECT * FROM referral_codes
+       WHERE owner_email = $1
+       ORDER BY created_at DESC`,
+      [email.toLowerCase().trim()],
     );
 
     return result.rows.map((row) => ({

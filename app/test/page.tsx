@@ -3,7 +3,7 @@ import EnrollPageClient from "@/enrol/EnrollPageClient";
 import type { PlanType } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Test Page - ZPD Tutoring",
+  title: "Test Page - ZPD Learning",
   description: "Test page for development purposes.",
 };
 

@@ -4,50 +4,69 @@ import { useState, useEffect } from "react";
 
 const items = [
   {
-    id: "certified-tutors",
-    iconColor: "from-red-500 to-orange-600",
-    iconPath: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-    title: "Certified, Experienced, Local Tutors",
-    text: "Our tutors aren't just subject matter experts - they're actively engaged in local schools, bringing fresh insights from the classroom to every session. This ensures they understand the current curriculum and teaching methods your child encounters daily.\n\nEvery tutor is rigorously vetted, participates in ongoing professional development, has at least 2 years of tutoring experience, and holds a current Working with Children Check.",
-  },
-  {
-    id: "personalised-plans",
-    iconColor: "from-purple-500 to-pink-600",
+    id: "active-classroom-tutors",
+    featured: true,
+    title: "Tutors who teach in classrooms near you",
+    teaser:
+      "Casual teachers actively working in local schools — curriculum-relevant, WWCC-cleared, and connected to what's happening in classrooms near you.",
+    detail: [
+      "Our tutors are classroom-active — not uni students winging it or retirees guessing at the syllabus. They're actively engaged in local schools, so they understand current curriculum, teaching methods, and assessment expectations your child faces daily.",
+      "Every tutor is rigorously vetted, holds a current Working With Children Check, participates in ongoing professional development, and brings at least two years of tutoring experience.",
+      "Our decentralised network spans Australia — online or in-home — combining local insight with nationwide reach.",
+    ],
     iconPath:
-      "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
-    title: "Personalised Learning Plans",
-    text: "No two students are alike, which is why we create individualised learning plans featuring weekly learning objectives, customised curriculum pacing, preferred teaching methodologies, and progress milestones that adapt to each student's unique needs, goals, and learning style.\n\nOur comprehensive assessment process ensures that every plan is tailored for maximum effectiveness and engagement, with regular plan reviews to maintain optimal progress.",
+      "M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222",
   },
   {
-    id: "supporting-parents",
-    iconColor: "from-teal-500 to-cyan-600",
+    id: "planned-before-sessions",
+    title: "We plan before we tutor",
+    teaser:
+      "Before the first session, we gather parent insights, school and teacher context, and build a tailored learning sequence — not improvised week to week.",
+    detail: [
+      "Our diagnostic discovery and insights intake capture your child's goals, challenges, and learning style. We elicit input from schools and teachers where possible, so plans reflect what's actually happening in the classroom.",
+      "Learning sequences are built before tutoring begins and reviewed regularly throughout the term.",
+      "We use AI to organise intake data and refine sequences after each session — informed by student work, parent feedback, and tutor notes. Technology supports the plan; your tutor delivers the learning. Tutors remain responsible for instruction, judgement, and the relationship with your child. No shortcuts around understanding or effort.",
+    ],
+    iconPath:
+      "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
+  },
+  {
+    id: "term-commitment",
+    title: "Term plans that build momentum",
+    teaser:
+      "We don't do pay-as-you-go. Term plans build momentum and foster the parent–tutor–student partnership that moves learning forward.",
+    detail: [
+      "One-off sessions encourage transactional tutoring. We ask families to commit to a term because it signals investment — from you and from us.",
+      "That commitment enables the three-way partnership between parents, tutors, and students that sits at the heart of effective learning.",
+      "Same tutor, same weekly rhythm, compounding progress. Parents stay engaged; tutors can plan ahead; students build habits rather than starting cold each time.",
+    ],
+    iconPath:
+      "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
+  },
+  {
+    id: "parent-coaching",
+    title: "Parent coaching in plain language",
+    teaser:
+      "We translate what your child is working on into terms you can engage with — so you can take a genuine interest in their schoolwork, not guess at progress.",
+    detail: [
+      "Educational jargon creates distance between parents and children. Our coaching sessions demystify the content and cognitive sequence your child is navigating — what they're learning, why it matters, and how you can support without becoming the teacher.",
+      "You'll learn effective questions to ask, what progress looks like at each stage, and how to stay connected to the learning journey without pressure or confusion.",
+    ],
     iconPath:
       "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
-    title: "Parent Coaching and Support Sessions",
-    text: "We empower parents to engage in their child's learning journey. By translating the content and cognitive sequence into lay terms, we allow parents to stay informed, focused, and connected.\n\nOur personalised coaching and support sessions help parents gain insight into what their child is experiencing, learn effective questions to ask, and discover the best ways to provide support at home.",
   },
   {
-    id: "trinity-synergy",
-    iconColor: "from-yellow-500 to-orange-600",
-    iconPath:
-      "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z",
-    title: "Trinity Synergy",
-    text: "At the heart of effective learning lies the powerful synergy between parents, teachers, and students. This trinity partnership creates a supportive ecosystem where each role is equally vital in nurturing academic growth and personal development.\n\nParents provide the foundation of values and encouragement, teachers offer expert guidance and knowledge, and students bring their unique perspectives and potential to the learning journey.\n\nOur Zone of Proximal Development (ZPD) method and expert tutors facilitate this partnership by bridging knowledge gaps and fostering collaborative learning environments that empower all participants.",
-  },
-  {
-    id: "tutor-matching",
-    iconColor: "from-indigo-500 to-purple-600",
-    iconPath: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
-    title: "Tailored Tutoring for Every Age and Subject",
-    text: "From mastering 'Friends of Ten' in kindergarten to acing final exams in secondary school, we've got you covered.\n\nOur diverse network of tutors spans every subject, level and learning style, ensuring we expertly match your child with a tutor perfectly suited to their unique needs.",
-  },
-  {
-    id: "zpd-approach",
-    iconColor: "from-blue-500 to-purple-600",
+    id: "zpd-by-design",
+    title: "ZPD isn't our gimmick — it's our method",
+    teaser:
+      "Scaffolded learning at the edge of what your child can do with support — deliberate in every plan and session, not a marketing label.",
+    detail: [
+      "Our approach is rooted in Lev Vygotsky's Zone of Proximal Development: the space where students achieve more with guidance than alone.",
+      "We target challenging yet achievable tasks, gradually reduce scaffolding as competence grows, and emphasise potential over current ability.",
+      "Rather than dumping content, we design experiences that extend comfort zones while guaranteeing success — building confidence, independence, and problem-solving along the way. We name it ZPD because it shapes how we plan, teach, and measure progress.",
+    ],
     iconPath:
       "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
-    title: "ZPD Approach",
-    text: "Our approach is rooted in Lev Vygotsky's Zone of Proximal Development theory, targeting the optimal learning zone where students achieve more with guidance than alone.\n\nWe provide challenging yet achievable tasks with support, gradually reducing guidance as competence increases, and emphasize potential over current ability.\n\nRather than just teaching content, we scaffold experiences that extend comfort zones while guaranteeing success, fostering accelerated learning, confidence through challenges, and independent problem-solving skills.",
   },
 ];
 
@@ -74,74 +93,121 @@ const Features = () => {
 
   return (
     <section
-      className="min-h-screen flex flex-col justify-center bg-gray-100 dark:bg-gray-900 px-6 z-10"
+      className="relative z-10 px-6 py-20 sm:py-24 bg-gray-100/90 backdrop-blur-sm dark:bg-gray-900/95"
       id="features"
     >
-      <div className="text-center py-16">
-        <h2
-          className="text-5xl font-light mb-12 text-gray-900 dark:text-white"
-          style={{ letterSpacing: "0.1em" }}
-        >
-          The ZPD Difference
-        </h2>
-        <div className="space-y-12 max-w-3xl mx-auto text-left">
+      <div className="mx-auto w-full max-w-3xl">
+        <div className="mb-12 text-center">
+          <h2
+            className="font-antipasto mb-3 text-4xl font-light text-gray-900 dark:text-white sm:text-5xl"
+            style={{ letterSpacing: "0.08em" }}
+          >
+            The ZPD Difference
+          </h2>
+          <p className="mx-auto max-w-2xl text-base text-gray-600 dark:text-gray-400 sm:text-lg">
+            Five ways we put the ZPD into practice. Tap any point to read more.
+          </p>
+        </div>
+
+        <div className="space-y-4">
           {items.map((item) => {
             const isExpanded = expandedId === item.id;
             return (
-              <div
+              <article
                 key={item.id}
-                className="group cursor-pointer"
+                className={`group relative cursor-pointer overflow-hidden rounded-2xl border bg-white/90 text-left shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800/90 ${
+                  item.featured
+                    ? "border-[var(--gradient-start)]/30 dark:border-[var(--gradient-start)]/40"
+                    : "border-gray-200/80 dark:border-gray-700/80"
+                } ${isExpanded ? "shadow-xl" : ""}`}
                 onClick={() => toggleExpand(item.id)}
               >
-                <div className="flex items-start gap-6">
-                  <div className="w-12 flex-shrink-0">
-                    <div
-                      className={`w-12 h-12 bg-gradient-to-r ${item.iconColor} rounded-full flex items-center justify-center`}
+                <div
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)]"
+                />
+                <div className="flex items-start gap-5 p-6 sm:p-7">
+                  <div
+                    className={`flex flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] shadow-md ${
+                      item.featured ? "h-14 w-14" : "h-12 w-12"
+                    }`}
+                  >
+                    <svg
+                      aria-hidden
+                      className={`text-white ${item.featured ? "h-7 w-7" : "h-6 w-6"}`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.75}
+                      viewBox="0 0 24 24"
                     >
-                      <svg
-                        className="w-6 h-6 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d={item.iconPath}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                        />
-                      </svg>
-                    </div>
+                      <path
+                        d={item.iconPath}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-lg text-gray-600 dark:text-gray-300 leading-relaxed ${isExpanded ? "" : "line-clamp-4 md:line-clamp-2"}`}
-                    >
-                      {item.text.split("\n\n")[0]}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3
+                        className={`font-semibold text-gray-900 dark:text-white ${
+                          item.featured
+                            ? "text-xl sm:text-2xl"
+                            : "text-lg sm:text-xl"
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+                      <span
+                        aria-hidden
+                        className={`mt-1 flex-shrink-0 text-gray-400 transition-transform duration-200 dark:text-gray-500 ${
+                          isExpanded ? "rotate-180" : ""
+                        }`}
+                      >
+                        <svg
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 9l-7 7-7-7"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <p className="mt-2 text-base leading-relaxed text-gray-600 dark:text-gray-300">
+                      {item.teaser}
                     </p>
                     <div
-                      className={`overflow-hidden transition-all duration-200 ease-out ${isExpanded ? "max-h-[700px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}
+                      className={`overflow-hidden transition-all duration-300 ease-out ${
+                        isExpanded
+                          ? "max-h-[900px] opacity-100"
+                          : "max-h-0 opacity-0"
+                      }`}
                     >
-                      <div className="space-y-4 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {item.text
-                          .split("\n\n")
-                          .slice(1)
-                          .map((paragraph, index) => (
-                            <p key={index}>{paragraph}</p>
-                          ))}
+                      <div className="mt-4 space-y-3 border-t border-gray-100 pt-4 dark:border-gray-700">
+                        {item.detail.map((paragraph, index) => (
+                          <p
+                            key={index}
+                            className="text-base leading-relaxed text-gray-600 dark:text-gray-300"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
                       </div>
                     </div>
                     {!isExpanded && (
-                      <div className="hidden md:block mt-1 text-sm text-gray-400 group-hover:text-gray-500 transition-opacity opacity-0 group-hover:opacity-100">
-                        Show more
-                      </div>
+                      <p className="mt-3 text-sm text-gray-400 transition-colors group-hover:text-[var(--gradient-start)] dark:text-gray-500 dark:group-hover:text-[var(--gradient-end)]">
+                        Read more
+                      </p>
                     )}
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
