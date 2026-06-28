@@ -12,6 +12,7 @@ const Nav = () => {
   const [navOpacity, setNavOpacity] = useState(0);
   const [showCtaInNav, setShowCtaInNav] = useState(pathname !== "/");
   const [ctaThreshold, setCtaThreshold] = useState(0);
+  const [bottomCtaInView, setBottomCtaInView] = useState(false);
   const [vh, setVh] = useState(0);
 
   useEffect(() => {
@@ -60,47 +61,68 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined" || pathname !== "/") {
+      setBottomCtaInView(false);
+      return;
+    }
+
+    const observeBottomCta = () => {
+      const bottomCta = document.getElementById("enrol-cta-button");
+      if (!bottomCta) return null;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setBottomCtaInView(entry.isIntersecting);
+        },
+        { threshold: 0 },
+      );
+
+      observer.observe(bottomCta);
+      return observer;
+    };
+
+    let observer = observeBottomCta();
+    const retryTimer = window.setTimeout(() => {
+      observer ??= observeBottomCta();
+    }, 500);
+
+    return () => {
+      window.clearTimeout(retryTimer);
+      observer?.disconnect();
+    };
+  }, [pathname]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
+
+    const updateCtaVisibility = () => {
+      if (pathname !== "/") {
+        setShowCtaInNav(true);
+        return;
+      }
+
+      const pastHero = ctaThreshold > 0 && window.scrollY > ctaThreshold - 64;
+      setShowCtaInNav(pastHero && !bottomCtaInView);
+    };
+
     const handleScroll = () => {
       const { scrollY } = window;
-      const threshold = vh / 2;
-      if (scrollY > threshold) {
-        // Note: showBackToTop logic removed as it's page-specific
-      } else {
-        // Note: showBackToTop logic removed as it's page-specific
-      }
-      const maxScroll = vh; // 100% vh for more gradual transition
+      const maxScroll = vh;
       const opacity =
         pathname === "/" ? Math.min((scrollY / maxScroll) * 0.2, 0.2) : 0.2;
       setNavOpacity(opacity);
-      if (pathname === "/") {
-        if (ctaThreshold > 0) {
-          setShowCtaInNav(scrollY > ctaThreshold - 64); // 64px = 4rem nav height
-        }
-      } else {
-        setShowCtaInNav(true);
-      }
+      updateCtaVisibility();
     };
+
+    updateCtaVisibility();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [ctaThreshold, pathname, vh]);
+  }, [bottomCtaInView, ctaThreshold, pathname, vh]);
 
   useEffect(() => {
     setIsOpen(false);
     prevPathnameRef.current = pathname || "/";
-    // Set CTA visibility on navigation
-    if (pathname !== "/") {
-      setShowCtaInNav(true); // Always show CTA on non-home pages
-    } else {
-      // For homepage, check current scroll position
-      const { scrollY } = window;
-      if (ctaThreshold > 0) {
-        setShowCtaInNav(scrollY > ctaThreshold - 64);
-      } else {
-        setShowCtaInNav(false);
-      }
-    }
-  }, [pathname, ctaThreshold]);
+  }, [pathname]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !isOpen) return;

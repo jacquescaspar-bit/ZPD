@@ -24,6 +24,7 @@ const EnrolCta = () => (
       <Link
         className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-8 py-4 text-lg font-medium tracking-wide text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gradient-start)] focus-visible:ring-offset-2"
         href="/enrol"
+        id="enrol-cta-button"
       >
         Enrol Now
       </Link>
