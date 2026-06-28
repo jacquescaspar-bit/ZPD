@@ -12,6 +12,7 @@ import {
   ZPD_RING_BORDER,
   ZPD_RING_GRADIENT,
   ZPD_RING_SHADOW,
+  ZPD_SOLID_RING_OPACITY,
   ZPD_TIMING,
   deviceBoundsClass,
   haloSizeClass,
@@ -134,7 +135,10 @@ const ZPDCircleDevice = ({ sectionRef }: ZPDCircleDeviceProps) => {
             <motion.div
               animate={{ scale: isExpanded ? growthTarget : 1 }}
               className={`z-10 ${innerSizeClass} rounded-full bg-white dark:bg-gray-900 ${ZPD_RING_BORDER}`}
-              style={{ transformOrigin: "center center" }}
+              style={{
+                opacity: ZPD_SOLID_RING_OPACITY,
+                transformOrigin: "center center",
+              }}
               transition={{
                 duration: instant ? 0 : expandDuration,
                 ease: "easeOut",

@@ -30,7 +30,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [_statusMessage, setStatusMessage] = useState<string | null>(null);
-  const [_errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const [showHighlights, setShowHighlights] = useState(false);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
@@ -92,7 +92,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     const missing: string[] = [];
     if (!parentName.trim()) missing.push("Full Name");
     if (!email.trim()) missing.push("Email");
-    if (isPaymentReady) missing.push("Payment Info");
     return missing;
   };
 
@@ -133,25 +132,13 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     // Check if this is a test payment
     const isTestPayment = paymentIntentId.startsWith("test_payment_intent_");
 
-    if (isTestPayment) {
-      console.warn("🧪 TEST PAYMENT: Skipping enrollment session creation");
-      sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
-      sessionStorage.setItem("enrollmentEmail", email);
-      if (selectedPlan) {
-        sessionStorage.setItem("enrollmentPlan", selectedPlan);
-      }
-      setTimeout(() => {
-        setPaymentStatus("success");
-        window.location.href = "/enrol/insights";
-      }, 1500);
-      return;
-    }
-
     try {
-      // Generate unique session ID
       const sessionId = crypto.randomUUID();
 
-      // Prepare enrollment data
+      if (isTestPayment) {
+        console.warn("🧪 TEST PAYMENT: Creating session without Stripe charge");
+      }
+
       const enrollmentPayload = {
         sessionId,
         email,
@@ -194,19 +181,23 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
       sessionStorage.setItem("enrollmentSessionId", result.session.sessionId);
       sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
 
-      const resumeUrl = buildInsightsResumeUrl(result.session.sessionId);
+      const resumeUrl = buildInsightsResumeUrl(
+        result.session.sessionId,
+        window.location.origin,
+      );
 
-      setTimeout(() => {
-        setPaymentStatus("success");
-        window.location.href = resumeUrl;
-      }, 1500);
+      setPaymentStatus("success");
+      window.location.href = resumeUrl;
     } catch (error) {
       console.error("Error creating enrollment session:", error);
-
-      setTimeout(() => {
-        setPaymentStatus("success");
-        window.location.href = "/enrol/insights";
-      }, 1500);
+      setIsPaymentProcessing(false);
+      setPaymentStatus("processing");
+      const isLocalPlaceholderDb = process.env.NODE_ENV === "development";
+      setErrorMessage(
+        isLocalPlaceholderDb
+          ? "Payment succeeded in Stripe, but your local database is not connected. Update DATABASE_URL in .env.local (copy it from Vercel → Settings → Environment Variables), restart the dev server, then use Skip payment (testing) — or complete payment again."
+          : "Payment succeeded but we could not save your session. Please contact grow@zpdlearning.com.",
+      );
     }
   };
 
@@ -214,26 +205,6 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   useEffect(() => {
     onPaymentProcessingChange?.(isPaymentProcessing || isFadingOut);
   }, [isPaymentProcessing, isFadingOut, onPaymentProcessingChange]);
-
-  // Handle the transition from loading to review after delay
-  useEffect(() => {
-    if (isPaymentProcessing && !isFadingOut && paymentStatus === "processing") {
-      // First, change to success message after 1.5 seconds
-      const successTimer = setTimeout(() => {
-        setPaymentStatus("success");
-        // Then start fading after another 0.5 seconds
-        setTimeout(() => {
-          setIsFadingOut(true);
-          // After fade out animation completes
-          setTimeout(() => {
-            setIsPaymentProcessing(false);
-            setIsFadingOut(false);
-          }, 300); // Match the fade duration
-        }, 500);
-      }, 1500);
-      return () => clearTimeout(successTimer);
-    }
-  }, [isPaymentProcessing, isFadingOut, paymentStatus]);
 
   const renderCurrentStep = () => {
     // Show loading screen during payment processing
@@ -421,7 +392,12 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Current Step Content */}
+      {errorMessage && !isPaymentProcessing && (
+        <div className="flex items-start gap-3 rounded-2xl border border-red-200/70 bg-red-50/80 px-6 py-4 text-red-900 shadow-lg dark:border-red-900 dark:bg-red-950/40 dark:text-red-200">
+          <span className="mt-1 h-2.5 w-2.5 rounded-full bg-red-500" />
+          <p className="text-sm font-medium sm:text-base">{errorMessage}</p>
+        </div>
+      )}
       {renderCurrentStep()}
     </div>
   );

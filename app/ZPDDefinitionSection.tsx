@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { SECTION_BAND_LIGHT } from "@/lib/sectionBands";
 import ZPDBackgroundLetters from "@/ZPDBackgroundLetters";
 import ZPDCircleDevice from "@/ZPDCircleDevice";
 
@@ -10,7 +11,7 @@ const ZPDDefinitionSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 overflow-visible bg-gray-100/90 backdrop-blur-sm dark:bg-gray-900/95"
+      className={`relative z-10 overflow-visible ${SECTION_BAND_LIGHT}`}
       id="zpd-definition"
     >
       <ZPDBackgroundLetters />

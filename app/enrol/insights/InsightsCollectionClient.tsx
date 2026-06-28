@@ -29,11 +29,13 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
   const [planType, setPlanType] = useState<PlanType>("essential");
+  const [isSessionLoaded, setIsSessionLoaded] = useState(false);
 
   const { status: autoSaveStatus, error: autoSaveError } = useAutoSave({
     sessionId: currentSessionId ?? "",
     data: { notes },
     delay: 2500,
+    enabled: isSessionLoaded && Boolean(currentSessionId),
   });
 
   const {
@@ -101,8 +103,13 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
               setResponses(data.session.insightsData.responses);
             }
           } else {
+            const onLocalhost =
+              typeof window !== "undefined" &&
+              window.location.hostname === "localhost";
             setSessionLoadError(
-              `This onboarding link has expired or is invalid. Email ${SUPPORT_EMAIL} and we'll help.`,
+              onLocalhost
+                ? `This session isn't in your local database — often because the email link pointed at zpdlearning.com while you tested on localhost. Use a fresh Skip payment test, or open http://localhost:3000/enrol/insights?session=… from your latest test.`
+                : `This onboarding link has expired or is invalid. Email ${SUPPORT_EMAIL} and we'll help.`,
             );
           }
         } catch (err) {
@@ -112,9 +119,11 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
           );
         }
       }
+
+      setIsSessionLoaded(true);
     };
     void loadSession();
-  }, [initialSessionId, currentSessionId]);
+  }, [initialSessionId]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -245,31 +254,37 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
           </section>
 
           <section id="tasks-section">
-            <ReviewStep
-              attachments={attachments}
-              autoSaveStatus={autoSaveStatus}
-              copyReferralLink={copyReferralLink}
-              errorMessage={autoSaveError ?? uploadError}
-              handleAttachmentChange={handleAttachmentChange}
-              isSubmitting={isSubmitting}
-              notes={notes}
-              referralLink={null}
-              removeAttachment={(attachmentId) => {
-                void removeAttachment(attachmentId);
-              }}
-              sessionId={currentSessionId}
-              setNotes={setNotes}
-              setStatusMessage={setStatusMessage}
-              statusMessage={statusMessage}
-              uploadError={uploadError}
-              uploadingCount={uploadingCount}
-              userEmail={userEmail}
-              onSubmit={() => {
-                handleSubmit().catch((error) => {
-                  console.error("Submission error:", error);
-                });
-              }}
-            />
+            {isSessionLoaded ? (
+              <ReviewStep
+                attachments={attachments}
+                autoSaveStatus={autoSaveStatus}
+                copyReferralLink={copyReferralLink}
+                errorMessage={autoSaveError ?? uploadError}
+                handleAttachmentChange={handleAttachmentChange}
+                isSubmitting={isSubmitting}
+                notes={notes}
+                referralLink={null}
+                removeAttachment={(attachmentId) => {
+                  void removeAttachment(attachmentId);
+                }}
+                sessionId={currentSessionId}
+                setNotes={setNotes}
+                setStatusMessage={setStatusMessage}
+                statusMessage={statusMessage}
+                uploadError={uploadError}
+                uploadingCount={uploadingCount}
+                userEmail={userEmail}
+                onSubmit={() => {
+                  handleSubmit().catch((error) => {
+                    console.error("Submission error:", error);
+                  });
+                }}
+              />
+            ) : (
+              <div className="flex justify-center py-16">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
+              </div>
+            )}
           </section>
         </div>
       </div>

@@ -177,29 +177,33 @@ const ParentQuestionsSection = ({
     [],
   );
 
-  // State for question responses
-  const [questionResponses, setQuestionResponses] = useState<
-    Record<string, string | string[]>
-  >({});
-  const hasLoadedInitialData = useRef(false);
-
-  // Load responses from notes if available (only once)
-  useEffect(() => {
-    if (!hasLoadedInitialData.current && notes) {
-      try {
-        const parsed = JSON.parse(notes);
-        if (typeof parsed === "object" && parsed.responses) {
-          setQuestionResponses(parsed.responses);
-          hasLoadedInitialData.current = true;
-        }
-      } catch {
-        // If not JSON, treat as legacy format
-      }
+  const parseResponsesFromNotes = (
+    rawNotes: string,
+  ): Record<string, string | string[]> => {
+    if (!rawNotes) return {};
+    try {
+      const parsed = JSON.parse(rawNotes) as {
+        responses?: Record<string, string | string[]>;
+      };
+      return parsed.responses ?? {};
+    } catch {
+      return {};
     }
-  }, [notes]);
+  };
 
-  // Save responses to notes
+  // State for question responses — seeded from saved notes before first paint
+  const [questionResponses, setQuestionResponses] = useState(() =>
+    parseResponsesFromNotes(notes),
+  );
+  const skipNextNotesSync = useRef(true);
+
+  // Sync responses to notes when the user edits (not on initial mount)
   useEffect(() => {
+    if (skipNextNotesSync.current) {
+      skipNextNotesSync.current = false;
+      return;
+    }
+
     const data = {
       responses: questionResponses,
       timestamp: new Date().toISOString(),

@@ -2,7 +2,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/adminApi";
 import { query } from "@/lib/db";
 import { EmailService } from "@/lib/email";
-import { buildInsightsResumeUrl } from "@/lib/insightsResume";
+import {
+  buildInsightsResumeUrl,
+  getRequestSiteOrigin,
+} from "@/lib/insightsResume";
 
 // POST /api/enrollment-sessions - Create new enrollment session
 export async function POST(request: NextRequest) {
@@ -92,7 +95,10 @@ export async function POST(request: NextRequest) {
       const planType = data.plan ?? "essential";
       const parentName = data.parentName ?? "";
       const amountCents = data.finalAmountCents ?? 0;
-      const onboardingUrl = buildInsightsResumeUrl(sessionId);
+      const onboardingUrl = buildInsightsResumeUrl(
+        sessionId,
+        getRequestSiteOrigin(request),
+      );
 
       void EmailService.sendEnrollmentConfirmationEmail(
         email,

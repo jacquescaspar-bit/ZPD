@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { SECTION_BAND_MUTED } from "@/lib/sectionBands";
 
 const items = [
   {
@@ -93,7 +94,7 @@ const Features = () => {
 
   return (
     <section
-      className="relative z-10 px-6 py-20 sm:py-24 bg-gray-100/90 backdrop-blur-sm dark:bg-gray-900/95"
+      className={`relative z-10 px-6 py-20 sm:py-24 ${SECTION_BAND_MUTED}`}
       id="features"
     >
       <div className="mx-auto w-full max-w-3xl">

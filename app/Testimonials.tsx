@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SECTION_BAND_MUTED } from "@/lib/sectionBands";
 
 const testimonials = [
   {
@@ -79,7 +80,7 @@ const Testimonials = () => {
 
   return (
     <section
-      className="relative z-10 flex min-h-screen flex-col justify-center bg-white/70 px-6 backdrop-blur-sm dark:bg-gray-900/70"
+      className={`relative z-10 flex min-h-screen flex-col justify-center px-6 ${SECTION_BAND_MUTED}`}
       id="testimonials"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}

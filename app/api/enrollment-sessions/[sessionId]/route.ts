@@ -77,7 +77,8 @@ export async function PUT(
     // Check if session exists and is not expired
     const existingResult = await query(
       `
-      SELECT id FROM enrollment_sessions
+      SELECT id, insights_data, progress_status
+      FROM enrollment_sessions
       WHERE session_id = $1 AND expires_at > NOW()
     `,
       [sessionId],
@@ -89,6 +90,11 @@ export async function PUT(
         { status: 404 },
       );
     }
+
+    const existingSession = existingResult.rows[0] as {
+      insights_data: Record<string, unknown>;
+      progress_status: Record<string, unknown>;
+    };
 
     // Validate update fields
     const {
@@ -141,8 +147,12 @@ export async function PUT(
     }
 
     if (insightsData !== undefined) {
+      const mergedInsightsData = {
+        ...(existingSession.insights_data ?? {}),
+        ...(insightsData as Record<string, unknown>),
+      };
       updateFields.push(`insights_data = $${paramIndex}`);
-      params.push(JSON.stringify(insightsData));
+      params.push(JSON.stringify(mergedInsightsData));
       paramIndex++;
     }
 
@@ -153,8 +163,12 @@ export async function PUT(
     }
 
     if (progressStatus !== undefined) {
+      const mergedProgressStatus = {
+        ...(existingSession.progress_status ?? {}),
+        ...(progressStatus as Record<string, unknown>),
+      };
       updateFields.push(`progress_status = $${paramIndex}`);
-      params.push(JSON.stringify(progressStatus));
+      params.push(JSON.stringify(mergedProgressStatus));
       paramIndex++;
     }
 

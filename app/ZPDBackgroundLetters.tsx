@@ -13,7 +13,7 @@ const ZPDBackgroundLetters = () => (
         {word.split("").map((letter, index) => (
           <span
             key={`${word}-${index}`}
-            className="select-none text-[2.8125rem] font-light leading-none text-gray-400 opacity-20 dark:text-gray-700 sm:text-6xl md:text-8xl md:opacity-30 lg:text-[12rem]"
+            className="select-none text-[2.8125rem] font-light leading-none text-gray-400/14 sm:text-6xl md:text-8xl md:text-gray-400/18 lg:text-[12rem] dark:text-gray-700/16 md:dark:text-gray-700/20"
           >
             {letter}
           </span>

@@ -8,6 +8,7 @@ interface UseAutoSaveOptions {
   sessionId: string;
   data: Record<string, unknown>;
   delay?: number; // milliseconds, default 2000
+  enabled?: boolean;
 }
 
 interface UseAutoSaveReturn {
@@ -20,6 +21,7 @@ export function useAutoSave({
   sessionId,
   data,
   delay = 2000,
+  enabled = true,
 }: UseAutoSaveOptions): UseAutoSaveReturn {
   const [status, setStatus] = useState<AutoSaveStatus>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -64,6 +66,8 @@ export function useAutoSave({
 
   // Auto-save with debouncing
   useEffect(() => {
+    if (!enabled || !sessionId) return;
+
     // Check if data has actually changed
     const hasChanged =
       JSON.stringify(data) !== JSON.stringify(lastDataRef.current);
@@ -86,7 +90,7 @@ export function useAutoSave({
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [data, delay, save]);
+  }, [data, delay, enabled, save, sessionId]);
 
   // Cleanup on unmount
   useEffect(

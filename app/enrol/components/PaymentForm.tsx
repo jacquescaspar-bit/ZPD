@@ -185,7 +185,15 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
       return;
     }
 
-    if (!stripe || !elements || !clientSecret) {
+    if (!stripe || !elements) {
+      onPaymentError("Payment form is still loading. Please wait a moment.");
+      return;
+    }
+
+    if (!clientSecret) {
+      onPaymentError(
+        "Could not start payment. Refresh the page or check your connection.",
+      );
       return;
     }
 

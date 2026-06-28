@@ -1,6 +1,6 @@
 import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { put, del } from "@vercel/blob";
+import { del, get, put } from "@vercel/blob";
 
 const LOCAL_UPLOAD_ROOT = path.join(
   process.cwd(),
@@ -9,8 +9,41 @@ const LOCAL_UPLOAD_ROOT = path.join(
   "insights",
 );
 
+const BLOB_PATH_PREFIX = "blob:";
+
 const isBlobStorageEnabled = (): boolean =>
   Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+const toBlobPathname = (storageKey: string): string | null => {
+  if (storageKey.startsWith(BLOB_PATH_PREFIX)) {
+    return storageKey.slice(BLOB_PATH_PREFIX.length);
+  }
+
+  if (storageKey.includes(".blob.vercel-storage.com/")) {
+    try {
+      return new URL(storageKey).pathname.replace(/^\//, "");
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
+};
+
+const streamToBuffer = async (
+  stream: ReadableStream<Uint8Array>,
+): Promise<Buffer> => {
+  const chunks: Uint8Array[] = [];
+  const reader = stream.getReader();
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    if (value) chunks.push(value);
+  }
+
+  return Buffer.concat(chunks);
+};
 
 export const storeInsightAttachment = async (
   sessionId: string,
@@ -19,15 +52,15 @@ export const storeInsightAttachment = async (
   buffer: Buffer,
   contentType: string,
 ): Promise<string> => {
-  const storageKey = `insights/${sessionId}/${attachmentId}-${filename}`;
+  const pathname = `insights/${sessionId}/${attachmentId}-${filename}`;
 
   if (isBlobStorageEnabled()) {
-    const blob = await put(storageKey, buffer, {
-      access: "public",
+    const blob = await put(pathname, buffer, {
+      access: "private",
       contentType,
       addRandomSuffix: false,
     });
-    return blob.url;
+    return `${BLOB_PATH_PREFIX}${blob.pathname}`;
   }
 
   const dir = path.join(LOCAL_UPLOAD_ROOT, sessionId);
@@ -40,6 +73,16 @@ export const storeInsightAttachment = async (
 export const readInsightAttachment = async (
   storageKey: string,
 ): Promise<Buffer> => {
+  const blobPathname = toBlobPathname(storageKey);
+
+  if (blobPathname && isBlobStorageEnabled()) {
+    const result = await get(blobPathname, { access: "private" });
+    if (!result || result.statusCode !== 200 || !result.stream) {
+      throw new Error(`Failed to read blob: ${blobPathname}`);
+    }
+    return streamToBuffer(result.stream);
+  }
+
   if (storageKey.startsWith("http://") || storageKey.startsWith("https://")) {
     const response = await fetch(storageKey);
     if (!response.ok) {
@@ -54,6 +97,13 @@ export const readInsightAttachment = async (
 export const deleteInsightAttachment = async (
   storageKey: string,
 ): Promise<void> => {
+  const blobPathname = toBlobPathname(storageKey);
+
+  if (blobPathname && isBlobStorageEnabled()) {
+    await del(blobPathname);
+    return;
+  }
+
   if (storageKey.startsWith("http://") || storageKey.startsWith("https://")) {
     if (isBlobStorageEnabled()) {
       await del(storageKey);

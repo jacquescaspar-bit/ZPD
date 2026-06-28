@@ -29,6 +29,9 @@ export const ZPD_SCROLL = {
   maxOpacity: 0.2,
 } as const;
 
+/** Solid inner ring — slightly translucent so page band shows through. */
+export const ZPD_SOLID_RING_OPACITY = 0.9;
+
 export const ZPD_RING_GRADIENT =
   "bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900";
 
