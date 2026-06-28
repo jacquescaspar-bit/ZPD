@@ -9,7 +9,6 @@ import {
   SUPPORT_PHONE,
   SUPPORT_PHONE_DISPLAY,
 } from "@/lib/constants";
-import { FALLBACK_SERVICE_AREA } from "@/lib/geo";
 
 const SiteFooter = () => (
   <footer className="bg-gray-900 dark:bg-black text-white py-12">
@@ -158,9 +157,6 @@ const SiteFooter = () => (
         </div>
       </div>
       <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-        <p className="mb-2">
-          {FALLBACK_SERVICE_AREA.headline} · {FALLBACK_SERVICE_AREA.detail}
-        </p>
         <p>
           &copy; {new Date().getFullYear()} {LEGAL_ENTITY_NAME}. All rights
           reserved.
