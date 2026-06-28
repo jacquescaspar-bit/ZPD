@@ -106,7 +106,7 @@ const Features = () => {
             The ZPD Difference
           </h2>
           <p className="mx-auto max-w-2xl text-base text-gray-600 dark:text-gray-400 sm:text-lg">
-            Five ways we put the ZPD into practice. Tap any point to read more.
+            Five ways we put the ZPD into practice.
           </p>
         </div>
 
