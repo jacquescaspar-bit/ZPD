@@ -41,6 +41,11 @@ export const ZPD_RING_BORDER =
 export const ZPD_RING_SHADOW =
   "shadow-sm shadow-indigo-200/20 dark:shadow-indigo-900/30";
 
+export const ZPD_LABEL_LAYER_CLASS = "pointer-events-none relative z-20";
+
+export const ZPD_LABEL_CENTER_CLASS =
+  "absolute inset-0 flex items-center justify-center text-center leading-none";
+
 export const ZPD_LABEL_CLASS =
   "font-antipasto select-none text-3xl font-extralight tracking-wide text-gray-600 dark:text-gray-300 md:text-4xl";
 

@@ -8,7 +8,9 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   GROWTH_SCALE,
   ZPD_GROWN_LABEL_CLASS,
+  ZPD_LABEL_CENTER_CLASS,
   ZPD_LABEL_CLASS,
+  ZPD_LABEL_LAYER_CLASS,
   ZPD_RING_BORDER,
   ZPD_RING_GRADIENT,
   ZPD_RING_SHADOW,
@@ -144,43 +146,43 @@ const ZPDCircleDevice = ({ sectionRef }: ZPDCircleDeviceProps) => {
                 ease: "easeOut",
               }}
             />
-          </div>
 
-          <div
-            aria-atomic="true"
-            aria-live="polite"
-            className="pointer-events-none absolute inset-0 z-20 grid place-items-center"
-          >
-            <span className="sr-only">
-              {isExpanded
-                ? "Grown — learning in the zone of proximal development"
-                : "Known — what your child can do alone"}
-            </span>
-
-            <motion.span
-              aria-hidden
-              animate={{ opacity: isExpanded ? 0 : 1 }}
-              className={ZPD_LABEL_CLASS}
-              transition={{
-                duration: instant ? 0 : expandDuration,
-                ease: "easeOut",
-              }}
+            <div
+              aria-atomic="true"
+              aria-live="polite"
+              className={`${innerSizeClass} ${ZPD_LABEL_LAYER_CLASS}`}
             >
-              known
-            </motion.span>
+              <span className="sr-only">
+                {isExpanded
+                  ? "Grown — learning in the zone of proximal development"
+                  : "Known — what your child can do alone"}
+              </span>
 
-            <motion.span
-              aria-hidden
-              animate={{ opacity: isExpanded ? 1 : 0 }}
-              className={`absolute ${ZPD_GROWN_LABEL_CLASS}`}
-              transition={{
-                duration: instant ? 0 : grownLabelDuration,
-                delay: instant ? 0 : isExpanded ? grownLabelDelay : 0,
-                ease: "easeOut",
-              }}
-            >
-              grown
-            </motion.span>
+              <motion.span
+                aria-hidden
+                animate={{ opacity: isExpanded ? 0 : 1 }}
+                className={`${ZPD_LABEL_CENTER_CLASS} ${ZPD_LABEL_CLASS}`}
+                transition={{
+                  duration: instant ? 0 : expandDuration,
+                  ease: "easeOut",
+                }}
+              >
+                known
+              </motion.span>
+
+              <motion.span
+                aria-hidden
+                animate={{ opacity: isExpanded ? 1 : 0 }}
+                className={`${ZPD_LABEL_CENTER_CLASS} ${ZPD_GROWN_LABEL_CLASS}`}
+                transition={{
+                  duration: instant ? 0 : grownLabelDuration,
+                  delay: instant ? 0 : isExpanded ? grownLabelDelay : 0,
+                  ease: "easeOut",
+                }}
+              >
+                grown
+              </motion.span>
+            </div>
           </div>
         </div>
       </div>
