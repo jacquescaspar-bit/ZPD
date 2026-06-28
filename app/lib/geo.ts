@@ -1,20 +1,6 @@
-export interface VisitorGeo {
-  city: string | null;
-  region: string | null;
-  country: string | null;
-  suburb: string | null;
-  latitude: number | null;
-  longitude: number | null;
-}
-
 export interface ServiceAreaCopy {
   headline: string;
   detail: string;
-}
-
-export interface GeoFooterLink {
-  href: string;
-  label: string;
 }
 
 export interface StateEducationCopy {
@@ -36,20 +22,7 @@ export interface GeoTutoringCopy {
 
 export const FALLBACK_SERVICE_AREA: ServiceAreaCopy = {
   headline: "Decentralised service across Australia",
-  detail: "Available to families nationwide",
-};
-
-const LOCAL_DETAIL = "Online & in-home tutoring for families in your area";
-
-const AU_STATE_NAMES: Record<string, string> = {
-  NSW: "New South Wales",
-  VIC: "Victoria",
-  QLD: "Queensland",
-  WA: "Western Australia",
-  SA: "South Australia",
-  TAS: "Tasmania",
-  ACT: "Australian Capital Territory",
-  NT: "Northern Territory",
+  detail: "Online & in-home tutoring for families in your area",
 };
 
 /** Capital and major metro areas where "greater {city}" copy applies. */
@@ -77,72 +50,6 @@ export const GREATER_CITIES = new Set([
   "townsville",
   "wollongong",
 ]);
-
-const formatStateName = (region: string): string =>
-  AU_STATE_NAMES[region.toUpperCase()] ?? region;
-
-const decodeHeader = (value: string | null): string | null => {
-  if (!value) return null;
-  try {
-    return decodeURIComponent(value.replace(/\+/g, " "));
-  } catch {
-    return value;
-  }
-};
-
-const parseCoordinate = (value: string | null): number | null => {
-  if (!value) return null;
-  const parsed = Number.parseFloat(value);
-  return Number.isFinite(parsed) ? parsed : null;
-};
-
-export const geoFromHeaders = (
-  headerLookup: (name: string) => string | null,
-): VisitorGeo => ({
-  city: decodeHeader(
-    headerLookup("x-vercel-ip-city") ?? headerLookup("cf-ipcity"),
-  ),
-  region: decodeHeader(
-    headerLookup("x-vercel-ip-country-region") ?? headerLookup("cf-region"),
-  ),
-  country: decodeHeader(
-    headerLookup("x-vercel-ip-country") ?? headerLookup("cf-ipcountry"),
-  ),
-  suburb: null,
-  latitude: parseCoordinate(headerLookup("x-vercel-ip-latitude")),
-  longitude: parseCoordinate(headerLookup("x-vercel-ip-longitude")),
-});
-
-export const formatServiceArea = (geo: VisitorGeo): ServiceAreaCopy => {
-  const { suburb, city, region, country } = geo;
-
-  if (country !== "AU") {
-    return FALLBACK_SERVICE_AREA;
-  }
-
-  if (suburb) {
-    return {
-      headline: `Servicing ${suburb} and surrounds`,
-      detail: LOCAL_DETAIL,
-    };
-  }
-
-  if (city && isGreaterCity(city)) {
-    return {
-      headline: `Servicing all areas in greater ${city}`,
-      detail: LOCAL_DETAIL,
-    };
-  }
-
-  if (region) {
-    return {
-      headline: `Servicing all local areas in ${formatStateName(region)}`,
-      detail: LOCAL_DETAIL,
-    };
-  }
-
-  return FALLBACK_SERVICE_AREA;
-};
 
 export const STATE_EDUCATION_LINGO: Record<string, StateEducationCopy> = {
   NSW: {
@@ -230,9 +137,6 @@ export const getGreaterCitySlugs = (): string[] =>
 
 export const isKnownGeoCitySlug = (slug: string): boolean => slug in CITY_STATE;
 
-export const isGreaterCity = (city: string): boolean =>
-  GREATER_CITIES.has(city.trim().toLowerCase());
-
 export const getStateEducationCopy = (stateCode: string): StateEducationCopy =>
   STATE_EDUCATION_LINGO[stateCode.toUpperCase()] ?? {
     seniorCertificate: "senior secondary",
@@ -241,51 +145,14 @@ export const getStateEducationCopy = (stateCode: string): StateEducationCopy =>
       "local curriculum, NAPLAN, and senior secondary expectations",
   };
 
-const formatDisplayCity = (city: string | null): string | null => {
-  if (!city) return null;
-  const trimmed = city.trim();
-  return trimmed ? titleCase(trimmed) : null;
-};
-
-export const getGeoFooterLink = (geo: VisitorGeo): GeoFooterLink => {
-  const rawCity = geo.city?.trim();
-  const displayCity = formatDisplayCity(rawCity ?? null);
-
-  if (
-    geo.country === "AU" &&
-    rawCity &&
-    displayCity &&
-    isGreaterCity(rawCity)
-  ) {
-    return {
-      href: `/tutoring/${cityToSlug(rawCity)}`,
-      label: `${displayCity} tutoring`,
-    };
-  }
-
-  return {
-    href: "/enrol",
-    label: "Tutors nearby",
-  };
-};
-
 const AREAS_FAQ_ANSWER =
   "Everywhere there are schools and casual teachers looking to make a difference.";
 
-export const getGeoTutoringCopy = (
-  citySlug: string,
-  geo?: VisitorGeo,
-): GeoTutoringCopy => {
+export const getGeoTutoringCopy = (citySlug: string): GeoTutoringCopy => {
   const displayCity = slugToDisplayCity(citySlug);
-  const stateCode = CITY_STATE[citySlug] ?? geo?.region?.toUpperCase() ?? "NSW";
+  const stateCode = CITY_STATE[citySlug] ?? "NSW";
   const education = getStateEducationCopy(stateCode);
-  const suburb =
-    geo?.suburb && geo.country === "AU" ? formatDisplayCity(geo.suburb) : null;
-  const geoCitySlug = geo?.city ? cityToSlug(geo.city) : null;
-  const heroSublineSuffix =
-    suburb && geoCitySlug === citySlug
-      ? `Servicing ${suburb} and surrounds · Online or in-home across greater ${displayCity}`
-      : `Online or in-home across greater ${displayCity}`;
+  const heroSublineSuffix = `Online or in-home across greater ${displayCity}`;
 
   return {
     displayCity,

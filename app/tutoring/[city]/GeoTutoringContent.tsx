@@ -4,14 +4,13 @@ import PageShell from "@/components/PageShell";
 import { Container } from "@/components/ui";
 import { formatAudWholeDollars, LOWEST_TERM_PLAN_PRICE } from "@/lib/constants";
 import { getGeoTutoringCopy } from "@/lib/geo";
-import { getVisitorGeo } from "@/lib/getVisitorGeo";
 
 interface GeoTutoringContentProps {
   citySlug: string;
 }
 
-const GeoTutoringContent = async ({ citySlug }: GeoTutoringContentProps) => {
-  const copy = getGeoTutoringCopy(citySlug, await getVisitorGeo());
+const GeoTutoringContent = ({ citySlug }: GeoTutoringContentProps) => {
+  const copy = getGeoTutoringCopy(citySlug);
 
   const highlights = [
     {
