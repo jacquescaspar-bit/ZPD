@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import SiteFooter from "@/components/SiteFooter";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import "@/globals.css";
 
 const inter = Inter({
@@ -30,9 +31,48 @@ const antipasto = localFont({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#4F46E5",
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light dark",
+};
+
 export const metadata: Metadata = {
-  title: "Where Learning Happens",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Where Learning Happens`,
+    template: `%s | ${SITE_NAME}`,
+  },
   description: "Personalised tutoring in the Zone of Proximal Development",
+  applicationName: SITE_NAME,
+  appleWebApp: {
+    capable: true,
+    title: "ZPD",
+    statusBarStyle: "default",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Where Learning Happens`,
+    description: "Personalised tutoring in the Zone of Proximal Development",
+    images: [
+      {
+        url: "/pwa/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: `${SITE_NAME} logo`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: `${SITE_NAME} — Where Learning Happens`,
+    description: "Personalised tutoring in the Zone of Proximal Development",
+    images: ["/pwa/icon-512.png"],
+  },
   icons: {
     icon: [
       {
@@ -61,8 +101,7 @@ export const metadata: Metadata = {
       { url: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)" },
     ],
     apple: [
-      { url: "/favicon.ico", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)" },
+      { url: "/pwa/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
 };

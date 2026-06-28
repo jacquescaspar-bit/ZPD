@@ -1,3 +1,4 @@
+import FooterInstallApp from "@/components/FooterInstallApp";
 import GeoFooterLink from "@/components/GeoFooterLink";
 import ServiceAreaText from "@/components/ServiceAreaText";
 import {
@@ -25,6 +26,7 @@ const SiteFooter = () => (
               Zone of Proximal Development
             </li>
           </ul>
+          <FooterInstallApp />
         </div>
         <div>
           <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
