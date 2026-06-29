@@ -6,6 +6,14 @@
   font-family: var(--font-antipasto);
 }
 
+.zpd-bg-letter {
+  color: rgb(156 163 175 / 0.1);
+}
+
+.dark .zpd-bg-letter {
+  color: rgb(55 65 81 / 0.12);
+}
+
 :root {
   font-family: var(--font-inter);
   /* Color Palette */

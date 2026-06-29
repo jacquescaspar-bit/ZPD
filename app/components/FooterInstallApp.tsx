@@ -40,7 +40,7 @@ const FooterInstallApp = () => {
     }
 
     if ("serviceWorker" in navigator) {
-      void navigator.serviceWorker.register("/sw.js").catch((error) => {
+      void navigator.serviceWorker.register("/sw.js?v=2").catch((error) => {
         console.warn("Service worker registration failed:", error);
       });
     }

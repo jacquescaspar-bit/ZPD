@@ -200,6 +200,7 @@ export default tseslint.config(
       'next-env.d.ts',
       'scripts/**',
       'public/service-worker.js',
+      'public/sw.js',
     ],
   }
 );
