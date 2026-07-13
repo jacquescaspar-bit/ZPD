@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { getEnrollmentSessionHeaders } from "@/enrol/lib/enrollmentSessionClient";
 import type { InsightAttachmentRecord } from "@/lib/insightsAttachments";
 
 interface UseInsightAttachmentsOptions {
@@ -19,6 +20,7 @@ export const useInsightAttachments = ({
     try {
       const response = await fetch(
         `/api/enrollment-sessions/${sessionId}/attachments`,
+        { headers: getEnrollmentSessionHeaders() },
       );
       if (!response.ok) return;
       const data = (await response.json()) as {
@@ -53,7 +55,11 @@ export const useInsightAttachments = ({
           formData.append("file", file);
           const response = await fetch(
             `/api/enrollment-sessions/${sessionId}/attachments`,
-            { method: "POST", body: formData },
+            {
+              method: "POST",
+              headers: getEnrollmentSessionHeaders(),
+              body: formData,
+            },
           );
           if (!response.ok) {
             const data = (await response.json()) as { error?: string };
@@ -90,7 +96,10 @@ export const useInsightAttachments = ({
       try {
         const response = await fetch(
           `/api/enrollment-sessions/${sessionId}/attachments?id=${encodeURIComponent(attachmentId)}`,
-          { method: "DELETE" },
+          {
+            method: "DELETE",
+            headers: getEnrollmentSessionHeaders(),
+          },
         );
         if (!response.ok) {
           const data = (await response.json()) as { error?: string };

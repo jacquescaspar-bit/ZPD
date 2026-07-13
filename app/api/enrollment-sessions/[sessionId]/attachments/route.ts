@@ -13,6 +13,7 @@ import {
   deleteInsightAttachment,
   storeInsightAttachment,
 } from "@/lib/insightsAttachmentStorage";
+import { requireEnrollmentSessionAccess } from "@/lib/enrollmentSessionAuth";
 
 const getSession = async (sessionId: string) => {
   const result = await query(
@@ -36,10 +37,13 @@ const isSubmitted = (progressStatus: Record<string, unknown> | null): boolean =>
   progressStatus?.insightsSubmitted === true;
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   context: { params: Promise<{ sessionId: string }> },
 ) {
   const { sessionId } = await context.params;
+  const authError = await requireEnrollmentSessionAccess(request, sessionId);
+  if (authError) return authError;
+
   const session = await getSession(sessionId);
   if (!session) {
     return NextResponse.json({ error: "Session not found" }, { status: 404 });
@@ -56,6 +60,9 @@ export async function POST(
 ) {
   try {
     const { sessionId } = await context.params;
+    const authError = await requireEnrollmentSessionAccess(request, sessionId);
+    if (authError) return authError;
+
     const session = await getSession(sessionId);
     if (!session) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
@@ -142,6 +149,9 @@ export async function DELETE(
 ) {
   try {
     const { sessionId } = await context.params;
+    const authError = await requireEnrollmentSessionAccess(request, sessionId);
+    if (authError) return authError;
+
     const session = await getSession(sessionId);
     if (!session) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });

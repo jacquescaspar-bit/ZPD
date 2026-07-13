@@ -38,6 +38,10 @@ export async function getReferralCodeForEnrollment(
   email: string,
   paymentIntentId: string,
 ): Promise<ReferralCode | null> {
+  const byPaymentIntent =
+    await ReferralStorage.getReferralCodeByPaymentIntent(paymentIntentId);
+  if (byPaymentIntent) return byPaymentIntent;
+
   const result = await query(
     `
     SELECT rc.*
@@ -69,6 +73,10 @@ export async function ensurePurchaserReferralCode({
 }): Promise<ReferralCode | null> {
   const normalizedEmail = email.toLowerCase().trim();
   const isTestPayment = paymentIntentId.startsWith("test_payment_intent_");
+
+  const existingCode =
+    await ReferralStorage.getReferralCodeByPaymentIntent(paymentIntentId);
+  if (existingCode) return existingCode;
 
   const enrollmentResult = await query(
     "SELECT * FROM enrollments WHERE stripe_payment_intent_id = $1",
@@ -122,6 +130,7 @@ export async function ensurePurchaserReferralCode({
 
   const referralCode = await ReferralStorage.createReferralCode({
     ownerEmail: normalizedEmail,
+    stripePaymentIntentId: paymentIntentId,
   });
 
   await ReferralStorage.trackEvent(

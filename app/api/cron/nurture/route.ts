@@ -75,12 +75,15 @@ const runNurtureCron = async () => {
     for (const row of abandoned.rows as {
       session_id: string;
       email: string;
-      enrollment_data: { selectedPlan?: string };
+      enrollment_data: { plan?: string; selectedPlan?: string };
     }[]) {
       const emailType = `abandoned_cart_${row.session_id}`;
       if (await wasNurtureSent(row.email, emailType)) continue;
 
-      const plan = row.enrollment_data?.selectedPlan ?? "trial";
+      const plan =
+        row.enrollment_data?.plan ??
+        row.enrollment_data?.selectedPlan ??
+        "trial";
       const resumeUrl = `${SITE_URL}/enrol?plan=${plan}&step=payment`;
       const sent = await EmailService.sendAbandonedEnrollmentEmail(
         row.email,
@@ -104,7 +107,7 @@ const runNurtureCron = async () => {
 
     const insightsNudge = await query(
       `
-      SELECT session_id, email, enrollment_data, updated_at
+      SELECT session_id, email, enrollment_data, updated_at, expires_at
       FROM enrollment_sessions
       WHERE ${insightsIncomplete}
         AND updated_at < NOW() - INTERVAL '4 hours'
@@ -117,11 +120,16 @@ const runNurtureCron = async () => {
       session_id: string;
       email: string;
       enrollment_data: { parentName?: string };
+      expires_at: Date;
     }[]) {
       const emailType = `insights_nudge_4h_${row.session_id}`;
       if (await wasNurtureSent(row.email, emailType)) continue;
 
-      const resumeUrl = buildInsightsResumeUrl(row.session_id);
+      const resumeUrl = await buildInsightsResumeUrl(
+        row.session_id,
+        SITE_URL,
+        row.expires_at,
+      );
       const sent = await EmailService.sendInsightsResumeEmail(
         row.email,
         resumeUrl,
@@ -136,7 +144,7 @@ const runNurtureCron = async () => {
 
     const insightsReminder = await query(
       `
-      SELECT session_id, email, enrollment_data
+      SELECT session_id, email, enrollment_data, expires_at
       FROM enrollment_sessions
       WHERE ${insightsIncomplete}
         AND created_at < NOW() - INTERVAL '3 days'
@@ -148,11 +156,16 @@ const runNurtureCron = async () => {
       session_id: string;
       email: string;
       enrollment_data: { parentName?: string };
+      expires_at: Date;
     }[]) {
       const emailType = `insights_reminder_3d_${row.session_id}`;
       if (await wasNurtureSent(row.email, emailType)) continue;
 
-      const resumeUrl = buildInsightsResumeUrl(row.session_id);
+      const resumeUrl = await buildInsightsResumeUrl(
+        row.session_id,
+        SITE_URL,
+        row.expires_at,
+      );
       const sent = await EmailService.sendInsightsReminderEmail(
         row.email,
         resumeUrl,
@@ -167,7 +180,7 @@ const runNurtureCron = async () => {
 
     const insightsEscalation = await query(
       `
-      SELECT session_id, email, enrollment_data
+      SELECT session_id, email, enrollment_data, expires_at
       FROM enrollment_sessions
       WHERE ${insightsIncomplete}
         AND created_at < NOW() - INTERVAL '3 days'
@@ -179,11 +192,16 @@ const runNurtureCron = async () => {
       session_id: string;
       email: string;
       enrollment_data: { parentName?: string };
+      expires_at: Date;
     }[]) {
       const emailType = `insights_escalation_${row.session_id}`;
       if (await wasNurtureSent(row.email, emailType)) continue;
 
-      const resumeUrl = buildInsightsResumeUrl(row.session_id);
+      const resumeUrl = await buildInsightsResumeUrl(
+        row.session_id,
+        SITE_URL,
+        row.expires_at,
+      );
       const sent = await EmailService.sendInsightsEscalationEmail(
         row.email,
         row.session_id,

@@ -31,4 +31,5 @@ export interface ReferralCodeCreation {
   ownerEmail: string;
   sourceCodeId?: string;
   allowedPlans?: PlanType[];
+  stripePaymentIntentId?: string;
 }

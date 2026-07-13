@@ -1,15 +1,24 @@
 import type { NextRequest } from "next/server";
 import { SITE_URL } from "@/lib/constants";
+import { createEnrollmentSessionToken } from "@/lib/enrollmentSessionAuth";
 
 export const getDefaultSiteOrigin = (): string =>
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? SITE_URL;
 
 /** Origin for resume links in emails and cron (production by default). */
-export const buildInsightsResumeUrl = (
+export const buildInsightsResumeUrl = async (
   sessionId: string,
   origin: string = getDefaultSiteOrigin(),
-): string =>
-  `${origin}/enrol/insights?session=${encodeURIComponent(sessionId)}`;
+  expiresAt?: Date,
+): Promise<string> => {
+  const base = `${origin}/enrol/insights?session=${encodeURIComponent(sessionId)}`;
+  if (!expiresAt) return base;
+
+  const token = await createEnrollmentSessionToken(sessionId, expiresAt);
+  if (!token) return base;
+
+  return `${base}&token=${encodeURIComponent(token)}`;
+};
 
 /** Prefer the browser/API request origin so local dev emails link to localhost. */
 export const getRequestSiteOrigin = (request: NextRequest): string => {

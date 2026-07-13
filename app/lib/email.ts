@@ -48,7 +48,7 @@ const sendEmail = async (data: EmailData): Promise<boolean> => {
         subject: data.subject,
         html: `${data.html.substring(0, 200)}...`,
       });
-      return true;
+      return process.env.NODE_ENV === "development";
     }
 
     // Dynamic import to avoid issues in environments without SendGrid
@@ -78,10 +78,10 @@ const sendEmail = async (data: EmailData): Promise<boolean> => {
   }
 };
 
-const sendReferralCodeEmail = async (
+const sendReferralCodeEmail = (
   email: string,
   referralCode: string,
-): Promise<void> => {
+): Promise<boolean> => {
   const subject = "Your ZPD Learning Referral Code";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -92,40 +92,46 @@ const sendReferralCodeEmail = async (
       </div>
       <p><strong>How it works:</strong></p>
       <ul>
-        <li>Share your referral code with friends and family</li>
-        <li>When they use it to enroll in Essential or Intensive plans, they get $100 off</li>
-        <li>You receive a new referral code to share with others</li>
-        <li>This creates an endless chain of referrals!</li>
+        <li>Share this code with friends and family — you can't use your own code at checkout</li>
+        <li>When someone enrolls in Essential or Intensive with your code, they get $100 off that invoice</li>
+        <li>You receive a personal $100 reward code for your next Essential or Intensive term</li>
+        <li>You'll also get a fresh referral code to keep sharing</li>
       </ul>
-      <p>Each successful referral earns you $100 off your next term.</p>
+      <p>Only one discount applies per invoice (up to $100).</p>
       <p>Happy learning!</p>
       <p>The ZPD Learning Team</p>
     </div>
   `;
 
-  await sendEmail({ to: email, subject, html });
+  return sendEmail({ to: email, subject, html });
 };
 
-const sendNewReferralCodeEmail = async (
+const sendNewReferralCodeEmail = (
   email: string,
+  rewardPromoCode: string,
   newReferralCode: string,
   originalCode: string,
-): Promise<void> => {
-  const subject = "New Referral Code Generated!";
+): Promise<boolean> => {
+  const subject = "Your $100 referral reward is ready!";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h1 style="color: #059669;">🎉 New Referral Code!</h1>
-      <p>Great news! Someone used your referral code <strong>${originalCode}</strong> to enrol.</p>
-      <p>You've earned a new referral code to share:</p>
+      <h1 style="color: #059669;">Someone used your referral code!</h1>
+      <p>Great news — a friend enrolled with your code <strong>${originalCode}</strong>.</p>
+      <p><strong>Your personal $100 reward</strong> (use at your next Essential or Intensive checkout):</p>
       <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <h2 style="color: #059669; font-size: 24px; margin: 0;">${rewardPromoCode}</h2>
+      </div>
+      <p>This reward is linked to <strong>${email}</strong> and can be used once.</p>
+      <p><strong>Your new code to share:</strong></p>
+      <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
         <h2 style="color: #059669; font-size: 24px; margin: 0;">${newReferralCode}</h2>
       </div>
-      <p>Keep sharing and keep saving!</p>
+      <p>Keep sharing ZPD Learning — each successful referral earns another $100 personal reward.</p>
       <p>The ZPD Learning Team</p>
     </div>
   `;
 
-  await sendEmail({ to: email, subject, html });
+  return sendEmail({ to: email, subject, html });
 };
 
 const onboardingCta = (url: string, label: string) => `

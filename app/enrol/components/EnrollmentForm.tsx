@@ -7,7 +7,13 @@ import type { EnrollmentPaymentData } from "@/enrol/components/PaymentForm";
 import PaymentDetails from "@/enrol/components/PaymentDetails";
 import PlanSelection from "@/enrol/components/PlanSelection";
 import { PRICING, type PlanType } from "@/lib/constants";
-import { buildInsightsResumeUrl } from "@/lib/insightsResume";
+import {
+  buildClientInsightsResumeUrl,
+  createEnrollmentSessionWithRetry,
+  getEnrollmentSessionHeaders,
+  resolveEnrollmentSessionCredentials,
+  storeEnrollmentSessionAccess,
+} from "@/enrol/lib/enrollmentSessionClient";
 import type { Step, EnrollmentFormProps } from "@/enrol/types";
 import { planDescriptions } from "@/enrol/data";
 import { useMobileCarousel } from "@/enrol/hooks/useMobileCarousel";
@@ -50,7 +56,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     promoAdjustments,
     calculateFinalAmount,
     validateCode,
-  } = useReferralSystem(selectedPlan, initialPromoCode);
+  } = useReferralSystem(selectedPlan, initialPromoCode, email);
 
   const { isMobile, fadeOthers, setFadeOthers } = useMobileCarousel();
 
@@ -120,6 +126,73 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   const basePriceCents = selectedPlan ? PRICING[selectedPlan].price : 0;
   const finalAmountCents = calculateFinalAmount(basePriceCents);
 
+  // Persist abandoned-cart session when parent reaches payment with contact details
+  useEffect(() => {
+    if (!selectedPlan || !isPaymentReady) return;
+
+    const timeout = setTimeout(() => {
+      void (async () => {
+        try {
+          const { sessionId: existingSessionId, token: existingToken } =
+            resolveEnrollmentSessionCredentials();
+          const enrollmentPayload = {
+            plan: selectedPlan,
+            parentName,
+            email,
+            phone,
+            notes,
+            attachmentNames: attachments.map((file) => file.name),
+            finalAmountCents,
+            promoCode: promoCode || undefined,
+            appliedPromoValue,
+            appliedPromoKind,
+          };
+
+          if (existingSessionId && existingToken) {
+            await fetch(`/api/enrollment-sessions/${existingSessionId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                ...getEnrollmentSessionHeaders(existingToken),
+              },
+              body: JSON.stringify({
+                email,
+                currentStep: "payment",
+                enrollmentData: enrollmentPayload,
+              }),
+            });
+            return;
+          }
+
+          await createEnrollmentSessionWithRetry((sessionId) => ({
+            sessionId,
+            email,
+            currentStep: "payment",
+            enrollmentData: enrollmentPayload,
+            insightsData: {},
+            progressStatus: {},
+          }));
+        } catch (error) {
+          console.error("Failed to persist payment-step session:", error);
+        }
+      })();
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [
+    selectedPlan,
+    isPaymentReady,
+    parentName,
+    email,
+    phone,
+    notes,
+    attachments,
+    finalAmountCents,
+    promoCode,
+    appliedPromoValue,
+    appliedPromoKind,
+  ]);
+
   const handlePaymentSuccess = async (paymentIntentId: string) => {
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -133,41 +206,78 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     const isTestPayment = paymentIntentId.startsWith("test_payment_intent_");
 
     try {
-      const sessionId = crypto.randomUUID();
+      const { sessionId: existingSessionId, token: existingToken } =
+        resolveEnrollmentSessionCredentials();
 
       if (isTestPayment) {
         console.warn("🧪 TEST PAYMENT: Creating session without Stripe charge");
       }
 
       const enrollmentPayload = {
-        sessionId,
+        plan: selectedPlan,
+        parentName,
         email,
-        currentStep: "insights",
-        enrollmentData: {
-          plan: selectedPlan,
-          parentName,
-          email,
-          phone,
-          notes,
-          attachmentNames: attachments.map((file) => file.name),
-          finalAmountCents,
-          promoCode: promoCode || undefined,
-          appliedPromoValue,
-          appliedPromoKind,
-        },
-        insightsData: {},
-        progressStatus: {},
-        stripePaymentIntentId: paymentIntentId,
+        phone,
+        notes,
+        attachmentNames: attachments.map((file) => file.name),
+        finalAmountCents,
+        promoCode: promoCode || undefined,
+        appliedPromoValue,
+        appliedPromoKind,
       };
 
-      // Create enrollment session
-      const response = await fetch("/api/enrollment-sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(enrollmentPayload),
-      });
+      let response: Response;
+      if (existingSessionId && existingToken) {
+        response = await fetch(
+          `/api/enrollment-sessions/${existingSessionId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              ...getEnrollmentSessionHeaders(existingToken),
+            },
+            body: JSON.stringify({
+              email,
+              currentStep: "insights",
+              enrollmentData: enrollmentPayload,
+              insightsData: {},
+              progressStatus: {},
+              stripePaymentIntentId: paymentIntentId,
+            }),
+          },
+        );
+      } else {
+        const created = await createEnrollmentSessionWithRetry((sessionId) => ({
+          sessionId,
+          email,
+          currentStep: "insights",
+          enrollmentData: enrollmentPayload,
+          insightsData: {},
+          progressStatus: {},
+          stripePaymentIntentId: paymentIntentId,
+        }));
+
+        if (!created) {
+          throw new Error("Failed to create enrollment session");
+        }
+
+        const resumeUrl = buildClientInsightsResumeUrl(
+          created.sessionId,
+          created.accessToken,
+          window.location.origin,
+        );
+
+        storeEnrollmentSessionAccess(created.sessionId, created.accessToken);
+        sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
+        sessionStorage.setItem("enrollmentEmail", email);
+        if (selectedPlan) {
+          sessionStorage.setItem("enrollmentPlan", selectedPlan);
+        }
+
+        setPaymentStatus("success");
+        window.location.href = resumeUrl;
+        return;
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -177,12 +287,20 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
       }
 
       const result = await response.json();
+      const resolvedSessionId =
+        result.session?.sessionId ?? existingSessionId ?? crypto.randomUUID();
+      const accessToken = result.accessToken ?? existingToken;
 
-      sessionStorage.setItem("enrollmentSessionId", result.session.sessionId);
+      storeEnrollmentSessionAccess(resolvedSessionId, accessToken);
       sessionStorage.setItem("enrollmentPaymentIntentId", paymentIntentId);
+      sessionStorage.setItem("enrollmentEmail", email);
+      if (selectedPlan) {
+        sessionStorage.setItem("enrollmentPlan", selectedPlan);
+      }
 
-      const resumeUrl = buildInsightsResumeUrl(
-        result.session.sessionId,
+      const resumeUrl = buildClientInsightsResumeUrl(
+        resolvedSessionId,
+        accessToken,
         window.location.origin,
       );
 

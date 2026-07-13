@@ -1,37 +1,38 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { PRICING, CURRENCY } from "@/lib/constants";
+import { query } from "@/lib/db";
+import { PRICING, CURRENCY, type PlanType } from "@/lib/constants";
+import { REFERRAL_VALUE } from "@/enrol/constants";
+import { ReferralStorage } from "@/lib/referralStorage";
+import { PromoCodeStorage } from "@/lib/promoStorage";
 
 export async function POST(request: NextRequest) {
   try {
-    const { planType, enrollmentData, amountOverride, appliedReferralCode } =
-      await request.json();
+    const {
+      planType,
+      enrollmentData,
+      amountOverride,
+      appliedReferralCode,
+      appliedPromoCode,
+    } = await request.json();
 
     if (!planType || !PRICING[planType as keyof typeof PRICING]) {
       return NextResponse.json({ error: "Invalid plan type" }, { status: 400 });
     }
 
     const plan = PRICING[planType as keyof typeof PRICING];
+    const checkoutEmail = enrollmentData?.email?.toLowerCase().trim();
 
-    // Check if this is a trial plan and restrict to 1 purchase per email
-    if (planType === "trial" && enrollmentData?.email) {
+    if (planType === "trial" && checkoutEmail) {
       try {
-        // Search for existing successful payments for this email and trial plan
-        // Note: Stripe doesn't support direct metadata filtering in list calls,
-        // so we'll get recent payments and filter client-side
-        const existingPayments = await stripe().paymentIntents.list({
-          limit: 100, // Check recent payments
-        });
-
-        // Filter for successful payments with matching email and trial plan
-        const successfulTrialPayments = existingPayments.data.filter(
-          (payment) =>
-            payment.status === "succeeded" &&
-            payment.metadata?.planType === "trial" &&
-            payment.metadata?.email === enrollmentData.email,
+        const existingTrial = await query(
+          `SELECT 1 FROM enrollments
+           WHERE LOWER(email) = LOWER($1) AND plan_type = 'trial'
+           LIMIT 1`,
+          [checkoutEmail],
         );
 
-        if (successfulTrialPayments.length > 0) {
+        if (existingTrial.rows.length > 0) {
           return NextResponse.json(
             {
               error:
@@ -42,17 +43,73 @@ export async function POST(request: NextRequest) {
         }
       } catch (error) {
         console.error("Error checking existing trial purchases:", error);
-        // Continue with payment creation if check fails, to avoid blocking legitimate purchases
       }
     }
 
-    let finalAmount: number = plan.price;
-    if (typeof amountOverride === "number" && Number.isFinite(amountOverride)) {
-      const rounded = Math.round(amountOverride);
-      finalAmount = Math.max(100, Math.min(plan.price, rounded));
+    const referralCode =
+      typeof appliedReferralCode === "string" && appliedReferralCode.trim()
+        ? appliedReferralCode.trim().toUpperCase()
+        : undefined;
+    const promoCode =
+      typeof appliedPromoCode === "string" && appliedPromoCode.trim()
+        ? appliedPromoCode.trim().toUpperCase()
+        : undefined;
+
+    if (referralCode && promoCode) {
+      return NextResponse.json(
+        { error: "Only one discount code can be applied per checkout." },
+        { status: 400 },
+      );
     }
 
-    // Create a PaymentIntent with the order amount and currency
+    let discountCents = 0;
+    let validatedReferralCode: string | undefined;
+    let validatedPromoCode: string | undefined;
+
+    if (referralCode) {
+      const validation = await ReferralStorage.validateReferralCode(
+        referralCode,
+        planType as PlanType,
+        checkoutEmail,
+      );
+      if (!validation.valid) {
+        return NextResponse.json(
+          { error: validation.reason ?? "Invalid referral code" },
+          { status: 400 },
+        );
+      }
+      discountCents = REFERRAL_VALUE;
+      validatedReferralCode = referralCode;
+    } else if (promoCode) {
+      const validation = await PromoCodeStorage.validatePromoCode(
+        promoCode,
+        planType as PlanType,
+        checkoutEmail,
+      );
+      if (!validation.valid || !validation.promoCode) {
+        return NextResponse.json(
+          { error: validation.reason ?? "Invalid promo code" },
+          { status: 400 },
+        );
+      }
+      const { discountCents: promoDiscount } = validation.promoCode;
+      discountCents = promoDiscount;
+      validatedPromoCode = promoCode;
+    }
+
+    const finalAmount = Math.max(100, plan.price - discountCents);
+
+    if (typeof amountOverride === "number" && Number.isFinite(amountOverride)) {
+      const rounded = Math.round(amountOverride);
+      const clientAmount = Math.max(100, Math.min(plan.price, rounded));
+      if (clientAmount !== finalAmount) {
+        return NextResponse.json(
+          { error: "Discount amount mismatch. Please refresh and try again." },
+          { status: 400 },
+        );
+      }
+    }
+
     const notesPreview = (enrollmentData?.notes ?? "").slice(0, 500);
     const attachmentCount = enrollmentData?.attachmentNames?.length ?? 0;
 
@@ -65,11 +122,12 @@ export async function POST(request: NextRequest) {
       metadata: {
         planType,
         parentName: enrollmentData?.parentName ?? "",
-        email: enrollmentData?.email ?? "",
+        email: checkoutEmail ?? "",
         phone: enrollmentData?.phone ?? "",
         notes: notesPreview,
         attachment_count: attachmentCount.toString(),
-        referralCode: appliedReferralCode ?? "",
+        referralCode: validatedReferralCode ?? "",
+        promoCode: validatedPromoCode ?? "",
       },
       description: `${plan.name} - ZPD Learning Enrolment`,
     });

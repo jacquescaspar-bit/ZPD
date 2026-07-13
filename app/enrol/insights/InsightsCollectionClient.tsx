@@ -9,14 +9,20 @@ import { SUPPORT_EMAIL } from "@/lib/constants";
 import PostPurchaseHero from "@/enrol/components/PostPurchaseHero";
 import SubmissionConfirmation from "@/enrol/components/SubmissionConfirmation";
 import ReferralShareCard from "@/enrol/components/ReferralShareCard";
+import {
+  getEnrollmentSessionHeaders,
+  storeEnrollmentSessionAccess,
+} from "@/enrol/lib/enrollmentSessionClient";
 import type { PlanType } from "@/lib/constants";
 
 interface InsightsCollectionClientProps {
   initialSessionId?: string;
+  initialSessionToken?: string;
 }
 
 const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
   initialSessionId,
+  initialSessionToken,
 } = {}) => {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
@@ -69,14 +75,23 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
         setPlanType(storedPlan as PlanType);
       }
 
+      if (sessionId && initialSessionToken) {
+        storeEnrollmentSessionAccess(sessionId, initialSessionToken);
+      }
+
       if (sessionId) {
         try {
-          const response = await fetch(`/api/enrollment-sessions/${sessionId}`);
+          const response = await fetch(
+            `/api/enrollment-sessions/${sessionId}`,
+            {
+              headers: getEnrollmentSessionHeaders(initialSessionToken),
+            },
+          );
           if (response.ok) {
             const data = await response.json();
             setCurrentSessionId(sessionId);
             setSessionLoadError(null);
-            sessionStorage.setItem("enrollmentSessionId", sessionId);
+            storeEnrollmentSessionAccess(sessionId, initialSessionToken);
 
             if (data.session.email) {
               setUserEmail(data.session.email);
@@ -123,7 +138,7 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
       setIsSessionLoaded(true);
     };
     void loadSession();
-  }, [initialSessionId]);
+  }, [initialSessionId, initialSessionToken]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });

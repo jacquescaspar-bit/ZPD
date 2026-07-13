@@ -6,8 +6,9 @@
 .pnp.js
 .pnpm/
 
-# local account recovery codes (2FA backup — not app secrets)
+# local secrets (never commit)
 /secrets/recovery-codes.md
+/secrets/production.env
 
 # testing
 /coverage
@@ -49,3 +50,4 @@ node_modules
 .next
 .DS_Store
 
+.env*

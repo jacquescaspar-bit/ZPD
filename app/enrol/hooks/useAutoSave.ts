@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getEnrollmentSessionHeaders } from "@/enrol/lib/enrollmentSessionClient";
 
 export type AutoSaveStatus = "idle" | "saving" | "saved" | "error";
 
@@ -39,6 +40,7 @@ export function useAutoSave({
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          ...getEnrollmentSessionHeaders(),
         },
         body: JSON.stringify({
           insightsData: data,

@@ -11,6 +11,7 @@ export interface PromoCodeValidation {
 const validatePromoCode = async (
   code: string,
   plan?: PlanType,
+  checkoutEmail?: string,
 ): Promise<PromoCodeValidation> => {
   try {
     const result = await query(
@@ -44,6 +45,23 @@ const validatePromoCode = async (
       return {
         valid: false,
         reason: `This promo code is not valid for the ${plan} plan`,
+      };
+    }
+
+    if (row.owner_email && checkoutEmail) {
+      const owner = (row.owner_email as string).toLowerCase().trim();
+      const checkout = checkoutEmail.toLowerCase().trim();
+      if (owner !== checkout) {
+        return {
+          valid: false,
+          reason:
+            "This reward code is linked to a different email address. Sign in with the email that received it.",
+        };
+      }
+    } else if (row.owner_email && !checkoutEmail) {
+      return {
+        valid: false,
+        reason: "Enter your email address before applying this reward code.",
       };
     }
 
@@ -81,6 +99,7 @@ const createPromoCode = async (data: {
   maxUses?: number | null;
   expiresAt?: string | null;
   allowedPlans?: PlanType[];
+  ownerEmail?: string | null;
 }): Promise<void> => {
   try {
     const allowedPlans = data.allowedPlans ?? [
@@ -89,9 +108,12 @@ const createPromoCode = async (data: {
       "essential",
       "intensive",
     ];
+    const ownerEmail = data.ownerEmail
+      ? data.ownerEmail.toLowerCase().trim()
+      : null;
     await query(
-      `INSERT INTO promo_codes (code, discount_cents, description, max_uses, expires_at, allowed_plans)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
+      `INSERT INTO promo_codes (code, discount_cents, description, max_uses, expires_at, allowed_plans, owner_email)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [
         data.code.toUpperCase(),
         data.discountCents,
@@ -99,6 +121,7 @@ const createPromoCode = async (data: {
         data.maxUses,
         data.expiresAt,
         allowedPlans,
+        ownerEmail,
       ],
     );
   } catch (error) {

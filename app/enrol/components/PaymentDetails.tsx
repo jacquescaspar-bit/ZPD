@@ -452,6 +452,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <PaymentForm
         adjustments={promoAdjustments}
         amountOverrideCents={finalAmountCents}
+        appliedPromoCode={appliedPromoKind === "promo" ? promoCode : undefined}
         appliedReferralCode={
           appliedPromoKind === "referral" ? promoCode : undefined
         }

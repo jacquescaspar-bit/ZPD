@@ -1,7 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { ReferralStorage } from "@/lib/referralStorage";
-import { EmailService } from "@/lib/email";
+import { fulfillPaymentIntent } from "@/lib/paymentFulfillment";
 import { validateWebhookRequest } from "@/lib/webhookSecurity";
 import type Stripe from "stripe";
 
@@ -22,7 +21,6 @@ export async function POST(request: NextRequest) {
     );
   }
   try {
-    // Check rate limiting and other security measures
     const securityCheck = validateWebhookRequest(request);
     if (securityCheck) {
       return securityCheck;
@@ -47,124 +45,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Webhook error" }, { status: 400 });
     }
 
-    // Handle the event
     switch (event.type) {
       case "payment_intent.succeeded": {
         const paymentIntent = event.data.object;
         console.warn("PaymentIntent was successful!", paymentIntent.id);
 
-        const { planType, parentName, email, phone, referralCode } =
-          paymentIntent.metadata;
-
-        console.warn("Enrollment data:", {
-          planType,
-          parentName,
-          email,
-          phone,
-          referralCode,
-          amount: paymentIntent.amount,
-          currency: paymentIntent.currency,
-        });
-
         try {
-          // Record the enrollment
-          await ReferralStorage.recordEnrollment(
-            paymentIntent.id,
-            email,
-            planType,
-            paymentIntent.amount,
-            referralCode,
-          );
-
-          // Generate referral code for the purchaser
-          const newReferralCode = await ReferralStorage.createReferralCode({
-            ownerEmail: email,
-          });
-
-          console.warn(
-            "Generated referral code for purchaser:",
-            newReferralCode.code,
-          );
-
-          // Track analytics
-          await ReferralStorage.trackEvent(
-            newReferralCode.id,
-            "generated",
-            email,
-            { planType },
-          );
-
-          // Send email to purchaser with their referral code
-          await EmailService.sendReferralCodeEmail(email, newReferralCode.code);
-
-          // If payment used a referral code, increment usage and propagate
-          if (referralCode) {
-            await ReferralStorage.incrementUsage(referralCode);
-
-            // Find the owner of the used referral code
-            const usedCodeValidation =
-              await ReferralStorage.validateReferralCode(referralCode);
-            if (usedCodeValidation.valid && usedCodeValidation.referralCode) {
-              const referrerEmail = usedCodeValidation.referralCode.ownerEmail;
-
-              // Track usage analytics
-              await ReferralStorage.trackEvent(
-                usedCodeValidation.referralCode.id,
-                "used",
-                email,
-                { planType },
-              );
-
-              // Generate a new referral code for the referrer
-              const propagatedCode = await ReferralStorage.createReferralCode({
-                ownerEmail: referrerEmail,
-                sourceCodeId: usedCodeValidation.referralCode.id,
-              });
-
-              console.warn(
-                "Generated propagated referral code for referrer:",
-                propagatedCode.code,
-              );
-
-              // Track propagation analytics
-              await ReferralStorage.trackEvent(
-                propagatedCode.id,
-                "generated",
-                referrerEmail,
-                {
-                  source: "propagation",
-                  originalCode: referralCode,
-                },
-              );
-
-              // Send email to referrer about new code
-              await EmailService.sendNewReferralCodeEmail(
-                referrerEmail,
-                propagatedCode.code,
-                referralCode,
-              );
-            }
-          }
-
-          // Payment confirmation with onboarding link is sent when the
-          // client creates the enrollment session after redirect.
+          await fulfillPaymentIntent(paymentIntent);
         } catch (error) {
-          console.error("Error processing referral codes:", error);
-          // Don't fail the webhook for referral processing errors
+          console.error("Error fulfilling payment intent:", error);
+          return NextResponse.json(
+            { error: "Payment fulfillment failed" },
+            { status: 500 },
+          );
         }
-
         break;
       }
 
       case "payment_intent.payment_failed": {
         const failedPayment = event.data.object;
-        console.warn("PaymentIntent failed:", failedPayment.id);
-
-        // Handle failed payment
-        // - Log failure
-        // - Send failure notification
-        // - Update enrollment status
-
+        console.warn("PaymentIntent failed:", {
+          id: failedPayment.id,
+          email: failedPayment.metadata.email,
+          planType: failedPayment.metadata.planType,
+          lastPaymentError: failedPayment.last_payment_error?.message,
+        });
         break;
       }
 

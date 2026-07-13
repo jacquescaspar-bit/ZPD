@@ -1,5 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { requireEnrollmentSessionAccess } from "@/lib/enrollmentSessionAuth";
+import { EmailService } from "@/lib/email";
+import {
+  buildInsightsResumeUrl,
+  getRequestSiteOrigin,
+} from "@/lib/insightsResume";
 
 // GET /api/enrollment-sessions/[sessionId] - Retrieve session
 export async function GET(
@@ -15,6 +21,9 @@ export async function GET(
         { status: 400 },
       );
     }
+
+    const authError = await requireEnrollmentSessionAccess(request, sessionId);
+    if (authError) return authError;
 
     const result = await query(
       `
@@ -74,10 +83,13 @@ export async function PUT(
       );
     }
 
+    const authError = await requireEnrollmentSessionAccess(request, sessionId);
+    if (authError) return authError;
+
     // Check if session exists and is not expired
     const existingResult = await query(
       `
-      SELECT id, insights_data, progress_status
+      SELECT id, insights_data, progress_status, current_step, email, enrollment_data, expires_at
       FROM enrollment_sessions
       WHERE session_id = $1 AND expires_at > NOW()
     `,
@@ -94,6 +106,10 @@ export async function PUT(
     const existingSession = existingResult.rows[0] as {
       insights_data: Record<string, unknown>;
       progress_status: Record<string, unknown>;
+      current_step: string;
+      email: string | null;
+      enrollment_data: Record<string, unknown>;
+      expires_at: Date;
     };
 
     // Validate update fields
@@ -194,6 +210,36 @@ export async function PUT(
     const result = await query(updateQuery, params);
     const [session] = result.rows;
 
+    if (
+      currentStep === "insights" &&
+      existingSession.current_step !== "insights" &&
+      (email ?? existingSession.email)
+    ) {
+      const resolvedEmail = (email ?? existingSession.email) as string;
+      const resolvedEnrollmentData = (
+        enrollmentData !== undefined
+          ? enrollmentData
+          : existingSession.enrollment_data
+      ) as {
+        plan?: string;
+        parentName?: string;
+        finalAmountCents?: number;
+      };
+      const onboardingUrl = await buildInsightsResumeUrl(
+        sessionId,
+        getRequestSiteOrigin(request),
+        session.expires_at as Date,
+      );
+
+      void EmailService.sendEnrollmentConfirmationEmail(
+        resolvedEmail,
+        resolvedEnrollmentData.parentName ?? "",
+        resolvedEnrollmentData.plan ?? "essential",
+        resolvedEnrollmentData.finalAmountCents ?? 0,
+        onboardingUrl,
+      );
+    }
+
     return NextResponse.json({
       session: {
         id: session.id,
@@ -232,6 +278,9 @@ export async function DELETE(
         { status: 400 },
       );
     }
+
+    const authError = await requireEnrollmentSessionAccess(request, sessionId);
+    if (authError) return authError;
 
     // Delete the session (works for both expired and active sessions)
     const result = await query(

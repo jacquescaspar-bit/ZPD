@@ -12,7 +12,8 @@ const LOCAL_UPLOAD_ROOT = path.join(
 const BLOB_PATH_PREFIX = "blob:";
 
 const isBlobStorageEnabled = (): boolean =>
-  Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  Boolean(process.env.BLOB_READ_WRITE_TOKEN) ||
+  Boolean(process.env.BLOB_STORE_ID);
 
 const toBlobPathname = (storageKey: string): string | null => {
   if (storageKey.startsWith(BLOB_PATH_PREFIX)) {

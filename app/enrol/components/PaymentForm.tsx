@@ -36,6 +36,7 @@ interface PaymentFormProps {
   amountOverrideCents?: number;
   adjustments?: { label: string; amount: number }[];
   appliedReferralCode?: string;
+  appliedPromoCode?: string;
   hasAttemptedSubmit: boolean;
   onSubmitAttempt: () => void;
   forceTestMode?: boolean;
@@ -54,6 +55,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   amountOverrideCents,
   adjustments = [],
   appliedReferralCode,
+  appliedPromoCode,
   onSubmitAttempt,
   forceTestMode = false,
 }) => {
@@ -100,6 +102,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
           enrollmentData,
           amountOverride: finalAmountCents,
           appliedReferralCode,
+          appliedPromoCode,
         }),
       });
 
@@ -123,6 +126,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
     finalAmountCents,
     onPaymentError,
     appliedReferralCode,
+    appliedPromoCode,
     isTestMode,
   ]);
 
@@ -260,21 +264,51 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
     onSubmitAttempt();
 
     paymentRequest.on("paymentmethod", async (ev) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const { error: confirmError } = await stripe!.confirmCardPayment(
-        clientSecret,
-        { payment_method: ev.paymentMethod.id },
-        { handleActions: false },
-      );
-
-      if (confirmError) {
-        ev.complete("fail");
-        onPaymentError(confirmError.message ?? "Payment failed");
-      } else {
-        ev.complete("success");
-        onPaymentSuccess("apple_pay_success");
+      if (!stripe) {
+        onPaymentError("Payment form is still loading. Please wait a moment.");
+        return;
       }
-      setIsProcessing(false);
+
+      try {
+        const { error: confirmError, paymentIntent } =
+          await stripe.confirmCardPayment(
+            clientSecret,
+            { payment_method: ev.paymentMethod.id },
+            { handleActions: false },
+          );
+
+        if (confirmError) {
+          ev.complete("fail");
+          onPaymentError(confirmError.message ?? "Payment failed");
+          return;
+        }
+
+        let resolvedIntent = paymentIntent;
+        if (resolvedIntent?.status === "requires_action") {
+          const { error: actionError, paymentIntent: confirmedIntent } =
+            await stripe.confirmCardPayment(clientSecret);
+          if (actionError) {
+            ev.complete("fail");
+            onPaymentError(actionError.message ?? "Payment failed");
+            return;
+          }
+          resolvedIntent = confirmedIntent;
+        }
+
+        if (resolvedIntent?.status === "succeeded") {
+          ev.complete("success");
+          onPaymentSuccess(resolvedIntent.id);
+          return;
+        }
+
+        ev.complete("fail");
+        onPaymentError("Payment could not be completed. Please try again.");
+      } catch {
+        ev.complete("fail");
+        onPaymentError("Payment processing failed");
+      } finally {
+        setIsProcessing(false);
+      }
     });
 
     try {

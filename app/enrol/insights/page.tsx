@@ -16,12 +16,17 @@ export const metadata: Metadata = {
 };
 
 interface InsightsPageProps {
-  searchParams: Promise<{ session?: string }>;
+  searchParams: Promise<{ session?: string; token?: string }>;
 }
 
 const InsightsPage = async ({ searchParams }: InsightsPageProps) => {
-  const { session } = await searchParams;
-  return <InsightsCollectionClient initialSessionId={session} />;
+  const { session, token } = await searchParams;
+  return (
+    <InsightsCollectionClient
+      initialSessionId={session}
+      initialSessionToken={token}
+    />
+  );
 };
 
 export default InsightsPage;

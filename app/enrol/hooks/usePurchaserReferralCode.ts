@@ -61,36 +61,13 @@ export function usePurchaserReferralCode({
       return false;
     };
 
-    const tryFetchLatest = async (): Promise<boolean> => {
-      try {
-        const response = await fetch(
-          `/api/referral-codes?email=${encodeURIComponent(email)}`,
-        );
-
-        if (!response.ok) return false;
-
-        const data = await response.json();
-        const latest = data.codes?.[0];
-        if (latest?.code && latest.isActive) {
-          resolveCode(latest.code as string);
-          return true;
-        }
-      } catch (error) {
-        console.error("Error fetching referral codes:", error);
-      }
-
-      return false;
-    };
-
     const loadReferralCode = async () => {
       setState("loading");
-
-      if (await tryClaim()) return;
 
       const maxAttempts = 12;
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
         if (cancelled) return;
-        if (await tryFetchLatest()) return;
+        if (await tryClaim()) return;
         await new Promise((resolve) => setTimeout(resolve, 2000));
       }
 

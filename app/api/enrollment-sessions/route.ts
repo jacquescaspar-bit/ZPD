@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/adminApi";
 import { query } from "@/lib/db";
 import { EmailService } from "@/lib/email";
+import { createEnrollmentSessionToken } from "@/lib/enrollmentSessionAuth";
 import {
   buildInsightsResumeUrl,
   getRequestSiteOrigin,
@@ -80,6 +81,11 @@ export async function POST(request: NextRequest) {
     );
 
     const [session] = result.rows;
+    const expiresAt = session.expires_at as Date;
+    const accessToken = await createEnrollmentSessionToken(
+      sessionId,
+      expiresAt,
+    );
 
     if (
       currentStep === "insights" &&
@@ -95,9 +101,10 @@ export async function POST(request: NextRequest) {
       const planType = data.plan ?? "essential";
       const parentName = data.parentName ?? "";
       const amountCents = data.finalAmountCents ?? 0;
-      const onboardingUrl = buildInsightsResumeUrl(
+      const onboardingUrl = await buildInsightsResumeUrl(
         sessionId,
         getRequestSiteOrigin(request),
+        expiresAt,
       );
 
       void EmailService.sendEnrollmentConfirmationEmail(
@@ -111,6 +118,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
+        accessToken,
         session: {
           id: session.id,
           sessionId: session.session_id,

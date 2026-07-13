@@ -32,14 +32,17 @@ const createReferralCode = (
     } while (existingCode.rows.length > 0);
 
     const result = await client.query(
-      `INSERT INTO referral_codes (code, owner_email, allowed_plans, source_code_id)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO referral_codes (code, owner_email, allowed_plans, source_code_id, stripe_payment_intent_id)
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (stripe_payment_intent_id) WHERE stripe_payment_intent_id IS NOT NULL
+       DO UPDATE SET owner_email = EXCLUDED.owner_email
        RETURNING id, code, owner_email, created_at, used_count, is_active, allowed_plans, source_code_id`,
       [
         code,
         data.ownerEmail,
         data.allowedPlans ?? ["essential", "intensive"],
-        data.sourceCodeId,
+        data.sourceCodeId ?? null,
+        data.stripePaymentIntentId ?? null,
       ],
     );
 
@@ -59,6 +62,7 @@ const createReferralCode = (
 const validateReferralCode = async (
   code: string,
   planType?: PlanType,
+  checkoutEmail?: string,
 ): Promise<ReferralCodeValidation> => {
   try {
     const result = await query(
@@ -90,6 +94,18 @@ const validateReferralCode = async (
       };
     }
 
+    if (checkoutEmail) {
+      const owner = referralCode.ownerEmail.toLowerCase().trim();
+      const checkout = checkoutEmail.toLowerCase().trim();
+      if (owner === checkout) {
+        return {
+          valid: false,
+          reason:
+            "Referral codes are for sharing with friends and family — you can't use your own code at checkout.",
+        };
+      }
+    }
+
     return { valid: true, referralCode };
   } catch (error) {
     console.error("Error validating referral code:", error);
@@ -105,6 +121,37 @@ const incrementUsage = async (code: string): Promise<void> => {
     );
   } catch (error) {
     console.error("Error incrementing usage:", error);
+  }
+};
+
+const mapReferralRow = (row: Record<string, unknown>): ReferralCode => ({
+  id: row.id as string,
+  code: row.code as string,
+  ownerEmail: row.owner_email as string,
+  createdAt: (row.created_at as Date).toISOString(),
+  usedCount: parseInt(String(row.used_count), 10),
+  isActive: row.is_active as boolean,
+  allowedPlans: row.allowed_plans as PlanType[],
+  sourceCodeId: (row.source_code_id as string | null) ?? undefined,
+});
+
+const getReferralCodeByPaymentIntent = async (
+  paymentIntentId: string,
+): Promise<ReferralCode | null> => {
+  try {
+    const result = await query(
+      `SELECT id, code, owner_email, created_at, used_count, is_active, allowed_plans, source_code_id
+       FROM referral_codes
+       WHERE stripe_payment_intent_id = $1
+       LIMIT 1`,
+      [paymentIntentId],
+    );
+
+    if (result.rows.length === 0) return null;
+    return mapReferralRow(result.rows[0]);
+  } catch (error) {
+    console.error("Error getting referral code by payment intent:", error);
+    return null;
   }
 };
 
@@ -199,20 +246,25 @@ const recordEnrollment = async (
   amountCents: number,
   referralCodeUsed?: string,
 ): Promise<void> => {
-  try {
-    await query(
-      "INSERT INTO enrollments (stripe_payment_intent_id, email, plan_type, referral_code_used, amount_cents) VALUES ($1, $2, $3, $4, $5)",
-      [stripePaymentIntentId, email, planType, referralCodeUsed, amountCents],
-    );
-  } catch (error) {
-    console.error("Error recording enrollment:", error);
-  }
+  await query(
+    `INSERT INTO enrollments (stripe_payment_intent_id, email, plan_type, referral_code_used, amount_cents)
+     VALUES ($1, $2, $3, $4, $5)
+     ON CONFLICT (stripe_payment_intent_id) DO NOTHING`,
+    [
+      stripePaymentIntentId,
+      email.toLowerCase().trim(),
+      planType,
+      referralCodeUsed ?? null,
+      amountCents,
+    ],
+  );
 };
 
 export const ReferralStorage = {
   createReferralCode,
   validateReferralCode,
   incrementUsage,
+  getReferralCodeByPaymentIntent,
   getReferralCodeById,
   getReferralCodesByOwner,
   deactivateReferralCode,

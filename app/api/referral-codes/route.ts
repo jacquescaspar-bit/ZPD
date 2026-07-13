@@ -1,32 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { ReferralStorage } from "@/lib/referralStorage";
-import type { ReferralCodeCreation } from "@/enrol/types";
 import type { PlanType } from "@/lib/constants";
 
-export async function POST(request: NextRequest) {
-  try {
-    const body: ReferralCodeCreation = await request.json();
-
-    if (!body.ownerEmail) {
-      return NextResponse.json(
-        { error: "ownerEmail is required" },
-        { status: 400 },
-      );
-    }
-
-    const referralCode = await ReferralStorage.createReferralCode(body);
-
-    return NextResponse.json({
-      success: true,
-      referralCode,
-    });
-  } catch (error: unknown) {
-    console.error("Error creating referral code:", error);
-    return NextResponse.json(
-      { error: "Failed to create referral code" },
-      { status: 500 },
-    );
-  }
+export function POST() {
+  return NextResponse.json(
+    { error: "Referral code creation requires admin access" },
+    { status: 403 },
+  );
 }
 
 export async function GET(request: NextRequest) {
@@ -35,24 +15,26 @@ export async function GET(request: NextRequest) {
     const code = searchParams.get("code");
     const email = searchParams.get("email");
     const planType = searchParams.get("planType");
+    const checkoutEmail = searchParams.get("checkoutEmail");
+
+    if (email) {
+      return NextResponse.json(
+        { error: "Listing referral codes by email requires admin access" },
+        { status: 403 },
+      );
+    }
 
     if (code) {
-      // Validate a specific code
       const validation = await ReferralStorage.validateReferralCode(
         code,
         planType ? (planType as PlanType) : undefined,
+        checkoutEmail ?? undefined,
       );
       return NextResponse.json(validation);
     }
 
-    if (email) {
-      // Get codes for a specific owner
-      const codes = await ReferralStorage.getReferralCodesByOwner(email);
-      return NextResponse.json({ codes });
-    }
-
     return NextResponse.json(
-      { error: "Missing code or email parameter" },
+      { error: "Missing code parameter" },
       { status: 400 },
     );
   } catch (error: unknown) {
