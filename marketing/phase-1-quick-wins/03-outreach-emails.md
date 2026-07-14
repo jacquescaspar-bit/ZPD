@@ -3,7 +3,7 @@
 **From:** grow@zpdlearning.com  
 **Rule:** Personalise line 1 only (their site, article, or page name). Link the **guide**, not the enrol page, in cold email.
 
-**Guide:** https://zpdlearning.com/guides/parents-guide-to-zpd
+**Guide:** https://zpdlearning.com/blog/is-tutoring-the-right-fit
 
 Send **2–3 per week**. Log: Name | URL | Sent? | Reply?
 

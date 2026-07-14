@@ -245,7 +245,7 @@ These documents help us assess your child's starting point and create a personal
                     ((questionResponses[currentStep.id] as string[]) || [])
                       .length === daysOfWeek.length
                   }
-                  className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                  className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   type="checkbox"
                   onChange={() => {
                     const selectedDays =
@@ -277,7 +277,7 @@ These documents help us assess your child's starting point and create a personal
                   <label key={day} className="flex items-center space-x-2">
                     <input
                       checked={selectedDays.includes(day)}
-                      className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                      className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                       type="checkbox"
                       onChange={(e) => {
                         const newSelected = e.target.checked
@@ -569,7 +569,7 @@ These documents help us assess your child's starting point and create a personal
                   </span>
                   <input
                     checked={agreedToTerms}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-blue-600 focus:ring-indigo-500 border-gray-300 rounded"
                     type="checkbox"
                     onChange={(e) => setAgreedToTerms?.(e.target.checked)}
                   />

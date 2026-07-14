@@ -26,7 +26,7 @@ Lead with the **$110 Diagnostic**, not the $950 Essential plan.
 ### Do
 
 - Write like you'd explain it to another parent at school pickup
-- Use **you** and **your child** — not "families" or "learners"
+- Use **you** and **your child** / **children** — not "families", "learners", or "kid(s)"
 - One concrete detail beats three adjectives ("Year 9 algebra, third meltdown this week")
 - Short sentences. Stop when you've made the point.
 - Australian English
@@ -60,7 +60,7 @@ Lead with the **$110 Diagnostic**, not the $950 Essential plan.
 | Diagnostic | https://zpdlearning.com/enrol?plan=trial                    |
 | Essential  | https://zpdlearning.com/enrol?plan=essential                |
 | Promo      | https://zpdlearning.com/enrol?plan=essential&promo=TERM2026 |
-| Guide      | https://zpdlearning.com/guides/parents-guide-to-zpd         |
+| Guide      | https://zpdlearning.com/blog/is-tutoring-the-right-fit      |
 | Blog       | https://zpdlearning.com/blog                                |
 
 Phone: **1300 990 443** on Contact, footer, Google — not in the main nav.

@@ -41,7 +41,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
         <div className="relative w-full rounded-full h-3 overflow-hidden">
           <div className="absolute inset-0 px-4 bg-gray-200 dark:bg-gray-700 rounded-full" />
           <div
-            className="h-full bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full transition-all duration-500 ease-out"
+            className="h-full bg-gradient-to-r from-indigo-400 to-blue-500 rounded-full transition-all duration-500 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
@@ -66,7 +66,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
               <div
                 className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${
                   section.completed
-                    ? "bg-emerald-500 text-white"
+                    ? "bg-indigo-500 text-white"
                     : "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400"
                 }`}
               >

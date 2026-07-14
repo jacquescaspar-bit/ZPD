@@ -39,7 +39,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       error:
         "bg-[var(--error)] text-white hover:bg-[var(--error-700)] focus-visible:ring-[var(--error)]",
       gradient:
-        "bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] text-white hover:from-[var(--gradient-start)] hover:to-[var(--gradient-end)] focus-visible:ring-[var(--gradient-start)]",
+        "bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)] focus-visible:ring-[var(--primary)]",
     };
 
     const sizeClasses = {

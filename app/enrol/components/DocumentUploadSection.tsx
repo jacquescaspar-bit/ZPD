@@ -50,8 +50,8 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({
           ? "cursor-not-allowed opacity-60 border-gray-300 dark:border-gray-600"
           : `cursor-pointer ${
               isDragOver
-                ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20"
-                : "border-gray-300 dark:border-gray-600 hover:border-emerald-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950/20"
+                : "border-gray-300 dark:border-gray-600 hover:border-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
             }`
       }`}
       onClick={handleClick}
@@ -62,7 +62,7 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({
       <div className="flex flex-col items-center space-y-4">
         <svg
           className={`w-12 h-12 ${
-            isDragOver ? "text-emerald-500" : "text-gray-400"
+            isDragOver ? "text-indigo-500" : "text-gray-400"
           }`}
           fill="none"
           stroke="currentColor"
@@ -85,7 +85,7 @@ const DragDropArea: React.FC<DragDropAreaProps> = ({
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             or{" "}
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+            <span className="text-indigo-600 dark:text-indigo-400 font-medium">
               click to browse
             </span>
           </p>
@@ -145,7 +145,7 @@ const DocumentUploadSection: React.FC<DocumentUploadSectionProps> = ({
           >
             <span className="truncate">
               {file.filename}
-              <span className="ml-2 text-xs text-emerald-600 dark:text-emerald-400">
+              <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400">
                 Saved
               </span>
             </span>

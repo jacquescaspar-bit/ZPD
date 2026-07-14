@@ -125,11 +125,11 @@ const Features = () => {
               >
                 <div
                   aria-hidden
-                  className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)]"
+                  className="absolute inset-x-0 top-0 h-1 bg-[var(--primary)]"
                 />
                 <div className="flex items-start gap-5 p-6 sm:p-7">
                   <div
-                    className={`flex flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] shadow-md ${
+                    className={`flex flex-shrink-0 items-center justify-center rounded-full bg-[var(--primary)] shadow-md ${
                       item.featured ? "h-14 w-14" : "h-12 w-12"
                     }`}
                   >
@@ -202,7 +202,7 @@ const Features = () => {
                       </div>
                     </div>
                     {!isExpanded && (
-                      <p className="mt-3 text-sm text-gray-400 transition-colors group-hover:text-[var(--gradient-start)] dark:text-gray-500 dark:group-hover:text-[var(--gradient-end)]">
+                      <p className="mt-3 text-sm text-gray-400 transition-colors group-hover:text-[var(--primary)] dark:text-gray-500 dark:group-hover:text-[var(--primary)]">
                         Read more
                       </p>
                     )}

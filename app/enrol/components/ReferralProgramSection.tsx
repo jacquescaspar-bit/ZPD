@@ -25,9 +25,9 @@ const ReferralProgramSection: React.FC<ReferralProgramSectionProps> = ({
       </p>
     </div>
 
-    <div className="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-950/30 dark:to-blue-950/30 rounded-2xl p-6 border border-emerald-200/50 dark:border-emerald-800/50">
+    <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 rounded-2xl p-6 border border-indigo-200/50 dark:border-indigo-800/50">
       <div className="flex items-center gap-4 mb-4">
-        <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center">
+        <div className="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center">
           <span className="text-white font-bold text-lg">↗</span>
         </div>
         <div>
@@ -43,11 +43,11 @@ const ReferralProgramSection: React.FC<ReferralProgramSectionProps> = ({
       <div className="flex gap-2 mb-4">
         <input
           readOnly
-          className="flex-1 border border-white/60 dark:border-gray-700 bg-white/90 dark:bg-gray-950/40 px-4 py-3 rounded-2xl text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-400 focus:outline-none shadow-sm text-sm"
+          className="flex-1 border border-white/60 dark:border-gray-700 bg-white/90 dark:bg-gray-950/40 px-4 py-3 rounded-2xl text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none shadow-sm text-sm"
           value={referralLink ?? ""}
         />
         <button
-          className="px-6 py-3 bg-emerald-500 text-white rounded-2xl font-semibold hover:bg-emerald-600 transition-colors duration-200 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+          className="px-6 py-3 bg-indigo-500 text-white rounded-2xl font-semibold hover:bg-indigo-600 transition-colors duration-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
           type="button"
           onClick={handleCopyReferralLink}
         >
@@ -57,25 +57,25 @@ const ReferralProgramSection: React.FC<ReferralProgramSectionProps> = ({
 
       <div className="grid md:grid-cols-2 gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <span className="text-green-500">✓</span>
+          <span className="text-indigo-500">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
             Get $100 off for each successful referral
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-green-500">✓</span>
+          <span className="text-indigo-500">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
             Your referrals get $100 off Essential/Intensive
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-green-500">✓</span>
+          <span className="text-indigo-500">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
             Referral chain propagates infinitely
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-green-500">✓</span>
+          <span className="text-indigo-500">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
             New codes generated automatically
           </span>

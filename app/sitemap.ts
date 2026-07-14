@@ -1,21 +1,6 @@
 import type { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/blog";
 import { getGreaterCitySlugs } from "@/lib/geo";
-
-const BLOG_POST_IDS = [
-  "invisible-ladder-brain",
-  "about-zpd-learning",
-  "supporting-parents",
-  "perfect-tutor-match",
-  "science-behind-zpd",
-  "educational-philosophy",
-  "progress-tracking-helps-learning",
-  "certified-tutors-matter",
-  "personalised-learning",
-  "zpd-zone-of-proximal-development",
-  "experienced-tutors",
-  "triangle-tutoring",
-  "magic-trick",
-] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://zpdlearning.com";
@@ -71,12 +56,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/guides/parents-guide-to-zpd`,
+      url: `${baseUrl}/blog/archive`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.85,
+      priority: 0.5,
     },
-
     {
       url: `${baseUrl}/privacy`,
       lastModified: now,
@@ -112,12 +96,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  const blogAnchors: MetadataRoute.Sitemap = BLOG_POST_IDS.map((id) => ({
-    url: `${baseUrl}/blog#${id}`,
-    lastModified: now,
+  const blogPosts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
     changeFrequency: "monthly",
-    priority: 0.6,
+    priority: post.pinned ? 0.9 : 0.65,
   }));
 
-  return [...staticPages, ...tutoringPages, ...blogAnchors];
+  const archiveYears = [...new Set(getAllPosts().map((p) => p.year))];
+  const archivePages: MetadataRoute.Sitemap = archiveYears.map((year) => ({
+    url: `${baseUrl}/blog/archive/${year}`,
+    lastModified: now,
+    changeFrequency: "yearly",
+    priority: 0.4,
+  }));
+
+  return [...staticPages, ...tutoringPages, ...blogPosts, ...archivePages];
 }

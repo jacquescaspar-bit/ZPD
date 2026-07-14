@@ -2,8 +2,8 @@
 
 **Rules:** No link in the post body if the group bans it — put the link in the first comment. Never post the same text to three groups on the same day. Value first; mention ZPD only when someone asks or in the comment.
 
-**Guide:** https://zpdlearning.com/guides/parents-guide-to-zpd  
-**Blog:** https://zpdlearning.com/blog#
+**Guide:** https://zpdlearning.com/blog/is-tutoring-the-right-fit  
+**Blog:** https://zpdlearning.com/blog
 
 ---
 
@@ -11,9 +11,9 @@
 
 ### Post 1 — The meltdown isn't laziness (Mon)
 
-> Last term I sat with a parent whose kid could do the maths in tutoring — then fell apart doing the same thing at home alone.
+> Last term I sat with a parent whose child could do the maths in tutoring — then fell apart doing the same thing at home alone.
 >
-> That's usually not attitude. The work's sitting in that gap between "I can do this with help" and "I can do this solo." Too far above it, and kids shut down.
+> That's usually not attitude. The work's sitting in that gap between "I can do this with help" and "I can do this solo." Too far above it, and children shut down.
 >
 > If that sounds familiar, the fix is often smaller steps and a tutor who knows what's actually being taught in class this year — not a harder worksheet.
 
@@ -25,9 +25,9 @@
 
 > Quick question for the group: when you see "experienced tutor" on a flyer, what do you actually want to know?
 >
-> For us it's: are they still in a classroom? Syllabus and NAPLAN weightings change constantly. The tutors we've seen work best still teach in schools — they're living the same content your kid gets on Monday morning.
+> For us it's: are they still in a classroom? Syllabus and NAPLAN weightings change constantly. The tutors we've seen work best still teach in schools — they're living the same content your child gets on Monday morning.
 
-**Comment:** Longer read on our blog if anyone wants it: https://zpdlearning.com/blog#experienced-tutors
+**Comment:** Longer read on our blog if anyone wants it: https://zpdlearning.com/blog/classroom-active-tutors
 
 ---
 
@@ -41,17 +41,17 @@
 >
 > If they can't answer that clearly, you're paying for dependency.
 
-**Comment:** https://zpdlearning.com/blog#magic-trick
+**Comment:** https://zpdlearning.com/blog/homework-help-vs-learning
 
 ---
 
 ### Post 4 — Why term plans exist (Thu)
 
-> Pay-as-you-go tutoring feels flexible. In practice it often means a new fire drill every week — no thread, no plan, kid never gets past the panic stage.
+> Pay-as-you-go tutoring feels flexible. In practice it often means a new fire drill every week — no thread, no plan, your child never gets past the panic stage.
 >
 > Term plans aren't about locking you in. They're how a tutor can actually map: figure out the gap → build the skill → step back. That takes more than one hour.
 
-**Comment:** https://zpdlearning.com/blog#educational-philosophy
+**Comment:** https://zpdlearning.com/blog/why-term-plans
 
 ---
 
@@ -59,11 +59,11 @@
 
 ### Post 5 — You matter as much as the tutor (Mon)
 
-> Tutoring works best when it's not a secret between kid and tutor.
+> Tutoring works best when it's not a secret between child and tutor.
 >
 > When parents know exactly what to practise for five minutes between sessions — one skill, not "do homework" — progress shows up faster. When nobody tells the parent what to do, it fizzles.
 
-**Comment:** https://zpdlearning.com/blog#triangle-tutoring
+**Comment:** https://zpdlearning.com/blog/parent-tutor-school-triangle
 
 ---
 
@@ -71,7 +71,7 @@
 
 > Before you sign up for a term of anything, ask: can we do one session first to see if this is actually the right fit?
 >
-> Any provider worth your money should be fine with that. You're not buying Netflix — you're letting someone into your kid's confidence.
+> Any provider worth your money should be fine with that. You're not buying Netflix — you're letting someone into your child's confidence.
 
 **Comment (only if asked / group allows):** We do a single Diagnostic session ($110) before term plans — https://zpdlearning.com/enrol?plan=trial
 
@@ -83,18 +83,18 @@
 
 _Adjust to Term 3 if that's when your groups heat up._
 
-> HSC season turns everyone into a cram machine. Cramming content your kid never understood in September rarely works in October.
+> HSC season turns everyone into a cram machine. Cramming content your child never understood in September rarely works in October.
 >
 > The gains we see late in the year are usually boring: fix a fundamentals gap, then practise exam questions hard enough to stretch them — not so hard they freeze.
 
-**Comment:** https://zpdlearning.com/blog#science-behind-zpd
+**Comment:** https://zpdlearning.com/blog/naplan-hsc-without-cramming
 
 ---
 
 ### Post 8 — Pay it forward (Thu)
 
-> If you've found tutoring that actually clicked for your kid, tell another parent. The good ones are buried under ads and Gumtree noise.
+> If you've found tutoring that actually clicked for your child, tell another parent. The good ones are buried under ads and Gumtree noise.
 >
 > Still looking? School-connected tutors, a clear plan for the term, and someone who'll tell you honestly when it's not working.
 
-**Comment:** Questions welcome in comments. More detail on our blog: https://zpdlearning.com/blog#about-zpd-learning
+**Comment:** Questions welcome in comments. More detail on our blog: https://zpdlearning.com/blog/about-zpd-learning

@@ -3,17 +3,20 @@
 import { useState, useCallback } from "react";
 import { SITE_URL } from "@/lib/constants";
 
-const SHARE_URL = `${SITE_URL}/guides/parents-guide-to-zpd`;
+interface SharePostLinkProps {
+  slug: string;
+}
 
-const ShareGuideLink = () => {
+const SharePostLink = ({ slug }: SharePostLinkProps) => {
+  const shareUrl = `${SITE_URL}/blog/${slug}`;
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(SHARE_URL);
+      await navigator.clipboard.writeText(shareUrl);
     } catch {
       const input = document.createElement("textarea");
-      input.value = SHARE_URL;
+      input.value = shareUrl;
       input.setAttribute("readonly", "");
       input.style.position = "absolute";
       input.style.left = "-9999px";
@@ -24,12 +27,12 @@ const ShareGuideLink = () => {
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  }, []);
+  }, [shareUrl]);
 
   return (
-    <p className="text-xs text-gray-500 mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+    <p className="text-xs text-gray-500 mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
       <button
-        className="inline-flex flex-wrap items-center justify-center gap-x-1 text-left hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 rounded"
+        className="inline-flex flex-wrap items-center justify-center gap-x-1 text-left hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
         type="button"
         onClick={() => {
           void handleCopy();
@@ -37,7 +40,7 @@ const ShareGuideLink = () => {
       >
         <span>Share:</span>
         <span className="underline decoration-dotted underline-offset-2 break-all">
-          {SHARE_URL}
+          {shareUrl}
         </span>
       </button>
       {copied ? (
@@ -52,4 +55,4 @@ const ShareGuideLink = () => {
   );
 };
 
-export default ShareGuideLink;
+export default SharePostLink;

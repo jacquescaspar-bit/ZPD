@@ -27,7 +27,7 @@ const ZPDDefinitionSection = () => {
           <p className="mb-1 text-lg text-gray-700 dark:text-gray-300 sm:text-xl md:text-2xl">
             <a
               className="cursor-pointer hover:underline"
-              href="/blog#zpd-zone-of-proximal-development"
+              href="/blog/what-is-zpd"
             >
               Zone of Proximal Development
             </a>

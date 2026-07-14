@@ -14,7 +14,7 @@ const TeacherQuestionsSection: React.FC<TeacherQuestionsSectionProps> = ({
   handleDownloadTeacherQuestions,
 }) => (
   <div className="flex-1">
-    <div className="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-950/30 dark:to-blue-950/30 rounded-2xl p-6 border border-emerald-200/50 dark:border-emerald-800/50 relative flex-1 flex flex-col">
+    <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 rounded-2xl p-6 border border-indigo-200/50 dark:border-indigo-800/50 relative flex-1 flex flex-col">
       <div className="absolute top-2 right-2 flex gap-2">
         <button
           className="p-1 hover:bg-white/10 rounded"

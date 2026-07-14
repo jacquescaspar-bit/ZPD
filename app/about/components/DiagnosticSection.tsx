@@ -7,7 +7,7 @@ const DiagnosticSection = () => (
     <div>
       <div className="flex items-start mb-6">
         <div className="flex-shrink-0">
-          <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-full flex items-center justify-center">
             <svg
               className="w-6 h-6 md:w-8 md:h-8 text-white"
               fill="none"

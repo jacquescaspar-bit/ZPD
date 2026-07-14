@@ -337,7 +337,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             {paymentStatus === "processing" ? (
               <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
             ) : (
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="currentColor"
@@ -366,7 +366,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
           </div>
           <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mt-4">
             <svg
-              className="w-5 h-5 text-green-500"
+              className="w-5 h-5 text-indigo-500"
               fill="currentColor"
               viewBox="0 0 20 20"
             >

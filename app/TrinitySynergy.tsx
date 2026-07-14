@@ -1,5 +1,5 @@
 const TrinitySynergy = () => (
-  <section className="py-20 bg-white dark:bg-gray-800">
+  <section className="py-20 bg-stone-50 dark:bg-stone-900">
     <div className="px-6">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-light mb-6 text-gray-900 dark:text-white">
@@ -14,7 +14,7 @@ const TrinitySynergy = () => (
 
       <div className="grid md:grid-cols-3 gap-8">
         <div className="text-center">
-          <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
               className="w-10 h-10 text-white"
               fill="none"
@@ -40,7 +40,7 @@ const TrinitySynergy = () => (
         </div>
 
         <div className="text-center">
-          <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-indigo-700 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
               className="w-10 h-10 text-white"
               fill="none"
@@ -66,7 +66,7 @@ const TrinitySynergy = () => (
         </div>
 
         <div className="text-center">
-          <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
               className="w-10 h-10 text-white"
               fill="none"

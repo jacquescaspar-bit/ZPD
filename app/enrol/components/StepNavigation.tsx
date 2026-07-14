@@ -43,12 +43,12 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
               <button
                 className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-semibold transition-all duration-200 ${
                   index <= currentStepIndex
-                    ? "bg-emerald-500 text-white shadow-lg"
+                    ? "bg-indigo-500 text-white shadow-lg"
                     : index === currentStepIndex + 1 &&
                         ((step === "plan" && canProceedToPlan) ||
                           (step === "payment" && canProceedToPayment) ||
                           (step === "review" && canProceedToReview))
-                      ? "bg-emerald-100 text-emerald-700 border-2 border-emerald-300 hover:bg-emerald-200"
+                      ? "bg-indigo-100 text-indigo-700 border-2 border-indigo-300 hover:bg-indigo-200"
                       : "bg-gray-200 text-gray-400 cursor-not-allowed"
                 }`}
                 disabled={
@@ -79,7 +79,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             {index < steps.length - 1 && (
               <div
                 className={`w-20 h-0.5 transition-colors duration-200 ${
-                  index < currentStepIndex ? "bg-emerald-500" : "bg-gray-300"
+                  index < currentStepIndex ? "bg-indigo-500" : "bg-gray-300"
                 }`}
               />
             )}
@@ -94,7 +94,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
               <span
                 className={`text-xs text-center leading-tight ${
                   index <= currentStepIndex
-                    ? "text-emerald-600 dark:text-emerald-400 font-medium"
+                    ? "text-indigo-600 dark:text-indigo-400 font-medium"
                     : "text-gray-500 dark:text-gray-400"
                 }`}
               >
@@ -127,7 +127,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
                 className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-200 ${
                   !canGoForward
                     ? "bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-800 dark:text-gray-500"
-                    : "bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+                    : "bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
                 }`}
                 disabled={!canGoForward}
                 onClick={onNextStep}

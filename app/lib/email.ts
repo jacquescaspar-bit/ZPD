@@ -85,10 +85,10 @@ const sendReferralCodeEmail = (
   const subject = "Your ZPD Learning Referral Code";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h1 style="color: #059669;">Welcome to ZPD Learning!</h1>
+      <h1 style="color: #4F46E5;">Welcome to ZPD Learning!</h1>
       <p>Thank you for your enrolment. Here's your unique referral code:</p>
-      <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-        <h2 style="color: #059669; font-size: 24px; margin: 0;">${referralCode}</h2>
+      <div style="background: #eef2ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <h2 style="color: #4F46E5; font-size: 24px; margin: 0;">${referralCode}</h2>
       </div>
       <p><strong>How it works:</strong></p>
       <ul>
@@ -115,16 +115,16 @@ const sendNewReferralCodeEmail = (
   const subject = "Your $100 referral reward is ready!";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h1 style="color: #059669;">Someone used your referral code!</h1>
+      <h1 style="color: #4F46E5;">Someone used your referral code!</h1>
       <p>Great news — a friend enrolled with your code <strong>${originalCode}</strong>.</p>
       <p><strong>Your personal $100 reward</strong> (use at your next Essential or Intensive checkout):</p>
-      <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-        <h2 style="color: #059669; font-size: 24px; margin: 0;">${rewardPromoCode}</h2>
+      <div style="background: #eef2ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <h2 style="color: #4F46E5; font-size: 24px; margin: 0;">${rewardPromoCode}</h2>
       </div>
       <p>This reward is linked to <strong>${email}</strong> and can be used once.</p>
       <p><strong>Your new code to share:</strong></p>
-      <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-        <h2 style="color: #059669; font-size: 24px; margin: 0;">${newReferralCode}</h2>
+      <div style="background: #f5f5f4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <h2 style="color: #4F46E5; font-size: 24px; margin: 0;">${newReferralCode}</h2>
       </div>
       <p>Keep sharing ZPD Learning — each successful referral earns another $100 personal reward.</p>
       <p>The ZPD Learning Team</p>
@@ -253,7 +253,7 @@ const sendAbandonedEnrollmentEmail = (
     <p style="text-align: center; margin: 24px 0;">
       <a href="${resumeUrl}" style="background: #4F46E5; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">Continue enrolment</a>
     </p>
-    <p>Or explore our <a href="${SITE_URL}/guides/parents-guide-to-zpd">parent's guide to ZPD</a> if you'd like more context first.</p>
+    <p>Or read our <a href="${SITE_URL}/blog/is-tutoring-the-right-fit">parent guide on tutoring fit</a> if you'd like more context first.</p>
   `);
 
   return sendEmail({ to: email, subject, html });

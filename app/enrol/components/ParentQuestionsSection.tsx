@@ -85,7 +85,7 @@ const ParentQuestionsProgressIndicator: React.FC<
               : hasContent
                 ? justSaved
                   ? "text-green-700 dark:text-green-300 font-semibold"
-                  : "text-green-600 dark:text-green-400"
+                  : "text-indigo-600 dark:text-indigo-400"
                 : "text-gray-500 dark:text-gray-500"
         }`}
       >
@@ -352,7 +352,7 @@ const ParentQuestionsSection = ({
       <div className="px-4">
         <div className="w-full h-0.5 overflow-hidden rounded-t-2xl">
           <div
-            className="h-full bg-emerald-500 transition-all duration-300 ease-out"
+            className="h-full bg-indigo-500 transition-all duration-300 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>

@@ -377,14 +377,14 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
                   <span>- AUD ${(item.amount / 100).toFixed(2)}</span>
                 </div>
               ))}
-              <div className="flex justify-between text-lg font-semibold text-green-600 dark:text-green-400 pt-2 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-between text-lg font-semibold text-indigo-600 dark:text-indigo-400 pt-2 border-t border-gray-200 dark:border-gray-700">
                 <span>Total today</span>
                 <span>AUD ${finalAmountDisplay}</span>
               </div>
             </div>
           )}
           {adjustments.length === 0 && (
-            <div className="flex justify-between text-lg font-semibold text-green-600 dark:text-green-400 mt-4">
+            <div className="flex justify-between text-lg font-semibold text-indigo-600 dark:text-indigo-400 mt-4">
               <span>Total today</span>
               <span>AUD ${finalAmountDisplay}</span>
             </div>
@@ -463,7 +463,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
 
         <div className="flex gap-3">
           <button
-            className="flex-1 py-3 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium bg-green-500 text-white hover:bg-green-600"
+            className="flex-1 py-3 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium bg-indigo-600 text-white hover:bg-indigo-700"
             disabled={
               !stripe ||
               isProcessing ||

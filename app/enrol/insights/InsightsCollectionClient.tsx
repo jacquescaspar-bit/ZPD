@@ -182,7 +182,7 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
     return (
       <div className="relative">
         <Nav />
-        <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900" />
+        <div className="fixed inset-0 -z-10 bg-gradient-to-br bg-stone-50 dark:bg-stone-900" />
         <div className="z-10 flex min-h-screen items-center justify-center px-4 pb-12 pt-16 sm:px-6 lg:px-8">
           <div className="mx-auto w-full max-w-lg">
             <SubmissionConfirmation
@@ -199,7 +199,7 @@ const InsightsCollectionClient: React.FC<InsightsCollectionClientProps> = ({
   return (
     <div className="relative">
       <Nav />
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br bg-stone-50 dark:bg-stone-900" />
       <div className="z-10 min-h-screen px-4 pb-12 pt-16 sm:px-6 lg:px-8">
         <div className="space-y-6">
           <section className="pb-8 text-center">

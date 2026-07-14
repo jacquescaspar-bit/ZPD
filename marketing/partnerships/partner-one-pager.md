@@ -6,7 +6,7 @@ _For OTs, speech pathologists, psychs, learning support coordinators._
 
 ## When families ask you about tutoring
 
-**ZPD Learning** matches kids with **teachers who still work in schools** — term-based support, not weekly homework rescue.
+**ZPD Learning** matches children with **teachers who still work in schools** — term-based support, not weekly homework rescue.
 
 **Why partners send families our way:**
 

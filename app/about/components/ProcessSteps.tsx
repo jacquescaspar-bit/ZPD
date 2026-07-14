@@ -30,7 +30,7 @@ const ProcessSteps = () => (
             }}
           >
             <div className="relative mb-6 flex h-16 items-center justify-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-indigo-600 shadow-lg">
                 <IconComponent className="h-8 w-8 text-white" strokeWidth={2} />
               </div>
               <div className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-blue-600 bg-blue-500">
@@ -53,11 +53,11 @@ const ProcessSteps = () => (
     </div>
     <div className="mt-8 flex h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
       <div
-        className="h-2.5 flex-1 rounded-l-full bg-gradient-to-r from-blue-500 to-purple-600"
+        className="h-2.5 flex-1 rounded-l-full bg-indigo-600"
         style={{ flexBasis: "75%" }}
       />
       <div
-        className="h-2.5 flex-1 rounded-r-full bg-gradient-to-r from-blue-500 to-purple-600"
+        className="h-2.5 flex-1 rounded-r-full bg-indigo-600"
         style={{ flexBasis: "25%" }}
       />
     </div>

@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
         destination: "/legal#child",
         permanent: true,
       },
+      {
+        source: "/guides/parents-guide-to-zpd",
+        destination: "/blog/is-tutoring-the-right-fit",
+        permanent: true,
+      },
     ];
   },
 };

@@ -138,7 +138,7 @@ const Nav = () => {
       {/* Desktop Navigation */}
       <nav className="hidden md:block sticky top-0 z-20 py-4 min-h-16 relative transition-all duration-500 backdrop-blur-md">
         <div
-          className={`absolute inset-0 bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 ${pathname === "/" ? "transition-opacity duration-500" : ""}`}
+          className={`absolute inset-0 bg-stone-100/80 dark:bg-stone-900/80 ${pathname === "/" ? "transition-opacity duration-500" : ""}`}
           style={{ opacity: navOpacity }}
         />
         <Container
@@ -260,7 +260,7 @@ const Nav = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed top-0 left-0 w-full z-30 flex flex-col justify-start items-start space-y-4 pt-16 pb-6 pl-6 pr-6 transition-opacity duration-300 border-b border-gray-200/60 dark:border-gray-700/60 bg-gradient-to-br from-blue-100/95 via-indigo-100/95 to-purple-100/95 dark:from-gray-900/95 dark:via-blue-900/95 dark:to-indigo-900/95 backdrop-blur-md shadow-lg ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`md:hidden fixed top-0 left-0 w-full z-30 flex flex-col justify-start items-start space-y-4 pt-16 pb-6 pl-6 pr-6 transition-opacity duration-300 border-b border-stone-200/60 dark:border-stone-700/60 bg-stone-50/95 dark:bg-stone-900/95 backdrop-blur-md shadow-lg ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
         <a
           className={`text-xl leading-snug relative transition-colors duration-300 ${pathname === "/" ? "font-bold text-gray-800 dark:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-800 dark:after:bg-gray-200 after:transform after:scale-x-100 after:transition-transform after:duration-300 after:ease-out after:origin-center" : "font-light text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-gray-200 after:absolute after:bottom-[-10px] after:left-0 after:right-0 after:h-[1px] after:bg-gray-900 dark:after:bg-gray-200 after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-center"}`}

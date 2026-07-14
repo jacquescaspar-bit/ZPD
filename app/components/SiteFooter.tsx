@@ -65,7 +65,7 @@ const SiteFooter = () => (
             <li>
               <a
                 className="text-gray-400 hover:text-white transition-colors"
-                href="/guides/parents-guide-to-zpd"
+                href="/blog/is-tutoring-the-right-fit"
               >
                 Parent&apos;s guide to ZPD
               </a>

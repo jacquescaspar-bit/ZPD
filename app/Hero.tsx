@@ -46,7 +46,7 @@ const Hero = () => {
       >
         <div className="text-center flex flex-col items-center justify-center relative z-10 animate-fade-in-up">
           {/* ZPD */}
-          <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] bg-clip-text text-transparent">
+          <div className="text-6xl sm:text-7xl md:text-9xl font-bold uppercase mb-4 text-center text-[var(--primary)]">
             ZPD
           </div>
 

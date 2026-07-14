@@ -65,7 +65,7 @@ const TeacherEmailPrompt = ({
           {copied ? (
             <span
               aria-live="polite"
-              className="text-sm font-medium text-green-600 dark:text-green-400"
+              className="text-sm font-medium text-indigo-600 dark:text-indigo-400"
             >
               Copied
             </span>

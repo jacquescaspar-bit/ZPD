@@ -116,7 +116,7 @@ const GeoTutoringContent = ({ citySlug }: GeoTutoringContentProps) => {
               {" · "}
               <Link
                 className="text-indigo-600 hover:underline"
-                href="/guides/parents-guide-to-zpd"
+                href="/blog/is-tutoring-the-right-fit"
               >
                 Parent&apos;s guide to ZPD
               </Link>

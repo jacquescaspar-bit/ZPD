@@ -25,25 +25,25 @@ const parentHighlights = [
     title: "Classroom-active teachers",
     body: "Our tutors are casually or part-time engaged in local schools — not uni students winging it or retirees guessing at the syllabus. They understand current curriculum, teaching methods, and what your child faces daily.",
     icon: GraduationCap,
-    accent: "from-blue-500 to-indigo-500",
+    accent: "from-indigo-600 to-indigo-700",
   },
   {
     title: "Rigorously vetted",
     body: "Every tutor holds a current Working With Children Check, brings at least two years of tutoring experience, and participates in ongoing professional development before they work with families.",
     icon: ShieldCheck,
-    accent: "from-indigo-500 to-purple-500",
+    accent: "from-indigo-600 to-indigo-700",
   },
   {
     title: "Planned before sessions",
     body: "We gather parent insights, school context, and goals before tutoring begins — then build a learning sequence your tutor delivers and refines. Not improvised homework help week to week.",
     icon: BookOpen,
-    accent: "from-violet-500 to-purple-500",
+    accent: "from-indigo-500 to-indigo-600",
   },
   {
     title: "Term momentum",
     body: "Same tutor, same weekly rhythm, compounding progress. Term plans foster the parent–tutor–student partnership that moves learning forward.",
     icon: CalendarCheck,
-    accent: "from-purple-500 to-fuchsia-500",
+    accent: "from-indigo-600 to-indigo-700",
   },
 ];
 
@@ -58,16 +58,16 @@ const joinBenefits = [
 
 const blogLinks = [
   {
-    href: "/blog#perfect-tutor-match",
+    href: "/blog/tutor-fit-not-just-subject",
     label: "Finding the right tutor fit",
   },
   {
-    href: "/blog#certified-tutors-matter",
-    label: "Why vetted tutors matter",
+    href: "/blog/classroom-active-tutors",
+    label: "Teachers still in classrooms",
   },
   {
-    href: "/blog#experienced-tutors",
-    label: "Experience in the classroom",
+    href: "/blog/is-tutoring-the-right-fit",
+    label: "Is tutoring the right fit?",
   },
 ];
 
@@ -110,7 +110,7 @@ const TutorsContent = () => {
                 type="button"
                 onClick={() => scrollToSection("our-tutors")}
               >
-                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-md">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 text-white shadow-md">
                   <Users aria-hidden className="h-5 w-5" />
                 </div>
                 <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2">
@@ -129,14 +129,14 @@ const TutorsContent = () => {
               </button>
 
               <button
-                className="group rounded-2xl border border-indigo-200/80 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-indigo-950/60 dark:via-gray-800/95 dark:to-purple-950/60 dark:border-indigo-700/80 p-6 sm:p-8 text-left shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                className="group rounded-2xl border border-indigo-200/80 bg-gradient-to-br from-indigo-50 via-white to-stone-50 dark:from-indigo-950/60 dark:via-gray-800/95 dark:to-stone-950/60 dark:border-indigo-700/80 p-6 sm:p-8 text-left shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                 type="button"
                 onClick={() => scrollToSection("join")}
               >
-                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white shadow-md">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 text-white shadow-md">
                   <GraduationCap aria-hidden className="h-5 w-5" />
                 </div>
-                <p className="text-sm font-medium text-purple-600 dark:text-purple-400 mb-2">
+                <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2">
                   For teachers
                 </p>
                 <p className="text-xl font-medium text-gray-900 dark:text-white mb-2">
@@ -145,7 +145,7 @@ const TutorsContent = () => {
                 <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Tutor with us — we run the plan, parents, and business side.
                 </p>
-                <span className="inline-block mt-5 text-sm font-medium text-purple-600 dark:text-purple-400 group-hover:underline">
+                <span className="inline-block mt-5 text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:underline">
                   Join our network &rarr;
                 </span>
               </button>
@@ -155,7 +155,7 @@ const TutorsContent = () => {
 
         {/* Join band */}
         <section className="scroll-mt-24 relative overflow-hidden" id="join">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600" />
+          <div className="absolute inset-0 bg-indigo-700" />
           <div
             aria-hidden
             className="absolute inset-0 opacity-20"
@@ -275,7 +275,7 @@ const TutorsContent = () => {
             <div className="relative mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-gray-200/80 bg-white/95 px-6 py-12 text-center shadow-xl dark:border-gray-700/80 dark:bg-gray-800/95 sm:px-10 sm:py-14">
               <div
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)]"
+                className="absolute inset-x-0 top-0 h-1.5 bg-[var(--primary)]"
               />
               <h2
                 className="font-antipasto mb-3 text-3xl font-light text-gray-900 dark:text-white sm:text-4xl"
@@ -288,7 +288,7 @@ const TutorsContent = () => {
                 about your child and build a plan before tutoring starts.
               </p>
               <Link
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-8 py-4 text-lg font-medium tracking-wide text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gradient-start)] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center rounded-full bg-[var(--primary)] hover:bg-[var(--primary-dark)] px-8 py-4 text-lg font-medium tracking-wide text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
                 href="/enrol?plan=trial"
               >
                 Start with a Diagnostic
