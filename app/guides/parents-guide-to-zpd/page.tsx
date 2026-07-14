@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import GuideContent from "@/guides/parents-guide-to-zpd/GuideContent";
 
 export const metadata: Metadata = {
-  title: "A Parent's Guide to ZPD | ZPD Learning",
+  title: "Is Tutoring the Right Fit? A Parent's Guide | ZPD Learning",
   description:
-    "Plain-language guide to the Zone of Proximal Development — how to spot the right level of challenge for your child and what to look for in tutoring.",
+    "Before you pay for a term of tutoring: how to spot when work is too hard or too easy, five questions to ask any tutor, and what good support looks like.",
   openGraph: {
-    title: "A Parent's Guide to the Zone of Proximal Development",
+    title: "Is tutoring actually the right fit?",
     description:
-      "How to spot the gap between what your child can do alone and what they can do with the right support.",
+      "A short guide for parents — what to ask before you commit to a term.",
     type: "article",
   },
 };

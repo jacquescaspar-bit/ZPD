@@ -25,9 +25,9 @@ https://zpdlearning.com/enrol?plan=essential&promo=TERM2026
 
 ## Copy to use publicly
 
-**Short:** Term start — $50 off Diagnostic or Essential. Code **TERM2026** at enrol.
+**Short:** $50 off a Diagnostic or Essential term — code **TERM2026** at checkout.
 
-**Facebook comment:** Use code TERM2026 at https://zpdlearning.com/enrol — $50 off Diagnostic Discovery or Essential plan (limited uses).
+**Facebook comment:** Code TERM2026 at https://zpdlearning.com/enrol — $50 off Diagnostic or Essential (limited uses).
 
 ## When to retire
 

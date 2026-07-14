@@ -13,175 +13,243 @@ const GuideContent = () => (
     <div className="px-6 pt-16 pb-12">
       <Container size="md">
         <header className="text-center mb-12 max-w-3xl mx-auto">
+          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-3 tracking-wide uppercase">
+            Free guide · ~8 min read
+          </p>
           <h1
             className="text-3xl sm:text-5xl font-semibold text-gray-900 dark:text-white mb-4 leading-tight"
             style={{ letterSpacing: "0.02em" }}
           >
-            A Parent&apos;s Guide to the Zone of Proximal Development
+            Is tutoring actually the right fit?
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-            How to spot the gap between what your child can do alone and what
-            they can do with the right support — and why it matters for
-            tutoring.
+            Before you sign up for a term, here&apos;s how to tell whether the
+            work is too hard, too easy, or sitting in that productive middle —
+            and what to ask any tutor on the phone.
           </p>
         </header>
 
         <article className="max-w-3xl mx-auto">
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              Introduction
+              You&apos;ve probably seen this kitchen table
             </h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Every parent has watched their child stuck on homework —
-              frustrated, quiet, or insisting &quot;I don&apos;t get it.&quot;
-              Often the problem isn&apos;t ability. It&apos;s{" "}
-              <strong>fit</strong>: the work is either too easy (boredom) or too
-              hard (shutdown).
+              Homework opens. Within ten minutes the mood has turned. By eight
+              o&apos;clock you&apos;re explaining the same concept for the third
+              time and wondering if you&apos;re helping or doing it for them.
             </p>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Psychologist Lev Vygotsky described the space between those
-              extremes: the <strong>Zone of Proximal Development (ZPD)</strong>.
-              It&apos;s where learning actually happens — with the right
-              support, not alone.
+              Or the flip side: they whip through the sheet, say tutoring is a
+              waste of money, and still walk out of the exam with a mark that
+              doesn&apos;t match what you know they can do.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Both patterns are common. Both are usually a <strong>fit</strong>{" "}
+              problem — not a kid who &quot;isn&apos;t trying.&quot;
             </p>
           </section>
 
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              1. Three zones — not just &quot;good&quot; and &quot;bad&quot;
+              The one idea worth knowing
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700">
-                    <th className="py-2 pr-4 font-medium">Zone</th>
-                    <th className="py-2 pr-4 font-medium">Feels like</th>
-                    <th className="py-2 font-medium">What happens</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-600 dark:text-gray-400">
-                  <tr className="border-b border-gray-100 dark:border-gray-800">
-                    <td className="py-3 pr-4">Too easy</td>
-                    <td className="py-3 pr-4">&quot;This is boring&quot;</td>
-                    <td className="py-3">No growth; child coasts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100 dark:border-gray-800">
-                    <td className="py-3 pr-4 font-medium text-indigo-700 dark:text-indigo-300">
-                      ZPD
-                    </td>
-                    <td className="py-3 pr-4">
-                      &quot;I need a hint… oh, I see it&quot;
-                    </td>
-                    <td className="py-3">Real learning; skills stick</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 pr-4">Too hard</td>
-                    <td className="py-3 pr-4">
-                      &quot;I can&apos;t do this&quot;
-                    </td>
-                    <td className="py-3">Anxiety; child gives up</td>
-                  </tr>
-                </tbody>
-              </table>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Kids learn fastest on work they <em>almost</em> get — with a hint,
+              a model, or someone asking the right question, not with you doing
+              it for them.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Psychologists call that band the Zone of Proximal Development. We
+              shorten it to ZPD. You don&apos;t need the theory — you need to
+              spot which band your child is in this week.
+            </p>
+          </section>
+
+          <section className={sectionClass}>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
+              Three bands — pick the one that sounds like your house
+            </h2>
+            <div className="space-y-4 text-gray-600 dark:text-gray-400">
+              <div className="rounded-xl bg-gray-50 dark:bg-gray-900/50 p-4 border border-gray-100 dark:border-gray-700">
+                <p className="font-medium text-gray-900 dark:text-white m-0">
+                  Too easy
+                </p>
+                <p className="mt-2 mb-0 leading-relaxed">
+                  &quot;This is boring.&quot; Done in minutes. Careless mistakes
+                  when it actually counts. Tutoring feels pointless because
+                  nothing stretches them.
+                </p>
+              </div>
+              <div className="rounded-xl bg-indigo-50/80 dark:bg-indigo-950/30 p-4 border border-indigo-100 dark:border-indigo-900/50">
+                <p className="font-medium text-indigo-900 dark:text-indigo-200 m-0">
+                  Just right
+                </p>
+                <p className="mt-2 mb-0 leading-relaxed">
+                  &quot;I need a hint… oh, I see it.&quot; Frustration, then a
+                  click. They can repeat it tomorrow with less help. This is
+                  where money and time actually pay off.
+                </p>
+              </div>
+              <div className="rounded-xl bg-gray-50 dark:bg-gray-900/50 p-4 border border-gray-100 dark:border-gray-700">
+                <p className="font-medium text-gray-900 dark:text-white m-0">
+                  Too hard (for now)
+                </p>
+                <p className="mt-2 mb-0 leading-relaxed">
+                  &quot;I can&apos;t do this.&quot; Won&apos;t start. Meltdowns
+                  on work they &quot;should&quot; know. You become the nightly
+                  tutor by default.
+                </p>
+              </div>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 mt-4">
-              <strong>Good tutoring</strong> keeps sessions in the ZPD — not
-              re-teaching the whole syllabus or doing homework for them.
+            <p className="text-gray-600 dark:text-gray-400 mt-5 mb-0 leading-relaxed">
+              Good tutoring stays in the middle band. Bad tutoring either does
+              the homework for them or throws harder content at a kid who
+              hasn&apos;t closed the gap underneath.
             </p>
           </section>
 
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              2. Signs work is too hard
+              Red flags — you might be paying for the wrong thing
             </h2>
             <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400">
-              <li>Meltdowns over tasks they &quot;should&quot; manage</li>
-              <li>Parent becomes the full-time explainer every night</li>
-              <li>Child avoids starting work</li>
-              <li>Tutor reports &quot;we just get through homework&quot;</li>
+              <li>
+                Sessions are mostly &quot;let&apos;s get tonight&apos;s sheet
+                done&quot;
+              </li>
+              <li>
+                Your child can&apos;t explain what they practised without the
+                tutor in the room
+              </li>
+              <li>
+                Nobody tells you what to do for five minutes between visits —
+                just &quot;do homework&quot;
+              </li>
+              <li>
+                The tutor can&apos;t say what should be different after five
+                sessions
+              </li>
+              <li>
+                You&apos;re on week six and the plan still changes every
+                Thursday
+              </li>
             </ul>
-            <p className="text-gray-600 dark:text-gray-400 mt-4">
-              <strong>What helps:</strong> Smaller steps, more scaffolding, a
-              tutor who understands current classroom expectations.
+          </section>
+
+          <section className={sectionClass}>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
+              What good support looks like in the room
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Watch for this pattern — it&apos;s simple and it works:
+            </p>
+            <ol className="list-decimal pl-5 space-y-3 text-gray-600 dark:text-gray-400">
+              <li>
+                <strong>Show one move</strong> — &quot;Watch how I&apos;d start
+                this problem.&quot;
+              </li>
+              <li>
+                <strong>Hand it back</strong> — &quot;What&apos;s your first
+                step?&quot;
+              </li>
+              <li>
+                <strong>Step away</strong> — less talking each week as the skill
+                sticks.
+              </li>
+            </ol>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              If the tutor is always holding the pencil, you&apos;re buying
+              dependency. If they never adjust when your kid shuts down,
+              you&apos;re buying anxiety.
             </p>
           </section>
 
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              3. Signs work is too easy
+              Five questions to ask before you hand over a term&apos;s fees
             </h2>
-            <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400">
-              <li>Finishes quickly but careless errors under pressure</li>
-              <li>Says tutoring is &quot;pointless&quot;</li>
-              <li>Grades don&apos;t match ability on harder exams</li>
-            </ul>
-            <p className="text-gray-600 dark:text-gray-400 mt-4">
-              <strong>What helps:</strong> Stretch tasks, exam-style
-              application, metacognition (&quot;how did you know that?&quot;).
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+              Copy these into an email or ask on a call. A decent provider
+              answers plainly.
             </p>
-          </section>
-
-          <section className={sectionClass}>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              4. What good support looks like
-            </h2>
-            <ol className="list-decimal pl-5 space-y-2 text-gray-600 dark:text-gray-400">
+            <ol className="list-decimal pl-5 space-y-3 text-gray-600 dark:text-gray-400">
               <li>
-                <strong>Model</strong> — &quot;Watch how I&apos;d approach
-                this&quot;
+                <strong>
+                  &quot;How will you figure out my child&apos;s level?&quot;
+                </strong>{" "}
+                — not just subject and year.
               </li>
               <li>
-                <strong>Prompt</strong> — &quot;What&apos;s the first step
-                you&apos;d try?&quot;
+                <strong>
+                  &quot;What should they do alone after session five that they
+                  can&apos;t do now?&quot;
+                </strong>
               </li>
               <li>
-                <strong>Fade</strong> — pull back as confidence grows
+                <strong>
+                  &quot;What do you want me practising at home — specifically,
+                  for how long?&quot;
+                </strong>
+              </li>
+              <li>
+                <strong>
+                  &quot;Are you still teaching in schools? What year
+                  levels?&quot;
+                </strong>
+              </li>
+              <li>
+                <strong>
+                  &quot;Can we do one session before committing to a term?&quot;
+                </strong>
               </li>
             </ol>
           </section>
 
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              5. Why classroom context matters
+              Why we care if the tutor still teaches in a classroom
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Curriculum and assessment change year to year. Tutors disconnected
-              from schools can accidentally teach outdated methods. Look for
-              tutors actively working in schools, who understand your
-              child&apos;s year level, and who communicate what to practise
-              between sessions.
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              &quot;Experienced tutor&quot; on a flyer often means &quot;has
+              tutored for years&quot; — not &quot;knows what your child&apos;s
+              teacher is doing this term.&quot;
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Syllabus, NAPLAN weighting, even how maths gets taught shifts
+              constantly. The tutors we see work best are still in schools. They
+              live the same content your kid walks into on Monday morning.
             </p>
           </section>
 
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              6. Term commitment vs pay-as-you-go
+              Why a term beats &quot;book when you&apos;re stuck&quot;
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              One-off homework help keeps children transactional. A term plan
-              lets a tutor diagnose properly, build a sequence, and partner with
-              you so practice continues between visits. ZPD isn&apos;t built in
-              a single hour.
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              One-off homework rescue keeps everyone in fire-drill mode. A term
+              gives room to find the actual gap, build one skill at a time, and
+              loop you in so something happens between visits.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              That doesn&apos;t mean lock-in for lock-in&apos;s sake. It means
+              enough runway for progress to show up — usually more than a single
+              hour.
             </p>
           </section>
 
           <section className={sectionClass}>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              7. Checklist before you choose tutoring
+              Quick checklist
             </h2>
             <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-              <li>☐ Do they explain how they find your child&apos;s ZPD?</li>
               <li>
-                ☐ Is there structured intake (not just &quot;what
-                subject?&quot;)?
+                ☐ They can explain how they&apos;d find your child&apos;s level
               </li>
-              <li>☐ Are tutors vetted (WWCC, school experience)?</li>
-              <li>
-                ☐ Is there a plan for the term — not improvised each week?
-              </li>
-              <li>
-                ☐ Can you start with a diagnostic before a term commitment?
-              </li>
+              <li>☐ Real intake — not just &quot;what subject?&quot;</li>
+              <li>☐ WWCC and school experience checked</li>
+              <li>☐ A plan for the term, not a new plan every week</li>
+              <li>☐ One trial session before you commit</li>
             </ul>
           </section>
 
@@ -189,24 +257,26 @@ const GuideContent = () => (
             className={`${sectionClass} text-center border-indigo-200/80 dark:border-indigo-800/80`}
           >
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-0">
-              About ZPD Learning
+              If you want to try us
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Classroom-active tutors · $110 Diagnostic Discovery · Term-based
-              plans · Online or in-home across Australia.
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              ZPD Learning matches kids with teachers who still work in local
+              schools. Start with a $110 Diagnostic — one session to see if the
+              fit&apos;s right — then term plans if it is. Online or in-home
+              across Australia.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
               <Link
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-8 py-3 font-medium text-white shadow-lg hover:scale-105 transition-transform"
                 href="/enrol?plan=trial"
               >
-                Start with a Diagnostic
+                Book a Diagnostic
               </Link>
               <Link
                 className="inline-flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 px-8 py-3 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 href="/blog#zpd-zone-of-proximal-development"
               >
-                Read more on our blog
+                More on our blog
               </Link>
             </div>
             <ShareGuideLink />

@@ -1,166 +1,89 @@
-# Tutor Network Virality — Supply-Side Growth
+# Tutor Network — Supply-Side Growth
 
-Casual teachers are a **second growth engine**, parallel to parent referrals. Same decentralised model — different incentive, different message.
+Casual teachers are a **second engine** alongside parent referrals. Different audience, different message.
 
 ## Two flywheels
 
-|                     | Parent referral                                                                                         | Tutor network                                             |
-| ------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| **Who**             | Enrolled families                                                                                       | Classroom-active casuals / teachers                       |
-| **Incentive**       | $100 off for a friend                                                                                   | Contractor income + referral upside; ops handled for them |
-| **What they share** | "This tutoring worked for us"                                                                           | "I tutor through ZPD — families I trust"                  |
-| **Proof type**      | Emotional / child outcomes                                                                              | Professional credibility + curriculum fit                 |
-| **Product today**   | Referral codes after purchase ([`ReferralShareCard`](../../app/enrol/components/ReferralShareCard.tsx)) | **Manual** — no tutor portal or tutor referral codes yet  |
+|                | Parents                                          | Teachers                              |
+| -------------- | ------------------------------------------------ | ------------------------------------- |
+| **Incentive**  | $100 off for a friend; personal reward when used | Contractor pay + referral bounty      |
+| **They share** | "This worked for us"                             | "I tutor through ZPD — ask me"        |
+| **Product**    | REF codes after purchase                         | Manual tracking → Phase 2 tutor codes |
 
-```mermaid
-flowchart TB
-  subgraph parent [Parent_flywheel]
-    Enrol[Family_enrols]
-    Code[REF_code]
-    Share[Shares_with_parents]
-    Enrol --> Code --> Share --> Enrol
-  end
-  subgraph tutor [Tutor_flywheel]
-    Join[Tutor_joins_as_contractor]
-    Deliver[ZPD_handles_planning_and_admin]
-    Refer[Refers_families_or_tutors]
-    Join --> Deliver --> Refer --> Enrol
-    Refer --> Join
-  end
-  Enrol --> Deliver
-```
+Parents fill demand. Teachers fill supply and can refer both.
 
 ---
 
-## Value proposition for casual teachers
+## Pitch to teachers
 
-**Lead with what you remove from their plate — not "extra work."**
+**Lead with what you remove, not "extra work."**
 
-### You handle
+**We handle:** intake, insights, session planning, enrolment, payments, contractor admin, matching.
 
-- Parent intake and insights funnel
-- Session planning and learning sequences (AI-assisted, tutor-owned delivery)
-- Enrolment, payments, term structure
-- Contractor payments (ABN, invoicing rhythm — define clearly)
-- Matching families to the right tutor in their area / online
+**They keep:** teaching, judgement, flexibility without building a solo business.
 
-### They keep
-
-- The teaching — relationship with the child
-- Professional judgement in the ZPD
-- Flexibility of casual life without building a solo tutoring business
-- **Financial upside** when they refer families or other strong tutors
-
-### One-line for tutors
-
-> _Teach in the zone. We run the plan, the parents, and the business._
+**One line:** _You teach in the zone. We run the plan and the parents._
 
 ---
 
-## Why tutors virally share (unlike generic gig work)
+## Why teachers refer
 
-1. **Staff-room trust** — other casuals ask "how do you get tutoring clients?"
-2. **Parent overlap** — teachers already meet parents who need support; referral feels like help, not sales
-3. **Reputation stake** — they only refer families they'd actually teach well
-4. **Repeat income** — term plans = stable contractor hours vs one-off Gumtree gigs
-5. **No admin guilt** — they're not handing parents a dodgy Facebook ad; they're handing them a structured system
-
----
-
-## Incentive structure (define before scaling)
-
-Document your actual numbers here once decided:
-
-| Action                                                      | Suggested model                                | Notes                                                                                      |
-| ----------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Tutor delivers sessions                                     | Contractor rate per session / term             | Core income — see internal `rate-card.md` ($55–68/session by plan); **not on public site** |
-| Tutor refers **family** who enrols                          | $**_ per Diagnostic OR $_** per term plan      | Paid after payment clears; track in spreadsheet → Phase 2 admin                            |
-| Tutor refers **another tutor** who joins + completes 1 term | $\_\_\_ one-off bounty                         | Quality gate: referred tutor must pass vetting + complete term                             |
-| Parent uses tutor's code at enrol                           | Mirror parent $100 off OR tutor-specific promo | Requires **tutor referral codes** in product (Phase 2)                                     |
-
-**Principle:** Tutor referral fee should feel meaningful on one term (~$50–$150 AUD range is common in ed-referral) without eroding margin on Essential ($950).
+- Staff-room trust — "how do you get clients without the admin?"
+- They already know parents who need help
+- They only refer families they'd actually teach
+- Term plans = stable hours vs one-off gigs
 
 ---
 
-## Messaging — tutor-facing (not parent-facing)
+## Incentives (fill in before scaling)
 
-**Do say:**
+| Action                           | Model                               |
+| -------------------------------- | ----------------------------------- |
+| Deliver sessions                 | See `rate-card.md` ($55–68/session) |
+| Refer family who enrols          | $\_\_\_ after payment clears        |
+| Refer tutor who completes 1 term | $\_\_\_ one-off                     |
 
-- Planned sequences, not homework hell
-- You stay classroom-active; we don't ask you to pretend to be a full-time agency
-- Decentralised — online or in-home near schools you already work in
-- WWCC and vetting already part of the system
-
-**Don't say:**
-
-- "Passive income" (insulting to teachers)
-- "Easy money"
-- Anything that sounds like they're selling out parents
+Keep bounty meaningful (~$50–150) without breaking Essential margin.
 
 ---
 
-## How tutors spread (channels)
+## Messaging
 
-| Channel                                    | Tactic                                                                     |
-| ------------------------------------------ | -------------------------------------------------------------------------- |
-| Staff rooms / casual networks              | Word of mouth — one satisfied tutor is worth 10 posts                      |
-| Existing ZPD tutor refers colleague        | Highest quality supply                                                     |
-| Teacher Facebook groups (AU)               | Value post: "how I tutor without building a business" — not a hiring blast |
-| University ed grad / casual teacher groups | Same angle — ops handled                                                   |
-| Parent pickup line / school events         | Soft: "if you ever need…" — tutor gives card or link, not hard sell        |
+**Say:** planned sessions, stay classroom-active, we handle admin, WWCC in place.
 
-**Same rule as parent Facebook:** value first, link second, enrol never in the first breath.
+**Don't say:** passive income, easy money, anything that sounds like selling out parents.
 
 ---
 
-## Onboarding sequence (manual until Phase 2)
+## Channels
 
-1. **Identify** 2–3 casuals you trust (pilot cohort)
-2. **Coffee / 15-min call** — walk through planning funnel + contractor terms
-3. **Give tutor kit:** `tutor-one-pager.md` + personal enrol link (today: generic `/enrol` + track source in spreadsheet)
-4. **First family** matched — tutor experiences full planning pipeline
-5. **Ask for one referral** — family or colleague — only after successful term start
-6. **Pay referral bounty** on time — trust is the whole game
+Staff rooms · teacher Facebook groups (value post, not "we're hiring") · colleague referrals from happy tutors · soft mention at school events.
+
+Same rule as parent Facebook: value first, link second.
 
 ---
 
-## Tutor kit (what to send)
+## Pilot sequence
 
-See [`tutor-one-pager.md`](./tutor-one-pager.md) — email or PDF for casuals.
-
-Optional physical: simple card with QR → `zpdlearning.com/enrol?plan=trial` and tutor name in `?ref=` once tutor codes exist.
-
----
-
-## Product gaps (Phase 2)
-
-To scale tutor virality beyond spreadsheets:
-
-- [ ] Tutor-specific referral / tracking codes (`TUTOR-NAME` or `REF` tied to `owner_email` of tutor)
-- [ ] Tutor portal: view matched families, session plans, mark sessions complete
-- [ ] Automated contractor payment reporting
-- [ ] Admin view: tutor-attributed enrollments and referral bounties owed
-- [x] `/tutors` dual-audience page (parent trust + `#join` recruitment band; no public $ rates)
-
-**Agent command:** "Build tutor referral tracking from marketing/tutor-network/"
+1. Pick 2–3 casuals you trust
+2. 15-min call — funnel + contractor terms
+3. Send `tutor-one-pager.md`
+4. First family matched — full pipeline experience
+5. Ask for one referral after term starts
+6. Pay bounty on time
 
 ---
 
-## Metrics (add to weekly tracker)
+## Phase 2 product
 
-| Metric                                   | Target (pilot)                      |
-| ---------------------------------------- | ----------------------------------- |
-| Active contractor tutors                 | 3 → 10                              |
-| Families from tutor referral             | Track manually: source = tutor name |
-| Tutor → tutor referrals                  | 1 per active tutor per term         |
-| Tutor NPS / would you refer a colleague? | Ask monthly                         |
+- Tutor referral codes
+- Tutor portal (families, plans, sessions)
+- Admin: tutor-attributed enrolments + bounties owed
+
+[x] `/tutors` page live
 
 ---
 
-## Where this sits in the marketing plan
+## Metrics (add to `tracking/weekly-metrics.md`)
 
-- **Phase 1:** Pilot with 2–3 tutors manually; no product build
-- **Phase 1b (parallel Week 2–3):** Tutor one-pager + staff-room word of mouth
-- **Phase 2:** Tutor codes + `/tutors` page + admin bounty tracking
-
-Parent marketing and tutor marketing **run in parallel** — parents fill demand, tutors fill supply and both can refer.
+Active contractor tutors · enrolments via tutor · tutor → tutor referrals

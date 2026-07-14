@@ -1,62 +1,66 @@
 # ZPD Learning — Positioning & Voice
 
-Use this before writing or posting anything. If copy contradicts this, fix the copy.
+Read this before you post, email, or paste anything public.
 
-## One-line pitch
+## What we are (one sentence)
 
-**Classroom-active tutors. Term-based plans. Learning in the Zone of Proximal Development — by design.**
+Classroom teachers who tutor — with a proper plan for the term, not ad-hoc homework help.
 
-## Wedge (what makes you different)
+## What makes us different
 
-| Say                                        | Don't say                                         |
-| ------------------------------------------ | ------------------------------------------------- |
-| Tutors actively teaching in local schools  | "Experienced tutors" (vague)                      |
-| Term-based plans with diagnostic first     | "Flexible / pay as you go"                        |
-| Planned sequences, not improvised sessions | "We adapt every week" without explaining planning |
-| Decentralised network — online or in-home  | "Nationwide" in hero (save for Features)          |
-| $110 Diagnostic Discovery as entry         | Lead with $950 Essential                          |
+- **Tutors still teaching in schools** — they know this year's syllabus, not "tutoring since 2012"
+- **Diagnostic first** — $110 session before anyone asks you to commit to a term
+- **Term plans** — 10 or 20 sessions with a sequence, not a new crisis every Tuesday
+- **Online or in-home** — wherever you're based in Australia
 
-## Audiences
+Lead with the **$110 Diagnostic**, not the $950 Essential plan.
 
-### Parents (demand)
+## Who we're talking to
 
-- Parents of school-age children (roughly Year 5–12)
-- Sydney / Melbourne / Brisbane metros + national online
-- Anxious about HSC, NAPLAN, falling behind, or "wrong tutor fit"
-- Want structure, not homework help ad hoc
+**Parents:** Years 5–12, Sydney/Melbourne/Brisbane + national online. They're tired of nightly homework battles, wrong-fit tutors, or vague "we'll see how it goes" arrangements.
 
-### Casual teachers (supply + referral)
+**Teachers (supply):** Casuals who already tutor a bit and hate the admin. Message: you teach; we handle parents, plans, and payments. See `tutor-network/tutor-one-pager.md`.
 
-- Actively teaching in schools; some already tutor on the side
-- Hate admin: finding clients, planning from scratch, invoicing parents
-- Financial incentive to refer families _and_ other strong tutors
-- Message: **we run plan + business; you teach in the ZPD** — see `tutor-network/tutor-virality.md`
+## Voice — sound like a person, not a brand
 
-## Voice
+### Do
 
-- Direct, confident, warm — not salesy or Socratic
+- Write like you'd explain it to another parent at school pickup
+- Use **you** and **your child** — not "families" or "learners"
+- One concrete detail beats three adjectives ("Year 9 algebra, third meltdown this week")
+- Short sentences. Stop when you've made the point.
 - Australian English
-- Short sentences. No jargon without explaining ZPD once.
-- Never fear-monger ("your child will fail without us")
 
-## Primary CTA
+### Don't (these read as AI / corporate)
 
-**Enrol** → Diagnostic Discovery ($110) → Essential / Intensive term
+| Kill this                                              | Why                                            |
+| ------------------------------------------------------ | ---------------------------------------------- |
+| "Something we wish more parents knew"                  | Fake intimacy                                  |
+| "Hot take:" / "The most underrated part"               | LinkedIn voice                                 |
+| "Plain-language guide" / "parent-facing explainer"     | You're describing the doc, not helping anyone  |
+| "By design" / "curriculum-native" / "decentralised"    | Jargon wallpaper                               |
+| "Neither means your child lacks ability"               | Therapist hedging — just say what's going on   |
+| "Happy to share if useful" / "No worries if not a fit" | Fine once; in every email it's a template tell |
+| Bullet lists where a paragraph would do                | Scan-friendly but soulless                     |
+| "We don't promise magic grades"                        | Defensive; nobody asked                        |
 
-Secondary: Blog (trust), Contact (questions), Referral ($100 off)
+**Test:** Read it aloud. If you wouldn't say it to a friend's face, rewrite it.
 
-## URLs to use in marketing
+## CTAs
 
-| Purpose        | URL                                                                  |
-| -------------- | -------------------------------------------------------------------- |
-| Main enrol     | https://zpdlearning.com/enrol                                        |
-| Diagnostic     | https://zpdlearning.com/enrol?plan=trial                             |
-| Essential      | https://zpdlearning.com/enrol?plan=essential                         |
-| With promo     | https://zpdlearning.com/enrol?plan=essential&promo=TERM2026          |
-| Blog           | https://zpdlearning.com/blog                                         |
-| Flagship guide | https://zpdlearning.com/guides/parents-guide-to-zpd (once published) |
+1. **Enrol** → Diagnostic ($110) → Essential / Intensive term
+2. Blog or flagship guide (trust, cold outreach)
+3. Referral — $100 off for a friend; referrer gets their own reward (see site emails)
 
-## Phone & nav
+## Links
 
-- Phone on Contact page + footer + Google Business Profile — **not** primary nav
-- Nav CTA stays **Enrol**
+| Use        | URL                                                         |
+| ---------- | ----------------------------------------------------------- |
+| Enrol      | https://zpdlearning.com/enrol                               |
+| Diagnostic | https://zpdlearning.com/enrol?plan=trial                    |
+| Essential  | https://zpdlearning.com/enrol?plan=essential                |
+| Promo      | https://zpdlearning.com/enrol?plan=essential&promo=TERM2026 |
+| Guide      | https://zpdlearning.com/guides/parents-guide-to-zpd         |
+| Blog       | https://zpdlearning.com/blog                                |
+
+Phone: **1300 990 443** on Contact, footer, Google — not in the main nav.

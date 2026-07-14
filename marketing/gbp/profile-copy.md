@@ -1,65 +1,44 @@
-# Google Business Profile — Copy & Setup
+# Google Business Profile
 
-**Business model:** Service area business (SAB) — hide street address, show service areas.
+**Model:** Service area business — hide street address.
 
-## Basics
+| Field            | Value                                   |
+| ---------------- | --------------------------------------- |
+| Name             | ZPD Learning                            |
+| Primary category | Tutoring service                        |
+| Secondary        | Educational consultant, Learning center |
+| Phone            | 1300 990 443                            |
+| Website          | https://zpdlearning.com                 |
+| Email            | grow@zpdlearning.com                    |
 
-| Field                  | Value                                   |
-| ---------------------- | --------------------------------------- |
-| Business name          | ZPD Learning                            |
-| Category (primary)     | Tutoring service                        |
-| Categories (secondary) | Educational consultant, Learning center |
-| Phone                  | 1300 990 443                            |
-| Website                | https://zpdlearning.com                 |
-| Email                  | grow@zpdlearning.com                    |
+## Service areas
 
-## Service areas (add all that apply)
-
-- Greater Sydney, NSW
-- Greater Melbourne, VIC
-- Greater Brisbane, QLD
-- New South Wales (state-wide online)
-- Victoria (state-wide online)
-- Queensland (state-wide online)
-
-_Add other states as you gain traction._
+Greater Sydney, Greater Melbourne, Greater Brisbane — plus NSW/VIC/QLD statewide for online.
 
 ## Description (750 chars max)
 
 ```
-ZPD Learning provides personalised tutoring designed around the Zone of Proximal Development — the sweet spot where your child learns with the right support, not alone.
+Personalised tutoring with classroom teachers who still work in local schools — not generic homework help.
 
-Our tutors are classroom-active teachers working in local schools. They understand current curriculum, assessment, and what happens in your child's classroom this year — not generic "homework help."
+Start with a $110 Diagnostic session to see if the fit's right. Then term plans (10 or 20 sessions), online or in-home across Australia. WWCC-cleared tutors.
 
-• Diagnostic Discovery session ($110) before term commitment
-• Term-based plans (10 or 20 sessions)
-• Online or in-home across Australia
-• WWCC-cleared, vetted tutors
-
-Enrol online at zpdlearning.com — or call 1300 990 443.
+Enrol at zpdlearning.com or call 1300 990 443.
 ```
 
-## Opening hours
+## Hours
 
-Match realistic response times, e.g.:
+Mon–Fri 9am–5pm (or by appointment). Sat–Sun closed unless you actually answer.
 
-- Mon–Fri: 9:00 am – 5:00 pm
-- Sat–Sun: Closed (or by appointment)
+## First Google Post
 
-## First Google Post (publish on setup)
+**Title:** Try tutoring before you commit to a term
 
-**Title:** Term start — Diagnostic Discovery $110
-
-**Body:** Not sure if tutoring is the right fit? Start with a single Diagnostic session. Classroom-active tutors. Term plans available. Enrol at zpdlearning.com
+**Body:** One Diagnostic session ($110). Classroom-active teachers. Term plans if it's a fit. zpdlearning.com
 
 **Button:** Learn more → https://zpdlearning.com/enrol?plan=trial
 
-## Review ask (after happy parent)
+## Don't
 
-Use the review link from GBP dashboard. Keep it personal — see PLAYBOOK §8.
-
-## What NOT to do
-
-- Don't show Bondi registered address as a storefront
-- Don't keyword-stuff suburbs in business name ("ZPD Learning Sydney Melbourne")
-- Don't post enrol spam weekly — 1 post per fortnight max
+- Show a residential address as a shopfront
+- Stuff suburbs into the business name
+- Post enrol spam weekly — fortnightly max

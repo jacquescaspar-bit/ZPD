@@ -1,43 +1,29 @@
 # Partner One-Pager — ZPD Learning
 
-_Paste into emails to OTs, speech pathologists, child psychs, learning support coordinators._
+_For OTs, speech pathologists, psychs, learning support coordinators._
 
 ---
 
-## For your families considering tutoring
+## When families ask you about tutoring
 
-**ZPD Learning** matches children with **classroom-active tutors** — teachers currently working in local schools — for structured, term-based support.
+**ZPD Learning** matches kids with **teachers who still work in schools** — term-based support, not weekly homework rescue.
 
-### Why partners refer us
+**Why partners send families our way:**
 
-- **Curriculum-native** — tutors know current syllabus and assessment, not outdated methods
-- **Diagnostic first** — $110 single session before any term commitment
-- **Planned sequences** — not improvised homework help
-- **Online or in-home** — decentralised across Australia
-- **WWCC-cleared** — all tutors vetted
+- Tutors know current syllabus and assessment
+- $110 Diagnostic before any term commitment
+- Planned sessions — not improvised each week
+- Online or in-home, Australia-wide
+- WWCC cleared
 
-### What we don't do
+**What we won't do:** pay-as-you-go cramming, random uni-student matching, or pushing enrolment when it's not a fit.
 
-- Pay-as-you-go homework cramming
-- Generic uni-student tutoring
-- Pressure enrolment — fit matters
+**Free handout for parents:**  
+[A Parent's Guide to the Zone of Proximal Development](https://zpdlearning.com/guides/parents-guide-to-zpd)
 
-### Free parent resource
+**Contact:** grow@zpdlearning.com · 1300 990 443 · https://zpdlearning.com/enrol?plan=trial
 
-**A Parent's Guide to the Zone of Proximal Development**  
-[GUIDE_URL — update when published]
-
-Helps parents evaluate whether tutoring is in the right "learning zone" for their child.
-
-### Contact
-
-- Web: https://zpdlearning.com/enrol?plan=trial
-- Email: grow@zpdlearning.com
-- Phone: 1300 990 443
-
-### Referral (optional — manual tracking)
-
-If you refer a family who enrols in a term plan, tell us — we're happy to acknowledge the partnership. (No formal portal yet.)
+If you refer a family who enrols, tell us — we'll acknowledge it. (Manual for now.)
 
 ---
 

@@ -1,131 +1,100 @@
-# Facebook Group Posts — 4 Weeks
+# Facebook Posts — 4 weeks (2/month)
 
-**Rules:** Value first. Link in comment if group rules allow. Never spam multiple groups same day.
+**Rules:** No link in the post body if the group bans it — put the link in the first comment. Never post the same text to three groups on the same day. Value first; mention ZPD only when someone asks or in the comment.
 
-**Blog base URL:** https://zpdlearning.com/blog#
+**Guide:** https://zpdlearning.com/guides/parents-guide-to-zpd  
+**Blog:** https://zpdlearning.com/blog#
 
 ---
 
 ## Week 1
 
-### Post 1 — ZPD explainer (Mon)
+### Post 1 — The meltdown isn't laziness (Mon)
 
-**Post:**
-
-> Something we wish more parents knew: the gap between "can do alone" and "can do with help" is where real learning happens. Psychologists call it the Zone of Proximal Development.
+> Last term I sat with a parent whose kid could do the maths in tutoring — then fell apart doing the same thing at home alone.
 >
-> If homework meltdowns are nightly, the work might be _above_ that zone. If tutoring feels pointless, it might be _below_ it.
+> That's usually not attitude. The work's sitting in that gap between "I can do this with help" and "I can do this solo." Too far above it, and kids shut down.
 >
-> Neither means your child lacks ability — it usually means the support isn't matched to the right level.
+> If that sounds familiar, the fix is often smaller steps and a tutor who knows what's actually being taught in class this year — not a harder worksheet.
 
-**Comment (add link):**
-
-> We wrote a plain-language guide for parents on spotting this — happy to share if useful: https://zpdlearning.com/blog#zpd-zone-of-proximal-development
+**Comment:** We put together a short guide for parents on spotting this (free, no signup): [guide URL]
 
 ---
 
-### Post 2 — Tutor quality (Thu)
+### Post 2 — "Experienced tutor" on a flyer (Thu)
 
-**Post:**
-
-> Hot take: "experienced tutor" on a flyer often means "has tutored for a long time" — not "understands what your child's classroom is doing _this year_."
+> Quick question for the group: when you see "experienced tutor" on a flyer, what do you actually want to know?
 >
-> Curriculum, NAPLAN/HSC weighting, and even how maths is taught shift constantly. The best fit we've seen is tutors still active in schools — they live the same syllabus your child sees Monday morning.
+> For us it's: are they still in a classroom? Syllabus and NAPLAN weightings change constantly. The tutors we've seen work best still teach in schools — they're living the same content your kid gets on Monday morning.
 
-**Comment:**
-
-> Longer read on why classroom-active tutors matter: https://zpdlearning.com/blog#experienced-tutors
+**Comment:** Longer read on our blog if anyone wants it: https://zpdlearning.com/blog#experienced-tutors
 
 ---
 
 ## Week 2
 
-### Post 3 — Homework vs learning (Mon)
+### Post 3 — Homework help vs learning (Mon)
 
-**Post:**
-
-> Homework help isn't the same as learning support.
+> Homework help gets tonight's sheet done. Learning support is different — it's "what can you do next week without me in the room?"
 >
-> If sessions are just "get through tonight's sheet," your child learns dependency. If sessions build a skill they can use tomorrow _without_ the tutor — that's ZPD done right.
+> Worth asking any tutor you're considering: what should my child be able to do alone after five sessions that they can't do now?
 >
-> Worth asking any tutor: "What will my child be able to do alone after 5 sessions that they can't do now?"
+> If they can't answer that clearly, you're paying for dependency.
 
-**Comment:**
-
-> https://zpdlearning.com/blog#magic-trick
+**Comment:** https://zpdlearning.com/blog#magic-trick
 
 ---
 
-### Post 4 — Term plans (Thu)
+### Post 4 — Why term plans exist (Thu)
 
-**Post:**
-
-> Pay-as-you-go tutoring feels flexible — but it often keeps kids stuck. No continuity, no plan, different focus every week.
+> Pay-as-you-go tutoring feels flexible. In practice it often means a new fire drill every week — no thread, no plan, kid never gets past the panic stage.
 >
-> Term plans aren't about locking you in for profit. They're how a tutor can actually map a sequence: diagnose → build → fade support. Learning needs repetition in the right zone.
+> Term plans aren't about locking you in. They're how a tutor can actually map: figure out the gap → build the skill → step back. That takes more than one hour.
 
-**Comment:**
-
-> https://zpdlearning.com/blog#educational-philosophy
+**Comment:** https://zpdlearning.com/blog#educational-philosophy
 
 ---
 
 ## Week 3
 
-### Post 5 — Parent partnership (Mon)
+### Post 5 — You matter as much as the tutor (Mon)
 
-**Post:**
-
-> The most underrated part of tutoring isn't the tutor — it's the triangle: parent + tutor + child.
+> Tutoring works best when it's not a secret between kid and tutor.
 >
-> When parents know _what_ to practise between sessions (5–10 min, specific skill), progress doubles. When tutoring is a secret between kid and tutor, it often fizzles.
+> When parents know exactly what to practise for five minutes between sessions — one skill, not "do homework" — progress shows up faster. When nobody tells the parent what to do, it fizzles.
 
-**Comment:**
-
-> https://zpdlearning.com/blog#triangle-tutoring
+**Comment:** https://zpdlearning.com/blog#triangle-tutoring
 
 ---
 
-### Post 6 — Diagnostic before commit (Thu)
+### Post 6 — Try before you commit (Thu)
 
-**Post:**
-
-> Before signing a term of tutoring, ask: "Can we do one session to see if this is actually the right fit?"
+> Before you sign up for a term of anything, ask: can we do one session first to see if this is actually the right fit?
 >
-> A good provider should be confident enough to offer that. You're not buying a subscription — you're choosing who gets access to your child's confidence.
+> Any provider worth your money should be fine with that. You're not buying Netflix — you're letting someone into your kid's confidence.
 
-**Comment:**
-
-> We offer a single Diagnostic Discovery session before any term plan — for families who want to test fit first. No pressure in the group, just mentioning because parents ask: https://zpdlearning.com/enrol?plan=trial
+**Comment (only if asked / group allows):** We do a single Diagnostic session ($110) before term plans — https://zpdlearning.com/enrol?plan=trial
 
 ---
 
 ## Week 4
 
-### Post 7 — HSC / exam season (Mon)
+### Post 7 — HSC panic (Mon)
 
-_Adjust timing to Term 3 if needed._
+_Adjust to Term 3 if that's when your groups heat up._
 
-**Post:**
-
-> HSC pressure is real — but cramming content your child never understood in the first place rarely works.
+> HSC season turns everyone into a cram machine. Cramming content your kid never understood in September rarely works in October.
 >
-> Last-term gains usually come from: (1) fixing gaps in fundamentals, (2) exam technique in the ZPD — hard enough to stretch, not so hard they shut down.
+> The gains we see late in the year are usually boring: fix a fundamentals gap, then practise exam questions hard enough to stretch them — not so hard they freeze.
 
-**Comment:**
-
-> https://zpdlearning.com/blog#science-behind-zpd
+**Comment:** https://zpdlearning.com/blog#science-behind-zpd
 
 ---
 
-### Post 8 — Referral / community (Thu)
+### Post 8 — Pay it forward (Thu)
 
-**Post:**
-
-> If you've found tutoring that actually clicked for your kid — tell another parent. Seriously. The good providers are hard to find in the noise.
+> If you've found tutoring that actually clicked for your kid, tell another parent. The good ones are buried under ads and Gumtree noise.
 >
-> If you're still looking: look for school-connected tutors, term plans with a clear sequence, and someone who'll tell you honestly if it's not the right fit.
+> Still looking? School-connected tutors, a clear plan for the term, and someone who'll tell you honestly when it's not working.
 
-**Comment:**
-
-> Happy to answer questions in comments. We built ZPD Learning around classroom-active tutors + term plans — blog has more detail: https://zpdlearning.com/blog#about-zpd-learning
+**Comment:** Questions welcome in comments. More detail on our blog: https://zpdlearning.com/blog#about-zpd-learning
