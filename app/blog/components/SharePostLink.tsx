@@ -32,7 +32,7 @@ const SharePostLink = ({ slug }: SharePostLinkProps) => {
   return (
     <p className="text-xs text-gray-500 mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
       <button
-        className="inline-flex flex-wrap items-center justify-center gap-x-1 text-left hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+        className="inline-flex flex-wrap items-center justify-center gap-x-1 text-left hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
         type="button"
         onClick={() => {
           void handleCopy();
@@ -46,7 +46,7 @@ const SharePostLink = ({ slug }: SharePostLinkProps) => {
       {copied ? (
         <span
           aria-live="polite"
-          className="font-medium text-indigo-600 dark:text-indigo-400"
+          className="font-medium text-blue-600 dark:text-blue-400"
         >
           Copied!
         </span>

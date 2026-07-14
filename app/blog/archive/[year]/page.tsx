@@ -47,14 +47,14 @@ const ArchiveYearPage = async ({ params }: ArchiveYearPageProps) => {
           <header className="mb-10">
             <p className="text-sm mb-2">
               <Link
-                className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
                 href="/blog/archive"
               >
                 Archive
               </Link>
               <span className="text-gray-400 mx-2">/</span>
               <Link
-                className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
                 href="/blog"
               >
                 Blog
@@ -75,7 +75,7 @@ const ArchiveYearPage = async ({ params }: ArchiveYearPageProps) => {
                   {q.posts.map((post) => (
                     <li key={post.slug}>
                       <Link
-                        className="block rounded-xl border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-800 px-5 py-4 hover:border-indigo-200 dark:hover:border-indigo-800 transition-colors"
+                        className="block rounded-xl border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-800 px-5 py-4 hover:border-blue-200 dark:hover:border-blue-800 transition-colors"
                         href={`/blog/${post.slug}`}
                       >
                         <span className="font-medium text-gray-900 dark:text-white">

@@ -85,10 +85,10 @@ const sendReferralCodeEmail = (
   const subject = "Your ZPD Learning Referral Code";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h1 style="color: #4F46E5;">Welcome to ZPD Learning!</h1>
+      <h1 style="color: #2563EB;">Welcome to ZPD Learning!</h1>
       <p>Thank you for your enrolment. Here's your unique referral code:</p>
-      <div style="background: #eef2ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-        <h2 style="color: #4F46E5; font-size: 24px; margin: 0;">${referralCode}</h2>
+      <div style="background: #eff6ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <h2 style="color: #2563EB; font-size: 24px; margin: 0;">${referralCode}</h2>
       </div>
       <p><strong>How it works:</strong></p>
       <ul>
@@ -115,16 +115,16 @@ const sendNewReferralCodeEmail = (
   const subject = "Your $100 referral reward is ready!";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h1 style="color: #4F46E5;">Someone used your referral code!</h1>
+      <h1 style="color: #2563EB;">Someone used your referral code!</h1>
       <p>Great news — a friend enrolled with your code <strong>${originalCode}</strong>.</p>
       <p><strong>Your personal $100 reward</strong> (use at your next Essential or Intensive checkout):</p>
-      <div style="background: #eef2ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-        <h2 style="color: #4F46E5; font-size: 24px; margin: 0;">${rewardPromoCode}</h2>
+      <div style="background: #eff6ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <h2 style="color: #2563EB; font-size: 24px; margin: 0;">${rewardPromoCode}</h2>
       </div>
       <p>This reward is linked to <strong>${email}</strong> and can be used once.</p>
       <p><strong>Your new code to share:</strong></p>
       <div style="background: #f5f5f4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-        <h2 style="color: #4F46E5; font-size: 24px; margin: 0;">${newReferralCode}</h2>
+        <h2 style="color: #2563EB; font-size: 24px; margin: 0;">${newReferralCode}</h2>
       </div>
       <p>Keep sharing ZPD Learning — each successful referral earns another $100 personal reward.</p>
       <p>The ZPD Learning Team</p>
@@ -136,7 +136,7 @@ const sendNewReferralCodeEmail = (
 
 const onboardingCta = (url: string, label: string) => `
   <p style="text-align: center; margin: 24px 0;">
-    <a href="${url}" style="background: #4F46E5; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">${label}</a>
+    <a href="${url}" style="background: #2563EB; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">${label}</a>
   </p>
 `;
 
@@ -175,7 +175,7 @@ const sendEnrollmentConfirmationEmail = (
     : `<p>We'll be in touch shortly about completing your onboarding questionnaire.</p>`;
 
   const html = emailWrapper(`
-    <h1 style="color: #4F46E5;">Thank you, ${parentName || "there"}!</h1>
+    <h1 style="color: #2563EB;">Thank you, ${parentName || "there"}!</h1>
     <p>Your payment is confirmed.</p>
     <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin: 20px 0;">
       <p style="margin: 0;"><strong>Plan:</strong> ${planName}</p>
@@ -195,7 +195,7 @@ const sendInsightsResumeEmail = (
 ): Promise<boolean> => {
   const subject = "Your onboarding responses are saved";
   const html = emailWrapper(`
-    <h1 style="color: #4F46E5;">Pick up where you left off</h1>
+    <h1 style="color: #2563EB;">Pick up where you left off</h1>
     <p>Your responses have been saved. When you're ready, continue your onboarding:</p>
     ${onboardingCta(resumeUrl, "Resume your onboarding")}
     ${onboardingImportanceCopy}
@@ -211,7 +211,7 @@ const sendInsightsReminderEmail = (
 ): Promise<boolean> => {
   const subject = "A gentle reminder to complete your onboarding";
   const html = emailWrapper(`
-    <h1 style="color: #4F46E5;">We're ready when you are</h1>
+    <h1 style="color: #2563EB;">We're ready when you are</h1>
     <p>It's been a few days since your enrolment — your saved responses are still waiting whenever you'd like to finish.</p>
     ${onboardingCta(resumeUrl, "Resume your onboarding")}
     ${onboardingImportanceCopy}
@@ -229,7 +229,7 @@ const sendInsightsEscalationEmail = (
 ): Promise<boolean> => {
   const subject = `Onboarding incomplete: ${parentEmail}`;
   const html = emailWrapper(`
-    <h1 style="color: #4F46E5;">Insights onboarding not completed</h1>
+    <h1 style="color: #2563EB;">Insights onboarding not completed</h1>
     <p>A parent paid but has not submitted their onboarding questionnaire after 3 days.</p>
     <ul>
       <li><strong>Parent:</strong> ${parentName ?? "Unknown"}</li>
@@ -248,10 +248,10 @@ const sendAbandonedEnrollmentEmail = (
 ): Promise<boolean> => {
   const subject = "Continue your ZPD Learning enrolment";
   const html = emailWrapper(`
-    <h1 style="color: #4F46E5;">You were almost there</h1>
+    <h1 style="color: #2563EB;">You were almost there</h1>
     <p>We saved your progress. When you're ready, pick up where you left off:</p>
     <p style="text-align: center; margin: 24px 0;">
-      <a href="${resumeUrl}" style="background: #4F46E5; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">Continue enrolment</a>
+      <a href="${resumeUrl}" style="background: #2563EB; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">Continue enrolment</a>
     </p>
     <p>Or read our <a href="${SITE_URL}/blog/is-tutoring-the-right-fit">parent guide on tutoring fit</a> if you'd like more context first.</p>
   `);
@@ -262,11 +262,11 @@ const sendAbandonedEnrollmentEmail = (
 const sendPostDiagnosticFollowUpEmail = (email: string): Promise<boolean> => {
   const subject = "How did the diagnostic session go?";
   const html = emailWrapper(`
-    <h1 style="color: #4F46E5;">We hope the session was useful</h1>
+    <h1 style="color: #2563EB;">We hope the session was useful</h1>
     <p>It's been a few days since your Diagnostic Discovery — we'd love to hear how it went.</p>
     <p>If you're ready to continue with a term plan, your diagnostic fee can be credited toward Essential or Intensive within 30 days.</p>
     <p style="text-align: center; margin: 24px 0;">
-      <a href="${SITE_URL}/enrol?plan=essential" style="background: #4F46E5; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">View term plans</a>
+      <a href="${SITE_URL}/enrol?plan=essential" style="background: #2563EB; color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 600;">View term plans</a>
     </p>
     <p>If you have feedback about the session, just reply to this email — it helps us improve.</p>
   `);

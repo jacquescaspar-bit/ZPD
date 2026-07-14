@@ -110,12 +110,12 @@ const GeoTutoringContent = ({ citySlug }: GeoTutoringContentProps) => {
               Book a Diagnostic
             </Link>
             <p className="mt-4 text-sm text-gray-500">
-              <Link className="text-indigo-600 hover:underline" href="/tutors">
+              <Link className="text-blue-600 hover:underline" href="/tutors">
                 Meet our tutors
               </Link>
               {" · "}
               <Link
-                className="text-indigo-600 hover:underline"
+                className="text-blue-600 hover:underline"
                 href="/blog/is-tutoring-the-right-fit"
               >
                 Parent&apos;s guide to ZPD

@@ -18,9 +18,9 @@ const SubmissionConfirmation = ({
 }: SubmissionConfirmationProps) => (
   <div className="flex w-full max-w-lg flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-8">
     <div className="mb-6">
-      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900">
+      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
         <svg
-          className="h-8 w-8 text-indigo-600 dark:text-indigo-400"
+          className="h-8 w-8 text-blue-600 dark:text-blue-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -86,8 +86,8 @@ const SubmissionConfirmation = ({
         planType={planType}
       />
     ) : (
-      <div className="mb-6 w-full max-w-md rounded-xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-800 dark:bg-indigo-950/30">
-        <p className="text-sm text-indigo-800 dark:text-indigo-200">
+      <div className="mb-6 w-full max-w-md rounded-xl border border-blue-200 bg-blue-50 p-5 dark:border-blue-800 dark:bg-blue-950/30">
+        <p className="text-sm text-blue-800 dark:text-blue-200">
           Your personal referral code will arrive by email once enrolment is
           confirmed.
         </p>
@@ -96,7 +96,7 @@ const SubmissionConfirmation = ({
 
     {onClose && (
       <button
-        className="mt-6 cursor-pointer rounded-lg bg-indigo-600 px-6 py-2 text-white transition-colors hover:bg-indigo-700"
+        className="mt-6 cursor-pointer rounded-lg bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
         type="button"
         onClick={onClose}
       >

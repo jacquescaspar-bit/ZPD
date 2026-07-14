@@ -1,13 +1,13 @@
 {
   "brand": {
-    "name": "ZPD Indigo",
-    "hex": "#4F46E5",
-    "usage": "Primary brand colour \u2014 matches site gradient and CTAs"
+    "name": "ZPD Learning Blue",
+    "hex": "#2563EB",
+    "usage": "Primary brand colour — calm focus blue for CTAs and links"
   },
   "accent": {
-    "name": "ZPD Violet",
-    "hex": "#7C3AED",
-    "usage": "Accent colour \u2014 gradient end-point and highlights"
+    "name": "ZPD Blue Deep",
+    "hex": "#1D4ED8",
+    "usage": "Hover and pressed states"
   },
   "logo": {
     "light": {

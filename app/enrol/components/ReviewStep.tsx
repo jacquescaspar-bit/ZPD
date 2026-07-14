@@ -76,7 +76,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
     <div className="space-y-6">
       {statusMessage && (
         <div className="flex items-start gap-3 rounded-2xl border border-green-200/70 bg-green-50/80 dark:bg-green-950/40 dark:border-green-900 px-6 py-4 text-green-900 dark:text-green-200 shadow-lg">
-          <span className="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-600 animate-pulse" />
+          <span className="mt-1 h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse" />
           <p className="text-sm sm:text-base font-medium">{statusMessage}</p>
         </div>
       )}
@@ -109,7 +109,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               checked={agreedToTerms}
-              className="mt-1 h-4 w-4 text-blue-600 focus:ring-indigo-500 border-gray-300 rounded"
+              className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               type="checkbox"
               onChange={(e) => setAgreedToTerms(e.target.checked)}
             />

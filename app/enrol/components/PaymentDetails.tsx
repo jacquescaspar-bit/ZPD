@@ -75,7 +75,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 ? "border-green-500 dark:border-green-400 focus:ring-2 focus:ring-green-400 focus:border-green-500"
                 : nameValid === false && hasAttemptedSubmit
                   ? "border-red-500 dark:border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-500"
-                  : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-indigo-400"
+                  : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-blue-400"
             }`}
             placeholder="Enter full name"
             type="text"
@@ -83,7 +83,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             onChange={(event) => setParentName(event.target.value)}
           />
           {nameValid === true && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-500 dark:text-green-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 dark:text-green-400">
               <svg
                 aria-hidden="true"
                 className="w-5 h-5"
@@ -113,7 +113,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 ? "border-green-500 dark:border-green-400 focus:ring-2 focus:ring-green-400 focus:border-green-500"
                 : emailValid === false && hasAttemptedSubmit
                   ? "border-red-500 dark:border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-500"
-                  : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-indigo-400"
+                  : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-blue-400"
             }`}
             placeholder="Enter email address"
             type="email"
@@ -121,7 +121,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             onChange={(event) => setEmail(event.target.value)}
           />
           {emailValid === true && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-500 dark:text-green-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 dark:text-green-400">
               <svg
                 aria-hidden="true"
                 className="w-5 h-5"
@@ -172,7 +172,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 ? "border-green-500 dark:border-green-400 focus:ring-2 focus:ring-green-400 focus:border-green-500"
                 : phoneValid === false && hasAttemptedSubmit
                   ? "border-red-500 dark:border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-500"
-                  : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-indigo-400"
+                  : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-blue-400"
             }`}
             placeholder="Enter phone number (optional)"
             type="tel"
@@ -191,7 +191,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             }}
           />
           {phoneValid === true && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-500 dark:text-green-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 dark:text-green-400">
               <svg
                 aria-hidden="true"
                 className="w-5 h-5"
@@ -382,7 +382,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
                       ? "border-green-500 dark:border-green-400 focus:ring-2 focus:ring-green-400 focus:border-green-500"
                       : promoCode.trim() && appliedPromoValue === 0
                         ? "border-red-500 dark:border-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-500"
-                        : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-indigo-400"
+                        : "border-white/60 dark:border-gray-700 focus:ring-2 focus:ring-blue-400"
                   }`}
                   placeholder="Enter your code"
                   type="text"
@@ -392,7 +392,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
                   }
                 />
                 {appliedPromoValue > 0 && (
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-500 dark:text-green-400">
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 dark:text-green-400">
                     <svg
                       aria-hidden="true"
                       className="w-5 h-5"
@@ -433,7 +433,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
           </div>
 
           {promoStatus && promoCode.trim() && (
-            <div className="rounded-2xl border border-indigo-200/70 dark:border-indigo-800 bg-indigo-50/70 dark:bg-indigo-900/40 px-4 py-3 text-sm text-indigo-800 dark:text-indigo-200 shadow-inner flex justify-between items-center">
+            <div className="rounded-2xl border border-blue-200/70 dark:border-blue-800 bg-blue-50/70 dark:bg-blue-900/40 px-4 py-3 text-sm text-blue-800 dark:text-blue-200 shadow-inner flex justify-between items-center">
               <span>{promoStatus}</span>
               {appliedPromoValue > 0 && (
                 <button
@@ -474,7 +474,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
           <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <svg
-                className="w-5 h-5 text-indigo-500 flex-shrink-0"
+                className="w-5 h-5 text-blue-500 flex-shrink-0"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >

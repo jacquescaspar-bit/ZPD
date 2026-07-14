@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
+import DevThemeToggle from "@/components/DevThemeToggle";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import "@/globals.css";
+
+const isDev = process.env.NODE_ENV === "development";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +36,7 @@ const antipasto = localFont({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#4F46E5",
+  themeColor: "#2563EB",
   width: "device-width",
   initialScale: 1,
   colorScheme: "light dark",
@@ -112,13 +116,20 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => (
   <html
+    suppressHydrationWarning
     className={`${inter.variable} ${antipasto.variable}`}
     dir="ltr"
     lang="en"
   >
     <body className="antialiased bg-[var(--background)] text-[var(--foreground)] min-h-screen font-sans">
+      {isDev ? (
+        <Script id="zpd-dev-theme" strategy="beforeInteractive">
+          {`(function(){try{var h=location.hostname;if(h!=='localhost'&&h!=='127.0.0.1'&&!h.endsWith('.local'))return;var t=localStorage.getItem('zpd-dev-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.devTheme=t;document.documentElement.style.colorScheme=t;}}catch(e){}})();`}
+        </Script>
+      ) : null}
       {children}
       <SiteFooter />
+      {isDev ? <DevThemeToggle /> : null}
     </body>
   </html>
 );

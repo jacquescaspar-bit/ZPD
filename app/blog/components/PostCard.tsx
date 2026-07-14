@@ -17,12 +17,12 @@ const PostCard = ({ post, pinned = false }: PostCardProps) => (
   <article
     className={`rounded-2xl border bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm transition-shadow hover:shadow-md ${
       pinned
-        ? "border-indigo-200/80 dark:border-indigo-800/80 ring-1 ring-indigo-100 dark:ring-indigo-900/40"
+        ? "border-blue-200/80 dark:border-blue-800/80 ring-1 ring-blue-100 dark:ring-blue-900/40"
         : "border-gray-200/80 dark:border-gray-700/80"
     }`}
   >
     {pinned ? (
-      <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-2">
+      <p className="text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400 mb-2">
         Pinned · start here
       </p>
     ) : null}
@@ -35,7 +35,7 @@ const PostCard = ({ post, pinned = false }: PostCardProps) => (
     </time>
     <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mt-2 mb-3 leading-snug">
       <Link
-        className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
         href={`/blog/${post.slug}`}
       >
         {post.title}
@@ -45,7 +45,7 @@ const PostCard = ({ post, pinned = false }: PostCardProps) => (
       {post.excerpt}
     </p>
     <Link
-      className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline"
+      className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
       href={`/blog/${post.slug}`}
     >
       Read →

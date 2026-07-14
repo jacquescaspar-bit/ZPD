@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
     subject: `${subjectPrefix}: ${name}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #4F46E5;">New contact form message</h1>
+        <h1 style="color: #2563EB;">New contact form message</h1>
         <p><strong>Name:</strong> ${escapedName}</p>
         <p><strong>Email:</strong> ${escapedEmail}</p>
         <p><strong>Message:</strong></p>
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
     subject: "We received your message - ZPD Learning",
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #4F46E5;">Thanks for contacting ZPD Learning</h1>
+        <h1 style="color: #2563EB;">Thanks for contacting ZPD Learning</h1>
         <p>Hi ${escapedName},</p>
         <p>We've received your message and will get back to you within 2–3 business days.</p>
         <p>If your enquiry is urgent, reply to this email or contact us at grow@zpdlearning.com.</p>

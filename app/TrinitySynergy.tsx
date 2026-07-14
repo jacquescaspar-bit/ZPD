@@ -14,7 +14,7 @@ const TrinitySynergy = () => (
 
       <div className="grid md:grid-cols-3 gap-8">
         <div className="text-center">
-          <div className="w-20 h-20 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
               className="w-10 h-10 text-white"
               fill="none"
@@ -40,7 +40,7 @@ const TrinitySynergy = () => (
         </div>
 
         <div className="text-center">
-          <div className="w-20 h-20 bg-indigo-700 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
               className="w-10 h-10 text-white"
               fill="none"
@@ -66,7 +66,7 @@ const TrinitySynergy = () => (
         </div>
 
         <div className="text-center">
-          <div className="w-20 h-20 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
               className="w-10 h-10 text-white"
               fill="none"

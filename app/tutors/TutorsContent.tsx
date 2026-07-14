@@ -25,25 +25,25 @@ const parentHighlights = [
     title: "Classroom-active teachers",
     body: "Our tutors are casually or part-time engaged in local schools — not uni students winging it or retirees guessing at the syllabus. They understand current curriculum, teaching methods, and what your child faces daily.",
     icon: GraduationCap,
-    accent: "from-indigo-600 to-indigo-700",
+    accent: "from-blue-600 to-blue-700",
   },
   {
     title: "Rigorously vetted",
     body: "Every tutor holds a current Working With Children Check, brings at least two years of tutoring experience, and participates in ongoing professional development before they work with families.",
     icon: ShieldCheck,
-    accent: "from-indigo-600 to-indigo-700",
+    accent: "from-blue-600 to-blue-700",
   },
   {
     title: "Planned before sessions",
     body: "We gather parent insights, school context, and goals before tutoring begins — then build a learning sequence your tutor delivers and refines. Not improvised homework help week to week.",
     icon: BookOpen,
-    accent: "from-indigo-500 to-indigo-600",
+    accent: "from-blue-500 to-blue-600",
   },
   {
     title: "Term momentum",
     body: "Same tutor, same weekly rhythm, compounding progress. Term plans foster the parent–tutor–student partnership that moves learning forward.",
     icon: CalendarCheck,
-    accent: "from-indigo-600 to-indigo-700",
+    accent: "from-blue-600 to-blue-700",
   },
 ];
 
@@ -106,14 +106,14 @@ const TutorsContent = () => {
 
             <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
               <button
-                className="group rounded-2xl border border-gray-200/80 bg-white/95 dark:bg-gray-800/95 dark:border-gray-700/80 p-6 sm:p-8 text-left shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="group rounded-2xl border border-gray-200/80 bg-white/95 dark:bg-gray-800/95 dark:border-gray-700/80 p-6 sm:p-8 text-left shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 type="button"
                 onClick={() => scrollToSection("our-tutors")}
               >
-                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 text-white shadow-md">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md">
                   <Users aria-hidden className="h-5 w-5" />
                 </div>
-                <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2">
+                <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2">
                   For parents
                 </p>
                 <p className="text-xl font-medium text-gray-900 dark:text-white mb-2">
@@ -123,20 +123,20 @@ const TutorsContent = () => {
                   Learn who teaches with ZPD and what to expect from a term
                   plan.
                 </p>
-                <span className="inline-block mt-5 text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:underline">
+                <span className="inline-block mt-5 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:underline">
                   Learn more &rarr;
                 </span>
               </button>
 
               <button
-                className="group rounded-2xl border border-indigo-200/80 bg-gradient-to-br from-indigo-50 via-white to-stone-50 dark:from-indigo-950/60 dark:via-gray-800/95 dark:to-stone-950/60 dark:border-indigo-700/80 p-6 sm:p-8 text-left shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="group rounded-2xl border border-blue-200/80 bg-gradient-to-br from-blue-50 via-white to-stone-50 dark:from-blue-950/60 dark:via-gray-800/95 dark:to-stone-950/60 dark:border-blue-700/80 p-6 sm:p-8 text-left shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 type="button"
                 onClick={() => scrollToSection("join")}
               >
-                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 text-white shadow-md">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md">
                   <GraduationCap aria-hidden className="h-5 w-5" />
                 </div>
-                <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2">
+                <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2">
                   For teachers
                 </p>
                 <p className="text-xl font-medium text-gray-900 dark:text-white mb-2">
@@ -145,7 +145,7 @@ const TutorsContent = () => {
                 <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Tutor with us — we run the plan, parents, and business side.
                 </p>
-                <span className="inline-block mt-5 text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:underline">
+                <span className="inline-block mt-5 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:underline">
                   Join our network &rarr;
                 </span>
               </button>
@@ -155,7 +155,7 @@ const TutorsContent = () => {
 
         {/* Join band */}
         <section className="scroll-mt-24 relative overflow-hidden" id="join">
-          <div className="absolute inset-0 bg-indigo-700" />
+          <div className="absolute inset-0 bg-blue-700" />
           <div
             aria-hidden
             className="absolute inset-0 opacity-20"
@@ -175,14 +175,14 @@ const TutorsContent = () => {
               >
                 Teach in the zone
               </h2>
-              <p className="text-indigo-100 mb-8 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              <p className="text-blue-100 mb-8 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
                 We run the plan, the parents, and the business. You teach.
               </p>
               <ul className="text-left max-w-lg mx-auto space-y-3 mb-10">
                 {joinBenefits.map((benefit) => (
                   <li
                     key={benefit}
-                    className="flex items-start gap-3 text-sm sm:text-base text-indigo-50"
+                    className="flex items-start gap-3 text-sm sm:text-base text-blue-50"
                   >
                     <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/20 text-xs">
                       ✓
@@ -192,12 +192,12 @@ const TutorsContent = () => {
                 ))}
               </ul>
               <Link
-                className="inline-flex items-center justify-center rounded-full bg-white text-indigo-700 px-8 py-3.5 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-600"
+                className="inline-flex items-center justify-center rounded-full bg-white text-blue-700 px-8 py-3.5 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600"
                 href="/contact?role=tutor"
               >
                 Express interest
               </Link>
-              <p className="mt-4 text-sm text-indigo-200">
+              <p className="mt-4 text-sm text-blue-200">
                 Casual or part-time classroom teachers · WWCC required
               </p>
             </div>
@@ -256,7 +256,7 @@ const TutorsContent = () => {
                 {blogLinks.map((link) => (
                   <li key={link.href}>
                     <Link
-                      className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:underline text-sm sm:text-base font-medium"
+                      className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline text-sm sm:text-base font-medium"
                       href={link.href}
                     >
                       <BookOpen aria-hidden className="h-4 w-4 shrink-0" />
@@ -296,7 +296,7 @@ const TutorsContent = () => {
               <p className="mt-6 text-sm text-gray-500 dark:text-gray-400">
                 Classroom teacher interested in tutoring with us?{" "}
                 <button
-                  className="font-medium text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
                   type="button"
                   onClick={() => scrollToSection("join")}
                 >

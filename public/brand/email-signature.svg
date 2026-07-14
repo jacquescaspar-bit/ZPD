@@ -18,7 +18,7 @@
 
   <!-- Brand text -->
   <text x="112" y="36" font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#0F172A">ZPD Learning</text>
-  <text x="112" y="58" font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#4F46E5">Where Learning Happens</text>
+  <text x="112" y="58" font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#2563EB">Where Learning Happens</text>
   <text x="112" y="78" font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B">grow@zpdlearning.com</text>
   <text x="112" y="96" font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B">zpdlearning.com</text>
 </svg>

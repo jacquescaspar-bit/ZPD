@@ -54,7 +54,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
           <article className="max-w-3xl mx-auto">
             <header className="mb-10 text-center">
               {post.pinned ? (
-                <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400 mb-3">
                   Pinned guide
                 </p>
               ) : null}

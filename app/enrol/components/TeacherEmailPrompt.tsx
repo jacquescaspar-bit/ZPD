@@ -43,7 +43,7 @@ const TeacherEmailPrompt = ({
   }, []);
 
   const copyButtonClass =
-    "flex-shrink-0 rounded-md text-gray-500 transition-colors hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 dark:hover:text-indigo-400";
+    "flex-shrink-0 rounded-md text-gray-500 transition-colors hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:hover:text-blue-400";
 
   return (
     <h4
@@ -65,7 +65,7 @@ const TeacherEmailPrompt = ({
           {copied ? (
             <span
               aria-live="polite"
-              className="text-sm font-medium text-indigo-600 dark:text-indigo-400"
+              className="text-sm font-medium text-blue-600 dark:text-blue-400"
             >
               Copied
             </span>
@@ -76,7 +76,7 @@ const TeacherEmailPrompt = ({
       </div>
       <button
         aria-label="Copy teacher email question to clipboard"
-        className="group mt-1 block w-full rounded-md text-left transition-colors hover:text-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 dark:hover:text-indigo-300"
+        className="group mt-1 block w-full rounded-md text-left transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:hover:text-blue-300"
         type="button"
         onClick={() => {
           void handleCopy();

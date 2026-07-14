@@ -39,7 +39,7 @@ const markdownComponents: Components = {
   a: ({ href, children }) => {
     const isInternal = href?.startsWith("/");
     const className =
-      "text-indigo-600 dark:text-indigo-400 hover:underline font-medium";
+      "text-blue-600 dark:text-blue-400 hover:underline font-medium";
     if (isInternal && href) {
       return (
         <Link className={className} href={href}>
@@ -82,7 +82,7 @@ const markdownComponents: Components = {
   ),
   hr: () => <hr className="my-8 border-gray-200 dark:border-gray-700" />,
   blockquote: ({ children }) => (
-    <blockquote className="border-l-4 border-indigo-300 dark:border-indigo-700 pl-4 my-6 text-gray-700 dark:text-gray-300 italic">
+    <blockquote className="border-l-4 border-blue-300 dark:border-blue-700 pl-4 my-6 text-gray-700 dark:text-gray-300 italic">
       {children}
     </blockquote>
   ),

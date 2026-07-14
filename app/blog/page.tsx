@@ -67,7 +67,7 @@ const BlogPage = () => {
                 </p>
               </div>
               <Link
-                className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
                 href="/blog/archive"
               >
                 Older →

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Button, Container } from "@/components/ui";
 import { NAV_ITEMS, NavLink } from "@/NavLinks";
+import { SECTION_BAND_HERO_NAV } from "@/lib/sectionBands";
 
 const Nav = () => {
   const pathname = usePathname();
@@ -138,7 +139,7 @@ const Nav = () => {
       {/* Desktop Navigation */}
       <nav className="hidden md:block sticky top-0 z-20 py-4 min-h-16 relative transition-all duration-500 backdrop-blur-md">
         <div
-          className={`absolute inset-0 bg-stone-100/80 dark:bg-stone-900/80 ${pathname === "/" ? "transition-opacity duration-500" : ""}`}
+          className={`absolute inset-0 ${pathname === "/" ? SECTION_BAND_HERO_NAV : "bg-stone-100/80 dark:bg-stone-900/80"} ${pathname === "/" ? "transition-opacity duration-500" : ""}`}
           style={{ opacity: navOpacity }}
         />
         <Container

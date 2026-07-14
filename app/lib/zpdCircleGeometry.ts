@@ -35,10 +35,10 @@ export const ZPD_SOLID_RING_OPACITY = 0.9;
 export const ZPD_RING_GRADIENT = "bg-stone-100 dark:bg-stone-800";
 
 export const ZPD_RING_BORDER =
-  "border border-gray-300/50 dark:border-indigo-400/30";
+  "border border-gray-300/50 dark:border-blue-400/30";
 
 export const ZPD_RING_SHADOW =
-  "shadow-sm shadow-indigo-200/20 dark:shadow-indigo-900/30";
+  "shadow-sm shadow-blue-200/20 dark:shadow-blue-900/30";
 
 export const ZPD_LABEL_LAYER_CLASS = "pointer-events-none relative z-20";
 

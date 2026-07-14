@@ -25,7 +25,7 @@ const BlogArchivePage = () => {
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               Posts grouped by year and quarter.{" "}
               <Link
-                className="text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
                 href="/blog"
               >
                 Back to recent posts
@@ -37,7 +37,7 @@ const BlogArchivePage = () => {
             {years.map((year) => (
               <li key={year}>
                 <Link
-                  className="block rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-800 p-6 shadow-sm hover:border-indigo-200 dark:hover:border-indigo-800 transition-colors"
+                  className="block rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-800 p-6 shadow-sm hover:border-blue-200 dark:hover:border-blue-800 transition-colors"
                   href={`/blog/archive/${year}`}
                 >
                   <span className="text-2xl font-semibold text-gray-900 dark:text-white">

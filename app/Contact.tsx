@@ -56,7 +56,7 @@ const Contact = () => (
                 Name
               </label>
               <input
-                className="open-sans w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="open-sans w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                 id="name"
                 placeholder="Your full name"
                 type="text"
@@ -70,7 +70,7 @@ const Contact = () => (
                 Email
               </label>
               <input
-                className="open-sans w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="open-sans w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                 id="email"
                 placeholder="your.email@example.com"
                 type="email"
@@ -84,14 +84,14 @@ const Contact = () => (
                 Message
               </label>
               <textarea
-                className="open-sans w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="open-sans w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                 id="message"
                 placeholder="Tell us about your child's learning needs..."
                 rows={3}
               />
             </div>
             <button
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide"
               type="submit"
             >
               Send Message

@@ -34,14 +34,14 @@ const PlanCard: React.FC<PlanCardProps> = ({
     variant === "mobile" && isSelected && showPaymentDetails;
   const cardContent = isCompactMobile ? (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-indigo-300 dark:border-indigo-700 flex flex-col ${onSelect ? "cursor-pointer" : ""} relative bg-gradient-to-br from-indigo-50/90 via-white to-indigo-100/80 dark:from-indigo-900/40 dark:via-gray-900/60 dark:to-indigo-900/30 shadow-indigo-100/70 dark:shadow-indigo-800/40 transition-all duration-300`}
+      className={`bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-blue-300 dark:border-blue-700 flex flex-col ${onSelect ? "cursor-pointer" : ""} relative bg-gradient-to-br from-blue-50/90 via-white to-blue-100/80 dark:from-blue-900/40 dark:via-gray-900/60 dark:to-blue-900/30 shadow-blue-100/70 dark:shadow-blue-800/40 transition-all duration-300`}
       onClick={onSelect ?? undefined}
     >
       <div className="flex justify-between items-start mb-1">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white transition-opacity duration-300 opacity-50">
           {title}
         </h3>
-        <div className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 transition-opacity duration-300 opacity-50">
+        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 transition-opacity duration-300 opacity-50">
           {price}
         </div>
       </div>
@@ -56,11 +56,11 @@ const PlanCard: React.FC<PlanCardProps> = ({
     <div
       className={`bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 h-full flex flex-col ${onSelect ? "cursor-pointer" : ""} relative ${
         isSelected
-          ? "bg-gradient-to-br from-indigo-50/90 via-white to-indigo-100/80 dark:from-indigo-900/40 dark:via-gray-900/60 dark:to-indigo-900/30"
-          : "border-white/50 dark:border-gray-700/60 bg-white/85 dark:bg-gray-900/40 hover:border-indigo-200/80 dark:hover:border-indigo-500/40 shadow-sm hover:shadow-lg"
+          ? "bg-gradient-to-br from-blue-50/90 via-white to-blue-100/80 dark:from-blue-900/40 dark:via-gray-900/60 dark:to-blue-900/30"
+          : "border-white/50 dark:border-gray-700/60 bg-white/85 dark:bg-gray-900/40 hover:border-blue-200/80 dark:hover:border-blue-500/40 shadow-sm hover:shadow-lg"
       } ${
         isSelected && showHighlights
-          ? "border-indigo-300 shadow-indigo-100/70 dark:shadow-indigo-800/40"
+          ? "border-blue-300 shadow-blue-100/70 dark:shadow-blue-800/40"
           : ""
       } transition-all duration-300`}
       onClick={onSelect ?? undefined}
@@ -87,7 +87,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
       </div>
       <div className="min-h-[3rem] flex items-center justify-start mb-2">
         <div
-          className={`text-4xl font-bold text-indigo-600 dark:text-indigo-400 transition-opacity duration-300 ${isSelected && showPaymentDetails ? "opacity-50" : ""}`}
+          className={`text-4xl font-bold text-blue-600 dark:text-blue-400 transition-opacity duration-300 ${isSelected && showPaymentDetails ? "opacity-50" : ""}`}
         >
           {price}
         </div>
@@ -108,7 +108,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
         {highlights.map((highlight, index) => (
           <li key={index} className="flex items-start">
             <span
-              className={`text-indigo-500 mr-2 transition-opacity duration-300 ${isSelected && showPaymentDetails ? "opacity-50" : ""}`}
+              className={`text-blue-500 mr-2 transition-opacity duration-300 ${isSelected && showPaymentDetails ? "opacity-50" : ""}`}
             >
               ✓
             </span>
@@ -124,7 +124,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
         className={`block w-full text-center py-3 rounded-full font-semibold transform transition-all duration-300 mt-auto ${
           isSelected
             ? "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600"
-            : "bg-indigo-600 text-white hover:bg-indigo-700 hover:scale-105"
+            : "bg-blue-600 text-white hover:bg-blue-700 hover:scale-105"
         }`}
         type="button"
         onClick={(e) => {

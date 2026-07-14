@@ -146,7 +146,7 @@ const ContactContent = () => {
                       </label>
                       <input
                         required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={isSubmitting}
                         maxLength={100}
                         name="name"
@@ -161,7 +161,7 @@ const ContactContent = () => {
                       </label>
                       <input
                         required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={isSubmitting}
                         name="email"
                         type="email"
@@ -175,7 +175,7 @@ const ContactContent = () => {
                       </label>
                       <textarea
                         required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
                         disabled={isSubmitting}
                         maxLength={5000}
                         minLength={10}
@@ -197,7 +197,7 @@ const ContactContent = () => {
                       </p>
                     ) : null}
                     <button
-                      className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none text-white py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide"
+                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none text-white py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide"
                       disabled={isSubmitting}
                       type="submit"
                     >
@@ -213,11 +213,11 @@ const ContactContent = () => {
                 </h2>
                 <div className="space-y-6 text-gray-700 dark:text-gray-300">
                   {isTutor ? (
-                    <div className="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-sm leading-relaxed">
-                      <p className="font-medium text-indigo-900 dark:text-indigo-200 mb-2">
+                    <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-sm leading-relaxed">
+                      <p className="font-medium text-blue-900 dark:text-blue-200 mb-2">
                         What happens next
                       </p>
-                      <p className="text-indigo-800 dark:text-indigo-300">
+                      <p className="text-blue-800 dark:text-blue-300">
                         Short call, no pressure. We&apos;ll walk through how
                         planning, matching, and contractor terms work.
                       </p>
