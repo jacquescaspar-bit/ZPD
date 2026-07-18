@@ -5,7 +5,7 @@ import {
   REFERRAL_VALUE,
   type PromoCode,
 } from "@/enrol/constants";
-import type { DiscountKind } from "@/lib/discountResolution";
+import type { DiscountKind, DiscountLine } from "@/lib/discountResolution";
 
 export interface PromoAdjustment {
   label: string;
@@ -23,6 +23,7 @@ export interface UseReferralSystemReturn {
   setPromoCode: (code: string) => void;
   promoStatus: string | null;
   appliedPromoValue: number;
+  /** Code-side kind only (referral/promo), or diagnostic_credit if only credit, or null */
   appliedPromoKind: DiscountKind | null;
   referralLink: string | null;
   applyReferral: (code: string, message?: string) => Promise<boolean>;
@@ -38,6 +39,15 @@ export interface UseReferralSystemReturn {
 const planAcceptsDiscounts = (plan: PlanType | null): plan is PlanType =>
   Boolean(plan) && DISCOUNT_ELIGIBLE_PLANS.includes(plan as PlanType);
 
+const lineLabel = (line: DiscountLine): string => {
+  if (line.kind === "promo" && line.code) return `Promo code (${line.code})`;
+  if (line.kind === "referral" && line.code) {
+    return `Referral thank-you (${line.code})`;
+  }
+  if (line.kind === "diagnostic_credit") return "Diagnostic Discovery credit";
+  return line.label;
+};
+
 export const useReferralSystem = (
   selectedPlan: PlanType | null,
   initialPromoCode?: string,
@@ -45,51 +55,84 @@ export const useReferralSystem = (
 ): UseReferralSystemReturn => {
   const [promoCode, setPromoCode] = useState(initialPromoCode ?? "");
   const [promoStatus, setPromoStatus] = useState<string | null>(null);
-  const [appliedPromoValue, setAppliedPromoValue] = useState(0);
-  const [appliedPromoKind, setAppliedPromoKind] = useState<DiscountKind | null>(
-    null,
-  );
+  const [discountLines, setDiscountLines] = useState<DiscountLine[]>([]);
   const referralLink: string | null = null;
 
   const normalizedCheckoutEmail = checkoutEmail?.trim() ?? undefined;
+
+  const appliedPromoValue = useMemo(
+    () => discountLines.reduce((sum, l) => sum + l.amountCents, 0),
+    [discountLines],
+  );
+
+  const appliedPromoKind = useMemo((): DiscountKind | null => {
+    const codeLine = discountLines.find(
+      (d) => d.kind === "referral" || d.kind === "promo",
+    );
+    if (codeLine) return codeLine.kind;
+    if (discountLines.some((d) => d.kind === "diagnostic_credit")) {
+      return "diagnostic_credit";
+    }
+    return null;
+  }, [discountLines]);
 
   const applyResolution = useCallback(
     (result: {
       finalAmountCents: number;
       planPriceCents: number;
-      discount: {
-        kind: DiscountKind;
-        amountCents: number;
-        label: string;
-        code?: string;
-      };
+      discounts?: DiscountLine[];
+      totalDiscountCents?: number;
+      discount?: { kind: DiscountKind; amountCents: number; label: string };
     }) => {
-      const { discount } = result;
-      if (discount.kind === "none" || discount.amountCents <= 0) {
-        setAppliedPromoValue(0);
-        setAppliedPromoKind(null);
-        if (!promoCode.trim()) {
-          setPromoStatus(null);
-        }
+      let lines: DiscountLine[] = [];
+      if (Array.isArray(result.discounts)) {
+        lines = result.discounts;
+      } else if (
+        result.discount &&
+        result.discount.kind !== "none" &&
+        result.discount.amountCents > 0
+      ) {
+        lines = [
+          {
+            kind: result.discount.kind,
+            amountCents: result.discount.amountCents,
+            label: result.discount.label,
+          },
+        ];
+      }
+
+      setDiscountLines(lines);
+
+      if (lines.length === 0) {
+        if (!promoCode.trim()) setPromoStatus(null);
         return;
       }
 
-      setAppliedPromoValue(discount.amountCents);
-      setAppliedPromoKind(discount.kind);
+      const credit = lines.find((l) => l.kind === "diagnostic_credit");
+      const codeLine = lines.find(
+        (l) => l.kind === "referral" || l.kind === "promo",
+      );
 
-      if (discount.kind === "diagnostic_credit") {
-        setPromoStatus(
-          `${discount.label} applied ($${(discount.amountCents / 100).toFixed(0)} off). One offer per purchase.`,
-        );
-        if (discount.code) {
-          setPromoCode(discount.code);
-        } else if (!promoCode.trim()) {
-          // leave field empty for auto credit
-        }
-      } else if (discount.code) {
-        setPromoCode(discount.code);
-        setPromoStatus(`${discount.label} applied!`);
+      if (codeLine?.code) {
+        setPromoCode(codeLine.code);
       }
+
+      const parts: string[] = [];
+      if (credit) {
+        parts.push(
+          `Diagnostic credit ($${(credit.amountCents / 100).toFixed(0)})`,
+        );
+      }
+      if (codeLine) {
+        parts.push(
+          `${codeLine.kind === "referral" ? "Referral" : "Promo"} ($${(codeLine.amountCents / 100).toFixed(0)})`,
+        );
+      }
+      setPromoStatus(
+        parts.length > 1
+          ? `${parts.join(" + ")} applied — both stack on this plan.`
+          : `${parts[0]} applied.`,
+      );
     },
     [promoCode],
   );
@@ -97,8 +140,7 @@ export const useReferralSystem = (
   const resolveFromServer = useCallback(
     async (code?: string): Promise<boolean> => {
       if (!planAcceptsDiscounts(selectedPlan)) {
-        setAppliedPromoValue(0);
-        setAppliedPromoKind(null);
+        setDiscountLines([]);
         if (selectedPlan === "online") {
           setPromoStatus(
             "Discounts do not apply to the Online plan — fixed term price only.",
@@ -126,22 +168,27 @@ export const useReferralSystem = (
         const result = await response.json();
         applyResolution(result);
 
-        if (code?.trim() && result.discount?.kind === "none") {
+        const lines: DiscountLine[] = result.discounts ?? [];
+        const codeApplied = Boolean(
+          code?.trim() &&
+            lines.some(
+              (d) =>
+                (d.kind === "referral" || d.kind === "promo") &&
+                d.code === code.trim().toUpperCase(),
+            ),
+        );
+
+        if (code?.trim() && !codeApplied) {
           setPromoStatus("Invalid Referral / Promo code");
+          // Keep diagnostic credit lines if any
+          const creditOnly = lines.filter(
+            (d) => d.kind === "diagnostic_credit",
+          );
+          setDiscountLines(creditOnly);
           return false;
         }
 
-        if (
-          code?.trim() &&
-          result.discount?.kind === "diagnostic_credit" &&
-          result.discount?.code !== code.trim().toUpperCase()
-        ) {
-          setPromoStatus(
-            `Diagnostic credit applied ($${(result.discount.amountCents / 100).toFixed(0)}). Entered code was not used — one offer per purchase.`,
-          );
-        }
-
-        return result.discount?.kind !== "none";
+        return lines.length > 0;
       } catch (error) {
         console.error("Error resolving discount:", error);
         setPromoStatus("Could not validate discount. Try again.");
@@ -153,23 +200,20 @@ export const useReferralSystem = (
 
   const refreshDiscount = useCallback(async () => {
     if (!planAcceptsDiscounts(selectedPlan)) {
-      setAppliedPromoValue(0);
-      setAppliedPromoKind(null);
+      setDiscountLines([]);
       return;
     }
     await resolveFromServer(promoCode.trim() || undefined);
   }, [selectedPlan, promoCode, resolveFromServer]);
 
-  // Auto-apply diagnostic credit when email + eligible plan
   useEffect(() => {
     if (!planAcceptsDiscounts(selectedPlan) || !normalizedCheckoutEmail) {
       return;
     }
     void resolveFromServer(promoCode.trim() || undefined);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when plan/email change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPlan, normalizedCheckoutEmail]);
 
-  // URL ?ref=
   useEffect(() => {
     if (typeof window === "undefined") return;
     const urlParams = new URLSearchParams(window.location.search);
@@ -183,21 +227,19 @@ export const useReferralSystem = (
 
   useEffect(() => {
     if (
-      appliedPromoKind &&
-      appliedPromoKind !== "none" &&
+      discountLines.length > 0 &&
       selectedPlan &&
       !planAcceptsDiscounts(selectedPlan)
     ) {
-      setAppliedPromoValue(0);
+      setDiscountLines([]);
       setPromoCode("");
-      setAppliedPromoKind(null);
       setPromoStatus(
         selectedPlan === "online"
           ? "Discounts removed — not available on the Online plan."
           : "Discount removed — not compatible with selected plan.",
       );
     }
-  }, [selectedPlan, appliedPromoKind]);
+  }, [selectedPlan, discountLines.length]);
 
   const applyReferral = useCallback(
     async (code: string, _message?: string): Promise<boolean> => {
@@ -205,7 +247,7 @@ export const useReferralSystem = (
       const ok = await resolveFromServer(code);
       if (ok) {
         setPromoStatus(
-          `Referral thank-you applied! That's $${(REFERRAL_VALUE / 100).toFixed(0)} off your term.`,
+          `Referral thank-you applied ($${(REFERRAL_VALUE / 100).toFixed(0)}). Diagnostic credit stacks if eligible.`,
         );
       }
       return ok;
@@ -245,12 +287,11 @@ export const useReferralSystem = (
 
   const removePromo = useCallback(() => {
     setPromoCode("");
-    setAppliedPromoValue(0);
-    setAppliedPromoKind(null);
     setPromoStatus(null);
-    // Re-apply diagnostic credit if still eligible
     if (planAcceptsDiscounts(selectedPlan) && normalizedCheckoutEmail) {
       void resolveFromServer(undefined);
+    } else {
+      setDiscountLines([]);
     }
   }, [selectedPlan, normalizedCheckoutEmail, resolveFromServer]);
 
@@ -266,25 +307,14 @@ export const useReferralSystem = (
     );
   }, [referralLink]);
 
-  const promoAdjustments = useMemo(() => {
-    const list: PromoAdjustment[] = [];
-    if (
-      appliedPromoValue > 0 &&
-      appliedPromoKind &&
-      appliedPromoKind !== "none"
-    ) {
-      let label = "Discount";
-      if (appliedPromoKind === "promo" && promoCode) {
-        label = `Promo code (${promoCode})`;
-      } else if (appliedPromoKind === "referral" && promoCode) {
-        label = `Referral thank-you (${promoCode})`;
-      } else if (appliedPromoKind === "diagnostic_credit") {
-        label = "Diagnostic Discovery credit";
-      }
-      list.push({ label, amount: appliedPromoValue });
-    }
-    return list;
-  }, [appliedPromoValue, promoCode, appliedPromoKind]);
+  const promoAdjustments = useMemo(
+    () =>
+      discountLines.map((line) => ({
+        label: lineLabel(line),
+        amount: line.amountCents,
+      })),
+    [discountLines],
+  );
 
   const calculateFinalAmount = useCallback(
     (basePriceCents: number) =>
@@ -310,5 +340,4 @@ export const useReferralSystem = (
   };
 };
 
-// Re-export for type consumers that imported PromoCode from this module path
 export type { PromoCode };

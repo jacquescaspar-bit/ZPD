@@ -38,7 +38,13 @@ export async function fulfillPaymentIntent(
   const alreadyFulfilled = await enrollmentExists(paymentIntent.id);
 
   if (!alreadyFulfilled) {
-    if (discountKind === "diagnostic_credit" && creditSourceEnrollmentId) {
+    // Redeem diagnostic credit when present (alone or stacked with a code)
+    const usesDiagnosticCredit =
+      Boolean(creditSourceEnrollmentId) &&
+      (discountKind === "diagnostic_credit" ||
+        discountKind.includes("diagnostic_credit"));
+
+    if (usesDiagnosticCredit && creditSourceEnrollmentId) {
       const redeemed = await markDiagnosticCreditRedeemed(
         creditSourceEnrollmentId,
       );

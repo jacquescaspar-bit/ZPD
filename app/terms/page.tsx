@@ -155,11 +155,12 @@ const TermsPage = () => (
                 promotional codes, and diagnostic credits do not apply.
               </li>
               <li>
-                <strong>One offer per purchase:</strong> Referral codes,
-                promotional codes, and diagnostic credits cannot be combined.
-                Where more than one offer is eligible, the single highest-value
-                eligible offer is applied. Not valid in conjunction with any
-                other offer unless we expressly say otherwise.
+                <strong>How offers combine:</strong> An eligible Diagnostic
+                Discovery credit stacks with one referral code or one
+                promotional code on Essential or Intensive. Referral codes and
+                promotional codes cannot be combined with each other. Not valid
+                in conjunction with any other offer unless we expressly say
+                otherwise.
               </li>
               <li>
                 <strong>Referrals:</strong> A valid referral code typically

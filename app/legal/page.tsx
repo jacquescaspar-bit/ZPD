@@ -86,11 +86,11 @@ const LegalPage = () => {
           </p>
           <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
             Diagnostic Discovery fees may be credited toward Essential or
-            Intensive within 30 days (once per email). Online plans are fixed
-            price — no referral, promo, or diagnostic credits. One offer per
-            purchase; offers are not combinable. Parent referrals typically
-            provide $50 off Essential/Intensive. See full Terms of Service for
-            details.
+            Intensive within 30 days (once per email) and stack with one
+            referral or promo code. Online plans are fixed price — no referral,
+            promo, or diagnostic credits. Referral and promo codes cannot be
+            combined with each other. Parent referrals typically provide $50 off
+            Essential/Intensive. See full Terms of Service for details.
           </p>
           <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
             Disputes are governed by the laws of New South Wales, Australia. By

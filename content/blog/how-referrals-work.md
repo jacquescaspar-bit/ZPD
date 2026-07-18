@@ -21,7 +21,7 @@ We keep referrals simple:
 
 - When they enrol, you get a personal **RWD-** code ($50 off your next Essential or Intensive term)
 - Plus a new **REF-** code to share again
-- One discount per invoice — referral or reward, not both stacked
+- Referral or promo codes cannot be stacked with each other — but Diagnostic Discovery credit (if eligible) stacks with a referral or promo on Essential/Intensive
 
 ## After you enrol
 

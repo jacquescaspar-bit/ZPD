@@ -6,8 +6,8 @@ import { query } from "@/lib/db";
 
 export type DiscountKind = "none" | "referral" | "promo" | "diagnostic_credit";
 
-export interface ResolvedDiscount {
-  kind: DiscountKind;
+export interface DiscountLine {
+  kind: Exclude<DiscountKind, "none">;
   amountCents: number;
   label: string;
   code?: string;
@@ -18,8 +18,15 @@ export interface DiscountResolutionResult {
   planType: PlanType;
   planPriceCents: number;
   finalAmountCents: number;
-  discount: ResolvedDiscount;
+  /** Line items that stack (diagnostic credit + at most one code). */
+  discounts: DiscountLine[];
+  totalDiscountCents: number;
+  /** Composite kind for audit/metadata, e.g. diagnostic_credit+referral */
+  discountKind: string;
 }
+
+/** @deprecated Prefer DiscountLine — kept for type imports in UI */
+export type ResolvedDiscount = DiscountLine & { kind: DiscountKind };
 
 export interface EligibleDiagnosticCredit {
   enrollmentId: string;
@@ -84,11 +91,21 @@ export async function markDiagnosticCreditRedeemed(
   }
 }
 
+function compositeDiscountKind(lines: DiscountLine[]): string {
+  if (lines.length === 0) return "none";
+  if (lines.length === 1) return lines[0].kind;
+  return lines
+    .map((l) => l.kind)
+    .sort()
+    .join("+");
+}
+
 /**
  * Server authority for checkout discounts.
  * Online and trial: no discounts.
- * Essential/Intensive: exactly one of referral, promo, or diagnostic credit
- * (highest value wins when multiple are eligible).
+ * Essential/Intensive:
+ *   - Diagnostic credit stacks with one referral OR promo code
+ *   - Referral and promo cannot stack with each other (single code field)
  */
 export async function resolveDiscount(input: {
   planType: PlanType;
@@ -100,32 +117,29 @@ export async function resolveDiscount(input: {
   const email = input.email?.toLowerCase().trim() ?? undefined;
   const code = input.code?.trim().toUpperCase() ?? undefined;
 
-  const none = (): DiscountResolutionResult => ({
+  const empty = (): DiscountResolutionResult => ({
     planType,
     planPriceCents,
     finalAmountCents: planPriceCents,
-    discount: {
-      kind: "none",
-      amountCents: 0,
-      label: "No discount",
-    },
+    discounts: [],
+    totalDiscountCents: 0,
+    discountKind: "none",
   });
 
   if (planType === "online" || planType === "trial") {
-    return none();
+    return empty();
   }
 
   if (!DISCOUNT_ELIGIBLE_PLANS.includes(planType)) {
-    return none();
+    return empty();
   }
 
-  type Candidate = ResolvedDiscount;
-  const candidates: Candidate[] = [];
+  const lines: DiscountLine[] = [];
 
   if (email) {
     const credit = await findEligibleDiagnosticCredit(email);
     if (credit) {
-      candidates.push({
+      lines.push({
         kind: "diagnostic_credit",
         amountCents: Math.min(credit.amountCents, PRICING.trial.price),
         label: "Diagnostic Discovery credit",
@@ -141,7 +155,7 @@ export async function resolveDiscount(input: {
       email,
     );
     if (promoValidation.valid && promoValidation.promoCode) {
-      candidates.push({
+      lines.push({
         kind: "promo",
         amountCents: promoValidation.promoCode.discountCents,
         label: promoValidation.promoCode.description,
@@ -154,7 +168,7 @@ export async function resolveDiscount(input: {
         email,
       );
       if (referralValidation.valid && referralValidation.referralCode) {
-        candidates.push({
+        lines.push({
           kind: "referral",
           amountCents: REFERRAL_VALUE,
           label: "Referral thank-you",
@@ -164,18 +178,32 @@ export async function resolveDiscount(input: {
     }
   }
 
-  if (candidates.length === 0) {
-    return none();
-  }
-
-  candidates.sort((a, b) => b.amountCents - a.amountCents);
-  const [winner] = candidates;
-  const finalAmountCents = Math.max(100, planPriceCents - winner.amountCents);
+  const totalDiscountCents = lines.reduce((sum, l) => sum + l.amountCents, 0);
+  const finalAmountCents = Math.max(100, planPriceCents - totalDiscountCents);
 
   return {
     planType,
     planPriceCents,
     finalAmountCents,
-    discount: winner,
+    discounts: lines,
+    totalDiscountCents,
+    discountKind: compositeDiscountKind(lines),
   };
+}
+
+/** True if resolution applied a referral or promo for the given code. */
+export function resolutionAppliedCode(
+  result: DiscountResolutionResult,
+  code?: string,
+): boolean {
+  if (!code?.trim()) return false;
+  const normalized = code.trim().toUpperCase();
+  return result.discounts.some(
+    (d) =>
+      (d.kind === "referral" || d.kind === "promo") && d.code === normalized,
+  );
+}
+
+export function hasDiagnosticCredit(result: DiscountResolutionResult): boolean {
+  return result.discounts.some((d) => d.kind === "diagnostic_credit");
 }

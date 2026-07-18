@@ -97,7 +97,7 @@ const sendReferralCodeEmail = (
         <li>You receive a personal $50 reward code for your next Essential or Intensive term</li>
         <li>You'll also get a fresh referral code to keep sharing</li>
       </ul>
-      <p>Only one discount applies per invoice (not valid with any other offer).</p>
+      <p>Referral and promo codes can't be combined with each other. Diagnostic Discovery credit (if eligible) stacks with a referral or promo on Essential or Intensive.</p>
       <p>Happy learning!</p>
       <p>The ZPD Learning Team</p>
     </div>

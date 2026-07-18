@@ -43,9 +43,9 @@ const DiscountCodeSection = ({
           Referral or Promo Code
         </h3>
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          $50 off with a referral or promo code. One offer per purchase — not
-          valid with any other offer. Diagnostic credit is applied automatically
-          when eligible.
+          $50 off with a referral or promo code. Diagnostic Discovery credit (if
+          eligible within 30 days) stacks on top. Referral and promo codes
+          cannot be combined with each other.
         </p>
       </div>
 

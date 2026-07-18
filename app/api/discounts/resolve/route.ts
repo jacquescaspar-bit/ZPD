@@ -20,7 +20,9 @@ export async function POST(request: NextRequest) {
       planType: result.planType,
       planPriceCents: result.planPriceCents,
       finalAmountCents: result.finalAmountCents,
-      discount: result.discount,
+      discounts: result.discounts,
+      totalDiscountCents: result.totalDiscountCents,
+      discountKind: result.discountKind,
     });
   } catch (error) {
     console.error("Error resolving discount:", error);

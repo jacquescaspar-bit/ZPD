@@ -2,7 +2,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { query } from "@/lib/db";
 import { PRICING, CURRENCY, type PlanType } from "@/lib/constants";
-import { resolveDiscount } from "@/lib/discountResolution";
+import {
+  resolveDiscount,
+  resolutionAppliedCode,
+} from "@/lib/discountResolution";
 
 export async function POST(request: NextRequest) {
   try {
@@ -81,12 +84,11 @@ export async function POST(request: NextRequest) {
       code: codeCandidate,
     });
 
-    // If client sent a code but nothing applied, surface invalid code
     if (
       codeCandidate &&
-      resolution.discount.kind === "none" &&
       planType !== "online" &&
-      planType !== "trial"
+      planType !== "trial" &&
+      !resolutionAppliedCode(resolution, codeCandidate)
     ) {
       return NextResponse.json(
         {
@@ -95,26 +97,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
-
-    // If client expected a specific code kind but diagnostic credit won, still OK —
-    // if client sent a code and we applied diagnostic credit only because code failed, reject.
-    if (
-      codeCandidate &&
-      resolution.discount.kind === "diagnostic_credit" &&
-      resolution.discount.code !== codeCandidate
-    ) {
-      // Re-resolve without code to confirm; if credit still wins, allow and ignore bad code
-      // Prefer: if code was sent but didn't win, check if code was invalid
-      const withCodeOnly = await resolveDiscount({
-        planType: planType as PlanType,
-        email: checkoutEmail,
-        code: codeCandidate,
-      });
-      // Already have full resolution with code+credit. If winner is credit, code may still be invalid.
-      // Allow diagnostic credit to win over a failed code — but if user explicitly applied a code
-      // that is invalid, they may expect an error. Plan: highest wins; invalid code ignored when credit applies.
-      void withCodeOnly;
     }
 
     const finalAmount = resolution.finalAmountCents;
@@ -134,7 +116,12 @@ export async function POST(request: NextRequest) {
 
     const notesPreview = (enrollmentData?.notes ?? "").slice(0, 500);
     const attachmentCount = enrollmentData?.attachmentNames?.length ?? 0;
-    const { discount } = resolution;
+    const codeLine = resolution.discounts.find(
+      (d) => d.kind === "referral" || d.kind === "promo",
+    );
+    const creditLine = resolution.discounts.find(
+      (d) => d.kind === "diagnostic_credit",
+    );
 
     const paymentIntent = await stripe().paymentIntents.create({
       amount: finalAmount,
@@ -149,11 +136,14 @@ export async function POST(request: NextRequest) {
         phone: enrollmentData?.phone ?? "",
         notes: notesPreview,
         attachment_count: attachmentCount.toString(),
-        referralCode: discount.kind === "referral" ? (discount.code ?? "") : "",
-        promoCode: discount.kind === "promo" ? (discount.code ?? "") : "",
-        discountKind: discount.kind,
-        discountCents: String(discount.amountCents),
-        creditSourceEnrollmentId: discount.creditSourceEnrollmentId ?? "",
+        referralCode:
+          codeLine?.kind === "referral" ? (codeLine.code ?? "") : "",
+        promoCode: codeLine?.kind === "promo" ? (codeLine.code ?? "") : "",
+        discountKind: resolution.discountKind,
+        discountCents: String(resolution.totalDiscountCents),
+        creditSourceEnrollmentId: creditLine?.creditSourceEnrollmentId ?? "",
+        creditCents: creditLine ? String(creditLine.amountCents) : "0",
+        codeDiscountCents: codeLine ? String(codeLine.amountCents) : "0",
       },
       description: `${plan.name} - ZPD Learning Enrolment`,
     });
@@ -163,12 +153,9 @@ export async function POST(request: NextRequest) {
       amount: finalAmount,
       currency: CURRENCY,
       planName: plan.name,
-      discount: {
-        kind: discount.kind,
-        amountCents: discount.amountCents,
-        label: discount.label,
-        code: discount.code,
-      },
+      discounts: resolution.discounts,
+      totalDiscountCents: resolution.totalDiscountCents,
+      discountKind: resolution.discountKind,
     });
   } catch (error: unknown) {
     console.error("Error creating payment intent:", error);
