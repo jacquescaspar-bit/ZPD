@@ -69,12 +69,14 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     return () => window.removeEventListener("resize", checkDesktop);
   }, []);
 
-  // Set showHighlights to true when a plan is selected
+  // Highlights + clear stale payment errors when plan selection changes
   useEffect(() => {
-    if (selectedPlan) {
-      setShowHighlights(true);
-    } else {
-      setShowHighlights(false);
+    setShowHighlights(Boolean(selectedPlan));
+    // PaymentForm unmounts/remounts with plan; don't leave "Email is required" etc. stuck
+    setErrorMessage(null);
+    setStatusMessage(null);
+    if (!selectedPlan) {
+      setHasAttemptedSubmit(false);
     }
   }, [selectedPlan]);
 
@@ -413,7 +415,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
                     missingFields: getMissingFields(),
                     onPaymentError: (message) => {
                       setErrorMessage(message);
-                      setStatusMessage(null);
+                      if (message) setStatusMessage(null);
                     },
                     onPaymentSuccess: (paymentIntentId) => {
                       handlePaymentSuccess(paymentIntentId).catch((error) => {
@@ -473,7 +475,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             validateCode={validateCode}
             onPaymentError={(message) => {
               setErrorMessage(message);
-              setStatusMessage(null);
+              if (message) setStatusMessage(null);
             }}
             onPaymentSuccess={(paymentIntentId) => {
               handlePaymentSuccess(paymentIntentId).catch((error) => {

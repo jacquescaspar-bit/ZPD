@@ -254,7 +254,7 @@ export interface PaymentDetailsProps {
   enrollmentData: EnrollmentPaymentData;
   isPaymentReady: boolean;
   missingFields?: string[];
-  onPaymentError: (message: string) => void;
+  onPaymentError: (message: string | null) => void;
   onPaymentSuccess: (paymentIntentId: string) => void;
   finalAmountCents: number;
   promoAdjustments: { label: string; amount: number }[];

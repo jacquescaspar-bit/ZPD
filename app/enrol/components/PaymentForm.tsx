@@ -28,7 +28,7 @@ interface PaymentFormProps {
   planType: PlanType;
   enrollmentData: EnrollmentPaymentData;
   onPaymentSuccess: (paymentIntentId: string) => void;
-  onPaymentError: (error: string) => void;
+  onPaymentError: (error: string | null) => void;
   summarySlot?: React.ReactNode;
   submitLabel?: string;
   isReady?: boolean;
@@ -92,6 +92,11 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
         );
         return;
       }
+      // Wait for email before calling the API — avoids sticky "Email is required" noise
+      if (!enrollmentData.email?.trim()) {
+        setClientSecret(null);
+        return;
+      }
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: {
@@ -113,6 +118,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
       }
 
       setClientSecret(data.clientSecret);
+      onPaymentError(null);
     } catch (error: unknown) {
       onPaymentError(
         error instanceof Error
@@ -131,12 +137,8 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   ]);
 
   useEffect(() => {
-    // Create PaymentIntent as soon as the component loads
     setClientSecret(null);
-    const createIntent = async () => {
-      await createPaymentIntent();
-    };
-    void createIntent();
+    void createPaymentIntent();
   }, [createPaymentIntent]);
 
   // Clear validation error when fields become ready

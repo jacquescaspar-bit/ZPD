@@ -15,36 +15,32 @@ export const planDescriptions: Record<
     title: "Discovery",
     blurb: "One-time • Diagnostic Discovery Session • Customised ZPD Plan",
     highlights: [
-      "One time offer",
-      "Diagnostic Discovery",
-      "Credit applied to Essential or Intensive plan within 30 days",
+      "One-time offer",
+      "Diagnostic discovery & term plan",
+      "$110 credited to Essential or Intensive within 30 days",
     ],
   },
   online: {
     title: "Online",
     blurb: "10 online sessions per term • 1 subject",
     highlights: [
-      "Virtual Delivery",
-      "Email Support",
-      "Fixed price — discounts do not apply",
+      "Remote delivery",
+      "Single subject focus",
+      "Flexible scheduling",
     ],
   },
   essential: {
     title: "Essential",
     blurb: "10 sessions per term • 2 subjects • Priority support",
-    highlights: [
-      "ATAR Specialist Tutors",
-      "Discovery session credit included",
-      "Most Popular",
-    ],
+    highlights: ["In-person delivery", "Dual subject focus", "Email support"],
   },
   intensive: {
     title: "Intensive",
     blurb: "20 sessions per term • Unlimited subjects",
     highlights: [
-      "Direct Phone Support",
-      "Fast-tracked Progress",
-      "Best for Year 11/12",
+      "Best for senior / heavy workloads",
+      "Integrated subject focus",
+      "Phone & email support",
     ],
   },
 };
