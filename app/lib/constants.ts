@@ -24,17 +24,17 @@ export const PRICING = {
   },
   online: {
     name: "Online Plan",
-    price: 75000, // $750.00 AUD per term
+    price: 85000, // $850.00 AUD per term ($85/session)
     sessionsPerTerm: 10,
   },
   essential: {
     name: "Essential Plan",
-    price: 95000, // $950.00 AUD per term
+    price: 105000, // $1,050.00 AUD per term ($105/session)
     sessionsPerTerm: 10,
   },
   intensive: {
     name: "Intensive Plan",
-    price: 170000, // $1,700.00 AUD per term
+    price: 190000, // $1,900.00 AUD per term ($95/session)
     sessionsPerTerm: 20,
   },
 } as const;

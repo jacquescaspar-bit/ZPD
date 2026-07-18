@@ -75,7 +75,7 @@ const ReferralShareCard = ({
     <div className="w-full max-w-md rounded-xl border border-blue-200 bg-blue-50 p-5 dark:border-blue-800 dark:bg-blue-950/30">
       <div className="text-center">
         <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
-          Earn $100 for every successful referral
+          Earn $50 for every successful referral
         </p>
         <p className="font-mono text-2xl font-bold tracking-wider break-all text-blue-950 dark:text-blue-50 sm:text-3xl">
           {referralCode}
@@ -99,7 +99,7 @@ const ReferralShareCard = ({
           )}
         </div>
         <p className="mt-2 text-xs text-blue-700 dark:text-blue-300">
-          Share with friends — they save $100 on Essential or Intensive plans
+          Share with friends — they save $50 on Essential or Intensive plans
         </p>
       </div>
     </div>

@@ -144,7 +144,7 @@ const ReferralsPage = () => {
             </div>
           </div>
         }
-        description="Track referral performance and manage $100 thank-you codes."
+        description="Track referral performance and manage $50 thank-you codes."
         title="Referrals"
       />
 

@@ -11,11 +11,13 @@
 | Plan type               | Parent revenue / session | Tutor pay / session | Gross margin / session |
 | ----------------------- | ------------------------ | ------------------- | ---------------------- |
 | Diagnostic Discovery    | $110                     | **$68**             | ~$42                   |
-| Essential (10 sessions) | $95                      | **$60**             | ~$35                   |
-| Intensive (20 sessions) | $85                      | **$60**             | ~$25                   |
-| Online (10 sessions)    | $75                      | **$55**             | ~$20                   |
+| Essential (10 sessions) | $105 ($1,050 term)       | **$60**             | ~$45                   |
+| Intensive (20 sessions) | $95 ($1,900 term)        | **$60**             | ~$35                   |
+| Online (10 sessions)    | $85 ($850 term)          | **$55**             | ~$30                   |
 
 GST included in parent pricing. Tutor pay is ex-GST contractor rate (tutor invoices with ABN).
+
+Diagnostic list price is fixed at $110 (not increased with the +$10/session term-plan lift).
 
 ---
 
@@ -39,15 +41,20 @@ GST included in parent pricing. Tutor pay is ex-GST contractor rate (tutor invoi
 
 ---
 
-## Referral bounties (define before scaling)
+## Referral bounties (manual)
 
-| Action                                            | Suggested range | Status |
-| ------------------------------------------------- | --------------- | ------ |
-| Tutor refers family → Diagnostic enrols           | $50–75          | TBD    |
-| Tutor refers family → term plan enrols            | $75–150         | TBD    |
-| Tutor refers colleague → joins + completes 1 term | $100–200        | TBD    |
+| Action                                                             | Amount   | Status                             |
+| ------------------------------------------------------------------ | -------- | ---------------------------------- |
+| Tutor refers family → converts Diagnostic → Essential or Intensive | **$50**  | Manual — pay when term plan clears |
+| Tutor refers colleague → joins + completes 1 term                  | $100–200 | TBD                                |
 
-Track manually in spreadsheet until Phase 2 admin bounty view.
+**Rules:**
+
+- Bounty is **$50**, paid by you when settling tutor invoices — not automated in product
+- Payable only when the referred family purchases **Essential or Intensive** (not Diagnostic alone, not Online)
+- Track in spreadsheet until Phase 2 admin bounty view
+
+Parent-facing referral codes remain separate: **$50 off** Essential/Intensive for the friend; referrer gets a **$50** personal reward promo.
 
 ---
 
@@ -57,4 +64,4 @@ Track manually in spreadsheet until Phase 2 admin bounty view.
 
 ---
 
-_Last updated: June 2026_
+_Last updated: July 2026_

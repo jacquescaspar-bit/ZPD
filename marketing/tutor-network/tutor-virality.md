@@ -4,11 +4,11 @@ Casual teachers are a **second engine** alongside parent referrals. Different au
 
 ## Two flywheels
 
-|                | Parents                                          | Teachers                              |
-| -------------- | ------------------------------------------------ | ------------------------------------- |
-| **Incentive**  | $100 off for a friend; personal reward when used | Contractor pay + referral bounty      |
-| **They share** | "This worked for us"                             | "I tutor through ZPD — ask me"        |
-| **Product**    | REF codes after purchase                         | Manual tracking → Phase 2 tutor codes |
+|                | Parents                                         | Teachers                              |
+| -------------- | ----------------------------------------------- | ------------------------------------- |
+| **Incentive**  | $50 off for a friend; personal reward when used | Contractor pay + referral bounty      |
+| **They share** | "This worked for us"                            | "I tutor through ZPD — ask me"        |
+| **Product**    | REF codes after purchase                        | Manual tracking → Phase 2 tutor codes |
 
 Parents fill demand. Teachers fill supply and can refer both.
 

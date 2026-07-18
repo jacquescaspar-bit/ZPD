@@ -23,6 +23,21 @@ const validatePromoCode = async (
       return { valid: false, reason: "Invalid promo code" };
     }
 
+    if (plan === "online") {
+      return {
+        valid: false,
+        reason:
+          "Discounts do not apply to the Online plan — fixed term price only.",
+      };
+    }
+
+    if (plan === "trial") {
+      return {
+        valid: false,
+        reason: "Discounts do not apply to the Diagnostic Discovery session.",
+      };
+    }
+
     const [row] = result.rows;
 
     // Check expiration
@@ -102,12 +117,8 @@ const createPromoCode = async (data: {
   ownerEmail?: string | null;
 }): Promise<void> => {
   try {
-    const allowedPlans = data.allowedPlans ?? [
-      "trial",
-      "online",
-      "essential",
-      "intensive",
-    ];
+    // Default: term plans that accept discounts (not Online, not Diagnostic)
+    const allowedPlans = data.allowedPlans ?? ["essential", "intensive"];
     const ownerEmail = data.ownerEmail
       ? data.ownerEmail.toLowerCase().trim()
       : null;

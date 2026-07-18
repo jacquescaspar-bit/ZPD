@@ -30,7 +30,7 @@ export async function createReferrerRewardPromo(
   await PromoCodeStorage.createPromoCode({
     code,
     discountCents: REFERRAL_VALUE,
-    description: "$100 off your next Essential or Intensive term",
+    description: "$50 off your next Essential or Intensive term",
     maxUses: 1,
     expiresAt: expiresAt.toISOString(),
     allowedPlans: ["essential", "intensive"],

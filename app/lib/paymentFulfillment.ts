@@ -1,9 +1,11 @@
 import type Stripe from "stripe";
-import { query } from "@/lib/db";
 import { EmailService } from "@/lib/email";
 import { ReferralStorage } from "@/lib/referralStorage";
 import { PromoCodeStorage } from "@/lib/promoStorage";
 import { createReferrerRewardPromo } from "@/lib/referrerRewards";
+import { markDiagnosticCreditRedeemed } from "@/lib/discountResolution";
+import { query } from "@/lib/db";
+
 async function enrollmentExists(paymentIntentId: string): Promise<boolean> {
   const result = await query(
     "SELECT id FROM enrollments WHERE stripe_payment_intent_id = $1 LIMIT 1",
@@ -19,6 +21,13 @@ export async function fulfillPaymentIntent(
   const planType = paymentIntent.metadata.planType ?? "essential";
   const referralCodeUsed = paymentIntent.metadata.referralCode || undefined;
   const promoCodeUsed = paymentIntent.metadata.promoCode || undefined;
+  const discountKind = paymentIntent.metadata.discountKind || "none";
+  const discountCents = parseInt(
+    paymentIntent.metadata.discountCents || "0",
+    10,
+  );
+  const creditSourceEnrollmentId =
+    paymentIntent.metadata.creditSourceEnrollmentId || undefined;
 
   if (!email) {
     throw new Error(
@@ -29,12 +38,29 @@ export async function fulfillPaymentIntent(
   const alreadyFulfilled = await enrollmentExists(paymentIntent.id);
 
   if (!alreadyFulfilled) {
+    if (discountKind === "diagnostic_credit" && creditSourceEnrollmentId) {
+      const redeemed = await markDiagnosticCreditRedeemed(
+        creditSourceEnrollmentId,
+      );
+      if (!redeemed) {
+        throw new Error(
+          `Diagnostic credit already redeemed or missing for ${paymentIntent.id}`,
+        );
+      }
+    }
+
     await ReferralStorage.recordEnrollment(
       paymentIntent.id,
       email,
       planType,
       paymentIntent.amount,
       referralCodeUsed,
+      {
+        promoCodeUsed,
+        discountKind,
+        discountCents: Number.isFinite(discountCents) ? discountCents : 0,
+        creditSourceEnrollmentId,
+      },
     );
   }
 

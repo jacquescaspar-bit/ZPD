@@ -13,7 +13,7 @@ Classroom teachers who tutor — with a proper plan for the term, not ad-hoc hom
 - **Term plans** — 10 or 20 sessions with a sequence, not a new crisis every Tuesday
 - **Online or in-home** — wherever you're based in Australia
 
-Lead with the **$110 Diagnostic**, not the $950 Essential plan.
+Lead with the **$110 Diagnostic**, not the $1,050 Essential plan.
 
 ## Who we're talking to
 
@@ -50,7 +50,7 @@ Lead with the **$110 Diagnostic**, not the $950 Essential plan.
 
 1. **Enrol** → Diagnostic ($110) → Essential / Intensive term
 2. Blog or flagship guide (trust, cold outreach)
-3. Referral — $100 off for a friend; referrer gets their own reward (see site emails)
+3. Referral — $50 off for a friend; referrer gets their own reward (see site emails)
 
 ## Links
 

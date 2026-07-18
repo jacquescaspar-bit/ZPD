@@ -93,11 +93,11 @@ const sendReferralCodeEmail = (
       <p><strong>How it works:</strong></p>
       <ul>
         <li>Share this code with friends and family — you can't use your own code at checkout</li>
-        <li>When someone enrolls in Essential or Intensive with your code, they get $100 off that invoice</li>
-        <li>You receive a personal $100 reward code for your next Essential or Intensive term</li>
+        <li>When someone enrolls in Essential or Intensive with your code, they get $50 off that invoice</li>
+        <li>You receive a personal $50 reward code for your next Essential or Intensive term</li>
         <li>You'll also get a fresh referral code to keep sharing</li>
       </ul>
-      <p>Only one discount applies per invoice (up to $100).</p>
+      <p>Only one discount applies per invoice (not valid with any other offer).</p>
       <p>Happy learning!</p>
       <p>The ZPD Learning Team</p>
     </div>
@@ -112,12 +112,12 @@ const sendNewReferralCodeEmail = (
   newReferralCode: string,
   originalCode: string,
 ): Promise<boolean> => {
-  const subject = "Your $100 referral reward is ready!";
+  const subject = "Your $50 referral reward is ready!";
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h1 style="color: #2563EB;">Someone used your referral code!</h1>
       <p>Great news — a friend enrolled with your code <strong>${originalCode}</strong>.</p>
-      <p><strong>Your personal $100 reward</strong> (use at your next Essential or Intensive checkout):</p>
+      <p><strong>Your personal $50 reward</strong> (use at your next Essential or Intensive checkout):</p>
       <div style="background: #eff6ff; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
         <h2 style="color: #2563EB; font-size: 24px; margin: 0;">${rewardPromoCode}</h2>
       </div>
@@ -126,7 +126,7 @@ const sendNewReferralCodeEmail = (
       <div style="background: #f5f5f4; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
         <h2 style="color: #2563EB; font-size: 24px; margin: 0;">${newReferralCode}</h2>
       </div>
-      <p>Keep sharing ZPD Learning — each successful referral earns another $100 personal reward.</p>
+      <p>Keep sharing ZPD Learning — each successful referral earns another $50 personal reward.</p>
       <p>The ZPD Learning Team</p>
     </div>
   `;

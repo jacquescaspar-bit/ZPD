@@ -37,7 +37,7 @@ const TermsPage = () => (
             Terms and conditions for using our tutoring services
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
-            Last updated: 19 June 2026
+            Last updated: 18 July 2026
           </p>
         </section>
 
@@ -134,6 +134,45 @@ const TermsPage = () => (
               7-day period. If payment cannot be processed successfully,
               services may be suspended until payment is resolved.
             </p>
+
+            <h2 className="text-lg font-semibold mt-8 mb-4">
+              Pricing, Offers and Discounts
+            </h2>
+            <p>
+              Published plan prices are in Australian dollars and include GST
+              unless stated otherwise. Current list prices are shown at checkout
+              on the enrolment page.
+            </p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                <strong>Diagnostic Discovery credit:</strong> The Diagnostic
+                Discovery session fee may be credited toward an Essential or
+                Intensive plan within 30 days of that session, once per
+                email/family, applied automatically at checkout when eligible.
+              </li>
+              <li>
+                <strong>Online plan:</strong> Fixed term price. Referral codes,
+                promotional codes, and diagnostic credits do not apply.
+              </li>
+              <li>
+                <strong>One offer per purchase:</strong> Referral codes,
+                promotional codes, and diagnostic credits cannot be combined.
+                Where more than one offer is eligible, the single highest-value
+                eligible offer is applied. Not valid in conjunction with any
+                other offer unless we expressly say otherwise.
+              </li>
+              <li>
+                <strong>Referrals:</strong> A valid referral code typically
+                provides $50 off Essential or Intensive for the referred family.
+                The referrer receives a personal $50 reward code for their next
+                Essential or Intensive term (credit, not cash), subject to the
+                reward&apos;s terms.
+              </li>
+              <li>
+                We may modify or withdraw offers at any time. Offers do not
+                affect your rights under Australian Consumer Law.
+              </li>
+            </ul>
 
             <h2 className="text-lg font-semibold mt-8 mb-4">
               Service Conditions

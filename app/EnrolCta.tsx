@@ -29,7 +29,7 @@ const EnrolCta = () => (
         Enrol Now
       </Link>
       <p className="mt-6 text-sm text-gray-500 dark:text-gray-400">
-        Referred by a family? They can share their code at checkout for $100 off
+        Referred by a family? They can share their code at checkout for $50 off
         Essential or Intensive plans.
       </p>
     </div>

@@ -2,9 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { query } from "@/lib/db";
 import { PRICING, CURRENCY, type PlanType } from "@/lib/constants";
-import { REFERRAL_VALUE } from "@/enrol/constants";
-import { ReferralStorage } from "@/lib/referralStorage";
-import { PromoCodeStorage } from "@/lib/promoStorage";
+import { resolveDiscount } from "@/lib/discountResolution";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,6 +12,7 @@ export async function POST(request: NextRequest) {
       amountOverride,
       appliedReferralCode,
       appliedPromoCode,
+      appliedDiscountCode,
     } = await request.json();
 
     if (!planType || !PRICING[planType as keyof typeof PRICING]) {
@@ -23,7 +22,14 @@ export async function POST(request: NextRequest) {
     const plan = PRICING[planType as keyof typeof PRICING];
     const checkoutEmail = enrollmentData?.email?.toLowerCase().trim();
 
-    if (planType === "trial" && checkoutEmail) {
+    if (!checkoutEmail) {
+      return NextResponse.json(
+        { error: "Email is required for checkout." },
+        { status: 400 },
+      );
+    }
+
+    if (planType === "trial") {
       try {
         const existingTrial = await query(
           `SELECT 1 FROM enrollments
@@ -46,65 +52,81 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const referralCode =
-      typeof appliedReferralCode === "string" && appliedReferralCode.trim()
-        ? appliedReferralCode.trim().toUpperCase()
-        : undefined;
-    const promoCode =
-      typeof appliedPromoCode === "string" && appliedPromoCode.trim()
-        ? appliedPromoCode.trim().toUpperCase()
-        : undefined;
+    const codeCandidate =
+      (typeof appliedDiscountCode === "string" && appliedDiscountCode.trim()
+        ? appliedDiscountCode.trim()
+        : undefined) ??
+      (typeof appliedReferralCode === "string" && appliedReferralCode.trim()
+        ? appliedReferralCode.trim()
+        : undefined) ??
+      (typeof appliedPromoCode === "string" && appliedPromoCode.trim()
+        ? appliedPromoCode.trim()
+        : undefined);
 
-    if (referralCode && promoCode) {
+    if (
+      typeof appliedReferralCode === "string" &&
+      appliedReferralCode.trim() &&
+      typeof appliedPromoCode === "string" &&
+      appliedPromoCode.trim()
+    ) {
       return NextResponse.json(
         { error: "Only one discount code can be applied per checkout." },
         { status: 400 },
       );
     }
 
-    let discountCents = 0;
-    let validatedReferralCode: string | undefined;
-    let validatedPromoCode: string | undefined;
+    const resolution = await resolveDiscount({
+      planType: planType as PlanType,
+      email: checkoutEmail,
+      code: codeCandidate,
+    });
 
-    if (referralCode) {
-      const validation = await ReferralStorage.validateReferralCode(
-        referralCode,
-        planType as PlanType,
-        checkoutEmail,
+    // If client sent a code but nothing applied, surface invalid code
+    if (
+      codeCandidate &&
+      resolution.discount.kind === "none" &&
+      planType !== "online" &&
+      planType !== "trial"
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Invalid or ineligible discount code for this plan. Remove the code or choose Essential/Intensive.",
+        },
+        { status: 400 },
       );
-      if (!validation.valid) {
-        return NextResponse.json(
-          { error: validation.reason ?? "Invalid referral code" },
-          { status: 400 },
-        );
-      }
-      discountCents = REFERRAL_VALUE;
-      validatedReferralCode = referralCode;
-    } else if (promoCode) {
-      const validation = await PromoCodeStorage.validatePromoCode(
-        promoCode,
-        planType as PlanType,
-        checkoutEmail,
-      );
-      if (!validation.valid || !validation.promoCode) {
-        return NextResponse.json(
-          { error: validation.reason ?? "Invalid promo code" },
-          { status: 400 },
-        );
-      }
-      const { discountCents: promoDiscount } = validation.promoCode;
-      discountCents = promoDiscount;
-      validatedPromoCode = promoCode;
     }
 
-    const finalAmount = Math.max(100, plan.price - discountCents);
+    // If client expected a specific code kind but diagnostic credit won, still OK —
+    // if client sent a code and we applied diagnostic credit only because code failed, reject.
+    if (
+      codeCandidate &&
+      resolution.discount.kind === "diagnostic_credit" &&
+      resolution.discount.code !== codeCandidate
+    ) {
+      // Re-resolve without code to confirm; if credit still wins, allow and ignore bad code
+      // Prefer: if code was sent but didn't win, check if code was invalid
+      const withCodeOnly = await resolveDiscount({
+        planType: planType as PlanType,
+        email: checkoutEmail,
+        code: codeCandidate,
+      });
+      // Already have full resolution with code+credit. If winner is credit, code may still be invalid.
+      // Allow diagnostic credit to win over a failed code — but if user explicitly applied a code
+      // that is invalid, they may expect an error. Plan: highest wins; invalid code ignored when credit applies.
+      void withCodeOnly;
+    }
+
+    const finalAmount = resolution.finalAmountCents;
 
     if (typeof amountOverride === "number" && Number.isFinite(amountOverride)) {
-      const rounded = Math.round(amountOverride);
-      const clientAmount = Math.max(100, Math.min(plan.price, rounded));
+      const clientAmount = Math.max(100, Math.round(amountOverride));
       if (clientAmount !== finalAmount) {
         return NextResponse.json(
-          { error: "Discount amount mismatch. Please refresh and try again." },
+          {
+            error: "Discount amount mismatch. Please refresh and try again.",
+            expectedAmount: finalAmount,
+          },
           { status: 400 },
         );
       }
@@ -112,6 +134,7 @@ export async function POST(request: NextRequest) {
 
     const notesPreview = (enrollmentData?.notes ?? "").slice(0, 500);
     const attachmentCount = enrollmentData?.attachmentNames?.length ?? 0;
+    const { discount } = resolution;
 
     const paymentIntent = await stripe().paymentIntents.create({
       amount: finalAmount,
@@ -122,12 +145,15 @@ export async function POST(request: NextRequest) {
       metadata: {
         planType,
         parentName: enrollmentData?.parentName ?? "",
-        email: checkoutEmail ?? "",
+        email: checkoutEmail,
         phone: enrollmentData?.phone ?? "",
         notes: notesPreview,
         attachment_count: attachmentCount.toString(),
-        referralCode: validatedReferralCode ?? "",
-        promoCode: validatedPromoCode ?? "",
+        referralCode: discount.kind === "referral" ? (discount.code ?? "") : "",
+        promoCode: discount.kind === "promo" ? (discount.code ?? "") : "",
+        discountKind: discount.kind,
+        discountCents: String(discount.amountCents),
+        creditSourceEnrollmentId: discount.creditSourceEnrollmentId ?? "",
       },
       description: `${plan.name} - ZPD Learning Enrolment`,
     });
@@ -137,6 +163,12 @@ export async function POST(request: NextRequest) {
       amount: finalAmount,
       currency: CURRENCY,
       planName: plan.name,
+      discount: {
+        kind: discount.kind,
+        amountCents: discount.amountCents,
+        label: discount.label,
+        code: discount.code,
+      },
     });
   } catch (error: unknown) {
     console.error("Error creating payment intent:", error);

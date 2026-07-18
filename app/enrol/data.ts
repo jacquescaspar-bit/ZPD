@@ -23,7 +23,11 @@ export const planDescriptions: Record<
   online: {
     title: "Online",
     blurb: "10 online sessions per term • 1 subject",
-    highlights: ["Virtual Delivery", "Email Support", "Great starter option"],
+    highlights: [
+      "Virtual Delivery",
+      "Email Support",
+      "Fixed price — discounts do not apply",
+    ],
   },
   essential: {
     title: "Essential",

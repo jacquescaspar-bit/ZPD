@@ -245,10 +245,19 @@ const recordEnrollment = async (
   planType: string,
   amountCents: number,
   referralCodeUsed?: string,
+  options?: {
+    promoCodeUsed?: string;
+    discountKind?: string;
+    discountCents?: number;
+    creditSourceEnrollmentId?: string;
+  },
 ): Promise<void> => {
   await query(
-    `INSERT INTO enrollments (stripe_payment_intent_id, email, plan_type, referral_code_used, amount_cents)
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO enrollments (
+       stripe_payment_intent_id, email, plan_type, referral_code_used, amount_cents,
+       promo_code_used, discount_kind, discount_cents, credit_source_enrollment_id
+     )
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
      ON CONFLICT (stripe_payment_intent_id) DO NOTHING`,
     [
       stripePaymentIntentId,
@@ -256,6 +265,10 @@ const recordEnrollment = async (
       planType,
       referralCodeUsed ?? null,
       amountCents,
+      options?.promoCodeUsed ?? null,
+      options?.discountKind ?? "none",
+      options?.discountCents ?? 0,
+      options?.creditSourceEnrollmentId ?? null,
     ],
   );
 };

@@ -78,10 +78,19 @@ const LegalPage = () => {
             the child and consent to all program activities.
           </p>
           <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
-            Fees are payable as per the selected plan. ZPD Learning reserves the
-            right to adjust schedules or tutors with reasonable notice.
-            Liability is limited to the extent permitted by Australian Consumer
-            Law (ACL). We do not guarantee specific academic outcomes.
+            Fees are payable as per the selected plan (GST-inclusive prices
+            shown at checkout). ZPD Learning reserves the right to adjust
+            schedules or tutors with reasonable notice. Liability is limited to
+            the extent permitted by Australian Consumer Law (ACL). We do not
+            guarantee specific academic outcomes.
+          </p>
+          <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+            Diagnostic Discovery fees may be credited toward Essential or
+            Intensive within 30 days (once per email). Online plans are fixed
+            price — no referral, promo, or diagnostic credits. One offer per
+            purchase; offers are not combinable. Parent referrals typically
+            provide $50 off Essential/Intensive. See full Terms of Service for
+            details.
           </p>
           <p className="mb-4 text-gray-600 dark:text-gray-400 leading-relaxed">
             Disputes are governed by the laws of New South Wales, Australia. By

@@ -1,6 +1,11 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import type { PlanType } from "@/lib/constants";
-import { REFERRAL_VALUE, type PromoCode } from "@/enrol/constants";
+import {
+  DISCOUNT_ELIGIBLE_PLANS,
+  REFERRAL_VALUE,
+  type PromoCode,
+} from "@/enrol/constants";
+import type { DiscountKind } from "@/lib/discountResolution";
 
 export interface PromoAdjustment {
   label: string;
@@ -18,7 +23,7 @@ export interface UseReferralSystemReturn {
   setPromoCode: (code: string) => void;
   promoStatus: string | null;
   appliedPromoValue: number;
-  appliedPromoKind: "referral" | "promo" | null;
+  appliedPromoKind: DiscountKind | null;
   referralLink: string | null;
   applyReferral: (code: string, message?: string) => Promise<boolean>;
   applyPromoCode: (code: string) => Promise<boolean>;
@@ -27,7 +32,11 @@ export interface UseReferralSystemReturn {
   promoAdjustments: PromoAdjustment[];
   calculateFinalAmount: (basePriceCents: number) => number;
   validateCode: (code: string) => Promise<void>;
+  refreshDiscount: () => Promise<void>;
 }
+
+const planAcceptsDiscounts = (plan: PlanType | null): plan is PlanType =>
+  Boolean(plan) && DISCOUNT_ELIGIBLE_PLANS.includes(plan as PlanType);
 
 export const useReferralSystem = (
   selectedPlan: PlanType | null,
@@ -37,255 +46,213 @@ export const useReferralSystem = (
   const [promoCode, setPromoCode] = useState(initialPromoCode ?? "");
   const [promoStatus, setPromoStatus] = useState<string | null>(null);
   const [appliedPromoValue, setAppliedPromoValue] = useState(0);
-  const [appliedPromoKind, setAppliedPromoKind] = useState<
-    "referral" | "promo" | null
-  >(null);
+  const [appliedPromoKind, setAppliedPromoKind] = useState<DiscountKind | null>(
+    null,
+  );
   const referralLink: string | null = null;
 
   const normalizedCheckoutEmail = checkoutEmail?.trim() ?? undefined;
 
-  const validateReferralCode = useCallback(
-    async (
-      code: string,
-    ): Promise<{
-      valid: boolean;
-      reason?: string;
-      referralCode?: ReferralCode;
-    }> => {
-      try {
-        const params = new URLSearchParams({
-          code,
-          planType: selectedPlan ?? "",
-        });
-        if (normalizedCheckoutEmail) {
-          params.set("checkoutEmail", normalizedCheckoutEmail);
+  const applyResolution = useCallback(
+    (result: {
+      finalAmountCents: number;
+      planPriceCents: number;
+      discount: {
+        kind: DiscountKind;
+        amountCents: number;
+        label: string;
+        code?: string;
+      };
+    }) => {
+      const { discount } = result;
+      if (discount.kind === "none" || discount.amountCents <= 0) {
+        setAppliedPromoValue(0);
+        setAppliedPromoKind(null);
+        if (!promoCode.trim()) {
+          setPromoStatus(null);
         }
+        return;
+      }
 
-        const response = await fetch(
-          `/api/referral-codes?${params.toString()}`,
+      setAppliedPromoValue(discount.amountCents);
+      setAppliedPromoKind(discount.kind);
+
+      if (discount.kind === "diagnostic_credit") {
+        setPromoStatus(
+          `${discount.label} applied ($${(discount.amountCents / 100).toFixed(0)} off). One offer per purchase.`,
         );
+        if (discount.code) {
+          setPromoCode(discount.code);
+        } else if (!promoCode.trim()) {
+          // leave field empty for auto credit
+        }
+      } else if (discount.code) {
+        setPromoCode(discount.code);
+        setPromoStatus(`${discount.label} applied!`);
+      }
+    },
+    [promoCode],
+  );
+
+  const resolveFromServer = useCallback(
+    async (code?: string): Promise<boolean> => {
+      if (!planAcceptsDiscounts(selectedPlan)) {
+        setAppliedPromoValue(0);
+        setAppliedPromoKind(null);
+        if (selectedPlan === "online") {
+          setPromoStatus(
+            "Discounts do not apply to the Online plan — fixed term price only.",
+          );
+        }
+        return false;
+      }
+
+      try {
+        const response = await fetch("/api/discounts/resolve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            planType: selectedPlan,
+            email: normalizedCheckoutEmail,
+            code: code?.trim() ? code.trim() : undefined,
+          }),
+        });
 
         if (!response.ok) {
-          return { valid: false, reason: "Error validating referral code" };
+          setPromoStatus("Could not validate discount. Try again.");
+          return false;
         }
 
-        const validation = await response.json();
-        return validation;
+        const result = await response.json();
+        applyResolution(result);
+
+        if (code?.trim() && result.discount?.kind === "none") {
+          setPromoStatus("Invalid Referral / Promo code");
+          return false;
+        }
+
+        if (
+          code?.trim() &&
+          result.discount?.kind === "diagnostic_credit" &&
+          result.discount?.code !== code.trim().toUpperCase()
+        ) {
+          setPromoStatus(
+            `Diagnostic credit applied ($${(result.discount.amountCents / 100).toFixed(0)}). Entered code was not used — one offer per purchase.`,
+          );
+        }
+
+        return result.discount?.kind !== "none";
       } catch (error) {
-        console.error("Error validating referral code:", error);
-        return { valid: false, reason: "Error validating referral code" };
-      }
-    },
-    [selectedPlan, normalizedCheckoutEmail],
-  );
-
-  const applyReferral = useCallback(
-    async (code: string, message?: string): Promise<boolean> => {
-      const validation = await validateReferralCode(code);
-
-      if (!validation.valid || !validation.referralCode) {
-        setPromoStatus(validation.reason ?? "Invalid referral code");
+        console.error("Error resolving discount:", error);
+        setPromoStatus("Could not validate discount. Try again.");
         return false;
       }
-
-      if (
-        selectedPlan &&
-        !validation.referralCode.allowedPlans.includes(selectedPlan)
-      ) {
-        setPromoStatus(
-          "This referral code is not compatible with the selected plan. Referral discounts are available for Essential and Intensive plans only.",
-        );
-        return false;
-      }
-
-      setPromoCode(code);
-      setAppliedPromoValue(REFERRAL_VALUE);
-      setAppliedPromoKind("referral");
-      setPromoStatus(
-        message ?? "Referral thank-you applied! That's $100 off your term.",
-      );
-      return true;
     },
-    [selectedPlan, validateReferralCode],
+    [selectedPlan, normalizedCheckoutEmail, applyResolution],
   );
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search);
-      const ref = urlParams.get("ref");
-      if (ref && appliedPromoValue === 0) {
-        applyReferral(ref.trim().toUpperCase()).catch((error) => {
-          console.error("Error applying referral code from URL:", error);
-        });
-      }
+  const refreshDiscount = useCallback(async () => {
+    if (!planAcceptsDiscounts(selectedPlan)) {
+      setAppliedPromoValue(0);
+      setAppliedPromoKind(null);
+      return;
     }
-  }, [appliedPromoValue, applyReferral]);
+    await resolveFromServer(promoCode.trim() || undefined);
+  }, [selectedPlan, promoCode, resolveFromServer]);
+
+  // Auto-apply diagnostic credit when email + eligible plan
+  useEffect(() => {
+    if (!planAcceptsDiscounts(selectedPlan) || !normalizedCheckoutEmail) {
+      return;
+    }
+    void resolveFromServer(promoCode.trim() || undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when plan/email change
+  }, [selectedPlan, normalizedCheckoutEmail]);
+
+  // URL ?ref=
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const ref = urlParams.get("ref");
+    if (ref && planAcceptsDiscounts(selectedPlan)) {
+      setPromoCode(ref.trim().toUpperCase());
+      void resolveFromServer(ref.trim().toUpperCase());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPlan]);
 
   useEffect(() => {
     if (
-      appliedPromoKind === "referral" &&
+      appliedPromoKind &&
+      appliedPromoKind !== "none" &&
       selectedPlan &&
-      !["essential", "intensive"].includes(selectedPlan)
+      !planAcceptsDiscounts(selectedPlan)
     ) {
       setAppliedPromoValue(0);
       setPromoCode("");
       setAppliedPromoKind(null);
       setPromoStatus(
-        "Referral code removed - not compatible with selected plan.",
+        selectedPlan === "online"
+          ? "Discounts removed — not available on the Online plan."
+          : "Discount removed — not compatible with selected plan.",
       );
     }
   }, [selectedPlan, appliedPromoKind]);
 
-  const validatePromoCode = useCallback(
-    async (
-      code: string,
-    ): Promise<{ valid: boolean; reason?: string; promoCode?: PromoCode }> => {
-      try {
-        const response = await fetch("/api/promo-codes/validate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            code,
-            plan: selectedPlan,
-            email: normalizedCheckoutEmail,
-          }),
-        });
-
-        if (!response.ok) {
-          return { valid: false, reason: "Error validating promo code" };
-        }
-
-        const validation = await response.json();
-        return validation;
-      } catch (error) {
-        console.error("Error validating promo code:", error);
-        return { valid: false, reason: "Error validating promo code" };
+  const applyReferral = useCallback(
+    async (code: string, _message?: string): Promise<boolean> => {
+      setPromoCode(code.toUpperCase());
+      const ok = await resolveFromServer(code);
+      if (ok) {
+        setPromoStatus(
+          `Referral thank-you applied! That's $${(REFERRAL_VALUE / 100).toFixed(0)} off your term.`,
+        );
       }
+      return ok;
     },
-    [selectedPlan, normalizedCheckoutEmail],
+    [resolveFromServer],
   );
 
   const applyPromoCode = useCallback(
-    async (code: string): Promise<boolean> => {
-      const validation = await validatePromoCode(code);
-
-      if (!validation.valid || !validation.promoCode) {
-        setPromoStatus(validation.reason ?? "Invalid promo code");
-        return false;
-      }
-
-      const { promoCode } = validation;
+    (code: string): Promise<boolean> => {
       setPromoCode(code.toUpperCase());
-      setAppliedPromoValue(promoCode.discountCents);
-      setAppliedPromoKind("promo");
-      setPromoStatus(`${promoCode.description} applied!`);
-
-      return true;
+      return resolveFromServer(code);
     },
-    [validatePromoCode],
+    [resolveFromServer],
   );
 
   const validateCode = useCallback(
     async (code: string): Promise<void> => {
       if (!code.trim()) {
         setPromoStatus(null);
+        await resolveFromServer(undefined);
         return;
       }
 
-      const promoValidation = await validatePromoCode(code);
-      if (promoValidation.valid) {
-        if (promoValidation.promoCode) {
-          const { allowedPlans } = promoValidation.promoCode;
-          if (
-            selectedPlan &&
-            allowedPlans &&
-            !allowedPlans.includes(selectedPlan)
-          ) {
-            setPromoStatus(
-              `This code is valid, but is compatible only with the following plans: ${allowedPlans.join(", ")}`,
-            );
-            return;
-          }
-          await applyPromoCode(code);
-          return;
-        }
+      if (!planAcceptsDiscounts(selectedPlan)) {
+        setPromoStatus(
+          selectedPlan === "online"
+            ? "Discounts do not apply to the Online plan."
+            : "Discounts are only available on Essential and Intensive plans.",
+        );
+        return;
       }
 
-      const referralValidation = await validateReferralCode(code);
-      if (referralValidation.valid) {
-        if (referralValidation.referralCode) {
-          const { allowedPlans } = referralValidation.referralCode;
-          if (selectedPlan && !allowedPlans.includes(selectedPlan)) {
-            setPromoStatus(
-              `This code is valid, but is compatible only with the following plans: ${allowedPlans.join(", ")}`,
-            );
-            return;
-          }
-          await applyReferral(
-            code,
-            "Referral thank-you applied! That's $100 off your term.",
-          );
-          return;
-        }
-      }
-
-      setPromoStatus(
-        promoValidation.reason ??
-          referralValidation.reason ??
-          "Invalid Referral / Promo code",
-      );
+      await resolveFromServer(code);
     },
-    [
-      selectedPlan,
-      validatePromoCode,
-      validateReferralCode,
-      applyPromoCode,
-      applyReferral,
-    ],
+    [selectedPlan, resolveFromServer],
   );
 
-  useEffect(() => {
-    if (!promoCode || !appliedPromoKind) return;
-
-    const revalidate = async () => {
-      if (appliedPromoKind === "referral") {
-        const validation = await validateReferralCode(promoCode);
-        if (!validation.valid) {
-          setAppliedPromoValue(0);
-          setPromoCode("");
-          setAppliedPromoKind(null);
-          setPromoStatus(
-            validation.reason ?? "Referral code is no longer valid.",
-          );
-        }
-      } else if (appliedPromoKind === "promo") {
-        const validation = await validatePromoCode(promoCode);
-        if (!validation.valid) {
-          setAppliedPromoValue(0);
-          setPromoCode("");
-          setAppliedPromoKind(null);
-          setPromoStatus(validation.reason ?? "Promo code is no longer valid.");
-        }
-      }
-    };
-
-    void revalidate();
-  }, [
-    normalizedCheckoutEmail,
-    promoCode,
-    appliedPromoKind,
-    validateReferralCode,
-    validatePromoCode,
-  ]);
-
   const removePromo = useCallback(() => {
-    setAppliedPromoValue(0);
     setPromoCode("");
+    setAppliedPromoValue(0);
     setAppliedPromoKind(null);
     setPromoStatus(null);
-  }, []);
+    // Re-apply diagnostic credit if still eligible
+    if (planAcceptsDiscounts(selectedPlan) && normalizedCheckoutEmail) {
+      void resolveFromServer(undefined);
+    }
+  }, [selectedPlan, normalizedCheckoutEmail, resolveFromServer]);
 
   const copyReferralLink = useCallback(() => {
     if (referralLink && navigator?.clipboard?.writeText) {
@@ -301,14 +268,20 @@ export const useReferralSystem = (
 
   const promoAdjustments = useMemo(() => {
     const list: PromoAdjustment[] = [];
-    if (appliedPromoValue && promoCode) {
-      list.push({
-        label:
-          appliedPromoKind === "promo"
-            ? `Promo code (${promoCode})`
-            : `Referral thank-you (${promoCode})`,
-        amount: appliedPromoValue,
-      });
+    if (
+      appliedPromoValue > 0 &&
+      appliedPromoKind &&
+      appliedPromoKind !== "none"
+    ) {
+      let label = "Discount";
+      if (appliedPromoKind === "promo" && promoCode) {
+        label = `Promo code (${promoCode})`;
+      } else if (appliedPromoKind === "referral" && promoCode) {
+        label = `Referral thank-you (${promoCode})`;
+      } else if (appliedPromoKind === "diagnostic_credit") {
+        label = "Diagnostic Discovery credit";
+      }
+      list.push({ label, amount: appliedPromoValue });
     }
     return list;
   }, [appliedPromoValue, promoCode, appliedPromoKind]);
@@ -333,5 +306,9 @@ export const useReferralSystem = (
     promoAdjustments,
     calculateFinalAmount,
     validateCode,
+    refreshDiscount,
   };
 };
+
+// Re-export for type consumers that imported PromoCode from this module path
+export type { PromoCode };

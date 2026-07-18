@@ -33,7 +33,7 @@ https://zpdlearning.com/enrol?plan=essential&promo=TERM2026
 
 - After 50 redemptions, or
 - End of term, or
-- When switching to referral-led growth (referral = $100 — don't stack messaging)
+- When switching to referral-led growth (referral = $50 — don't stack messaging)
 
 ## Tracking
 

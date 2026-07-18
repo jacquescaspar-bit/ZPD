@@ -2,7 +2,10 @@ import type { PlanType } from "@/lib/constants";
 
 export const MAX_NOTES_LENGTH = 8000;
 
-export const REFERRAL_VALUE = 10000; // $100
+export const REFERRAL_VALUE = 5000; // $50
+
+/** Plans that accept referral, promo, or diagnostic credits. */
+export const DISCOUNT_ELIGIBLE_PLANS: PlanType[] = ["essential", "intensive"];
 
 export const SECTION_CARD_CLASS =
   "rounded-3xl border border-white/60 dark:border-gray-800 bg-white/80 dark:bg-gray-900/60 shadow-2xl backdrop-blur-lg";

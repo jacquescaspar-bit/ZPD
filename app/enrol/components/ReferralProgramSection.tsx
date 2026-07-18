@@ -21,7 +21,7 @@ const ReferralProgramSection: React.FC<ReferralProgramSectionProps> = ({
         You've received a unique referral code via email! Share it with friends
         and family. When they use your code to enrol in Essential or Intensive
         plans, you'll receive a new referral code to share. This creates a chain
-        of referrals where everyone saves $100!
+        of referrals where everyone saves $50!
       </p>
     </div>
 
@@ -59,13 +59,13 @@ const ReferralProgramSection: React.FC<ReferralProgramSectionProps> = ({
         <div className="flex items-center gap-2">
           <span className="text-blue-500">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            Get $100 off for each successful referral
+            Get $50 off for each successful referral
           </span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-blue-500">✓</span>
           <span className="text-gray-700 dark:text-gray-300">
-            Your referrals get $100 off Essential/Intensive
+            Your referrals get $50 off Essential/Intensive
           </span>
         </div>
         <div className="flex items-center gap-2">

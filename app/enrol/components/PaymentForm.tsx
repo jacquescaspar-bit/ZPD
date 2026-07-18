@@ -72,7 +72,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
   const plan = PRICING[planType];
   const finalAmountCents =
     typeof amountOverrideCents === "number"
-      ? Math.max(0, Math.min(plan.price, Math.round(amountOverrideCents)))
+      ? Math.max(100, Math.min(plan.price, Math.round(amountOverrideCents)))
       : plan.price;
   const baseAmountDisplay = (plan.price / 100).toFixed(2);
   const finalAmountDisplay = (finalAmountCents / 100).toFixed(2);
