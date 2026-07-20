@@ -26,11 +26,17 @@ const getInitialPlan = (planParam?: string): PlanType | undefined => {
 const EnrollPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ plan?: string; ref?: string; step?: string }>;
+  searchParams: Promise<{
+    plan?: string;
+    ref?: string;
+    promo?: string;
+    step?: string;
+  }>;
 }) => {
   const params = await searchParams;
   const initialPlan = getInitialPlan(params?.plan);
-  const initialPromoCode = params?.ref;
+  // promo= for campaigns (GROW50); ref= for referral links
+  const initialPromoCode = params?.promo ?? params?.ref;
   const initialStep =
     params?.step === "payment"
       ? "payment"
