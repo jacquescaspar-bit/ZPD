@@ -95,7 +95,10 @@ const PrivacyPage = () => (
               website:
             </p>
             <ul className="list-disc pl-6 space-y-1">
-              <li>Website usage data through Google Analytics 4</li>
+              <li>
+                Website usage data (page views and performance via Vercel
+                Analytics)
+              </li>
               <li>IP address, browser type, and device information</li>
               <li>Email communications and preferences</li>
             </ul>
@@ -181,8 +184,8 @@ const PrivacyPage = () => (
             </h3>
             <ul className="list-disc pl-6 space-y-1">
               <li>
-                <strong>Google Analytics 4:</strong> For website analytics (with
-                IP anonymization enabled)
+                <strong>Vercel Analytics:</strong> Privacy-friendly page views
+                and traffic metrics for our website hosted on Vercel
               </li>
               <li>
                 <strong>SendGrid:</strong> For email communications and

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import DevThemeToggle from "@/components/DevThemeToggle";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
@@ -129,6 +130,7 @@ const RootLayout = ({
       ) : null}
       {children}
       <SiteFooter />
+      <Analytics />
       {isDev ? <DevThemeToggle /> : null}
     </body>
   </html>
