@@ -36,8 +36,10 @@ export interface UseReferralSystemReturn {
   refreshDiscount: () => Promise<void>;
 }
 
+/** Essential/Intensive: promo, referral, diagnostic credit. Trial: promo only. */
 const planAcceptsDiscounts = (plan: PlanType | null): plan is PlanType =>
-  Boolean(plan) && DISCOUNT_ELIGIBLE_PLANS.includes(plan as PlanType);
+  Boolean(plan) &&
+  (plan === "trial" || DISCOUNT_ELIGIBLE_PLANS.includes(plan as PlanType));
 
 const lineLabel = (line: DiscountLine): string => {
   if (line.kind === "promo" && line.code) return `Promo code (${line.code})`;
@@ -146,6 +148,7 @@ export const useReferralSystem = (
             "Discounts do not apply to the Online plan — fixed term price only.",
           );
         }
+        setDiscountLines([]);
         return false;
       }
 
@@ -275,7 +278,7 @@ export const useReferralSystem = (
         setPromoStatus(
           selectedPlan === "online"
             ? "Discounts do not apply to the Online plan."
-            : "Discounts are only available on Essential and Intensive plans.",
+            : "Discounts are not available for this plan.",
         );
         return;
       }

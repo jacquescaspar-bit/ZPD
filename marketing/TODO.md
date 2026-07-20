@@ -13,9 +13,9 @@ Top to bottom. Tick as you go.
 
 - [ ] Review `01-flagship-guide.md`
 - [ ] Guide live at `/guides/parents-guide-to-zpd`
-- [ ] Create `TERM2026` promo (`04-promo-TERM2026.md`)
+- [x] Create `GROW50` promo (`04-promo-TERM2026.md`) — live on production
 - [ ] 2 Facebook posts (Week 1)
-- [ ] Google Business Profile (`gbp/profile-copy.md`)
+- [x] Google Business Profile (`gbp/profile-copy.md`) — verified & active
 - [ ] Sitemap includes guide (`05-sitemap-notes.md`)
 
 ## Week 2

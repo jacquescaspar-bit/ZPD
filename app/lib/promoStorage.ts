@@ -31,13 +31,6 @@ const validatePromoCode = async (
       };
     }
 
-    if (plan === "trial") {
-      return {
-        valid: false,
-        reason: "Discounts do not apply to the Diagnostic Discovery session.",
-      };
-    }
-
     const [row] = result.rows;
 
     // Check expiration

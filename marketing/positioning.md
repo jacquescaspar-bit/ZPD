@@ -54,13 +54,13 @@ Lead with the **$110 Diagnostic**, not the $1,050 Essential plan.
 
 ## Links
 
-| Use        | URL                                                         |
-| ---------- | ----------------------------------------------------------- |
-| Enrol      | https://zpdlearning.com/enrol                               |
-| Diagnostic | https://zpdlearning.com/enrol?plan=trial                    |
-| Essential  | https://zpdlearning.com/enrol?plan=essential                |
-| Promo      | https://zpdlearning.com/enrol?plan=essential&promo=TERM2026 |
-| Guide      | https://zpdlearning.com/blog/is-tutoring-the-right-fit      |
-| Blog       | https://zpdlearning.com/blog                                |
+| Use        | URL                                                       |
+| ---------- | --------------------------------------------------------- |
+| Enrol      | https://zpdlearning.com/enrol                             |
+| Diagnostic | https://zpdlearning.com/enrol?plan=trial                  |
+| Essential  | https://zpdlearning.com/enrol?plan=essential              |
+| Promo      | https://zpdlearning.com/enrol?plan=essential&promo=GROW50 |
+| Guide      | https://zpdlearning.com/blog/is-tutoring-the-right-fit    |
+| Blog       | https://zpdlearning.com/blog                              |
 
 Phone: **1300 990 443** on Contact, footer, Google — not in the main nav.

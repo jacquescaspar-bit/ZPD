@@ -87,13 +87,12 @@ export async function POST(request: NextRequest) {
     if (
       codeCandidate &&
       planType !== "online" &&
-      planType !== "trial" &&
       !resolutionAppliedCode(resolution, codeCandidate)
     ) {
       return NextResponse.json(
         {
           error:
-            "Invalid or ineligible discount code for this plan. Remove the code or choose Essential/Intensive.",
+            "Invalid or ineligible discount code for this plan. Remove the code or try another plan.",
         },
         { status: 400 },
       );

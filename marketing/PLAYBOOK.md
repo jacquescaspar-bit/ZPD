@@ -7,7 +7,7 @@
 ## Day 1 (45 min)
 
 1. Read `positioning.md`
-2. **Promo** — create `TERM2026` per `phase-1-quick-wins/04-promo-TERM2026.md`; test in incognito
+2. **Promo** — `GROW50` is live (see `phase-1-quick-wins/04-promo-TERM2026.md`); test in incognito
 3. **Google Business** — `gbp/profile-copy.md` (don't wait for verification to continue)
 4. Open `TODO.md` and admin dashboard
 

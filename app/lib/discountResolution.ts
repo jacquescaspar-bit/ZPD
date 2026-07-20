@@ -102,7 +102,8 @@ function compositeDiscountKind(lines: DiscountLine[]): string {
 
 /**
  * Server authority for checkout discounts.
- * Online and trial: no discounts.
+ * Online: no discounts.
+ * Diagnostic (trial): promo codes only (if allowed on the code) — no referral, no credit.
  * Essential/Intensive:
  *   - Diagnostic credit stacks with one referral OR promo code
  *   - Referral and promo cannot stack with each other (single code field)
@@ -126,15 +127,43 @@ export async function resolveDiscount(input: {
     discountKind: "none",
   });
 
-  if (planType === "online" || planType === "trial") {
+  if (planType === "online") {
     return empty();
+  }
+
+  const lines: DiscountLine[] = [];
+
+  // Diagnostic: promo only (e.g. GROW50) — no referral, no diagnostic credit
+  if (planType === "trial") {
+    if (code) {
+      const promoValidation = await PromoCodeStorage.validatePromoCode(
+        code,
+        planType,
+        email,
+      );
+      if (promoValidation.valid && promoValidation.promoCode) {
+        lines.push({
+          kind: "promo",
+          amountCents: promoValidation.promoCode.discountCents,
+          label: promoValidation.promoCode.description,
+          code,
+        });
+      }
+    }
+    const totalDiscountCents = lines.reduce((sum, l) => sum + l.amountCents, 0);
+    return {
+      planType,
+      planPriceCents,
+      finalAmountCents: Math.max(100, planPriceCents - totalDiscountCents),
+      discounts: lines,
+      totalDiscountCents,
+      discountKind: compositeDiscountKind(lines),
+    };
   }
 
   if (!DISCOUNT_ELIGIBLE_PLANS.includes(planType)) {
     return empty();
   }
-
-  const lines: DiscountLine[] = [];
 
   if (email) {
     const credit = await findEligibleDiagnosticCredit(email);

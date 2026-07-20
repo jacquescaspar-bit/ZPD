@@ -32,26 +32,28 @@ const DiscountCodeSection = ({
     );
   }
 
-  if (selectedPlan === "trial" || !selectedPlan) {
+  if (!selectedPlan) {
     return null;
   }
+
+  const isTrial = selectedPlan === "trial";
 
   return (
     <div className="border-t border-white/60 dark:border-gray-700 pt-6 space-y-4">
       <div>
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-          Referral or Promo Code
+          {isTrial ? "Promo Code" : "Referral or Promo Code"}
         </h3>
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          $50 off with a referral or promo code. Diagnostic Discovery credit (if
-          eligible within 30 days) stacks on top. Referral and promo codes
-          cannot be combined with each other.
+          {isTrial
+            ? "Have a promo code? Enter it here for $50 off this Diagnostic."
+            : "Promo or referral code for $50 off. Diagnostic Discovery credit (if eligible within 30 days) stacks on top. Referral and promo codes cannot be combined with each other."}
         </p>
       </div>
 
       <div className="space-y-2">
         <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-          Referral or promo code
+          {isTrial ? "Promo code" : "Referral or promo code"}
         </label>
         <div className="relative">
           <input

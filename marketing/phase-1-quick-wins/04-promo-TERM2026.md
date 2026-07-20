@@ -1,39 +1,40 @@
-# Promo Code: TERM2026
+# Promo Code: GROW50
 
-Launch promo for term-start campaigns. Create in admin, then use in Facebook posts, emails, and GBP posts.
+Launch promo for campaigns. Live in production admin / DB.
 
-## Admin setup
+## Live configuration
 
-1. Go to https://zpdlearning.com/admin/promo-codes
-2. **New promo code** with these values:
+| Field         | Value                                      |
+| ------------- | ------------------------------------------ |
+| Code          | `GROW50`                                   |
+| Discount      | **$50**                                    |
+| Description   | $50 off Diagnostic, Essential or Intensive |
+| Max uses      | 50                                         |
+| Expires       | 2026-12-31                                 |
+| Allowed plans | Diagnostic (`trial`), Essential, Intensive |
+| **Not valid** | Online                                     |
+| Status        | **Active**                                 |
 
-| Field          | Value                                                                                                      |
-| -------------- | ---------------------------------------------------------------------------------------------------------- |
-| Code           | `TERM2026`                                                                                                 |
-| Discount (AUD) | `50`                                                                                                       |
-| Description    | `$50 off your first term or Diagnostic`                                                                    |
-| Max uses       | `50` (or leave blank for unlimited during launch)                                                          |
-| Expires        | Set to end of current term (e.g. 2026-04-30)                                                               |
-| Allowed plans  | Diagnostic Discovery, Essential, Intensive _(tick all except Online if you want to push in-person/hybrid)_ |
-
-3. Save and test:
+## Test URLs
 
 ```
-https://zpdlearning.com/enrol?plan=trial&promo=TERM2026
-https://zpdlearning.com/enrol?plan=essential&promo=TERM2026
+https://zpdlearning.com/enrol?plan=trial&promo=GROW50
+https://zpdlearning.com/enrol?plan=essential&promo=GROW50
 ```
+
+(Online will reject the code — expected.)
 
 ## Copy to use publicly
 
-**Short:** $50 off a Diagnostic or Essential term — code **TERM2026** at checkout.
+**Short:** $50 off a Diagnostic or Essential term — code **GROW50** at checkout.
 
-**Facebook comment:** Code TERM2026 at https://zpdlearning.com/enrol — $50 off Diagnostic or Essential (limited uses).
+**Facebook comment:** Code GROW50 at https://zpdlearning.com/enrol — $50 off Diagnostic or Essential (limited uses).
 
 ## When to retire
 
 - After 50 redemptions, or
-- End of term, or
-- When switching to referral-led growth (referral = $50 — don't stack messaging)
+- End of year / campaign, or
+- When switching to referral-led growth (referral is also $50 — don't stack messaging)
 
 ## Tracking
 
