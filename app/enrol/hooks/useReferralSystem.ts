@@ -38,8 +38,7 @@ export interface UseReferralSystemReturn {
 
 /** Essential/Intensive: promo, referral, diagnostic credit. Trial: promo only. */
 const DIAGNOSTIC_ONLY_CODE = "GET50";
-const DIAGNOSTIC_ONLY_NOTE =
-  "GET50 applies only to the Diagnostic ($55 instead of $110). Choose the Diagnostic to use it.";
+const DIAGNOSTIC_ONLY_NOTE = "GET50 applies only to the Discovery diagnostic.";
 
 const planAcceptsDiscounts = (plan: PlanType | null): plan is PlanType =>
   Boolean(plan) &&
@@ -61,16 +60,6 @@ export const useReferralSystem = (
 ): UseReferralSystemReturn => {
   const [promoCode, setPromoCode] = useState(initialPromoCode ?? "");
   const [promoStatus, setPromoStatus] = useState<string | null>(null);
-  // Carry a homepage offer (e.g. GET50 from a QR scan) into checkout.
-  useEffect(() => {
-    if (initialPromoCode) return;
-    try {
-      const stored = sessionStorage.getItem("zpd_offer_code");
-      if (stored) setPromoCode((prev) => prev || stored);
-    } catch {
-      // storage unavailable
-    }
-  }, [initialPromoCode]);
   const [discountLines, setDiscountLines] = useState<DiscountLine[]>([]);
   const referralLink: string | null = null;
 
@@ -222,7 +211,7 @@ export const useReferralSystem = (
     [selectedPlan, normalizedCheckoutEmail, applyResolution],
   );
 
-  // GET50 (QR / homepage offer): resolve as soon as the plan is known, no email needed.
+  // GET50 (typed by the visitor): re-resolve when plan changes, no email needed.
   useEffect(() => {
     if (!selectedPlan) return;
     if (promoCode.trim().toUpperCase() !== DIAGNOSTIC_ONLY_CODE) return;

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-/** Guide-page-only offer. Validated server-side (see BUILT_IN_PROMO_CODES). */
+/** Offer code mentioned on the guide page; typed at checkout, validated server-side. */
 const GUIDE_OFFER_CODE = "GET50";
 
 const buildOfferHref = (search: string): string => {
@@ -70,10 +70,9 @@ const GuideCta = ({ showGuideOffer = false }: { showGuideOffer?: boolean }) => {
         they sit, and map out a plan.{" "}
         {showGuideOffer ? (
           <>
-            Readers of this guide get <strong>50% off</strong>: $55 instead of
-            $110 with code <strong>{GUIDE_OFFER_CODE}</strong> (applied
-            automatically). What you pay is credited to your term if you
-            continue.
+            Enter <strong>{GUIDE_OFFER_CODE}</strong> at checkout for 50% off
+            your Discovery diagnostic ($55 instead of $110). What you pay is
+            credited to your term if you continue.
           </>
         ) : (
           <>The $110 is credited to your term if you continue.</>
@@ -84,7 +83,7 @@ const GuideCta = ({ showGuideOffer = false }: { showGuideOffer?: boolean }) => {
           className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-6 py-2.5 font-medium text-white shadow hover:scale-105 transition-transform"
           href={showGuideOffer ? offerHref : "/enrol?plan=trial"}
         >
-          {showGuideOffer ? "Book a Diagnostic for $55" : "Book a Diagnostic"}
+          Book a Diagnostic
         </Link>
         <Link
           className="inline-flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 px-6 py-2.5 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
