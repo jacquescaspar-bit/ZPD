@@ -10,11 +10,11 @@ export interface PromoCodeValidation {
 
 /**
  * Code-defined promos that work without a DB row (a DB row with the same code
- * takes precedence). GUIDE50: 50% off the Diagnostic Discovery, guide page only.
+ * takes precedence). GET50: 50% off the Diagnostic Discovery, guide page only.
  * Credit toward a term later uses the amount actually paid (paymentIntent.amount).
  */
 const BUILT_IN_PROMO_CODES: Record<string, PromoCode> = {
-  GUIDE50: {
+  GET50: {
     discountCents: 5500,
     description: "Guide reader offer: 50% off Diagnostic Discovery",
     maxUses: null,

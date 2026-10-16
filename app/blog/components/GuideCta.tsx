@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 /** Guide-page-only offer. Validated server-side (see BUILT_IN_PROMO_CODES). */
-const GUIDE_OFFER_CODE = "GUIDE50";
+const GUIDE_OFFER_CODE = "GET50";
 
 const buildOfferHref = (search: string): string => {
   const params = new URLSearchParams({

@@ -7,13 +7,14 @@ export const OFFER_STORAGE_KEY = "zpd_offer_code";
 
 /** Codes the homepage banner will advertise. Validated server-side at checkout. */
 const BANNER_CODES: Record<string, string> = {
-  GUIDE50: "50% off your first Diagnostic: $55 instead of $110",
+  GET50: "GET50 applied: 50% off your first diagnostic",
 };
 
 const OfferBanner = () => {
   const [offer, setOffer] = useState<{ code: string; href: string } | null>(
     null,
   );
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const search = new URLSearchParams(window.location.search);
@@ -37,19 +38,30 @@ const OfferBanner = () => {
     setOffer({ code, href: `/enrol?${params.toString()}` });
   }, []);
 
-  if (!offer) return null;
+  if (!offer || !visible) return null;
 
   return (
-    <div className="relative z-30 mt-16 md:mt-0 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-4 py-2.5 text-center text-sm text-white">
-      <span className="font-semibold">{BANNER_CODES[offer.code]}</span>{" "}
-      <span className="opacity-90">
-        with code <strong>{offer.code}</strong>, applied automatically.
-      </span>{" "}
+    <div
+      aria-live="polite"
+      className="fixed left-1/2 top-20 z-[60] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl bg-gray-900/95 p-4 text-sm text-white shadow-xl"
+      role="status"
+    >
+      <div className="flex items-start gap-3">
+        <span className="flex-1 font-semibold">{BANNER_CODES[offer.code]}</span>
+        <button
+          aria-label="Dismiss"
+          className="-mt-1 px-1 text-xl leading-none opacity-70 hover:opacity-100"
+          type="button"
+          onClick={() => setVisible(false)}
+        >
+          ×
+        </button>
+      </div>
       <Link
-        className="ml-1 inline-block rounded-full bg-white/20 px-3 py-0.5 font-medium underline-offset-2 hover:bg-white/30"
+        className="mt-3 block rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-4 py-2.5 text-center font-semibold text-white shadow hover:opacity-95"
         href={offer.href}
       >
-        Book now
+        Book my $55 diagnostic
       </Link>
     </div>
   );

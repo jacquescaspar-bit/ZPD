@@ -37,6 +37,10 @@ export interface UseReferralSystemReturn {
 }
 
 /** Essential/Intensive: promo, referral, diagnostic credit. Trial: promo only. */
+const DIAGNOSTIC_ONLY_CODE = "GET50";
+const DIAGNOSTIC_ONLY_NOTE =
+  "GET50 applies only to the Diagnostic ($55 instead of $110). Choose the Diagnostic to use it.";
+
 const planAcceptsDiscounts = (plan: PlanType | null): plan is PlanType =>
   Boolean(plan) &&
   (plan === "trial" || DISCOUNT_ELIGIBLE_PLANS.includes(plan as PlanType));
@@ -57,7 +61,7 @@ export const useReferralSystem = (
 ): UseReferralSystemReturn => {
   const [promoCode, setPromoCode] = useState(initialPromoCode ?? "");
   const [promoStatus, setPromoStatus] = useState<string | null>(null);
-  // Carry a homepage offer (e.g. GUIDE50 from a QR scan) into checkout.
+  // Carry a homepage offer (e.g. GET50 from a QR scan) into checkout.
   useEffect(() => {
     if (initialPromoCode) return;
     try {
@@ -153,7 +157,9 @@ export const useReferralSystem = (
     async (code?: string): Promise<boolean> => {
       if (!planAcceptsDiscounts(selectedPlan)) {
         setDiscountLines([]);
-        if (selectedPlan === "online") {
+        if (code?.trim().toUpperCase() === DIAGNOSTIC_ONLY_CODE) {
+          setPromoStatus(DIAGNOSTIC_ONLY_NOTE);
+        } else if (selectedPlan === "online") {
           setPromoStatus(
             "Discounts do not apply to the Online plan — fixed term price only.",
           );
@@ -192,7 +198,12 @@ export const useReferralSystem = (
         );
 
         if (code?.trim() && !codeApplied) {
-          setPromoStatus("Invalid Referral / Promo code");
+          setPromoStatus(
+            code.trim().toUpperCase() === DIAGNOSTIC_ONLY_CODE &&
+              selectedPlan !== "trial"
+              ? DIAGNOSTIC_ONLY_NOTE
+              : "Invalid Referral / Promo code",
+          );
           // Keep diagnostic credit lines if any
           const creditOnly = lines.filter(
             (d) => d.kind === "diagnostic_credit",
@@ -210,6 +221,14 @@ export const useReferralSystem = (
     },
     [selectedPlan, normalizedCheckoutEmail, applyResolution],
   );
+
+  // GET50 (QR / homepage offer): resolve as soon as the plan is known, no email needed.
+  useEffect(() => {
+    if (!selectedPlan) return;
+    if (promoCode.trim().toUpperCase() !== DIAGNOSTIC_ONLY_CODE) return;
+    void resolveFromServer(promoCode.trim());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPlan, promoCode]);
 
   const refreshDiscount = useCallback(async () => {
     if (!planAcceptsDiscounts(selectedPlan)) {
