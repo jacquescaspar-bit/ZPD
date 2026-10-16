@@ -40,7 +40,7 @@ const OfferBanner = () => {
   if (!offer) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 shadow-lg md:relative md:shadow-none bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-4 py-2.5 text-center text-sm text-white">
+    <div className="relative z-30 mt-16 md:mt-0 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-4 py-2.5 text-center text-sm text-white">
       <span className="font-semibold">{BANNER_CODES[offer.code]}</span>{" "}
       <span className="opacity-90">
         with code <strong>{offer.code}</strong>, applied automatically.
