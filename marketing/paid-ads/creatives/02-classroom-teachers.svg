@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-label="Tutors who still teach in schools">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#bg2)"/>
+  <rect x="72" y="72" width="936" height="936" rx="48" fill="none" stroke="#93c5fd" stroke-opacity="0.35" stroke-width="3"/>
+  <text x="100" y="180" fill="#93c5fd" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="600" letter-spacing="3">STILL IN THE CLASSROOM</text>
+  <text x="100" y="310" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="64" font-weight="700">Tutors who still</text>
+  <text x="100" y="395" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="64" font-weight="700">teach in schools</text>
+  <text x="100" y="540" fill="#bfdbfe" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="500">Same syllabus your child</text>
+  <text x="100" y="595" fill="#bfdbfe" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="500">faces on Monday morning.</text>
+  <rect x="100" y="720" width="420" height="80" rx="16" fill="#38bdf8"/>
+  <text x="310" y="772" fill="#0f172a" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">Book Diagnostic $110</text>
+  <text x="100" y="880" fill="#94a3b8" font-family="Helvetica, Arial, sans-serif" font-size="28">ZPD Learning · Online or in-home</text>
+</svg>

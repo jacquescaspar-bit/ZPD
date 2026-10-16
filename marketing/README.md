@@ -1,27 +1,20 @@
-# Marketing Hub
+# Marketing
 
-**Order:** `positioning.md` → `PLAYBOOK.md` → tick `TODO.md`.
+**Read:** `positioning.md` → `PLAYBOOK.md` → `grok-bot/GROK-BUILD.md`
 
-## What's here
+Grok Build scouts, writes, validates. **Operator** (Grok Bot) = Zoho only.
 
-| Folder / file         | Purpose                                               |
-| --------------------- | ----------------------------------------------------- |
-| `positioning.md`      | Voice, wedge, anti-AI copy rules                      |
-| `PLAYBOOK.md`         | What to do, week by week                              |
-| `TODO.md`             | Checklist                                             |
-| `phase-1-quick-wins/` | Guide, Facebook posts, outreach, promo, sitemap notes |
-| `gbp/`                | Google Business Profile copy                          |
-| `partnerships/`       | OT/psych one-pager                                    |
-| `tutor-network/`      | Supply-side recruitment (not parent Facebook)         |
-| `phase-2-build/`      | Product work — **after** Phase 1 gate only            |
-| `tracking/`           | Weekly numbers                                        |
+| Path                                    | What                                          |
+| --------------------------------------- | --------------------------------------------- |
+| `PLAYBOOK.md`                           | How Phase 1 runs                              |
+| `positioning.md`                        | Voice                                         |
+| `grok-bot/`                             | Operator profile + local agent instructions   |
+| `tracking/`                             | CSVs (open in Sheets) + thread files          |
+| `phase-1-quick-wins/`                   | Templates, FB library, reply scenarios, promo |
+| `paid-ads/`                             | Meta 14-day test                              |
+| `gbp/` `partnerships/` `tutor-network/` | Channel packs                                 |
+| `phase-2-build/`                        | After the gate                                |
 
-## Weekly rhythm (~45 min)
+**Rhythm:** Grok Build compose+validate → you approve → Operator `check zoho-queue`. Replies: Operator dumps INBOUND_V1 → we analyse → queue.
 
-| When      | What                                                 |
-| --------- | ---------------------------------------------------- |
-| Monday    | Admin funnel + stuck enrolments (10 min)             |
-| Wednesday | 1 Facebook post from `02-facebook-posts.md` (10 min) |
-| Friday    | 2–3 outreach emails + log metrics (25 min)           |
-
-**Links:** https://zpdlearning.com · https://zpdlearning.com/admin · grow@zpdlearning.com · 1300 990 443
+**Links:** https://zpdlearning.com · /admin · grow@zpdlearning.com · 1300 990 443

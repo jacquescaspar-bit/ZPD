@@ -1,6 +1,6 @@
-# Weekly Metrics Tracker
+# Metrics tracker
 
-Copy this table into a spreadsheet or fill in each week.
+Operator updates every morning pack. Numbers you cannot see → blank + `unverified`.
 
 ## Admin URLs
 
@@ -11,38 +11,43 @@ Copy this table into a spreadsheet or fill in each week.
 
 ---
 
-## Week of: ****\_\_\_****
+## Week of: \***\*\_\_\_\*\***
 
-| Metric                        | This week | Notes |
-| ----------------------------- | --------- | ----- |
-| Paid enrollments              |           |       |
-| Diagnostic (trial)            |           |       |
-| Essential / Intensive         |           |       |
-| Revenue (AUD)                 |           |       |
-| Funnel: stuck at plan         |           |       |
-| Funnel: stuck at payment      |           |       |
-| Referral codes used           |           |       |
-| Outreach emails sent          |           |       |
-| Outreach replies              |           |       |
-| Facebook posts published      |           |       |
-| Google reviews (total)        |           |       |
-| Contact form submissions      |           |       |
-| Active contractor tutors      |           |       |
-| Enrolments via tutor referral |           |       |
-| Tutor → tutor referrals       |           |       |
+| Metric                           | This week | Notes              |
+| -------------------------------- | --------- | ------------------ |
+| Paid enrollments                 |           |                    |
+| Diagnostic (trial)               |           |                    |
+| Essential / Intensive            |           |                    |
+| Revenue (AUD)                    |           |                    |
+| Funnel: stuck at plan            |           |                    |
+| Funnel: stuck at payment         |           |                    |
+| Referral codes used              |           |                    |
+| Outreach emails **sent**         |           | cold + follow-up   |
+| Outreach replies                 |           |                    |
+| Facebook posts **published**     |           | drafted vs posted  |
+| Google reviews (total)           |           |                    |
+| Contact form submissions         |           |                    |
+| Active contractor tutors         |           |                    |
+| Enrolments via tutor referral    |           |                    |
+| Queue: ready / drafted / waiting |           | from outreach-log  |
+| Drafts waiting Jacques           |           |                    |
+| Coverage: empty states           |           | from coverage.md   |
+| Zoho / bounce warnings           |           | pause cold if ugly |
 
-## Targets (Phase 1 — first 4 weeks)
+## Platform (not TAM)
 
-| Metric               | 4-week target |
-| -------------------- | ------------- |
-| Diagnostic sessions  | ≥3            |
-| Term enrollments     | ≥1            |
-| Outreach emails sent | ≥15           |
-| Facebook posts       | ≥8            |
-| Google reviews       | ≥1            |
-| Partnership emails   | ≥3            |
+| Channel  | Rule                                                                     |
+| -------- | ------------------------------------------------------------------------ |
+| Facebook | 2 posts / group / month; localise; no identical body two groups same day |
+| Email    | Send what Jacques approved; pause if Zoho/bounces trip                   |
+| GBP      | 1 / fortnight                                                            |
 
-## Decision gate (end Week 4)
+## Rolling gate (28 days)
 
-- [ ] Hit any enrollment target → Phase 2 build
-- [ ] No traction → double FB + outreach Week 5–6, don't build tooling yet
+| Metric                                             | 28-day | Hit? |
+| -------------------------------------------------- | ------ | ---- |
+| Paid Diagnostics or term enrolments from marketing | ≥3     |      |
+| Funnel sessions with emails captured               | ≥10    |      |
+| Positive outreach/partner replies                  | ≥2     |      |
+
+Any one hit → flag Jacques for Phase 2. Miss → diagnose funnel/copy, not shrink the map.

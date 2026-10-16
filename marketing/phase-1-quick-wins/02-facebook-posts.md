@@ -1,6 +1,8 @@
-# Facebook Posts — 4 weeks (2/month)
+# Facebook Posts — rotating library
 
-**Rules:** No link in the post body if the group bans it — put the link in the first comment. Never post the same text to three groups on the same day. Value first; mention ZPD only when someone asks or in the comment.
+Operator schedules these across **all joined groups nationally**. Week headings are labels for the copy, not a chore chart.
+
+**Rules:** No link in the post body if the group bans it — put the link in the first comment. Never post the **identical** body to two groups on the same day — localise city and senior cert (HSC/VCE/QCE/WACE/SACE/TCE). Max 2 posts per group per month. No daily TAM cap: fill every eligible group-slot. Value first; mention ZPD only when someone asks or in the comment. Track in `tracking/facebook-calendar.md`.
 
 **Guide:** https://zpdlearning.com/blog/is-tutoring-the-right-fit  
 **Blog:** https://zpdlearning.com/blog

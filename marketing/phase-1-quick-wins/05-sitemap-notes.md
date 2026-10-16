@@ -15,4 +15,4 @@
 
 ## Parent guide
 
-Pinned post `is-tutoring-the-right-fit` — priority 0.9 in sitemap. Old `/guides/parents-guide-to-zpd` redirects permanently.
+Pinned post `is-tutoring-the-right-fit` — priority 0.9 in sitemap. Print PDF at `/guides/is-tutoring-the-right-fit.pdf`. Old `/guides/parents-guide-to-zpd` redirects permanently.

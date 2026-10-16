@@ -13,7 +13,7 @@
 
 ## Service areas
 
-Greater Sydney, Greater Melbourne, Greater Brisbane — plus NSW/VIC/QLD statewide for online.
+Australia — all states and territories. Online nationwide; in-home where a tutor is available.
 
 ## Description (750 chars max)
 

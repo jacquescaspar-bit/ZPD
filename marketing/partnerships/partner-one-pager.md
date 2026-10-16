@@ -19,7 +19,7 @@ _For OTs, speech pathologists, psychs, learning support coordinators._
 **What we won't do:** pay-as-you-go cramming, random uni-student matching, or pushing enrolment when it's not a fit.
 
 **Free handout for parents:**  
-[A Parent's Guide to the Zone of Proximal Development](https://zpdlearning.com/guides/parents-guide-to-zpd)
+[Is tutoring actually the right fit?](https://zpdlearning.com/blog/is-tutoring-the-right-fit) · [PDF](https://zpdlearning.com/guides/is-tutoring-the-right-fit.pdf)
 
 **Contact:** grow@zpdlearning.com · 1300 990 443 · https://zpdlearning.com/enrol?plan=trial
 

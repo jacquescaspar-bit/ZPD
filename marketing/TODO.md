@@ -1,59 +1,53 @@
 # Marketing TODO
 
-Top to bottom. Tick as you go.
+Grok Build owns scout/compose/validate. Grok Bot is Zoho only. Tick when Jacques confirms.
 
-## Setup (Day 1)
+## Setup (once)
 
 - [ ] Read `positioning.md`
 - [ ] Site live at zpdlearning.com
 - [ ] Stripe + SendGrid + webhook tested (one Diagnostic enrolment)
 - [ ] Bookmark `/admin`
+- [x] `GROW50` live (`04-promo-TERM2026.md`)
+- [x] Google Business Profile verified (`gbp/profile-copy.md`)
+- [x] Tutor `rate-card.md` + `/tutors` page
+- [ ] Operator: paste Profile from `grok-bot/operator.md` (inbound dump + zoho-queue; variant A/B)
+- [ ] Auto-review: require approval on every send (`permissions.md`)
+- [ ] Zoho signed in as grow@zpdlearning.com when first pass set is ready (not Gmail)
+- [ ] Grok Build: scout → compose → validate (`grok-bot/GROK-BUILD.md`)
 
-## Week 1
+## Human-only
 
-- [ ] Review `01-flagship-guide.md`
-- [ ] Guide live at `/guides/parents-guide-to-zpd`
-- [x] Create `GROW50` promo (`04-promo-TERM2026.md`) — live on production
-- [ ] 2 Facebook posts (Week 1)
-- [x] Google Business Profile (`gbp/profile-copy.md`) — verified & active
+- [ ] Join groups from Scout’s calendar in **batches** (national list — not four and done)
+- [ ] Approve Next after dual-hat; then tell Operator `check zoho-queue`
+- [ ] Paste INBOUND_V1 dumps into Grok Build to ingest
+- [ ] Name trusted casuals for tutor one-pager (any state)
+- [ ] Ads Manager: Pixel, payment, Publish — targeting **Australia** (`paid-ads/LAUNCH.md`)
+- [ ] Gate decision when Operator flags it
+
+## Bot queues (always on — token-bound)
+
+- [ ] `tracking/coverage.md` — no empty states
+- [ ] Outreach log: every qualified national prospect with a hook (no 20/40 cap)
+- [ ] Grok Build compose pack; Operator Zoho only after approve
+- [ ] Facebook calendar: groups × metros; draft every eligible slot
+- [ ] Flagship guide live at `/blog/is-tutoring-the-right-fit`
 - [ ] Sitemap includes guide (`05-sitemap-notes.md`)
+- [ ] Contact form / stuck-payment drafts same day
+- [ ] Testimonial ask drafted after first happy Diagnostic
+- [ ] GBP post drafted fortnightly
 
-## Week 2
+## Paid Meta ads (14-day test)
 
-- [ ] 5 outreach emails (`03-outreach-emails.md`)
-- [ ] 2 Facebook posts (Week 2)
-- [ ] Share guide in 1 Facebook group
-- [ ] Tutor one-pager to 3 casual teachers
-- [ ] First testimonial ask after Diagnostic (PLAYBOOK)
+See `paid-ads/LAUNCH.md` — Bots cannot publish. Locations = Australia.
 
-## Week 3
-
-- [ ] 5 outreach emails (new targets)
-- [ ] 2 Facebook posts (Week 3)
-- [ ] 3 partnership emails (`partner-one-pager.md`)
-- [ ] Onboard 1 pilot tutor
-
-## Week 4
-
-- [ ] 5 outreach emails
-- [ ] 2 Facebook posts (Week 4)
-- [ ] Log metrics (`tracking/weekly-metrics.md`)
-- [ ] Gate: ≥3 paid enrolments OR ≥10 funnel emails OR ≥2 replies → Phase 2
-
-## Tutor network (parallel)
-
-- [x] `rate-card.md` + `/tutors` page
-- [ ] Track tutor-attributed enrolments in spreadsheet
-- [ ] 1 tutor → tutor referral after successful term
+- [ ] Create Meta Pixel; set `NEXT_PUBLIC_META_PIXEL_ID` on Vercel; redeploy
+- [ ] Verify PageView + ViewContent in Events Manager (Accept All on cookie banner)
+- [ ] Ad account payment method + ZPD Learning Facebook Page
+- [ ] Publish 3 ads from `paid-ads/` (budget is your call; targeting AU)
+- [ ] Operator daily CPA memo; Day 7 / Day 14 you scale or kill
 
 ## Phase 2 (after gate only)
 
-- [ ] `phase-2-build/implementation-brief.md`
-
-## Ongoing
-
-- [ ] Contact form <24h
-- [ ] Google reviews <48h
-- [ ] 1 value post/week
-- [ ] Monday: check stuck enrolments
-- [ ] 1 testimonial/month
+- [ ] Rolling 28-day gate: ≥3 paid Diagnostics/term **or** ≥10 funnel emails **or** ≥2 positive replies
+- [ ] `phase-2-build/implementation-brief.md` via Grok Build, not Grok Bot
