@@ -379,3 +379,16 @@ html {
   direction: ltr !important;
   text-align: left !important;
 }
+
+@media print {
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body,
+  html {
+    background: #fff !important;
+  }
+}

@@ -12,6 +12,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { PRICING, type PlanType } from "@/lib/constants";
 import { getStripe } from "@/lib/stripe";
+import { enrollmentEvents } from "@/lib/analytics";
 import type { PaymentRequest } from "@stripe/stripe-js";
 
 const stripePromise = getStripe();
@@ -204,6 +205,7 @@ const PaymentFormContent: React.FC<PaymentFormProps> = ({
     }
 
     setIsProcessing(true);
+    enrollmentEvents.paymentStarted(planType, finalAmountCents / 100);
 
     const cardNumber = elements.getElement(CardNumberElement);
     const cardExpiry = elements.getElement(CardExpiryElement);

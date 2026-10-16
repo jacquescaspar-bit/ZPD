@@ -5,6 +5,7 @@ import Nav from "@/Nav";
 import PageShell from "@/components/PageShell";
 import { Container } from "@/components/ui";
 import GuideCta from "@/blog/components/GuideCta";
+import GuidePrintActions from "@/blog/components/GuidePrintActions";
 import MarkdownContent from "@/blog/components/MarkdownContent";
 import SharePostLink from "@/blog/components/SharePostLink";
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
@@ -74,23 +75,21 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
               </p>
             </header>
 
-            <div className="rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-white/95 dark:bg-gray-800/95 p-6 sm:p-10 shadow-sm">
+            <div className="rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-white/95 dark:bg-gray-800/95 p-6 sm:p-10 shadow-sm print:border-0 print:shadow-none print:p-0 print:bg-white">
               <MarkdownContent content={post.content} />
             </div>
 
-            <SharePostLink slug={post.slug} />
+            {post.pinned ? <GuidePrintActions /> : null}
+
+            <div className="no-print">
+              <SharePostLink slug={post.slug} />
+            </div>
 
             <GuideCta />
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+            <div className="no-print mt-8 text-center">
               <Link
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-8 py-3 font-medium text-white shadow-lg hover:scale-105 transition-transform text-center"
-                href="/enrol?plan=trial"
-              >
-                Book a Diagnostic
-              </Link>
-              <Link
-                className="inline-flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 px-8 py-3 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-center"
+                className="text-sm text-gray-500 dark:text-gray-400 underline decoration-dotted underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400"
                 href="/blog"
               >
                 All posts

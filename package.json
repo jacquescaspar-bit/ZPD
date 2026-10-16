@@ -17,7 +17,8 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "db:setup": "tsx database/setup.ts",
-    "db:migrate": "echo 'Migrations are run automatically on setup'"
+    "db:migrate": "echo 'Migrations are run automatically on setup'",
+    "guide:print": "node scripts/export-guide-print.mjs"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",

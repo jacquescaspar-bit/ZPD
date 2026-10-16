@@ -1,10 +1,20 @@
-// Declare global gtag function
+// Declare global gtag / Meta Pixel helpers
 declare global {
   function gtag(...args: unknown[]): void;
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+    _fbq?: unknown;
+  }
 }
 
 // Google Analytics 4 Measurement ID
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
+// Meta (Facebook) Pixel ID — set NEXT_PUBLIC_META_PIXEL_ID after creating a Pixel
+export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
+const ANALYTICS_CONSENT_KEY = "analytics_consent";
+const MARKETING_CONSENT_KEY = "marketing_consent";
 
 // Initialize GA4
 export const initGA = () => {
@@ -18,7 +28,23 @@ export const initGA = () => {
   }
 };
 
-// Generic event tracking
+/** Fire a Meta Pixel standard or custom event (no-op if pixel unloaded). */
+export const trackMetaEvent = (
+  eventName: string,
+  parameters: Record<string, unknown> = {},
+  options?: { eventID?: string },
+) => {
+  if (typeof window === "undefined" || typeof window.fbq !== "function") {
+    return;
+  }
+  if (options?.eventID) {
+    window.fbq("track", eventName, parameters, { eventID: options.eventID });
+  } else {
+    window.fbq("track", eventName, parameters);
+  }
+};
+
+// Generic event tracking (GA4 + optional Meta custom mirror for non-standard names)
 export const trackEvent = (
   eventName: string,
   parameters: Record<string, unknown> = {},
@@ -49,14 +75,21 @@ export const trackPageView = (pagePath: string, pageTitle: string) => {
   }
 };
 
-// Enrollment funnel events
+// Enrollment funnel events (GA4 + Meta standard events for ads optimisation)
 export const enrollmentEvents = {
-  // Page visits
-  enrollPageVisit: () =>
+  // Page visits — Meta ViewContent so traffic ads can optimise
+  enrollPageVisit: () => {
     trackEvent("enroll_page_visit", {
       page_location: "/enrol",
       page_title: "Enrol with ZPD Learning",
-    }),
+    });
+    trackMetaEvent("ViewContent", {
+      content_name: "Enrol",
+      content_category: "enrollment",
+      content_ids: ["enrol"],
+      content_type: "product",
+    });
+  },
 
   // Widget interactions
   widgetStart: () =>
@@ -104,7 +137,7 @@ export const enrollmentEvents = {
       event_label: "pricing",
     }),
 
-  planSelected: (planType: string, planPrice: number) =>
+  planSelected: (planType: string, planPrice: number) => {
     trackEvent("plan_selected", {
       event_category: "ecommerce",
       event_label: planType,
@@ -118,10 +151,19 @@ export const enrollmentEvents = {
           currency: "AUD",
         },
       ],
-    }),
+    });
+    trackMetaEvent("AddToCart", {
+      content_name: planType,
+      content_ids: [planType],
+      content_type: "product",
+      value: planPrice,
+      currency: "AUD",
+      num_items: 1,
+    });
+  },
 
   // Payment events
-  paymentStarted: (planType: string, amount: number) =>
+  paymentStarted: (planType: string, amount: number) => {
     trackEvent("begin_checkout", {
       event_category: "ecommerce",
       event_label: "payment",
@@ -135,9 +177,22 @@ export const enrollmentEvents = {
           currency: "AUD",
         },
       ],
-    }),
+    });
+    trackMetaEvent("InitiateCheckout", {
+      content_name: planType,
+      content_ids: [planType],
+      content_type: "product",
+      value: amount,
+      currency: "AUD",
+      num_items: 1,
+    });
+  },
 
-  paymentCompleted: (planType: string, amount: number, transactionId: string) =>
+  paymentCompleted: (
+    planType: string,
+    amount: number,
+    transactionId: string,
+  ) => {
     trackEvent("purchase", {
       event_category: "ecommerce",
       event_label: "payment_success",
@@ -152,7 +207,21 @@ export const enrollmentEvents = {
           currency: "AUD",
         },
       ],
-    }),
+    });
+    // eventID = Stripe payment intent id — enables CAPI dedupe later if needed
+    trackMetaEvent(
+      "Purchase",
+      {
+        content_name: planType,
+        content_ids: [planType],
+        content_type: "product",
+        value: amount,
+        currency: "AUD",
+        num_items: 1,
+      },
+      { eventID: transactionId },
+    );
+  },
 
   paymentFailed: (error: string) =>
     trackEvent("payment_failed", {
@@ -320,21 +389,78 @@ export const setUserId = (userId: string) => {
   }
 };
 
-// Check if analytics is enabled (for GDPR compliance)
+// Check if analytics is enabled (for privacy / consent)
 export const isAnalyticsEnabled = (): boolean => {
   if (typeof window === "undefined") return false;
+  return localStorage.getItem(ANALYTICS_CONSENT_KEY) === "granted";
+};
 
-  // Check for consent cookie or localStorage
-  const consent = localStorage.getItem("analytics_consent");
-  return consent === "granted";
+export const isMarketingEnabled = (): boolean => {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem(MARKETING_CONSENT_KEY) === "granted";
 };
 
 export const enableAnalytics = () => {
-  localStorage.setItem("analytics_consent", "granted");
+  localStorage.setItem(ANALYTICS_CONSENT_KEY, "granted");
   initGA();
 };
 
 export const disableAnalytics = () => {
-  localStorage.setItem("analytics_consent", "revoked");
-  // Note: GA4 doesn't have a direct disable method, but we can stop tracking
+  localStorage.setItem(ANALYTICS_CONSENT_KEY, "revoked");
+  // Note: GA4 doesn't have a direct disable method; we stop sending events
+};
+
+/** Marketing cookies = Meta Pixel (and similar ad pixels). */
+export const enableMarketing = () => {
+  localStorage.setItem(MARKETING_CONSENT_KEY, "granted");
+  window.dispatchEvent(new Event("zpd-marketing-consent"));
+};
+
+export const disableMarketing = () => {
+  localStorage.setItem(MARKETING_CONSENT_KEY, "revoked");
+  window.dispatchEvent(new Event("zpd-marketing-consent"));
+};
+
+/**
+ * Capture UTM / Meta click ids on first land so enrol can attribute paid traffic.
+ * Call once from a client layout effect.
+ */
+export const captureMarketingParams = () => {
+  if (typeof window === "undefined") return;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const keys = [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_content",
+      "utm_term",
+      "fbclid",
+    ] as const;
+    const stored: Record<string, string> = {};
+    let found = false;
+    for (const key of keys) {
+      const value = params.get(key);
+      if (value) {
+        stored[key] = value;
+        found = true;
+      }
+    }
+    if (found) {
+      sessionStorage.setItem("zpd_marketing_params", JSON.stringify(stored));
+    }
+  } catch {
+    // ignore storage errors
+  }
+};
+
+export const getStoredMarketingParams = (): Record<string, string> => {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = sessionStorage.getItem("zpd_marketing_params");
+    if (!raw) return {};
+    return JSON.parse(raw) as Record<string, string>;
+  } catch {
+    return {};
+  }
 };

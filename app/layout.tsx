@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import DevThemeToggle from "@/components/DevThemeToggle";
+import MetaPixel from "@/components/MetaPixel";
+import PrivacyConsent from "@/components/PrivacyConsent";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import "@/globals.css";
@@ -130,6 +132,8 @@ const RootLayout = ({
       ) : null}
       {children}
       <SiteFooter />
+      <PrivacyConsent />
+      <MetaPixel />
       <Analytics />
       {isDev ? <DevThemeToggle /> : null}
     </body>

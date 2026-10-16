@@ -54,7 +54,7 @@ const GuideCta = () => {
           className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-6 py-2.5 font-medium text-white shadow hover:scale-105 transition-transform"
           href="/enrol?plan=trial"
         >
-          Book a Discovery session
+          Book a Diagnostic
         </Link>
         <Link
           className="inline-flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 px-6 py-2.5 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"

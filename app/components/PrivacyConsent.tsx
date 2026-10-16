@@ -5,6 +5,8 @@ import {
   privacyEvents,
   enableAnalytics,
   disableAnalytics,
+  enableMarketing,
+  disableMarketing,
 } from "@/lib/analytics";
 
 interface PrivacyConsentProps {
@@ -25,6 +27,7 @@ const PrivacyConsent: React.FC<PrivacyConsentProps> = ({ onConsentChange }) => {
 
   const handleAcceptAll = () => {
     enableAnalytics();
+    enableMarketing();
     privacyEvents.consentGranted(["analytics", "marketing", "functional"]);
     setShowBanner(false);
     onConsentChange?.(true);
@@ -32,6 +35,7 @@ const PrivacyConsent: React.FC<PrivacyConsentProps> = ({ onConsentChange }) => {
 
   const handleAcceptEssential = () => {
     disableAnalytics();
+    disableMarketing();
     privacyEvents.consentGranted(["functional"]);
     privacyEvents.consentRevoked(["analytics", "marketing"]);
     setShowBanner(false);
@@ -63,13 +67,18 @@ const PrivacyConsent: React.FC<PrivacyConsentProps> = ({ onConsentChange }) => {
       privacyEvents.consentRevoked(revokedItems);
     }
 
-    // Enable/disable analytics based on analytics preference
     if (preferences.analytics) {
       enableAnalytics();
       onConsentChange?.(true);
     } else {
       disableAnalytics();
       onConsentChange?.(false);
+    }
+
+    if (preferences.marketing) {
+      enableMarketing();
+    } else {
+      disableMarketing();
     }
 
     setShowBanner(false);

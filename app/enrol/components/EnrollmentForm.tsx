@@ -18,6 +18,7 @@ import type { Step, EnrollmentFormProps } from "@/enrol/types";
 import { planDescriptions } from "@/enrol/data";
 import { useMobileCarousel } from "@/enrol/hooks/useMobileCarousel";
 import { useReferralSystem } from "@/enrol/hooks/useReferralSystem";
+import { enrollmentEvents } from "@/lib/analytics";
 
 const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   initialPlan,
@@ -206,6 +207,16 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
     // Check if this is a test payment
     const isTestPayment = paymentIntentId.startsWith("test_payment_intent_");
+
+    // GA4 + Meta Purchase (dollars, not cents) — fire before redirect
+    if (selectedPlan && !isTestPayment) {
+      const amountDollars = finalAmountCents / 100;
+      enrollmentEvents.paymentCompleted(
+        selectedPlan,
+        amountDollars,
+        paymentIntentId,
+      );
+    }
 
     try {
       const { sessionId: existingSessionId, token: existingToken } =
@@ -442,7 +453,12 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
             }
             selectedPlan={selectedPlan}
             showHighlights={showHighlights}
-            onPlanSelect={setSelectedPlan}
+            onPlanSelect={(plan) => {
+              setSelectedPlan(plan);
+              if (plan) {
+                enrollmentEvents.planSelected(plan, PRICING[plan].price / 100);
+              }
+            }}
           />
         );
 

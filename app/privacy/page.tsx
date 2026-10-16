@@ -188,6 +188,14 @@ const PrivacyPage = () => (
                 and traffic metrics for our website hosted on Vercel
               </li>
               <li>
+                <strong>Google Analytics:</strong> Optional site usage metrics
+                when you accept analytics cookies
+              </li>
+              <li>
+                <strong>Meta (Facebook) Pixel:</strong> Measures ad performance
+                and conversions when you accept marketing cookies
+              </li>
+              <li>
                 <strong>SendGrid:</strong> For email communications and
                 newsletters
               </li>
