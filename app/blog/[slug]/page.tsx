@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Nav from "@/Nav";
 import PageShell from "@/components/PageShell";
 import { Container } from "@/components/ui";
+import GuideCta from "@/blog/components/GuideCta";
 import MarkdownContent from "@/blog/components/MarkdownContent";
 import SharePostLink from "@/blog/components/SharePostLink";
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
@@ -78,6 +79,8 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
             </div>
 
             <SharePostLink slug={post.slug} />
+
+            <GuideCta />
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Link
