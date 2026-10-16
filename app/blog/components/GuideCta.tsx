@@ -1,9 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const GuideCta = () => {
+/** Guide-page-only offer. Validated server-side (see BUILT_IN_PROMO_CODES). */
+const GUIDE_OFFER_CODE = "GUIDE50";
+
+const buildOfferHref = (search: string): string => {
+  const params = new URLSearchParams({
+    plan: "trial",
+    promo: GUIDE_OFFER_CODE,
+  });
+  const incoming = new URLSearchParams(search);
+  incoming.forEach((value, key) => {
+    if (key.startsWith("utm_")) params.set(key, value);
+  });
+  if (!params.has("utm_source")) params.set("utm_source", "guide");
+  if (!params.has("utm_medium")) params.set("utm_medium", "guide_cta");
+  return `/enrol?${params.toString()}`;
+};
+
+const GuideCta = ({ showGuideOffer = false }: { showGuideOffer?: boolean }) => {
+  const [offerHref, setOfferHref] = useState(() => buildOfferHref(""));
+  useEffect(() => {
+    if (showGuideOffer) setOfferHref(buildOfferHref(window.location.search));
+  }, [showGuideOffer]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
@@ -46,15 +67,24 @@ const GuideCta = () => {
       </h2>
       <p className="mt-2 text-gray-600 dark:text-gray-300">
         Start with a Discovery session. We learn about your child, check where
-        they sit, and map out a plan. The $110 is credited to your term if you
-        continue.
+        they sit, and map out a plan.{" "}
+        {showGuideOffer ? (
+          <>
+            Readers of this guide get <strong>50% off</strong>: $55 instead of
+            $110 with code <strong>{GUIDE_OFFER_CODE}</strong> (applied
+            automatically). What you pay is credited to your term if you
+            continue.
+          </>
+        ) : (
+          <>The $110 is credited to your term if you continue.</>
+        )}
       </p>
       <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
         <Link
           className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-6 py-2.5 font-medium text-white shadow hover:scale-105 transition-transform"
-          href="/enrol?plan=trial"
+          href={showGuideOffer ? offerHref : "/enrol?plan=trial"}
         >
-          Book a Diagnostic
+          {showGuideOffer ? "Book a Diagnostic for $55" : "Book a Diagnostic"}
         </Link>
         <Link
           className="inline-flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 px-6 py-2.5 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"

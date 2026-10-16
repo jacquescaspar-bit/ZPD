@@ -85,7 +85,9 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
               <SharePostLink slug={post.slug} />
             </div>
 
-            <GuideCta />
+            <GuideCta
+              showGuideOffer={post.slug === "is-tutoring-the-right-fit"}
+            />
 
             <div className="no-print mt-8 text-center">
               <Link

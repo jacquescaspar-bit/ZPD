@@ -8,6 +8,37 @@ export interface PromoCodeValidation {
   promoCode?: PromoCode;
 }
 
+/**
+ * Code-defined promos that work without a DB row (a DB row with the same code
+ * takes precedence). GUIDE50: 50% off the Diagnostic Discovery, guide page only.
+ * Credit toward a term later uses the amount actually paid (paymentIntent.amount).
+ */
+const BUILT_IN_PROMO_CODES: Record<string, PromoCode> = {
+  GUIDE50: {
+    discountCents: 5500,
+    description: "Guide reader offer: 50% off Diagnostic Discovery",
+    maxUses: null,
+    expiresAt: null,
+    isActive: true,
+    allowedPlans: ["trial"],
+  },
+};
+
+const validateBuiltIn = (
+  code: string,
+  plan?: PlanType,
+): PromoCodeValidation | null => {
+  const builtIn = BUILT_IN_PROMO_CODES[code.toUpperCase()];
+  if (!builtIn) return null;
+  if (plan && !builtIn.allowedPlans?.includes(plan)) {
+    return {
+      valid: false,
+      reason: "This code is only valid for the Diagnostic Discovery session",
+    };
+  }
+  return { valid: true, promoCode: builtIn };
+};
+
 const validatePromoCode = async (
   code: string,
   plan?: PlanType,
@@ -20,7 +51,12 @@ const validatePromoCode = async (
     );
 
     if (result.rows.length === 0) {
-      return { valid: false, reason: "Invalid promo code" };
+      return (
+        validateBuiltIn(code, plan) ?? {
+          valid: false,
+          reason: "Invalid promo code",
+        }
+      );
     }
 
     if (plan === "online") {
@@ -85,7 +121,12 @@ const validatePromoCode = async (
     return { valid: true, promoCode };
   } catch (error) {
     console.error("Error validating promo code:", error);
-    return { valid: false, reason: "Error validating promo code" };
+    return (
+      validateBuiltIn(code, plan) ?? {
+        valid: false,
+        reason: "Error validating promo code",
+      }
+    );
   }
 };
 
