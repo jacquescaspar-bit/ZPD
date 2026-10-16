@@ -57,6 +57,16 @@ export const useReferralSystem = (
 ): UseReferralSystemReturn => {
   const [promoCode, setPromoCode] = useState(initialPromoCode ?? "");
   const [promoStatus, setPromoStatus] = useState<string | null>(null);
+  // Carry a homepage offer (e.g. GUIDE50 from a QR scan) into checkout.
+  useEffect(() => {
+    if (initialPromoCode) return;
+    try {
+      const stored = sessionStorage.getItem("zpd_offer_code");
+      if (stored) setPromoCode((prev) => prev || stored);
+    } catch {
+      // storage unavailable
+    }
+  }, [initialPromoCode]);
   const [discountLines, setDiscountLines] = useState<DiscountLine[]>([]);
   const referralLink: string | null = null;
 

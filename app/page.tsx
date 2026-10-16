@@ -4,6 +4,7 @@ import Hero from "@/Hero";
 import ZPDDefinitionSection from "@/ZPDDefinitionSection";
 import EnrolCta from "@/EnrolCta";
 import PageShell from "@/components/PageShell";
+import OfferBanner from "@/components/OfferBanner";
 
 const Features = dynamic(() => import("@/Features"));
 const Testimonials = dynamic(() => import("@/Testimonials"));
@@ -11,6 +12,7 @@ const BackToTop = dynamic(() => import("@/BackToTop"));
 
 const Home = () => (
   <PageShell>
+    <OfferBanner />
     <Nav />
     <Hero />
     <Features />

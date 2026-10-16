@@ -30,13 +30,14 @@ const EnrollPage = async ({
     plan?: string;
     ref?: string;
     promo?: string;
+    code?: string;
     step?: string;
   }>;
 }) => {
   const params = await searchParams;
   const initialPlan = getInitialPlan(params?.plan);
   // promo= for campaigns (GROW50); ref= for referral links
-  const initialPromoCode = params?.promo ?? params?.ref;
+  const initialPromoCode = params?.promo ?? params?.code ?? params?.ref;
   const initialStep =
     params?.step === "payment"
       ? "payment"
