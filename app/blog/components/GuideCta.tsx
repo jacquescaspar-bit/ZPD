@@ -9,7 +9,6 @@ const GUIDE_OFFER_CODE = "GET50";
 const buildOfferHref = (search: string): string => {
   const params = new URLSearchParams({
     plan: "trial",
-    promo: GUIDE_OFFER_CODE,
   });
   const incoming = new URLSearchParams(search);
   incoming.forEach((value, key) => {
