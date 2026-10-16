@@ -1,14 +1,26 @@
 // Declare global gtag / Meta Pixel helpers
 declare global {
-  function gtag(...args: unknown[]): void;
   interface Window {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
     fbq?: (...args: unknown[]) => void;
     _fbq?: unknown;
   }
 }
 
 // Google Analytics 4 Measurement ID
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+// Empty or the G-XXXXXXXXXX placeholder are treated as unset.
+const GA_FALLBACK_ID = "G-H430HPFXFX";
+const rawGaId = (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "").trim();
+export const GA_MEASUREMENT_ID =
+  rawGaId && rawGaId !== "G-XXXXXXXXXX" ? rawGaId : GA_FALLBACK_ID;
+
+/** Safe gtag call: no-op until the GA loader has defined window.gtag. */
+const gtag = (...args: unknown[]) => {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag(...args);
+  }
+};
 
 // Meta (Facebook) Pixel ID — set NEXT_PUBLIC_META_PIXEL_ID after creating a Pixel
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -52,7 +64,7 @@ export const trackEvent = (
   if (
     typeof window !== "undefined" &&
     GA_MEASUREMENT_ID &&
-    typeof gtag !== "undefined"
+    typeof window.gtag === "function"
   ) {
     gtag("event", eventName, {
       ...parameters,
@@ -66,7 +78,7 @@ export const trackPageView = (pagePath: string, pageTitle: string) => {
   if (
     typeof window !== "undefined" &&
     GA_MEASUREMENT_ID &&
-    typeof gtag !== "undefined"
+    typeof window.gtag === "function"
   ) {
     gtag("config", GA_MEASUREMENT_ID, {
       page_path: pagePath,
@@ -364,7 +376,7 @@ export const setUserProperties = (properties: Record<string, unknown>) => {
   if (
     typeof window !== "undefined" &&
     GA_MEASUREMENT_ID &&
-    typeof gtag !== "undefined"
+    typeof window.gtag === "function"
   ) {
     gtag("config", GA_MEASUREMENT_ID, {
       custom_map: {
@@ -381,7 +393,7 @@ export const setUserId = (userId: string) => {
   if (
     typeof window !== "undefined" &&
     GA_MEASUREMENT_ID &&
-    typeof gtag !== "undefined"
+    typeof window.gtag === "function"
   ) {
     gtag("config", GA_MEASUREMENT_ID, {
       user_id: userId,
@@ -402,12 +414,13 @@ export const isMarketingEnabled = (): boolean => {
 
 export const enableAnalytics = () => {
   localStorage.setItem(ANALYTICS_CONSENT_KEY, "granted");
-  initGA();
+  window.dispatchEvent(new Event("zpd-analytics-consent"));
 };
 
 export const disableAnalytics = () => {
   localStorage.setItem(ANALYTICS_CONSENT_KEY, "revoked");
-  // Note: GA4 doesn't have a direct disable method; we stop sending events
+  gtag("consent", "update", { analytics_storage: "denied" });
+  window.dispatchEvent(new Event("zpd-analytics-consent"));
 };
 
 /** Marketing cookies = Meta Pixel (and similar ad pixels). */

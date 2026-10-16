@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import DevThemeToggle from "@/components/DevThemeToggle";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import MetaPixel from "@/components/MetaPixel";
 import PrivacyConsent from "@/components/PrivacyConsent";
 import SiteFooter from "@/components/SiteFooter";
@@ -133,6 +134,7 @@ const RootLayout = ({
       {children}
       <SiteFooter />
       <PrivacyConsent />
+      <GoogleAnalytics />
       <MetaPixel />
       <Analytics />
       {isDev ? <DevThemeToggle /> : null}
