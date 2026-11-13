@@ -28,3 +28,15 @@ Local only. Operator is Zoho.
 
 **Operator:**  
 `check zoho-queue`
+
+## Outreach links (future waves)
+
+Use first-party click paths, not the bare guide URL:
+
+- `https://zpdlearning.com/g/w12` for Wave 12
+- `https://zpdlearning.com/g/w12-school` (or `-clinic`, `-pc`) for audience splits
+
+These redirect to the guide with `utm_source=email&utm_medium=outreach&utm_campaign=<code>`.
+Do not put `/enrol` or promo codes in outreach emails.
+Do not change hrefs in a wave that is already sending.
+Details: `marketing/tracking/outreach-links.md`.

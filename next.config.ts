@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const GUIDE = "/blog/is-tutoring-the-right-fit";
+
 const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
@@ -24,7 +26,22 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/guides/parents-guide-to-zpd",
-        destination: "/blog/is-tutoring-the-right-fit",
+        destination: GUIDE,
+        permanent: true,
+      },
+      // Mangled guide slugs seen in analytics (email-scanner truncations).
+      // aXMtdHV0b3 is the start of Base64(is-tutoring-the-right-fit);
+      // the regex also catches longer Base64 prefixes of the same slug.
+      {
+        source: "/blog/:slug(aXMtdHV0b3.*)",
+        destination: GUIDE,
+        permanent: true,
+      },
+      { source: "/blog/is-tut", destination: GUIDE, permanent: true },
+      { source: "/blog/is-tutoring-th", destination: GUIDE, permanent: true },
+      {
+        source: "/gqtldnx-yzytwnsl-ymj-wnlmy-kny",
+        destination: GUIDE,
         permanent: true,
       },
     ];
