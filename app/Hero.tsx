@@ -2,7 +2,11 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Button, Container } from "@/components/ui";
-import { formatAudWholeDollars, LOWEST_TERM_PLAN_PRICE } from "@/lib/constants";
+import {
+  formatAudWholeDollars,
+  LOWEST_TERM_PLAN_PRICE,
+  PRICING,
+} from "@/lib/constants";
 import { SECTION_BAND_HERO } from "@/lib/sectionBands";
 
 const Hero = () => {
@@ -61,7 +65,9 @@ const Hero = () => {
           </div>
 
           <p className="mb-8 max-w-xl px-4 text-base text-gray-600 dark:text-gray-400 sm:text-lg">
-            Classroom-active tutors · Term-based plans from{" "}
+            Classroom-active tutors · Start with a{" "}
+            {formatAudWholeDollars(PRICING.trial.price / 100)} Diagnostic ·
+            Term-based plans from{" "}
             {formatAudWholeDollars(LOWEST_TERM_PLAN_PRICE)}
           </p>
 
@@ -74,9 +80,10 @@ const Hero = () => {
               id="cta-button"
               size="lg"
               variant="gradient"
-              onClick={() => (window.location.href = "/enrol")}
+              onClick={() => (window.location.href = "/enrol?plan=trial")}
             >
-              Enrol Now
+              Book a {formatAudWholeDollars(PRICING.trial.price / 100)}{" "}
+              Diagnostic
             </Button>
           </div>
         </div>
